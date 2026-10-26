@@ -48,12 +48,12 @@ export function LocationContact({
               {a.suite ? ` ${a.suite}` : ""}, {a.city}, {a.state} {a.zip}
             </p>
             <p>
-              <a href={telHref(business.phone)} className="hover:text-brand">
+              <a href={telHref(business.phone)} className="hover:text-primary-text">
                 {business.phone}
               </a>
             </p>
             <p>
-              <a href={`mailto:${business.email}`} className="hover:text-brand">
+              <a href={`mailto:${business.email}`} className="hover:text-primary-text">
                 {business.email}
               </a>
             </p>

@@ -29,7 +29,7 @@ export function ServicesIndex({
               data-toc-link={s.slug}
               className="py-1.5 group -ml-px flex gap-2 border-l border-transparent pl-4 text-body-sm text-text-tertiary hover:text-text aria-[current=true]:border-brand aria-[current=true]:text-text"
             >
-              <span className="w-7 shrink-0 tabular-nums text-text-disabled group-aria-[current=true]:text-brand">
+              <span className="w-7 shrink-0 tabular-nums text-text-disabled group-aria-[current=true]:text-primary-text">
                 {String(i + 1).padStart(2, "0")}
               </span>
               {s.title}

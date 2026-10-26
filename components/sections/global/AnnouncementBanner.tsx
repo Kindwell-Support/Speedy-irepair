@@ -6,6 +6,8 @@ export function AnnouncementBanner({ announcement }: { announcement: Announcemen
   if (!announcement?.enabled) return null;
   return (
     <div
+      role="region"
+      aria-label={A11Y.announcement}
       data-section="banner"
       data-testid="announcement-banner"
       className="relative z-banner bg-primary text-text"
@@ -13,7 +15,7 @@ export function AnnouncementBanner({ announcement }: { announcement: Announcemen
       <div className="container-site min-h-banner flex items-center justify-center py-2 text-center text-body-sm font-semibold">
         <a
           href={announcement.href}
-          className="underline-offset-4 hover:underline"
+          className="underline-offset-4 hover:underline focus-visible:shadow-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text"
           {...(announcement.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         >
           {announcement.text}

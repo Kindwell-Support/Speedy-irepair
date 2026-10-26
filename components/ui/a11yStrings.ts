@@ -8,6 +8,8 @@ export const A11Y = {
   opensInNewTab: " (opens in a new tab)",
   opensMapsInNewTab: " (opens Google Maps in a new tab)",
   openMenu: "Open menu",
+  /** Landmark name for the site-wide promo banner (design role="region" aria-label="Announcement"). */
+  announcement: "Announcement",
   closeMenu: "Close menu",
   /** Star row label, e.g. "4 out of 5 stars". */
   starRating: (rating: number) => `${rating} out of 5 stars`,
