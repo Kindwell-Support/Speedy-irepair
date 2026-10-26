@@ -104,9 +104,34 @@ test("seoQueries adapter (sanity/lib/client) runs over the seed", async () => {
   const llms = await client.fetch<{ llmsTxt: string }>(seo.LLMS_TXT_QUERY);
   assert.equal(llms?.llmsTxt.trim(), LLMS_TXT_DEFAULT.trim());
   const nav = await client.fetch<unknown[]>(seo.NAV_QUERY);
-  assert.ok((nav?.length ?? 0) >= 7);
+  assert.equal(nav?.length, 8); // 7 header links + Schedule Repair CTA
   const docs = await client.fetch<unknown[]>(seo.SITEMAP_DOCS_QUERY, { types: ["service", "policyPage"] });
   assert.equal(docs?.length, 18); // 15 service docs (14 listed on servicesPage) + 3 policies
+});
+
+test("v1.3 fields: nav (7 + Services dropdown), eyebrows, page intro, valueProp stats, contact heading", async () => {
+  const s = await c.getSiteSettings();
+  assert.equal(s.navigation.primary.length, 7);
+  assert.deepEqual(s.navigation.primary.map((l) => l.label), ["Services", "Shop", "Sell Your Device", "Home Internet", "Financing", "FAQ", "About"]);
+  assert.equal(s.navigation.primary[0].children?.length, 14);
+  assert.equal(s.navigation.headerCta.label, "Schedule Repair");
+  const h = await c.getHomePage();
+  assert.equal(h.hero.eyebrow, "Akron, Ohio · Walk-ins welcome");
+  assert.equal(h.whySection.eyebrow, "Why choose us");
+  assert.equal(h.contactSection.heading, "Send us a message.");
+  assert.equal(h.newsletter.eyebrow, "Newsletter");
+  const vp = await c.getValueProps();
+  assert.deepEqual(vp.filter((v) => v.stat).map((v) => v.stat), [{ value: "45", label: "min" }, { value: "90", label: "day" }]);
+  const quote = await c.getQuotePage();
+  assert.match(quote.intro ?? "", /^Request a smartphone repair quote/);
+  assert.match((await c.getSchedulePage()).intro ?? "", /^Book a smartphone repair appointment/);
+  assert.equal((await c.getSellPage()).formSection.eyebrow, "Trade-in form");
+  assert.equal((await c.getFinancingPage()).faqSection.eyebrow, "Financing FAQ");
+  assert.equal((await c.getHomeInternetPage()).signUpSection?.heading, "Sign up for Home Internet.");
+  assert.equal((await c.getAboutPage()).contactSection.eyebrow, "Contact");
+  assert.equal((await c.getPolicyPage("privacy")).eyebrow, "Policies");
+  const promos = await c.getPromotions();
+  assert.deepEqual(promos.map((p) => p.cta.label), ["Sign up now", "See the plan", "Apply with Acima"]);
 });
 
 test("no hand-fixture placeholder leaks into seeded fields", async () => {

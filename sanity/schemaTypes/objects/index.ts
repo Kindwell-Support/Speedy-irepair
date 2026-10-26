@@ -69,6 +69,15 @@ const linkFields = [
 
 export const link = defineType({name: 'link', type: 'object', fields: linkFields})
 
+/** v1.3 header nav item: a link with an optional dropdown (design: "Services ▾"). */
+export const navLink = defineType({
+  name: 'navLink',
+  title: 'Nav link',
+  type: 'object',
+  fields: [...linkFields, defineField({name: 'children', title: 'Dropdown links', type: 'array', of: [defineArrayMember({type: 'link'})]})],
+  preview: {select: {title: 'label', children: 'children'}, prepare: ({title, children}) => ({title, subtitle: children?.length ? `${children.length} dropdown links` : undefined})},
+})
+
 export const cta = defineType({
   name: 'cta',
   title: 'Call to action',
@@ -162,4 +171,4 @@ export const hero = defineType({
   ],
 })
 
-export const objectTypes = [seo, link, cta, richText, riveIcon, step, openingHours, sectionHeading, hero]
+export const objectTypes = [seo, link, navLink, cta, richText, riveIcon, step, openingHours, sectionHeading, hero]

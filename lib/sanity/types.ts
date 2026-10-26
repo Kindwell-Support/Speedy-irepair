@@ -106,8 +106,13 @@ export interface BusinessInfo extends Placeholderable {
   logoInverse?: ImageAsset | null;
 }
 
+/** v1.3 header item: link + optional dropdown (design "Services ▾"). */
+export interface NavLink extends CtaLink {
+  children?: CtaLink[] | null;
+}
+
 export interface Navigation {
-  primary: CtaLink[];
+  primary: NavLink[];
   headerCta: CtaLink;
   footerQuickLinks: CtaLink[];
   footerLegalLinks: CtaLink[];
@@ -210,6 +215,8 @@ export interface ValueProp extends Placeholderable {
   detail?: string | null;
   speakable: boolean;
   order: number;
+  /** v1.3 optional stat (design `.why__num`), e.g. {value:"45", label:"min"}. Only real numbers from the brief. */
+  stat?: { value: string; label?: string | null } | null;
 }
 
 export type StepSet = "home" | "sell" | "financing" | "homeInternet";
@@ -233,7 +240,7 @@ export interface PageHero {
 
 /** A titled copy block inside a page (section heading + optional intro). */
 export interface SectionCopy extends Placeholderable {
-  /** Small label above the h2 (design `.eyebrow`). Optional until the CMS adds the field. */
+  /** Small label above the h2 (design `.eyebrow`). CMS: sectionHeading.eyebrow (contract v1.3). */
   eyebrow?: string | null;
   heading: string;
   intro?: string | null;
@@ -243,6 +250,8 @@ export interface SectionCopy extends Placeholderable {
 export interface BasePage {
   title: string;
   hero: PageHero;
+  /** v1.3 page intro under the hero (G4: on quote/schedule this = the Service JSON-LD description). */
+  intro?: string | null;
   seo: Seo;
 }
 
@@ -256,7 +265,7 @@ export interface HomePage extends BasePage {
   promotionsSection: SectionCopy;
   faqSection: SectionCopy;
   locationSection: SectionCopy & { directionsLabel: string };
-  newsletter: { heading: string; emailLabel: string; buttonLabel: string; successMessage: string };
+  newsletter: { eyebrow?: string | null; heading: string; emailLabel: string; buttonLabel: string; successMessage: string };
   contactSection: SectionCopy;
   /** Optional Spline scene URL; when empty the R3F hero is used (ARCHITECTURE: 3D hero). */
   splineSceneUrl?: string | null;
@@ -287,6 +296,7 @@ export interface QuotePage extends BasePage {
 export interface SchedulePage extends BasePage {
   whatToExpect: SectionCopy;
   whatToBring: SectionCopy;
+  bookingSection?: SectionCopy;
   locationSection: SectionCopy;
   squareBookingUrl: string;
 }
@@ -302,6 +312,7 @@ export interface AboutPage extends BasePage {
   valuesSection: SectionCopy & { values: string[] };
   spectrumSection: SectionCopy;
   ctaSection: SectionCopy & { ctas: CtaLink[] };
+  locationSection?: SectionCopy;
   contactSection: SectionCopy;
 }
 
@@ -317,6 +328,7 @@ export interface HomeInternetPage extends BasePage {
   whoItsForSection: SectionCopy & { items: string[] };
   whatYouGetSection: SectionCopy & { items: string[] };
   howToSignUpSection: SectionCopy;
+  signUpSection?: SectionCopy;
   jotformUrl: string;
   faqSection: SectionCopy;
 }
@@ -325,6 +337,7 @@ export type PolicySlug = "shipping-return" | "privacy" | "terms";
 
 export interface PolicyPage extends Placeholderable {
   slug: PolicySlug;
+  eyebrow?: string | null;
   title: string;
   body: PortableTextBlock[];
   sourceUrl?: string | null;

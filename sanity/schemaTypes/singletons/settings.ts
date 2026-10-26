@@ -106,7 +106,7 @@ export const navigation = defineType({
   name: 'navigation',
   type: 'document',
   fields: [
-    defineField({name: 'headerLinks', type: 'array', of: [defineArrayMember({type: 'link'})]}),
+    defineField({name: 'headerLinks', type: 'array', description: 'Design: 7 links (Services has a dropdown) + the Schedule Repair CTA.', of: [defineArrayMember({type: 'navLink'})], validation: (r) => r.max(7)}),
     defineField({name: 'headerCta', type: 'cta'}),
     defineField({name: 'footerQuickLinks', type: 'array', of: [defineArrayMember({type: 'link'})]}),
     defineField({name: 'footerLegalLinks', type: 'array', of: [defineArrayMember({type: 'link'})]}),

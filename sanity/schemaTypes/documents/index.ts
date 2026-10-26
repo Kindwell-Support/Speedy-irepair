@@ -155,6 +155,7 @@ export const policyPage = defineType({
   type: 'document',
   groups: seoGroups,
   fields: [
+    defineField({name: 'eyebrow', type: 'string', group: 'content', initialValue: 'Policies'}),
     defineField({name: 'title', type: 'string', group: 'content', validation: (r) => r.required()}),
     defineField({name: 'slug', type: 'slug', group: 'content', options: {list: ['shipping-return', 'privacy', 'terms']} as never, validation: (r) => r.required()}),
     defineField({name: 'body', type: 'richText', group: 'content'}),
