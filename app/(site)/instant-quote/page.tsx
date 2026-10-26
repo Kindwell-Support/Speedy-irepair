@@ -9,6 +9,7 @@ import { ServiceSummary } from "@/components/ui/ServiceSummary";
 import { PageHero } from "@/components/ui/PageHero";
 import { LeadFlow } from "@/components/sections/forms/lead/LeadFlow";
 import { LeadFlowAside } from "@/components/sections/forms/lead/LeadFlowAside";
+import { withEnumOptions } from "@/components/sections/forms/lead/enumOptions";
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("/instant-quote", (await getQuotePage()).seo);
@@ -39,7 +40,7 @@ export default async function InstantQuotePage() {
           <div className="grid gap-12 lg:grid-cols-[8fr_4fr] [&>*]:min-w-0">
             <LeadFlow
               kind="quote"
-              copy={lead.flow}
+              copy={withEnumOptions("quote", lead.flow)}
               phoneDisplay={business.phone}
               testId="quote-form"
             />

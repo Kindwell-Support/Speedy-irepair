@@ -4,26 +4,31 @@
  * Off for touch / coarse pointers and under reduced motion (renders children only).
  * Purpose: "what to look at" — the two hero CTAs.
  */
-import type { ReactNode } from "react";
-import Magnet from "./reactbits/Magnet";
+import { lazy, Suspense, type ReactNode } from "react";
 import { cn } from "@/lib/utils/cn";
 import { useFinePointer, useReducedMotion } from "@/lib/motion/reduced-motion";
+
+/** Code-split: only fetched for fine-pointer, motion-OK visitors (SSR and touch render the plain wrapper). */
+const Magnet = lazy(() => import("./reactbits/Magnet"));
 
 type Props = { children: ReactNode; className?: string; strength?: number; padding?: number };
 
 export function MagneticButton({ children, className, strength = 3, padding = 60 }: Props) {
   const reduced = useReducedMotion();
   const fine = useFinePointer();
-  if (reduced || !fine) return <span className={cn("inline-block", className)}>{children}</span>;
+  const plain = <span className={cn("inline-block", className)}>{children}</span>;
+  if (reduced || !fine) return plain;
   return (
-    <Magnet
-      wrapperClassName={className}
-      padding={padding}
-      magnetStrength={strength}
-      maxOffset={10}
-      spring={{ stiffness: 320, damping: 24, mass: 1 }}
-    >
-      {children}
-    </Magnet>
+    <Suspense fallback={plain}>
+      <Magnet
+        wrapperClassName={className}
+        padding={padding}
+        magnetStrength={strength}
+        maxOffset={10}
+        spring={{ stiffness: 320, damping: 24, mass: 1 }}
+      >
+        {children}
+      </Magnet>
+    </Suspense>
   );
 }

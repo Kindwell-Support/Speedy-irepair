@@ -18,6 +18,7 @@ import { CtaBand } from "@/components/sections/shared/CtaBand";
 import { NumberedSteps } from "@/components/sections/shared/NumberedSteps";
 import { LeadFlow } from "@/components/sections/forms/lead/LeadFlow";
 import { LeadFlowAside } from "@/components/sections/forms/lead/LeadFlowAside";
+import { tradeInBrandOptions, withEnumOptions } from "@/components/sections/forms/lead/enumOptions";
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("/sell-your-device", (await getSellPage()).seo);
@@ -47,8 +48,8 @@ export default async function SellYourDevicePage() {
         <div className="grid gap-12 lg:grid-cols-[8fr_4fr] [&>*]:min-w-0">
           <LeadFlow
             kind="tradein"
-            copy={lead.flow}
-            brandOptions={accepted.map((b) => ({ key: b.shortName, label: b.shortName }))}
+            copy={withEnumOptions("tradein", lead.flow)}
+            brandOptions={tradeInBrandOptions(accepted)}
             phoneDisplay={business.phone}
             testId="trade-in-form"
           />

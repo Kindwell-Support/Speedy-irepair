@@ -418,7 +418,7 @@ export interface LeadFlowCopy {
   /** Model lists keyed by device/brand key. Empty = free-text model input (CMS contract 2.4). */
   models: Record<string, string[]>;
   stepCounter: string;
-  model: { searchLabel: string; inputLabel: string; placeholder: string; notSureLabel: string; help: string };
+  model: { searchLabel: string; inputLabel: string; placeholder: string; notSureLabel: string; help: string; error: string };
   contact: {
     nameLabel: string;
     phoneLabel: string;

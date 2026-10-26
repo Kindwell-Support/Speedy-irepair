@@ -3,7 +3,7 @@
 import { useState, type FormEvent, type ReactNode } from "react";
 import { MultiStepForm, useMultiStep } from "@/components/motion/MultiStepForm";
 import { buttonClasses } from "@/components/ui/ButtonLink";
-import { formSchemas, type QuoteInput, type TradeInInput } from "@/lib/forms/schemas";
+import type { QuoteInput, TradeInInput } from "@/lib/forms/schemas";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import type { LeadFlowCopy, LeadOption } from "@/lib/sanity/types";
 import { cn } from "@/lib/utils/cn";
@@ -78,10 +78,8 @@ export function LeadFlow({
 
   const validate = (id: string): string | null => {
     if (id === "contact") return null;
-    if (id === "model") {
-      const r = formSchemas[kind].shape.model.safeParse(answers.model);
-      return r.success ? null : (r.error.issues[0]?.message ?? copy.chooseError);
-    }
+    // zod is lazy-loaded (useFormSubmit); per-step checks are presence checks, full schema runs on submit.
+    if (id === "model") return answers.model.trim() ? null : copy.model.error;
     return answers[id as keyof Answers] ? null : copy.chooseError;
   };
 

@@ -84,6 +84,7 @@ export const quoteFlow: LeadFlowPageCopy = {
       inputLabel: "Model",
       placeholder: "e.g. iPhone 13",
       notSureLabel: "Not sure / Other",
+      error: "Please enter your model",
       help: 'Not sure? Choose "Not sure / Other" and we will figure it out together.',
     },
     buttons: {
@@ -189,6 +190,7 @@ export const tradeInFlow: LeadFlowPageCopy = {
       inputLabel: "Model",
       placeholder: "e.g. Galaxy S22",
       notSureLabel: "Not sure / Other",
+      error: "Please enter your model",
       help: 'Not sure? Choose "Not sure / Other".',
     },
     buttons: {
