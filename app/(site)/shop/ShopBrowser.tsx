@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { CategoryKey, Product } from "@/lib/shop/types";
 import type { ShopChromeCopy } from "@/lib/sanity/types";
 import { ShopGrid } from "@/components/motion/ShopGrid";
-import { ProductCard } from "@/components/sections/shared/ProductCard";
+import { ProductCard, type ProductCardLabels } from "@/components/sections/shared/ProductCard";
 import { CategoryTiles } from "@/components/sections/shop/CategoryTiles";
 import { ShopEmpty } from "@/components/sections/shop/ShopEmpty";
 import { A11Y, type A11yProps } from "@/components/ui/a11yStrings";
@@ -28,6 +28,7 @@ export function ShopBrowser({
   phone,
   copy,
   a11y = A11Y,
+  cardLabels,
 }: {
   products: Product[];
   categories: { key: CategoryKey; label: string }[];
@@ -36,6 +37,7 @@ export function ShopBrowser({
   copy: ShopChromeCopy;
   /** getA11yCopy() from the route; constants are the fallback. */
   a11y?: A11yProps;
+  cardLabels: ProductCardLabels;
 }) {
   const [filter, setFilter] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>("featured");
@@ -48,7 +50,12 @@ export function ShopBrowser({
   }, [categories]);
 
   const sorted = useMemo(() => {
-    if (sort === "featured") return products;
+    // Decision (confirm with Design Lead): default "Featured" keeps Shopify order but puts sold-out items last.
+    if (sort === "featured")
+      return [
+        ...products.filter((p) => p.availableForSale),
+        ...products.filter((p) => !p.availableForSale),
+      ];
     const dir = sort === "priceAsc" ? 1 : -1;
     return [...products].sort((a, b) => {
       const pa = price(a);
@@ -98,7 +105,7 @@ export function ShopBrowser({
           categories={categories.map((c) => c.label)}
           getKey={(p) => p.id}
           getCategory={(p) => labelFor(p.category)}
-          renderItem={(p) => <ProductCard product={p} />}
+          renderItem={(p) => <ProductCard product={p} labels={cardLabels} />}
           allLabel={copy.allLabel}
           value={filter}
           onFilterChange={setFilter}

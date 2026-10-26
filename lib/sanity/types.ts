@@ -545,6 +545,16 @@ export interface PdpChromeCopy {
   addedLabel: string;
   soldOutLabel: string;
   viewCartLabel: string;
+  /** Additive (Frontend, batch 3): design buy box. Optional so a Sanity doc without them falls back to fixtures. */
+  inStockLabel?: string | null;
+  /** Product card / related card link label (design "View"). */
+  viewLabel?: string | null;
+  /** "Finance with Acima" button + note under it; href = siteSettings externalLinks.financing. */
+  acimaLabel?: string | null;
+  acimaNote?: string | null;
+  /** Design `.assure` rows. `store` shows siteSettings address; `returns` links to the return policy. */
+  assurances?: PdpAssurance[] | null;
+  related?: { eyebrow?: string | null; heading: string } | null;
   drawer: {
     title: string;
     closeLabel: string;
@@ -558,6 +568,15 @@ export interface PdpChromeCopy {
     decreaseLabel: string;
     increaseLabel: string;
   };
+}
+
+export type PdpAssuranceKey = "shipping" | "returns" | "store" | "payments";
+export interface PdpAssurance {
+  key: PdpAssuranceKey;
+  title: string;
+  body?: string | null;
+  linkLabel?: string | null;
+  linkHref?: string | null;
 }
 
 /** Screen-reader-only strings (components/ui/a11yStrings A11Y). CMS v1.5: uiCopy.a11y; getA11yCopy(). */

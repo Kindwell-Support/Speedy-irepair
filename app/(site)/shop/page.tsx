@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { getA11yCopy, getShopChrome, getShopPage, getSiteSettings } from "@/lib/sanity/content";
+import {
+  getA11yCopy,
+  getPdpChrome,
+  getShopChrome,
+  getShopPage,
+  getSiteSettings,
+} from "@/lib/sanity/content";
 import { getCatalog, SHOP_CATEGORIES } from "@/lib/shop";
 import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
@@ -19,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
 /** R03 — catalog via CatalogProvider (Shopify Storefront when configured, else the snapshot fixture). */
 export default async function ShopPage() {
   const catalog = getCatalog();
-  const [page, products, seo, settings, chrome, a11y] = await Promise.all([
+  const [page, products, seo, settings, chrome, a11y, pdp] = await Promise.all([
     getShopPage(),
     // Storefront outage => empty state (with eBay CTA), never a 500.
     catalog.listProducts({ first: 100 }).catch(() => []),
@@ -27,6 +33,7 @@ export default async function ShopPage() {
     getSiteSettings(),
     getShopChrome(),
     getA11yCopy(),
+    getPdpChrome(),
   ]);
   return (
     <>
@@ -47,6 +54,7 @@ export default async function ShopPage() {
           phone={settings.business.phone}
           copy={chrome}
           a11y={a11y}
+          cardLabels={{ view: pdp.viewLabel ?? "", soldOut: pdp.soldOutLabel }}
         />
       </div>
     </>

@@ -3,8 +3,10 @@ import Link from "next/link";
 import type { Product } from "@/lib/shop/types";
 import { formatPrice, PRICE_PLACEHOLDER } from "@/lib/utils/format";
 
-/** Shop product card: image, name, price (from Shopify / snapshot only), View CTA. */
-export function ProductCard({ product }: { product: Product }) {
+export type ProductCardLabels = { view: string; soldOut: string };
+
+/** Shop product card: image, name, price (from Shopify / snapshot only), View / Sold out label (CMS). */
+export function ProductCard({ product, labels }: { product: Product; labels: ProductCardLabels }) {
   const img = product.featuredImage;
   const { min, max } = product.priceRange;
   const price =
@@ -32,13 +34,16 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
       <div className="flex flex-1 flex-col gap-2 p-5">
         <h3 className="text-h6">
-          <Link href={`/shop/${product.handle}`} className="after:absolute after:inset-0">
+          <Link
+            href={`/shop/${product.handle}`}
+            className="after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:after:shadow-focus"
+          >
             {product.title}
           </Link>
         </h3>
         <p className="text-body-sm text-text-secondary">{price}</p>
         <span className="mt-auto text-body-sm font-semibold text-primary-text">
-          {product.availableForSale ? "View" : "Sold out"}
+          {product.availableForSale ? labels.view : labels.soldOut}
         </span>
       </div>
     </article>
