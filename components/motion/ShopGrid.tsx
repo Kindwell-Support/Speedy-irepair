@@ -24,6 +24,13 @@ type Props<T> = {
   tabClassName?: string;
   gridClassName?: string;
   onFilterChange?: (category: string | null) => void;
+  /** Additive (Frontend): controlled filter (e.g. from category tiles / ?category=). Omit for internal state. */
+  value?: string | null;
+  /** Additive (Frontend): rendered instead of the grid when the current filter has no items. */
+  emptyState?: ReactNode;
+  /** Additive (Frontend): extra controls rendered next to the tabs (e.g. sort select). */
+  toolbarEnd?: ReactNode;
+  barClassName?: string;
 };
 
 export function ShopGrid<T>({
@@ -38,48 +45,65 @@ export function ShopGrid<T>({
   tabClassName,
   gridClassName,
   onFilterChange,
+  value,
+  emptyState,
+  toolbarEnd,
+  barClassName,
 }: Props<T>) {
   const reduced = useReducedMotion();
-  const [filter, setFilter] = useState<string | null>(null);
-  const visible = useMemo(() => (filter ? items.filter((i) => getCategory(i) === filter) : items), [items, filter, getCategory]);
+  const [internal, setFilter] = useState<string | null>(null);
+  const filter = value !== undefined ? value : internal;
+  const visible = useMemo(
+    () => (filter ? items.filter((i) => getCategory(i) === filter) : items),
+    [items, filter, getCategory],
+  );
   const t = reduced ? { duration: 0 } : { duration: 0.3, ease: FM_EASE.inOut };
   const tabs: (string | null)[] = [null, ...categories];
 
   return (
     <div className={className} data-shop-grid>
-      <LayoutGroup id="shop-tabs">
-        <div role="toolbar" aria-label="Filter products by category" className={tabsClassName}>
-          {tabs.map((c) => {
-            const active = filter === c;
-            return (
-              <button
-                key={c ?? "all"}
-                type="button"
-                aria-pressed={active}
-                className={cn("relative", tabClassName)}
-                onClick={() => {
-                  setFilter(c);
-                  onFilterChange?.(c);
-                }}
-              >
-                {c ?? allLabel}
-                {active && (
-                  <m.span
-                    layoutId="shop-tab-underline"
-                    transition={t}
-                    aria-hidden
-                    className="absolute inset-x-0 bottom-[-2px] h-[2px] bg-brand"
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </LayoutGroup>
+      <div className={barClassName}>
+        <LayoutGroup id="shop-tabs">
+          <div role="toolbar" aria-label="Filter products by category" className={tabsClassName}>
+            {tabs.map((c) => {
+              const active = filter === c;
+              return (
+                <button
+                  key={c ?? "all"}
+                  type="button"
+                  aria-pressed={active}
+                  className={cn("relative", tabClassName)}
+                  onClick={() => {
+                    setFilter(c);
+                    onFilterChange?.(c);
+                  }}
+                >
+                  {c ?? allLabel}
+                  {active && (
+                    <m.span
+                      layoutId="shop-tab-underline"
+                      transition={t}
+                      aria-hidden
+                      className="absolute inset-x-0 bottom-[-2px] h-[2px] bg-brand"
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </LayoutGroup>
+        {toolbarEnd}
+      </div>
       <p aria-live="polite" className="sr-only">
         {visible.length} products shown
       </p>
-      <m.ul layout className={gridClassName} transition={t}>
+      {visible.length === 0 && emptyState ? emptyState : null}
+      <m.ul
+        layout
+        className={gridClassName}
+        transition={t}
+        hidden={visible.length === 0 && !!emptyState}
+      >
         <AnimatePresence mode="popLayout" initial={false}>
           {visible.map((item) => (
             <m.li

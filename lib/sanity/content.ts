@@ -15,6 +15,7 @@ import type {
   FooterCopy,
   HeroChip,
   ServicesChromeCopy,
+  ShopChromeCopy,
   FaqCategory,
   FaqPage,
   FinancingPage,
@@ -207,6 +208,8 @@ export const getHomeInternetPage = singleton<HomeInternetPage>("homeInternetPage
 export const getHeroChips = cache(async (): Promise<HeroChip[]> => fx.heroChips);
 /** /services index + CTA band (fixture-backed; additive, Frontend). */
 export const getServicesChrome = cache(async (): Promise<ServicesChromeCopy> => fx.servicesChrome);
+/** /shop chrome (fixture-backed; additive, Frontend). */
+export const getShopChrome = cache(async (): Promise<ShopChromeCopy> => fx.shopChrome);
 /** Footer chrome labels (fixture-backed; additive, Frontend). */
 export const getFooterCopy = cache(async (): Promise<FooterCopy> => fx.footerCopy);
 /** PolicyLayout chrome (fixture-backed; additive, Frontend). */

@@ -510,3 +510,16 @@ export interface ServicesChromeCopy {
   chipsAriaLabel: string;
   ctaSection: SectionCopy & { ctas: CtaLink[] };
 }
+
+/** Frontend: /shop chrome (category tiles, toolbar, empty frames). Fixture-backed until CMS fields exist. */
+export interface ShopChromeCopy {
+  categoriesHeading: string;
+  productsHeading: string;
+  filterAriaLabel: string;
+  allLabel: string;
+  sortLabel: string;
+  sortOptions: { featured: string; priceAsc: string; priceDesc: string };
+  loadingLabel: string;
+  emptyCategory: { title: string; body: string; callLabel: string; showAllLabel: string };
+  emptyCatalog: { title: string; body: string; ebayLabel: string };
+}

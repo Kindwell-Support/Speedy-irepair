@@ -8,3 +8,4 @@ export * from "./policyChrome";
 export * from "./footer";
 export * from "./heroChips";
 export * from "./servicesChrome";
+export * from "./shopChrome";
