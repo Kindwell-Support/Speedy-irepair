@@ -103,3 +103,18 @@ Legend:
 2. **Localhost with no throttling.** LCP is in tens to hundreds of ms because there is no network. Use the relative ordering (poster is LCP, no CLS, nothing heavy pre-DCL), not the absolute values. Field LCP must come from CrUX/RUM after staging.
 3. **INP proxy** comes from synthetic interactions, so it is not field INP.
 4. **Bundle figures** are from `feature/foundation` at the time of the run. Other lanes (CMS, FE forms, SEO JSON-LD) keep changing first load. Re-run `scripts/motion-perf.mjs` after merges.
+
+## Follow-ups re-run (2026-10-27, `motion/followups` on `feature/foundation`)
+These are isolated production builds (`NEXT_PUBLIC_SITE_ENV=production`, `next build` + `next start`). **Before** = e774b82 (perf/first-load-js merged). **After** = e774b82 + this follow-up work. Raw data: `perf-results-followups-before.json` / `perf-results-followups.json`.
+
+| Route | Next table first load (before → after) | gz-9 sum (before → after) | CLS | heavy pre-DCL | 3D / Rive in first load |
+|---|---|---|---|---|---|
+| `/` | 144 kB → **144 kB** | 154.5 → 154.8 KB | 0 → 0 | none | no |
+| `/instant-quote` | 142 kB → **142 kB** | 150.1 → 150.4 KB | 0 → 0 | none | no |
+
+- The +0.3 KB gz is shared on both routes. It comes from the new tokens (`STEPS_MQ`, the step durations) and the direction-aware MultiStepForm variants.
+- `Drawer` and `CountUp` add nothing to any site route, because no site page imports them yet. `/motion-lab/drawer` is 134 kB.
+- The How It Works rewrite lives in the async engine chunk (`bindings.ts`).
+- TBT on `/`: 0–15 ms at every viewport.
+
+**How It Works pin.** ≥1280 pins (pin distance measured at 2.50 × vh). Below that it's a stack: 375 / 768 / 1024 / 1279 → `data-steps-mode="stack"`, no `.pin-spacer`. Each card reveal is a single `ScrollTrigger.batch`, with no pin-spacer reflow on mobile or tablet (cheaper than the old mobile card-stack pin). Screenshots: `docs/motion/screens/how-it-works-{375,768,1024,1279,1280,1440}-staging.png`, `-1440-step2-`, `-768-reduced-`, `-1440-reduced-`.

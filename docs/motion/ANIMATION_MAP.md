@@ -24,7 +24,7 @@ Token note: the Design tokens define `--duration-slow 480ms` and `--ease-out cub
 | 9 | Service card hover (/, /services) | hover / focus | Framer `HoverCard` (or CSS on FE cards) | Affordance | lift −4 px + glow, 0.2 s power2.out | Colour only |
 | 10 | Service icons (/, /services) | host hover / focus / click | `RiveIcon` (code-driven SVG; .riv later) | Delight, state feedback | Accent scale 1.12, y −1, 0.2 s. Click: spring pulse 700/18 | Static icon |
 | 11 | /services 14 sections | 85% in view | GSAP reveal (`data-reveal="children"`) | Calm long-page rhythm | 0.55 s, stagger 0.08 | Visible |
-| 12 | How It Works (/, /about) | scroll (pinned) | GSAP ScrollTrigger pin + scrub | Showpiece: 4 steps | ≥768: tiles tip over (rotX 14, y 4, α .55) and the active tile lifts (y −8). <768: card stack. Scrub 0.4, snap per step, bar scaleX | Plain list, all visible |
+| 12 | How It Works (/, /about) | scroll (pinned ≥1280) / enter (<1280) | GSAP ScrollTrigger pin + scrub (gsap.matchMedia on `STEPS_MQ`) | Showpiece: 4 steps | ≥1280 (`STEPS_PIN_MIN_PX`): pinned 250vh, scrub 0.3, snap per step. Domino tip (rotate −6° at bottom-left) then "done" α .6; active tile lifts (y −8); bar scaleX; click a tile to jump. <1280: no pin, per-card fade + 16px rise, 0.48s, stagger 60ms; static rail | Plain list, all visible |
 | 13 | Brand marquee (/) | always (in view) | React Bits LogoLoop | Social proof | 60 px/s, pauses on hover | Static wrapped list |
 | 14 | Brand logos | hover | Framer `BrandLogo` | Monochrome → brand colour | 0.2 s | Instant |
 | 15 | Why choose us (/) | hover / focus | Framer `ValueProps` (layoutId highlight) | Focus one value prop | 0.3 s power2.inOut | Highlight jumps |
@@ -44,3 +44,12 @@ Token note: the Design tokens define `--duration-slow 480ms` and `--ease-out cub
 3. **View Transitions API** for shop card → product page shared-element morph (Chrome only, progressive).
 4. **Rive mascot / status micro-scene** in the How It Works final step (needs a designer's .riv).
 5. **Footer map pin drop** (Framer spring, 0.4 s) on the location card.
+
+
+## Follow-ups (2026-10-27)
+
+| # | Element | Trigger | Lib | What | Motion | Reduced |
+|---|---|---|---|---|---|---|
+| D1 | Cart drawer (shop PDP, when the Frontend adds one) | Add to cart / open | Framer `m` (LazyMotion) | Drawer sheet | x 100%→0 0.25s power-out, scrim fade; out 0.2s | 120ms fade |
+| D2 | `$40` (/home-internet), `45` / `90` (home) | enter, once | rAF (`CountUp`) | Count-up | 0→value, 0.6s / 0.48s, ease-out, tabular-nums | Final value |
+| D3 | LeadFlow steps (/instant-quote, /sell-your-device) | Next / Back | Framer `m` (`MultiStepForm`) | Step change | out 24px + fade 160ms, in from the opposite side 240ms; bar scaleX 0.3s | Instant |

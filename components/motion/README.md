@@ -20,7 +20,41 @@ Rules:
 | `BrandMarquee` / `BrandLogo` | React Bits LogoLoop + monochrome → colour logo | `brands`, `speed`, `logoHeight`, `gap` | Static list |
 | `ValueProps` | Framer layoutId highlight list | `items`, class props | Highlight jumps |
 | `ShopGrid` | Layout + presence filter grid | `items`, `getKey`, `render`, filters | Instant |
-| `MultiStepForm` + `useMultiStep` | Step slider for lead-capture forms (no prices) | `steps`, `index`, `direction`, `label`, `footer` | Instant |
+| `MultiStepForm` + `useMultiStep` | Step slider for lead-capture forms (no prices). Out 24px/160ms, in from the opposite side 240ms, bar scaleX | `steps`, `index`, `direction`, `label`, `footer`, `header`, `progressTestId`, `titleClassName` | Instant |
+| `Drawer` | Right-side modal sheet (cart). Slide + scrim 0.25s power-out, focus trap, Escape, inert background, Lenis stop. Demo `/motion-lab/drawer` | `open`, `onClose`, `title`/`ariaLabel`, `footer`, `initialFocusRef`, `closeLabel`, `widthClassName`, `className`, `testId` (see HOOKS.md) | 120ms fade |
+| `CountUp` | Number counts 0→value once on enter (rAF, tabular-nums); SSR renders the final value | `value`, `from`, `duration`, `decimals`, `prefix`, `suffix`, `ariaLabel`, `threshold` | Final value |
 | `CursorFollower` | Desktop fine-pointer follower (red on targets) | n/a | Not rendered |
 | `framer-features.ts` | The domMax bundle for LazyMotion (async) | n/a | n/a |
 | `reactbits/` | Vendored React Bits (MIT, see LICENSE.md), used as-is apart from `motion.` → `m.` in DecryptedText | n/a | n/a |
+
+
+## Drawer: usage (for the Frontend cart drawer)
+`import { Drawer } from "@/components/motion/Drawer";`, file `components/motion/Drawer.tsx`. The full props table is in `docs/motion/HOOKS.md`; there's a live demo at `/motion-lab/drawer` (non-production builds).
+
+```tsx
+"use client";
+const [open, setOpen] = useState(false);
+const checkoutRef = useRef<HTMLButtonElement>(null);
+
+<button type="button" onClick={() => setOpen(true)}>Add to cart</button>
+<Drawer
+  open={open}
+  onClose={() => setOpen(false)}
+  title="Your cart"                 // visible <h2> = accessible name (or ariaLabel="…" with title omitted)
+  testId="cart-drawer"
+  initialFocusRef={checkoutRef}     // optional; defaults to the first focusable element
+  footer={<button ref={checkoutRef} type="button">Checkout</button>}
+  // closeLabel="Close" (null hides it) · widthClassName="w-full max-w-[420px]" · className="…" · id
+>
+  {/* line items: the body scrolls (data-lenis-prevent) */}
+</Drawer>
+```
+
+- The Drawer portals to `body` and sets `role="dialog"` + `aria-modal`. Escape and a scrim click both call `onClose`. Tab is trapped. Every other body child is `inert`. Focus returns to the opener. Lenis is stopped and the page scroll is locked.
+- Motion: slide from the right + scrim fade, 0.25s power-out; out is 0.2s. Reduced motion uses a 120ms fade.
+- The Frontend owns `open` state, the content and the styles inside the panel.
+
+## CountUp: usage
+`<CountUp value={40} prefix="$" />` (`/home-internet`) or `<CountUp value={45} duration={0.48} />` (home Why stats).
+- `WhyStat.tsx` receives `value` as a CMS string, e.g. "45". Parse it, and render `CountUp` only when it is purely numeric; otherwise keep the string.
+- SSR renders the final value.

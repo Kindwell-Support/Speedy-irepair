@@ -1,0 +1,436 @@
+{
+  "base": "http://localhost:3123",
+  "label": "staging",
+  "at": "2026-10-26T22:45:37.961Z",
+  "howItWorks": [
+    {
+      "w": 375,
+      "reduced": false,
+      "mode": "stack",
+      "pinnedSection": "false",
+      "pinnedInner": "false",
+      "pinSpacers": 0,
+      "qaReq026": false,
+      "stepOpacity": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "stepsInView": 3,
+      "screenshot": "docs/motion/screens/how-it-works-375-staging.png"
+    },
+    {
+      "w": 768,
+      "reduced": false,
+      "mode": "stack",
+      "pinnedSection": "false",
+      "pinnedInner": "false",
+      "pinSpacers": 0,
+      "qaReq026": false,
+      "stepOpacity": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "stepsInView": 4,
+      "screenshot": "docs/motion/screens/how-it-works-768-staging.png"
+    },
+    {
+      "w": 1024,
+      "reduced": false,
+      "mode": "stack",
+      "pinnedSection": "false",
+      "pinnedInner": "false",
+      "pinSpacers": 0,
+      "qaReq026": false,
+      "stepOpacity": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "stepsInView": 4,
+      "screenshot": "docs/motion/screens/how-it-works-1024-staging.png"
+    },
+    {
+      "w": 1279,
+      "reduced": false,
+      "mode": "stack",
+      "pinnedSection": "false",
+      "pinnedInner": "false",
+      "pinSpacers": 0,
+      "qaReq026": false,
+      "stepOpacity": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "stepsInView": 4,
+      "screenshot": "docs/motion/screens/how-it-works-1279-staging.png"
+    },
+    {
+      "w": 1280,
+      "reduced": false,
+      "mode": "pin",
+      "pinnedSection": "true",
+      "pinnedInner": "true",
+      "pinSpacers": 1,
+      "qaReq026": true,
+      "stepOpacity": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "stepsInView": 4,
+      "screenshot": "docs/motion/screens/how-it-works-1280-staging.png"
+    },
+    {
+      "w": 1440,
+      "reduced": false,
+      "mode": "pin",
+      "pinnedSection": "true",
+      "pinnedInner": "true",
+      "pinSpacers": 1,
+      "qaReq026": true,
+      "stepOpacity": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "stepsInView": 4,
+      "screenshot": "docs/motion/screens/how-it-works-1440-staging.png"
+    },
+    {
+      "w": 768,
+      "reduced": true,
+      "mode": null,
+      "pinnedSection": null,
+      "pinnedInner": null,
+      "pinSpacers": 0,
+      "qaReq026": false,
+      "stepOpacity": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "stepsInView": 4,
+      "screenshot": "docs/motion/screens/how-it-works-768-reduced-staging.png"
+    },
+    {
+      "w": 1440,
+      "reduced": true,
+      "mode": null,
+      "pinnedSection": null,
+      "pinnedInner": null,
+      "pinSpacers": 0,
+      "qaReq026": false,
+      "stepOpacity": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "stepsInView": 4,
+      "screenshot": "docs/motion/screens/how-it-works-1440-reduced-staging.png"
+    }
+  ],
+  "howItWorksPinProgress": {
+    "pinDistanceVh": 2.5,
+    "res": [
+      {
+        "f": 0,
+        "active": 0,
+        "bar": "matrix(0, 0, 0, 1, 0, 0)"
+      },
+      {
+        "f": 0.3333333333333333,
+        "active": 1,
+        "bar": "matrix(0.3333, 0, 0, 1, 0, 0)"
+      },
+      {
+        "f": 0.6666666666666666,
+        "active": 2,
+        "bar": "matrix(0.6667, 0, 0, 1, 0, 0)"
+      },
+      {
+        "f": 1,
+        "active": 3,
+        "bar": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    ]
+  },
+  "qaGlobal": {
+    "present": true,
+    "keys": [
+      "lenis",
+      "gsap",
+      "ScrollTrigger"
+    ],
+    "htmlLenis": true
+  },
+  "homeHooks": {
+    "sections": {
+      "banner": 1,
+      "hero": 1,
+      "services": 1,
+      "how-it-works": 1,
+      "brands": 1,
+      "why-choose-us": 1,
+      "testimonials": 1,
+      "promotions": 1,
+      "faq": 1,
+      "location": 1,
+      "newsletter": 1,
+      "footer": 1
+    },
+    "testids": {
+      "announcement-banner": 1,
+      "logo": 1,
+      "nav-toggle": 1,
+      "hero": 1,
+      "hero-poster": 1,
+      "service-card": 8,
+      "how-it-works": 1,
+      "brands-marquee": 1,
+      "testimonials": 1,
+      "testimonial": 0,
+      "testimonial-placeholder": 3,
+      "star-rating": 0,
+      "promotions": 1,
+      "map-embed": 1,
+      "newsletter-form": 1
+    },
+    "heroPosterInHero": true,
+    "skipLink": true,
+    "main": true,
+    "faqButtons": [
+      [
+        true,
+        true
+      ],
+      [
+        true,
+        true
+      ],
+      [
+        true,
+        true
+      ]
+    ],
+    "cursorFollower": 1
+  },
+  "logoLoop": {
+    "found": true,
+    "styleAttr": "--logoloop-pad: 0px;",
+    "mask": "linear-gradient(to right, rgba(0, 0, 0, ",
+    "gap": "64px",
+    "moving": true
+  },
+  "hooks/instant-quote": {
+    "quote-form": 1,
+    "form-progress": 1,
+    "form-option": 6
+  },
+  "hooks/sell-your-device": {
+    "trade-in-form": 1,
+    "form-progress": 1,
+    "form-option": 5
+  },
+  "hooks/home-internet": {},
+  "hooks/shop": {
+    "product-card": 9
+  },
+  "logoLoopReduced": {
+    "loop": false,
+    "staticRow": true
+  },
+  "multiStep": {
+    "optionFound": true,
+    "before": "device",
+    "after": "model",
+    "s": [
+      {
+        "t": 0,
+        "n": [
+          "device:none:1.00"
+        ]
+      },
+      {
+        "t": 57,
+        "n": [
+          "device:matrix(1, 0, 0, 1, -0.133742, 0):0.99"
+        ]
+      },
+      {
+        "t": 121,
+        "n": [
+          "device:matrix(1, 0, 0, 1, -10.5596, 0):0.56"
+        ]
+      },
+      {
+        "t": 187,
+        "n": [
+          "device:matrix(1, 0, 0, 1, -23.1914, 0):0.03"
+        ]
+      },
+      {
+        "t": 256,
+        "n": [
+          "model:matrix(1, 0, 0, 1, 16.1842, 0):0.33"
+        ]
+      },
+      {
+        "t": 321,
+        "n": [
+          "model:matrix(1, 0, 0, 1, 4.97081, 0):0.79"
+        ]
+      },
+      {
+        "t": 387,
+        "n": [
+          "model:matrix(1, 0, 0, 1, 1.0417, 0):0.96"
+        ]
+      },
+      {
+        "t": 454,
+        "n": [
+          "model:matrix(1, 0, 0, 1, 0.0172217, 0):1.00"
+        ]
+      },
+      {
+        "t": 521,
+        "n": [
+          "model:none:1.00"
+        ]
+      },
+      {
+        "t": 587,
+        "n": [
+          "model:none:1.00"
+        ]
+      }
+    ],
+    "dir": "forward",
+    "bar": "matrix(0.5, 0, 0, 1, 0, 0)"
+  },
+  "multiStepReduced": {
+    "optionFound": true,
+    "before": "device",
+    "after": "model",
+    "s": [
+      {
+        "t": 0,
+        "n": [
+          "device:none:1.00"
+        ]
+      },
+      {
+        "t": 51,
+        "n": [
+          "model:none:1.00"
+        ]
+      },
+      {
+        "t": 117,
+        "n": [
+          "model:none:1.00"
+        ]
+      },
+      {
+        "t": 184,
+        "n": [
+          "model:none:1.00"
+        ]
+      },
+      {
+        "t": 250,
+        "n": [
+          "model:none:1.00"
+        ]
+      },
+      {
+        "t": 317,
+        "n": [
+          "model:none:1.00"
+        ]
+      },
+      {
+        "t": 384,
+        "n": [
+          "model:none:1.00"
+        ]
+      },
+      {
+        "t": 450,
+        "n": [
+          "model:none:1.00"
+        ]
+      },
+      {
+        "t": 517,
+        "n": [
+          "model:none:1.00"
+        ]
+      },
+      {
+        "t": 584,
+        "n": [
+          "model:none:1.00"
+        ]
+      }
+    ],
+    "dir": "forward",
+    "bar": "matrix(0.5, 0, 0, 1, 0, 0)"
+  },
+  "drawer": {
+    "status": 200,
+    "open": {
+      "ariaModal": "true",
+      "name": "Your cart",
+      "focusInside": true,
+      "focused": "Checkout",
+      "inertOthers": true,
+      "htmlLock": true,
+      "panelTransform": "none"
+    },
+    "trapAfter5Tabs": true,
+    "afterEscape": {
+      "dialog": false,
+      "focusReturned": "Add to cart",
+      "inertCleared": true
+    }
+  },
+  "countUp": {
+    "ssrFinal": true,
+    "samples": {
+      "pre": "0:idle",
+      "s": [
+        "0:0:idle",
+        "80:12:running",
+        "160:23:running",
+        "240:29:running",
+        "320:35:running",
+        "401:38:running",
+        "481:40:running",
+        "561:40:running",
+        "641:40:done",
+        "721:40:done",
+        "802:40:done",
+        "882:40:done",
+        "962:40:done"
+      ],
+      "sr": "$40"
+    }
+  },
+  "drawerReduced": {
+    "transform": "none",
+    "opacity": "0.710465"
+  },
+  "countUpReduced": "40"
+}

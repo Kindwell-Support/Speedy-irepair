@@ -49,5 +49,5 @@ gsap.ticker.lagSmoothing(0);                         // a long frame never makes
 | Stagger batch | `top 88%` | once, stagger 0.08 |
 | Split heading | `top 85%` | once, or on load in the hero |
 | Parallax | `top bottom` → `bottom top` | scrub: true |
-| How It Works ≥768 | pin the tile row from `top 30%` (clear of the sticky header), end `+=(n-1)×0.6×vh` | scrub 0.4, snap 1/(n-1), `invalidateOnRefresh` |
-| How It Works <768 | pin from `top top+=64`, end `+=(n-1)×0.55×vh` | Card stack, same snap |
+| How It Works ≥1280 (`STEPS_MQ.pin`) | pin the tile row from `top 30%` (clear of the sticky header), end `+=STEPS_PIN_VH×vh` (2.5 × vh) | scrub 0.3, snap 1/(n-1), `invalidateOnRefresh`; a tile click goes through `lenis.scrollTo` (`getLenis()`) |
+| How It Works <1280 (`STEPS_MQ.stack`) | **no pin**; `ScrollTrigger.batch` `top 88%`, once | Per-card fade + 16px rise, stagger 60ms |
