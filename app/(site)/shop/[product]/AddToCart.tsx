@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import type { Cart } from "@/lib/shop/types";
 import type { PdpChromeCopy } from "@/lib/sanity/types";
 import { addToCart, goToCheckout, updateCartLine } from "@/lib/shop/actions";
@@ -39,6 +39,8 @@ export function AddToCart({
   const [added, setAdded] = useState(false);
   const [drawer, setDrawer] = useState<"unmounted" | "open" | "closed">("unmounted");
   const [pending, start] = useTransition();
+  // The add button is disabled while pending, so the dialog's native focus return lands on <body>; restore it here.
+  const addRef = useRef<HTMLButtonElement>(null);
   const selected = variants.find((v) => v.id === variantId);
   const soldOut = !selected?.available;
 
@@ -66,6 +68,7 @@ export function AddToCart({
       ) : null}
       <div className="flex flex-wrap gap-4">
         <button
+          ref={addRef}
           type="button"
           data-testid="add-to-cart"
           aria-busy={pending || undefined}
@@ -101,7 +104,10 @@ export function AddToCart({
       {drawer !== "unmounted" ? (
         <CartDrawer
           open={drawer === "open"}
-          onClose={() => setDrawer("closed")}
+          onClose={() => {
+            setDrawer("closed");
+            requestAnimationFrame(() => addRef.current?.focus());
+          }}
           cart={cart}
           notice={notice}
           copy={copy.drawer}
