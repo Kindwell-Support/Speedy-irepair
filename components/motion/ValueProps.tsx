@@ -12,7 +12,14 @@ import { useReducedMotion } from "@/lib/motion/reduced-motion";
 import { FM_EASE } from "@/lib/motion/tokens";
 import { cn } from "@/lib/utils/cn";
 
-export type ValueProp = { id: string; title: string; detail?: string; icon?: ReactNode };
+export type ValueProp = {
+  id: string;
+  title: string;
+  detail?: string;
+  icon?: ReactNode;
+  /** Optional block above the title row (design `.why__num` stat). Additive (Frontend). */
+  lead?: ReactNode;
+};
 
 type Props = { items: ValueProp[]; className?: string; itemClassName?: string };
 
@@ -44,6 +51,7 @@ export function ValueProps({ items, className, itemClassName }: Props) {
                   className="absolute inset-0 -z-10 rounded-[inherit] bg-primary-tint shadow-[inset_0_0_0_1px_var(--color-primary-glow)]"
                 />
               )}
+              {item.lead}
               <m.div layout="position" transition={t} className="flex items-center gap-3">
                 {item.icon}
                 <strong>{item.title}</strong>
