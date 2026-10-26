@@ -159,7 +159,7 @@ export const quoteConfig = defineType({
       title: 'Trade-in: models per brand',
       type: 'array',
       description: 'Optional. Brands without a list get a free-text model field (design R05).',
-      of: [defineArrayMember({type: 'object', name: 'brandModels', fields: [defineField({name: 'brand', type: 'string', validation: (r) => r.required()}), defineField({name: 'models', type: 'array', of: [defineArrayMember({type: 'string'})]})]})],
+      of: [defineArrayMember({type: 'object', name: 'brandModels', fields: [defineField({name: 'brand', type: 'string', description: 'Must equal a trade-in brand value (lib/forms/schemas.ts).', options: {list: ['Apple', 'Samsung', 'LG', 'Google', 'Motorola', 'OnePlus', 'Other']}, validation: (r) => r.required()}), defineField({name: 'models', type: 'array', of: [defineArrayMember({type: 'string'})], description: 'Shown as a searchable list on the Model step. Empty = free-text input.'})]})],
     }),
     defineField({name: 'consentLabel', title: 'Form consent checkbox label', type: 'string', description: 'Optional (design LeadFlow). Needs client approval before it is shown.'}),
     defineField({name: 'showPrices', type: 'boolean', initialValue: false, readOnly: true, description: 'Locked off: no public pricing (decision 5).'}),
@@ -179,6 +179,8 @@ export const uiCopy = defineType({
     {name: 'embeds', title: 'Embeds', default: true},
     {name: 'footer', title: 'Footer'},
     {name: 'policies', title: 'Policy pages'},
+    {name: 'shop', title: 'Product page & cart'},
+    {name: 'a11y', title: 'Screen-reader text'},
   ],
   fields: [
     defineField({name: 'embeds', type: 'object', group: 'embeds', fields: [
@@ -192,6 +194,17 @@ export const uiCopy = defineType({
     ]}),
     defineField({name: 'policyChrome', title: 'Policy page labels', type: 'object', group: 'policies', description: 'Per-policy sub-lines live on each Policy page (subline).', fields: [
       lbl('tocLabel'), lbl('introLabel'), lbl('lastUpdatedLabel'), lbl('sourceLabel'), lbl('otherPoliciesLabel'), lbl('reviewLabel', 'Pending-review note'),
+    ]}),
+    defineField({name: 'productPage', title: 'Product page buy box', type: 'object', group: 'shop', fields: [
+      lbl('optionLabel'), lbl('addLabel', 'Add to cart'), lbl('addingLabel', 'Adding (busy)'), lbl('addedLabel', 'Added'), lbl('soldOutLabel'), lbl('viewCartLabel'),
+    ]}),
+    defineField({name: 'cartDrawer', title: 'Cart drawer', type: 'object', group: 'shop', fields: [
+      lbl('title'), lbl('closeLabel'), lbl('emptyTitle'), lbl('emptyBody'), lbl('subtotalLabel'), lbl('checkoutNote'), lbl('checkoutLabel'), lbl('continueLabel'),
+      lbl('quantityLabel'), lbl('decreaseLabel'), lbl('increaseLabel'),
+    ]}),
+    defineField({name: 'a11y', title: 'Screen-reader-only text', type: 'object', group: 'a11y', description: 'Not visible on screen; read by screen readers.', fields: [
+      lbl('loading', 'Loading'),
+      defineField({name: 'opensInNewTab', title: 'Opens in a new tab', type: 'string', description: 'Appended to external links, e.g. "(opens in a new tab)". A leading space is added automatically.'}),
     ]}),
   ],
   preview: {prepare: () => ({title: 'Site labels'})},

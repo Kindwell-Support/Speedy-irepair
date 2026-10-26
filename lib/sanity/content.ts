@@ -17,6 +17,7 @@ import type {
   ServicesChromeCopy,
   ShopChromeCopy,
   PdpChromeCopy,
+  A11yCopy,
   FaqCategory,
   FaqPage,
   FinancingPage,
@@ -43,6 +44,7 @@ import type {
   Weekday,
 } from "./types";
 import { isProductionSite } from "@/lib/env";
+import { a11yCopy } from "./fixtures/a11y";
 
 /**
  * CONTENT DATA-ACCESS LAYER. The only module pages/sections may use to read editorial content.
@@ -164,11 +166,21 @@ export const getValueProps = cache(
 
 const STEP_PAGE: Partial<Record<StepSet, string>> = { home: "homePage", sell: "sellYourDevicePage", financing: "financingPage" };
 
+/** v1.5: "{streetAddress}" in step copy = siteSettings address street + suite (one editable suite field). */
+const STREET_TOKEN = "{streetAddress}";
+async function resolveAddressTokens(steps: HowItWorksStep[]): Promise<HowItWorksStep[]> {
+  if (!steps.some((s) => s.body?.includes(STREET_TOKEN) || s.title.includes(STREET_TOKEN))) return steps;
+  const { street, suite } = (await getSiteSettings()).business.address;
+  const line = [street, suite].map((x) => (x ?? "").trim()).filter(Boolean).join(" ");
+  const sub = (t: string) => t.split(STREET_TOKEN).join(line);
+  return steps.map((s) => ({ ...s, title: sub(s.title), ...(s.body ? { body: sub(s.body) } : {}) }));
+}
+
 export const getHowItWorksSteps = cache(async (set: StepSet): Promise<HowItWorksStep[]> => {
   const fallback = fx.howItWorksSteps.filter((s) => s.set === set).sort(byOrder);
   const pageId = STEP_PAGE[set];
-  if (!pageId) return fallback;
-  return indexOrder(await fromSanity(q.howItWorksStepsQuery, { pageId, set }, [pageId], fallback));
+  if (!pageId) return resolveAddressTokens(fallback);
+  return resolveAddressTokens(indexOrder(await fromSanity(q.howItWorksStepsQuery, { pageId, set }, [pageId], fallback)));
 });
 
 export const getPromotions = cache(
@@ -200,6 +212,12 @@ export const getServicesPage = singleton<ServicesPage>("servicesPage", fx.servic
 export const getShopPage = singleton<ShopPage>("shopPage", fx.shopPage);
 export const getSellPage = singleton<SellPage>("sellYourDevicePage", fx.sellPage);
 export const getQuotePage = singleton<QuotePage>("instantQuotePage", fx.quotePage);
+/** v1.5: flow.modelLists [{k, models}] (quoteConfig) → flow.models Record; none → the fixture's models. */
+function withModels(copy: LeadFlowPageCopy): LeadFlowPageCopy {
+  const { modelLists, ...flow } = copy.flow as LeadFlowPageCopy["flow"] & { modelLists?: { k?: string; models?: string[] }[] };
+  const lists = (modelLists ?? []).filter((m): m is { k: string; models: string[] } => !!m.k && !!m.models?.length);
+  return { ...copy, flow: { ...flow, models: lists.length ? Object.fromEntries(lists.map((m) => [m.k, m.models])) : flow.models } };
+}
 /** Lead-flow copy (steps, options, states). CMS v1.4: <page>.leadFlow + quoteConfig options; fixture back-fill. */
 export const getLeadFlow = cache(
   (kind: "quote" | "tradein"): Promise<LeadFlowPageCopy> =>
@@ -208,7 +226,9 @@ export const getLeadFlow = cache(
       { pageId: kind === "quote" ? "instantQuotePage" : "sellYourDevicePage", kind },
       [kind === "quote" ? q.TAGS.instantQuotePage : q.TAGS.sellYourDevicePage, q.TAGS.quoteConfig],
       kind === "quote" ? fx.quoteFlow : fx.tradeInFlow,
-    ).then(dropNulls),
+    )
+      .then(dropNulls)
+      .then(withModels),
 );
 /** Embed frame copy. CMS v1.4: uiCopy.embeds.<kind>; fixture back-fill. */
 export const getEmbedCopy = cache(
@@ -218,7 +238,17 @@ export const getEmbedCopy = cache(
 export const getSchedulePage = singleton<SchedulePage>("scheduleRepairPage", fx.schedulePage);
 export const getFaqPage = singleton<FaqPage>("faqPage", fx.faqPage);
 export const getAboutPage = singleton<AboutPage>("aboutPage", fx.aboutPage);
-export const getFinancingPage = singleton<FinancingPage>("financingPage", fx.financingPage);
+const getFinancingRaw = singleton<FinancingPage>("financingPage", fx.financingPage);
+/** v1.5: financeItems[].description arrive as itemBodyList [{title, description}] → itemBodies Record (Frontend shape). */
+export const getFinancingPage = cache(async (): Promise<FinancingPage> => {
+  const page = await getFinancingRaw();
+  const { itemBodyList, ...finance } = page.whatYouCanFinanceSection as FinancingPage["whatYouCanFinanceSection"] & {
+    itemBodyList?: { title?: string | null; description?: string | null }[] | null;
+  };
+  const list = (itemBodyList ?? []).filter((x): x is { title: string; description: string } => !!x?.title && !!x?.description);
+  const itemBodies = list.length ? Object.fromEntries(list.map((x) => [x.title, x.description])) : finance.itemBodies;
+  return dropNulls({ ...page, whatYouCanFinanceSection: { ...finance, itemBodies } });
+});
 export const getHomeInternetPage = singleton<HomeInternetPage>("homeInternetPage", fx.homeInternetPage);
 
 /** Homepage hero trust chips. CMS v1.4: homePage.heroChips (empty → fixture). */
@@ -235,7 +265,14 @@ export const getShopChrome = cache(
   (): Promise<ShopChromeCopy> => fromSanity(q.shopChromeQuery, {}, [q.TAGS.shopPage], fx.shopChrome).then(dropNulls),
 );
 /** /shop/[product] buy box + cart drawer (fixture-backed; additive, Frontend). */
-export const getPdpChrome = cache(async (): Promise<PdpChromeCopy> => fx.pdpChrome);
+export const getPdpChrome = cache(
+  (): Promise<PdpChromeCopy> => fromSanity(q.pdpChromeQuery, {}, [q.TAGS.uiCopy], fx.pdpChrome).then(dropNulls),
+);
+/** Screen-reader-only strings. CMS v1.5: uiCopy.a11y; fallback = fixtures/a11y (mirrors components/ui/a11yStrings A11Y). opensInNewTab always starts with one space. */
+export const getA11yCopy = cache(async (): Promise<A11yCopy> => {
+  const c = dropNulls(await fromSanity<A11yCopy>(q.a11yCopyQuery, {}, [q.TAGS.uiCopy], a11yCopy));
+  return { loading: c.loading, opensInNewTab: ` ${c.opensInNewTab.trim()}` };
+});
 /** Footer chrome labels. CMS v1.4: uiCopy.footer. */
 export const getFooterCopy = cache(
   (): Promise<FooterCopy> => fromSanity(q.footerCopyQuery, {}, [q.TAGS.uiCopy], fx.footerCopy).then(dropNulls),

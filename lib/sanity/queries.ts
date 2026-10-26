@@ -156,10 +156,15 @@ export const pageSingletonQuery = defineQuery(`*[_id == $type][0]{
   "aboutSection": whoWeAreHeading{ eyebrow, heading, "intro": subheading, "body": ^.aboutBusiness, "isPlaceholder": coalesce(^.aboutIsPlaceholder, false) },
   "storySection": storyHeading{ eyebrow, heading, "intro": subheading, "body": ^.story, "isPlaceholder": coalesce(^.storyIsPlaceholder, false) },
   "valuesSection": valuesHeading{ eyebrow, heading, "intro": subheading, "items": ^.values[]{ title, "body": description } },
+  // v1.5 pre-footer CTA band (about, financing): ctaHeading + the page's ctas[].
+  "ctaSection": ctaHeading{ eyebrow, heading, "intro": subheading, "ctas": ^.ctas[]${cta} },
   "teamSection": teamHeading${heading},
   "contactSection": contactHeading${heading},
-  "whatIsSection": whatIsAcimaHeading{ eyebrow, heading, "intro": subheading, "body": ^.whatIsAcima },
-  "whatYouCanFinanceSection": whatYouCanFinanceHeading{ eyebrow, heading, "intro": subheading, "items": ^.whatYouCanFinance },
+  "whatIsSection": whatIsAcimaHeading{ eyebrow, heading, "intro": subheading, "body": ^.whatIsAcima, "highlights": ^.whatIsAcimaHighlights, "visualLabel": ^.acimaVisualLabel },
+  // v1.5: financeItems[{title, description}] wins over the deprecated whatYouCanFinance[]; itemBodyList → itemBodies (Record) in content.ts.
+  "whatYouCanFinanceSection": whatYouCanFinanceHeading{ eyebrow, heading, "intro": subheading,
+    "items": select(count(^.financeItems) > 0 => ^.financeItems[].title, ^.whatYouCanFinance),
+    "itemBodyList": ^.financeItems[defined(description)]{ title, description } },
   "whatYouGetSection": whatYouGetHeading{ eyebrow, heading, "intro": subheading, "items": ^.whatYouGet },
   "whoItsForSection": whoItsForHeading{ eyebrow, heading, "intro": coalesce(subheading, ^.whoItsFor) },
   "howToSignUpSection": howToSignUpHeading{ eyebrow, heading, "intro": coalesce(subheading, ^.howToSignUp) },
@@ -211,6 +216,11 @@ export const leadFlowQuery = defineQuery(`*[_id == $pageId][0]{
     "success": success{ title, body, "ctas": ctas[]${cta} },
     submitError{ title, body },
     stagingNote,
+    // v1.5: model lists (quoteConfig.deviceTypes[].models by device key; tradeInModels[].models by brand). → flow.models in content.ts.
+    "modelLists": select(
+      $kind == "quote" => ${qc}.deviceTypes[count(models) > 0]{ "k": key, models },
+      ${qc}.tradeInModels[count(models) > 0]{ "k": brand, models }
+    ),
     "options": select(
       $kind == "quote" => { "device": ${qc}.deviceTypes[]${leadOption}, "issue": ${qc}.repairIssues[]${leadOption} },
       { "device": ${qc}.tradeInDeviceTypes[]${leadOption}, "condition": ${qc}.tradeInConditions[]${leadOption} }
@@ -256,6 +266,15 @@ export const shopChromeQuery = defineQuery(`*[_id == "shopPage"][0]{
   emptyCategory{ title, body, callLabel, showAllLabel },
   emptyCatalog{ title, body, ebayLabel }
 }`);
+
+/** v1.5: /shop/[product] buy box (uiCopy.productPage) + cart drawer (uiCopy.cartDrawer). Shape = PdpChromeCopy. */
+export const pdpChromeQuery = defineQuery(`*[_id == "uiCopy"][0]{
+  ...productPage{ optionLabel, addLabel, addingLabel, addedLabel, soldOutLabel, viewCartLabel },
+  "drawer": cartDrawer{ title, closeLabel, emptyTitle, emptyBody, subtotalLabel, checkoutNote, checkoutLabel, continueLabel, quantityLabel, decreaseLabel, increaseLabel }
+}`);
+
+/** v1.5: screen-reader-only strings (uiCopy.a11y). Shape = A11yCopy. */
+export const a11yCopyQuery = defineQuery(`*[_id == "uiCopy"][0].a11y{ loading, opensInNewTab }`);
 
 export const TAGS = {
   shopCollectionConfig: "shopCollectionConfig",

@@ -127,7 +127,7 @@ test("v1.3 fields: nav (7 + Services dropdown), eyebrows, page intro, valueProp 
   const quote = await c.getQuotePage();
   assert.match(quote.intro ?? "", /^Request a smartphone repair quote/);
   assert.match((await c.getSchedulePage()).intro ?? "", /^Book a smartphone repair appointment/);
-  assert.equal((await c.getSellPage()).formSection.eyebrow, "Trade-in form · Lead capture");
+  assert.equal((await c.getSellPage()).formSection.eyebrow, "Trade-in form"); // v1.5: "· Lead capture" was a design annotation
   assert.equal((await c.getFinancingPage()).faqSection.eyebrow, "Financing FAQ");
   assert.equal((await c.getHomeInternetPage()).signUpSection?.heading, "Sign up for Home Internet.");
   assert.equal((await c.getAboutPage()).contactSection.eyebrow, "Contact");
@@ -158,9 +158,11 @@ test("v1.4: chrome copy comes from the seed (raw GROQ == Frontend fixture shapes
     ["quote", "instantQuotePage", fx.quoteFlow],
     ["tradein", "sellYourDevicePage", fx.tradeInFlow],
   ] as const) {
-    const raw = await fixtureFetch<Record<string, unknown>>(q.leadFlowQuery, { pageId, kind });
+    const raw = await fixtureFetch<{ flow: Record<string, unknown> }>(q.leadFlowQuery, { pageId, kind });
+    const { modelLists, ...rawFlow } = raw.flow;
+    assert.deepEqual(modelLists, [], `${kind}: fixtures hold no model lists, so none are seeded`);
     const { models: _m, ...flow } = fixture.flow;
-    assert.deepEqual(norm(raw), norm({ ...fixture, flow }), `leadFlow ${kind}`);
+    assert.deepEqual(norm({ ...raw, flow: rawFlow }), norm({ ...fixture, flow }), `leadFlow ${kind}`);
   }
   for (const kind of ["square", "jotform", "map"] as const)
     assert.deepEqual(norm(await fixtureFetch(q.embedCopyQuery, { kind })), norm(fx.embedCopy[kind]), `embed ${kind}`);
@@ -201,4 +203,43 @@ test("v1.4: trade-in conditions (PM), option keys = form enums, policy dates, sh
   assert.equal((await c.getSellPage()).hero.headline, "Get top dollar for your old device."); // spec-verbatim
   const vp = await c.getValueProps();
   assert.equal(vp.filter((v) => v.stat).length, 2);
+});
+
+test("v1.5: about/financing blocks, PDP + cart drawer, a11y strings, model lists, address token, no annotation eyebrows", async () => {
+  // Raw GROQ (no back-fill) carries the design copy.
+  const fin = await fixtureFetch<{ whatIsSection: { highlights: string[]; visualLabel: string }; whatYouCanFinanceSection: { items: string[]; itemBodyList: { title: string; description: string }[] }; ctaSection: { heading: string; intro: string; ctas: { label: string; href: string }[] } }>(
+    q.pageSingletonQuery, { type: "financingPage" });
+  assert.deepEqual(fin.whatIsSection.highlights, fx.financingPage.whatIsSection.highlights);
+  assert.equal(fin.whatIsSection.visualLabel, "Acima");
+  assert.deepEqual(fin.whatYouCanFinanceSection.items, ["Smartphones", "Accessories", "And more"]);
+  assert.equal(fin.ctaSection.heading, "Ready to apply?");
+  assert.deepEqual(fin.ctaSection.ctas.map((x) => x.label), ["Apply Now", "Visit the store"]);
+  const f = await c.getFinancingPage();
+  assert.deepEqual(f.whatYouCanFinanceSection.itemBodies, fx.financingPage.whatYouCanFinanceSection.itemBodies);
+  assert.equal(f.ctaSection?.intro, "Lease-to-own with Acima. No credit needed.");
+  assert.equal("itemBodyList" in f.whatYouCanFinanceSection, false);
+
+  const about = await fixtureFetch<{ valuesSection: { items: { title: string; body: string }[] }; ctaSection: { heading: string; intro: string; ctas: { label: string }[] } }>(
+    q.pageSingletonQuery, { type: "aboutPage" });
+  assert.deepEqual(about.valuesSection.items, fx.aboutPage.valuesSection.items);
+  assert.deepEqual([about.ctaSection.heading, about.ctaSection.intro], ["Need a repair?", "Book a time, or come by the shop."]);
+  assert.deepEqual(about.ctaSection.ctas.map((x) => x.label), fx.aboutPage.ctaSection.ctas.map((x) => x.label));
+
+  assert.deepEqual(norm(await fixtureFetch(q.pdpChromeQuery, {})), norm(fx.pdpChrome));
+  assert.deepEqual(await c.getPdpChrome(), fx.pdpChrome);
+  assert.deepEqual(await fixtureFetch(q.a11yCopyQuery, {}), { loading: "Loading", opensInNewTab: "(opens in a new tab)" });
+  assert.deepEqual(await c.getA11yCopy(), { loading: "Loading", opensInNewTab: " (opens in a new tab)" });
+
+  // Model lists: editable in quoteConfig, none invented (fixtures hold none) → flow.models = {}.
+  assert.deepEqual((await c.getLeadFlow("quote")).flow.models, {});
+  assert.deepEqual((await c.getLeadFlow("tradein")).flow.models, {});
+
+  // Suite comes from siteSettings.address.unit via {streetAddress}.
+  const sell = await c.getHowItWorksSteps("sell");
+  const unit = (await c.getSiteSettings()).business.address.suite;
+  assert.equal(sell[1].body, `Drop it off at 1650 W Market St ${unit}, Akron, or ask us about mailing it in.`);
+  assert.equal(JSON.stringify(sell).includes("{streetAddress}"), false);
+
+  assert.equal((await c.getQuotePage()).hero.eyebrow, "Instant quote");
+  assert.equal(JSON.stringify(await c.getSellPage()).includes("Lead capture"), false);
 });

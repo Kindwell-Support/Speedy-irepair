@@ -85,7 +85,7 @@ export const sellPage: SellPage = {
     secondaryCta: { label: "Call us for a quote", href: "tel:+18553773339", variant: "secondary" },
   },
   howItWorksSection: { eyebrow: "How it works", heading: "Sell it in three steps." },
-  formSection: { eyebrow: "Trade-in form · Lead capture", heading: "Tell us about your device." },
+  formSection: { eyebrow: "Trade-in form", heading: "Tell us about your device." },
   brandsSection: { eyebrow: "Brands accepted", heading: "We buy these brands." },
   ctaSection: {
     heading: "Prefer to talk it through?",
@@ -105,7 +105,7 @@ export const quotePage: QuotePage = {
   title: "Instant Quote",
   // Copy verbatim from design/pages/instant-quote.html.
   hero: {
-    eyebrow: "Instant quote · Lead capture",
+    eyebrow: "Instant quote",
     headline: "Get a repair quote in four steps.",
     subline: "Tell us your device, model and issue. We will contact you with your quote.",
   },

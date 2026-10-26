@@ -323,14 +323,14 @@ export interface AboutPage extends BasePage {
 }
 
 export interface FinancingPage extends BasePage {
-  /** highlights = design .check-list; visualLabel = the partner wordmark stand-in (fixture until CMS fields exist). */
+  /** highlights = design .check-list; visualLabel = the partner wordmark stand-in. CMS v1.5: financingPage.whatIsAcimaHighlights / acimaVisualLabel. */
   whatIsSection: SectionCopy & { highlights?: string[] | null; visualLabel?: string | null };
   howItWorksSection: SectionCopy;
-  /** itemBodies: optional card body per item title (design .info-card); fixture until a CMS field exists. */
+  /** itemBodies: optional card body per item title (design .info-card). CMS v1.5: financingPage.financeItems[].description. */
   whatYouCanFinanceSection: SectionCopy & { items: string[]; itemBodies?: Record<string, string> | null };
   applyCta: CtaLink;
   faqSection: SectionCopy;
-  /** Pre-footer CTA band (design .cta-band). Fixture until a CMS field exists. */
+  /** Pre-footer CTA band (design .cta-band). CMS v1.5: financingPage.ctaHeading + ctas. */
   ctaSection?: (SectionCopy & { ctas: CtaLink[] }) | null;
 }
 
@@ -537,7 +537,7 @@ export interface ShopChromeCopy {
   emptyCatalog: { title: string; body: string; ebayLabel: string };
 }
 
-/** Frontend: /shop/[product] buy box + cart drawer chrome. Fixture-backed until CMS fields exist. */
+/** Frontend: /shop/[product] buy box + cart drawer chrome. CMS v1.5: uiCopy.productPage + uiCopy.cartDrawer. */
 export interface PdpChromeCopy {
   optionLabel: string;
   addLabel: string;
@@ -558,4 +558,11 @@ export interface PdpChromeCopy {
     decreaseLabel: string;
     increaseLabel: string;
   };
+}
+
+/** Screen-reader-only strings (components/ui/a11yStrings A11Y). CMS v1.5: uiCopy.a11y; getA11yCopy(). */
+export interface A11yCopy {
+  loading: string;
+  /** Includes the leading space, e.g. " (opens in a new tab)". */
+  opensInNewTab: string;
 }

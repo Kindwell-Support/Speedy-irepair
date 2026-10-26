@@ -121,7 +121,7 @@ export const shopPage = page('shopPage', 'Shop', [
 
 export const sellYourDevicePage = page('sellYourDevicePage', 'Sell Your Device', [
   heading('howItWorksHeading'),
-  steps('howItWorksSteps', 3),
+  {...steps('howItWorksSteps', 3), description: 'v1.5: write {streetAddress} to insert Site Settings → address street + suite (e.g. "1650 W Market St #27"), so the suite is edited in one place.'},
   heading('formHeading'),
   defineField({name: 'formIntro', type: 'text', group: g}),
   heading('brandsHeading'),
@@ -172,7 +172,8 @@ export const aboutPage = page('aboutPage', 'About', [
   refs('team', 'teamMember'),
   defineField({name: 'spectrumBadge', type: 'image', group: g, fields: [defineField({name: 'alt', type: 'string'})]}),
   defineField({name: 'spectrumText', type: 'string', group: g}),
-  ctas(),
+  {...heading('ctaHeading'), title: 'CTA band heading (pre-footer)'},
+  {...ctas(), title: 'CTA band buttons'},
   heading('locationHeading'),
   defineField({name: 'showMap', type: 'boolean', group: g, initialValue: true}),
   heading('contactHeading'),
@@ -182,14 +183,25 @@ export const aboutPage = page('aboutPage', 'About', [
 export const financingPage = page('financingPage', 'Financing', [
   heading('whatIsAcimaHeading'),
   defineField({name: 'whatIsAcima', type: 'richText', group: g}),
+  defineField({name: 'whatIsAcimaHighlights', title: 'What is Acima: check-list', type: 'array', group: g, of: [defineArrayMember({type: 'string'})], validation: (r) => r.max(5)}),
+  defineField({name: 'acimaVisualLabel', title: 'Partner visual label (wordmark stand-in until the licensed logo)', type: 'string', group: g}),
   heading('howItWorksHeading'),
   steps('howItWorksSteps', 3),
   heading('whatYouCanFinanceHeading'),
-  strings('whatYouCanFinance'),
+  {...strings('whatYouCanFinance'), description: 'Deprecated (v1.5): use "What you can finance: cards". Read only when the cards are empty.'},
+  defineField({
+    name: 'financeItems',
+    title: 'What you can finance: cards',
+    type: 'array',
+    group: g,
+    of: [defineArrayMember({type: 'object', name: 'financeItem', fields: [defineField({name: 'title', type: 'string', validation: (r) => r.required()}), defineField({name: 'description', type: 'string'})]})],
+  }),
   defineField({name: 'applyCta', type: 'cta', group: g}),
   defineField({name: 'acimaLogo', type: 'image', group: g, description: 'Licensed Acima logo (design open issue 7).', fields: [defineField({name: 'alt', type: 'string'})]}),
   heading('faqHeading'),
   refs('faqs', 'faq'),
+  {...heading('ctaHeading'), title: 'CTA band heading (pre-footer)'},
+  {...ctas(), title: 'CTA band buttons'},
 ])
 
 export const homeInternetPage = page('homeInternetPage', 'Home Internet', [
