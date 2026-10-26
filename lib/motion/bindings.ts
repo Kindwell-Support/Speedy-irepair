@@ -5,12 +5,13 @@
  *
  * All behaviours are created inside gsap.matchMedia() so that:
  *  - prefers-reduced-motion users get NOTHING bound (content is already visible via CSS),
- *  - breakpoint-specific behaviour (How-It-Works tile pin on >=768px, card-stack pin on mobile)
+ *  - breakpoint-specific behaviour (How It Works: pin >= STEPS_PIN_MIN_PX, stacked reveal below)
  *    is torn down / rebuilt automatically on resize,
  *  - everything is reverted on route change/unmount (mm.revert()).
  */
 import { gsap, ScrollTrigger, SplitText, registerGsap } from "./gsap";
-import { DUR, EASE, MQ, REVEAL_Y, STAGGER } from "./tokens";
+import { getLenis } from "./lenis-gsap";
+import { DUR, EASE, MQ, REVEAL_Y, STAGGER, STEPS_MQ, STEPS_PIN_VH } from "./tokens";
 
 type Cleanup = () => void;
 
@@ -142,21 +143,52 @@ function bindSplitHeadings(root: ParentNode): Cleanup[] {
 
 /* ------------------------------------------------- how it works (steps) */
 /**
- * Markup (design/pages/home.html §3): section[data-pin="how"] > ... > ol > li.step[data-step] x4,
- * optional .progress__fill / [data-steps-progress]. All 4 tiles are always rendered and visible
- * (no-JS / reduced = static row). Motion only drives state: active tile lifts, previous tiles
- * "tip over" (rotateX, domino), progress fill scales. Classes is-active / is-done are the
- * Design CSS hooks; data-active / data-done mirror them.
+ * Markup (FE HowItWorks / design home.html §3): section[data-testid=how-it-works] > [data-pin="how"]
+ * > [data-steps-pin] > ([data-steps-progress] | .progress__fill) + ol > li[data-step] x4.
+ * All tiles are rendered and visible without JS / under reduced motion (static list).
+ *
+ * mode "pin"   (>= STEPS_PIN_MIN_PX): row pinned for STEPS_PIN_VH x 100vh, scrub 0.3, snap per
+ *              step. The rail fills 0 -> 100 % (scaleX). The active tile lifts; the previous tile tips
+ *              like a domino (rotate -6deg at its bottom-left origin) and settles to "done".
+ *              Clicking a tile scrolls to its position.
+ * mode "stack" (< STEPS_PIN_MIN_PX): no pin. Each card fades and rises on enter (stagger 60 ms); the rail is static.
+ * State hooks: is-active / is-done (+ data-active / data-done, aria-current="step") in pin mode,
+ * data-steps-mode="pin|stack" and data-pinned="true|false" on [data-pin] AND on the closest
+ * [data-testid="how-it-works"] (QA selector).
  */
-function bindSteps(root: ParentNode, desktop: boolean) {
+function bindSteps(root: ParentNode, mode: "pin" | "stack"): Cleanup[] {
+  const cleanups: Cleanup[] = [];
   q(root, SEL.steps).forEach((section) => {
     const pin = section.querySelector<HTMLElement>("[data-steps-pin]") ?? section;
     const steps = q(section, "[data-step]");
     const bar = section.querySelector<HTMLElement>("[data-steps-progress], .progress__fill");
     const n = steps.length;
     if (!n) return;
+    const hosts = [section, section.closest<HTMLElement>('[data-testid="how-it-works"]')].filter(
+      (h, i, a): h is HTMLElement => !!h && a.indexOf(h) === i,
+    );
+    const mark = (pinned: boolean) =>
+      hosts.forEach((h) => {
+        h.setAttribute("data-steps-mode", mode);
+        h.setAttribute("data-pinned", String(pinned));
+      });
     settle(section);
-    section.setAttribute("data-testid", section.getAttribute("data-testid") ?? "how-it-works");
+
+    if (mode === "stack") {
+      mark(false);
+      gsap.set(steps, { autoAlpha: 0, y: 16 });
+      const batch = ScrollTrigger.batch(steps, {
+        start: "top 88%",
+        once: true,
+        onEnter: (b) =>
+          gsap.to(b, { autoAlpha: 1, y: 0, duration: DUR.card, ease: EASE.out, stagger: 0.06, overwrite: true }),
+      });
+      cleanups.push(() => {
+        batch.forEach((t) => t.kill());
+        hosts.forEach((h) => h.removeAttribute("data-steps-mode"));
+      });
+      return;
+    }
 
     let current = -1;
     const setActive = (i: number) => {
@@ -172,68 +204,64 @@ function bindSteps(root: ParentNode, desktop: boolean) {
       });
     };
 
+    mark(true);
     if (bar) gsap.set(bar, { width: "100%", scaleX: 0, transformOrigin: "left center" });
-
-    if (!desktop) {
-      // Mobile (<768px): pinned CARD STACK. motion.css grid-stacks the tiles (only when
-      // html[data-motion=ok], so no-JS/reduced users get the plain vertical list). Each step the
-      // current card tips over and fades while the next rises in; progress bar scrubs.
-      section.setAttribute("data-pinned", "true");
-      gsap.set(steps, { transformPerspective: 900, transformOrigin: "50% 100%" });
-      gsap.set(steps.slice(1), { autoAlpha: 0, y: REVEAL_Y });
-      setActive(0);
-      const tlm = gsap.timeline({
-        defaults: { ease: EASE.inOut },
-        scrollTrigger: {
-          trigger: pin,
-          start: "top top+=64",
-          end: () => `+=${(n - 1) * window.innerHeight * 0.55}`,
-          pin: true,
-          scrub: 0.4,
-          snap: { snapTo: 1 / (n - 1), duration: { min: 0.15, max: 0.3 }, ease: EASE.inOut, delay: 0.05 },
-          invalidateOnRefresh: true,
-          onUpdate: (self) => setActive(Math.round(self.progress * (n - 1))),
-          onKill: () => section.removeAttribute("data-pinned"),
-        },
-      });
-      for (let i = 1; i < n; i++) {
-        const at = i - 1;
-        tlm.to(steps[i - 1]!, { rotationX: 18, y: -12, autoAlpha: 0, duration: 0.5 }, at + 0.15)
-          .to(steps[i]!, { autoAlpha: 1, y: 0, duration: 0.5, ease: EASE.out }, at + 0.4);
-        if (bar) tlm.to(bar, { scaleX: i / (n - 1), ease: "none", duration: 0.8 }, at + 0.1);
-      }
-      return;
-    }
-
-    // Desktop: pin + scrubbed state timeline, ~60vh of scroll per step. Snaps to steps.
-    section.setAttribute("data-pinned", "true");
-    gsap.set(steps, { transformPerspective: 900, transformOrigin: "50% 100%" });
+    gsap.set(steps, { transformOrigin: "0% 100%" });
     setActive(0);
     const tl = gsap.timeline({
       defaults: { ease: EASE.inOut, duration: 1 },
       scrollTrigger: {
         trigger: pin,
-        // Pin the tile row at 30 % of the viewport so it sits centred-high and the bar clears the sticky header.
+        // Row pinned at 30 % of the viewport: clear of the sticky header, centred-high.
         start: "top 30%",
-        end: () => `+=${(n - 1) * window.innerHeight * 0.6}`,
+        end: () => `+=${window.innerHeight * STEPS_PIN_VH}`,
         pin: true,
-        scrub: 0.4,
+        scrub: 0.3,
         snap: { snapTo: 1 / (n - 1), duration: { min: 0.15, max: 0.35 }, ease: EASE.inOut, delay: 0.05 },
         invalidateOnRefresh: true,
         onUpdate: (self) => setActive(Math.round(self.progress * (n - 1))),
-        onKill: () => section.removeAttribute("data-pinned"),
+        onKill: () => hosts.forEach((h) => h.removeAttribute("data-pinned")),
       },
     });
-    // first tile starts active (lifted)
     gsap.set(steps[0]!, { y: -8 });
     for (let i = 1; i < n; i++) {
       const at = i - 1;
-      // previous tile tips over (domino), next lifts in
-      tl.to(steps[i - 1]!, { y: 4, rotationX: 14, autoAlpha: 0.55, duration: 0.6 }, at + 0.2)
-        .fromTo(steps[i]!, { y: 0 }, { y: -8, duration: 0.6, ease: EASE.out }, at + 0.35);
+      // previous tile: domino tip (<= 8deg at bottom-left), then settles flat and dimmed ("done")
+      tl.to(steps[i - 1]!, { rotation: -6, y: 0, duration: 0.3, ease: EASE.out }, at + 0.15)
+        .to(steps[i - 1]!, { rotation: 0, autoAlpha: 0.6, duration: 0.35 }, at + 0.45)
+        .fromTo(steps[i]!, { y: 0 }, { y: -8, duration: 0.5, ease: EASE.out }, at + 0.35);
       if (bar) tl.to(bar, { scaleX: i / (n - 1), ease: "none", duration: 0.8 }, at + 0.1);
     }
+
+    // Click on a tile jumps to its scroll position (Lenis when present, otherwise native). Pointer
+    // convenience only: tiles stay non-focusable list items (keyboard users scroll through the pin).
+    const st = tl.scrollTrigger!;
+    const offs = steps.map((s, i) => {
+      const go = () => {
+        const y = st.start + ((st.end - st.start) * i) / (n - 1);
+        const lenis = getLenis();
+        if (lenis) lenis.scrollTo(y, { duration: 0.6 });
+        else window.scrollTo({ top: y, behavior: "smooth" });
+      };
+      s.addEventListener("click", go);
+      s.setAttribute("data-step-jump", "");
+      return () => {
+        s.removeEventListener("click", go);
+        s.removeAttribute("data-step-jump");
+      };
+    });
+    cleanups.push(() => {
+      offs.forEach((o) => o());
+      steps.forEach((s) => {
+        s.classList.remove("is-active", "is-done");
+        s.removeAttribute("data-active");
+        s.removeAttribute("data-done");
+        s.removeAttribute("aria-current");
+      });
+      hosts.forEach((h) => h.removeAttribute("data-steps-mode"));
+    });
   });
+  return cleanups;
 }
 
 /* ------------------------------------------------------ FAQ (GSAP accordion) */
@@ -320,12 +348,16 @@ export function bindAnimations(root: HTMLElement): Cleanup {
     };
   });
 
-  // How It Works: pinned tile row on >=768px, pinned card stack below. Rebuilt across the breakpoint.
-  mm.add(`${MQ.motionOk} and (min-width: 768px)`, () => {
-    if (allowed()) bindSteps(root, true);
+  // How It Works: pinned >= STEPS_PIN_MIN_PX, stacked reveal below. Rebuilt across the breakpoint.
+  mm.add(`${MQ.motionOk} and ${STEPS_MQ.pin}`, () => {
+    if (!allowed()) return;
+    const c = bindSteps(root, "pin");
+    return () => c.forEach((f) => f());
   });
-  mm.add(`${MQ.motionOk} and (max-width: 767.98px)`, () => {
-    if (allowed()) bindSteps(root, false);
+  mm.add(`${MQ.motionOk} and ${STEPS_MQ.stack}`, () => {
+    if (!allowed()) return;
+    const c = bindSteps(root, "stack");
+    return () => c.forEach((f) => f());
   });
 
   document.documentElement.setAttribute("data-motion-ready", "");

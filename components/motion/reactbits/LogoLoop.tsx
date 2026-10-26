@@ -1,6 +1,7 @@
 'use client';
 
 import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { cssVars, type CssVars } from '@/lib/utils/css-vars';
 
 export type LogoItem =
   | {
@@ -50,7 +51,6 @@ export interface LogoLoopProps {
   renderItem?: (item: LogoItem, key: React.Key) => React.ReactNode;
   ariaLabel?: string;
   className?: string;
-  style?: React.CSSProperties;
 }
 
 interface LoopConfig {
@@ -195,6 +195,13 @@ const HALF_SQRT_PI = Math.sqrt(Math.PI) / 2;
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
+/** Defaults mirrored in lib/motion/motion.css (.logoloop: --logoloop-gap / --logoloop-logoHeight / --logoloop-fade).
+ *  Kindwell: gap/logoHeight defaults are the BrandMarquee values (upstream: 32 / 28), so the site's
+ *  only usage renders with no style attribute at all. */
+const DEFAULT_GAP = 64;
+const DEFAULT_LOGO_HEIGHT = 32;
+const DEFAULT_FADE = 0.12;
+
 const toCssLength = (value?: number | string): string | undefined =>
   typeof value === 'number' ? `${value}px` : (value ?? undefined);
 
@@ -210,21 +217,6 @@ const erf = (x: number) => {
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
-
-const smootherstep = (t: number) => t * t * t * (t * (t * 6 - 15) + 10);
-
-const fadeMask = (size: number, vertical: boolean) => {
-  const span = clamp(size, 0, 0.5) * 100;
-  if (span <= 0) return undefined;
-  const stops: string[] = [];
-  for (let i = 0; i <= 12; i++) {
-    stops.push(`rgba(0,0,0,${smootherstep(i / 12).toFixed(4)}) ${((span * i) / 12).toFixed(3)}%`);
-  }
-  for (let i = 12; i >= 0; i--) {
-    stops.push(`rgba(0,0,0,${smootherstep(i / 12).toFixed(4)}) ${(100 - (span * i) / 12).toFixed(3)}%`);
-  }
-  return `linear-gradient(${vertical ? 'to bottom' : 'to right'}, ${stops.join(', ')})`;
-};
 
 const rotationMatrix = (degX: number, degY: number): number[] => {
   const a = (degX * Math.PI) / 180;
@@ -1075,12 +1067,12 @@ export const LogoLoop = memo<LogoLoopProps>(
     speed = 120,
     direction = 'left',
     width = '100%',
-    logoHeight = 28,
-    gap = 32,
+    logoHeight = DEFAULT_LOGO_HEIGHT,
+    gap = DEFAULT_GAP,
     pauseOnHover,
     hoverSpeed,
     fadeOut = true,
-    fadeOutWidth = 0.12,
+    fadeOutWidth = DEFAULT_FADE,
     scaleOnHover = false,
     layout = 'line',
     bend = 0.5,
@@ -1096,8 +1088,7 @@ export const LogoLoop = memo<LogoLoopProps>(
     intro = true,
     renderItem,
     ariaLabel = 'Partner logos',
-    className,
-    style
+    className
   }) => {
     const rootRef = useRef<HTMLDivElement>(null);
     const trackRef = useRef<HTMLDivElement>(null);
@@ -1255,9 +1246,7 @@ export const LogoLoop = memo<LogoLoopProps>(
                   key={key}
                   role="listitem"
                   data-color={item.hoverColor ? '' : undefined}
-                  style={
-                    item.hoverColor ? ({ '--logoloop-item-color': item.hoverColor } as React.CSSProperties) : undefined
-                  }
+                  style={item.hoverColor ? cssVars({ '--logoloop-item-color': item.hoverColor }) : undefined}
                 >
                   {item.href ? (
                     <a
@@ -1287,26 +1276,27 @@ export const LogoLoop = memo<LogoLoopProps>(
       });
     }, [copies, primary, logos, renderItem, labels, vertical, scaleOnHover, isMuted]);
 
-    const mask = fadeOut ? fadeMask(fadeOutWidth, vertical) : undefined;
-
-    const containerStyle = {
-      width: vertical
-        ? toCssLength(width) === '100%'
-          ? undefined
-          : toCssLength(width)
-        : (toCssLength(width) ?? '100%'),
-      '--logoloop-gap': `${gap}px`,
-      '--logoloop-logoHeight': `${logoHeight}px`,
+    // Kindwell: no inline styles (docs/CODE_REVIEW.md). Defaults live in classes / motion.css
+    // (.logoloop-fade-x|y); only non-default prop values are passed, as CSS custom properties.
+    const fadeSpan = fadeOut ? clamp(fadeOutWidth, 0, 0.5) : 0;
+    const widthCss = toCssLength(width);
+    const customWidth = widthCss !== undefined && widthCss !== '100%';
+    const vars: CssVars = {
+      ...(gap !== DEFAULT_GAP && { '--logoloop-gap': `${gap}px` }),
+      ...(logoHeight !== DEFAULT_LOGO_HEIGHT && { '--logoloop-logoHeight': `${logoHeight}px` }),
+      ...(customWidth && { '--logoloop-width': widthCss }),
+      ...(fadeSpan > 0 && fadeSpan !== DEFAULT_FADE && { '--logoloop-fade': `${(fadeSpan * 100).toFixed(3)}%` }),
       ...(amount > 0 && {
         '--logoloop-gray': Math.min(1, amount * 2).toFixed(3),
         '--logoloop-dim': (1 - amount * 0.6).toFixed(3)
-      }),
-      ...(mask && { WebkitMaskImage: mask, maskImage: mask }),
-      ...style
-    } as React.CSSProperties;
+      })
+    };
+    const hasVars = Object.keys(vars).length > 0;
 
     const rootClassName = cx(
-      'group/loop relative overflow-hidden [-webkit-tap-highlight-color:transparent]',
+      'logoloop group/loop relative overflow-hidden [-webkit-tap-highlight-color:transparent]',
+      customWidth ? 'w-[var(--logoloop-width)]' : !vertical && 'w-full',
+      fadeSpan > 0 && (vertical ? 'logoloop-fade-y' : 'logoloop-fade-x'),
       vertical ? 'inline-block h-full px-[var(--logoloop-pad)]' : 'py-[var(--logoloop-pad)]',
       draggable && 'cursor-grab data-[dragging]:cursor-grabbing [&[data-dragging]_*]:cursor-grabbing',
       draggable && (vertical ? '[touch-action:pan-x_pinch-zoom]' : '[touch-action:pan-y_pinch-zoom]'),
@@ -1317,7 +1307,7 @@ export const LogoLoop = memo<LogoLoopProps>(
       <div
         ref={rootRef}
         className={rootClassName}
-        style={containerStyle}
+        style={hasVars ? cssVars(vars) : undefined}
         role="region"
         aria-label={ariaLabel}
         data-intro={introPending ? '' : undefined}

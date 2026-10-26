@@ -33,9 +33,14 @@ export type LenisGsapHandle = {
   destroy: () => void;
 };
 
+let active: Lenis | null = null;
+/** The live Lenis instance (null before init, under reduced motion, or after destroy). */
+export const getLenis = (): Lenis | null => active;
+
 export function createLenisGsap(options: Partial<LenisOptions> = {}): LenisGsapHandle {
   registerGsap();
   const lenis = new Lenis({ ...LENIS_DEFAULTS, ...options, autoRaf: false });
+  active = lenis;
 
   const onScroll = () => ScrollTrigger.update();
   lenis.on("scroll", onScroll);
@@ -51,6 +56,7 @@ export function createLenisGsap(options: Partial<LenisOptions> = {}): LenisGsapH
       gsap.ticker.lagSmoothing(500, 33); // restore GSAP default
       lenis.off("scroll", onScroll);
       lenis.destroy();
+      if (active === lenis) active = null;
     },
   };
 }

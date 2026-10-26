@@ -5,9 +5,13 @@
  * the Frontend passes each step's content and decides when `next()` is allowed.
  * LEAD CAPTURE ONLY — no prices are rendered by this component (DECISIONS #5).
  *
- * Transitions: slide 24px + fade, 0.25s power2.inOut; progress bar = scaleX (0.3s).
+ * Transitions (design/pages/instant-quote.responsive-and-motion.md "Step change"), direction-aware:
+ *  - outgoing step slides 24px toward the travel direction and fades out (160ms, ease-in-out);
+ *  - incoming step slides in from the opposite side (240ms, power3-out). Transform + opacity only.
+ *  - progress bar = scaleX tween (0.3s), never width.
  * Focus moves to the new step's heading for screen readers / keyboard users.
- * Reduced motion: instant swap, progress bar jumps.
+ * Reduced motion: instant swap, progress bar jumps (no transform, no fade).
+ * DOM hooks: [data-multistep][data-direction="forward|back"], step wrapper [data-step-id].
  */
 import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
@@ -72,7 +76,12 @@ export function MultiStepForm({
 
   const dx = reduced ? 0 : 24;
   return (
-    <section aria-label={label} className={className} data-multistep>
+    <section
+      aria-label={label}
+      className={className}
+      data-multistep
+      data-direction={direction === 1 ? "forward" : "back"}
+    >
       <div
         role="progressbar"
         data-testid={progressTestId}
@@ -98,14 +107,21 @@ export function MultiStepForm({
             key={step.id}
             custom={direction}
             variants={{
-              enter: (d: number) => ({ opacity: 0, x: d * dx }),
-              center: { opacity: 1, x: 0 },
-              exit: (d: number) => ({ opacity: 0, x: d * -dx }),
+              enter: (d: number) => ({ opacity: reduced ? 1 : 0, x: d * dx }),
+              center: {
+                opacity: 1,
+                x: 0,
+                transition: { duration: reduced ? 0 : DUR.stepIn, ease: FM_EASE.out },
+              },
+              exit: (d: number) => ({
+                opacity: reduced ? 1 : 0,
+                x: d * -dx,
+                transition: { duration: reduced ? 0 : DUR.stepOut, ease: FM_EASE.inOut },
+              }),
             }}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: reduced ? 0 : DUR.page, ease: FM_EASE.inOut }}
             data-step-id={step.id}
           >
             <h2 ref={headingRef} tabIndex={-1} data-multistep-title className={cn("outline-none", titleClassName)}>

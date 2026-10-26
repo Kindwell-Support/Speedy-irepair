@@ -8,6 +8,9 @@ export const DUR = {
   reveal: 0.55, // section + card reveals (0.4–0.7)
   revealLong: 0.7,
   page: 0.25, // route transition
+  stepOut: 0.16, // MultiStepForm outgoing step (design instant-quote.responsive-and-motion.md)
+  stepIn: 0.24, // MultiStepForm incoming step
+  card: 0.48, // How It Works stacked-card reveal (home budget 120–480ms)
   heroTotal: 1.5, // hero sequence must finish by this (<= 1.5–2s)
 } as const;
 
@@ -37,6 +40,7 @@ export const REVEAL_Y = 24;
 export const BREAKPOINTS = {
   md: "(min-width: 768px)",
   lg: "(min-width: 1024px)",
+  xl: "(min-width: 1280px)",
   finePointer: "(hover: hover) and (pointer: fine)",
 } as const;
 
@@ -44,3 +48,17 @@ export const MQ = {
   motionOk: "(prefers-reduced-motion: no-preference)",
   reduce: "(prefers-reduced-motion: reduce)",
 } as const;
+
+/**
+ * How It Works pin breakpoint, the single source (design/pages/home.animation-intent.md §3 and
+ * home.responsive.md: "Pinned, 4 tiles in a row" from 1280, no pin below).
+ * >= STEPS_PIN_MIN_PX: pinned, scrubbed domino sequence. Below: stacked cards, per-card reveal.
+ * Reduced motion: static list at every width. motion.css mirrors this value (1279.98px); keep in sync.
+ */
+export const STEPS_PIN_MIN_PX = 1280;
+export const STEPS_MQ = {
+  pin: `(min-width: ${STEPS_PIN_MIN_PX}px)`,
+  stack: `(max-width: ${STEPS_PIN_MIN_PX - 0.02}px)`,
+} as const;
+/** Pinned scroll distance, in viewport heights (design: "Section pins for ~250vh"). */
+export const STEPS_PIN_VH = 2.5;

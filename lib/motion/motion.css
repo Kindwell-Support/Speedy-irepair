@@ -22,19 +22,15 @@ html[data-motion="ok"] :is([data-animate="split-heading"], [data-split]):not([da
 html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]) [data-step] {
   will-change: transform;
 }
-/* Mobile: pinned card stack. Tiles share one grid cell (tallest sets the height, so no jump);
-   bindings.ts cross-fades them. Only when motion is OK -> no-JS / reduced = plain list. */
-@media (max-width: 767.98px) {
-  html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]) :has(> [data-step]) {
-    display: grid;
-  }
-  html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]) :has(> [data-step]) > [data-step] {
-    grid-area: 1 / 1;
-  }
-  html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]):not([data-animated]) [data-step]:not(:first-child) {
+/* Below the pin breakpoint (STEPS_PIN_MIN_PX in tokens.ts = 1280): stacked cards revealed on enter.
+   Before-state only while motion is OK and not yet bound, so no-JS / reduced = visible list. */
+@media (max-width: 1279.98px) {
+  html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]):not([data-animated]) [data-step] {
     opacity: 0;
   }
 }
+/* Pinned mode: tiles are click/Enter targets that jump to their step. */
+[data-step-jump] { cursor: pointer; }
 
 /* Parallax media: compositor hint. */
 :is([data-animate="parallax"], [data-parallax]) { will-change: transform; }
@@ -52,9 +48,83 @@ html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]) [data-step]
   contain: layout paint;
 }
 
+/* React Bits LogoLoop (components/motion/reactbits/LogoLoop.tsx): defaults as classes, no inline styles.
+   Props that differ from these defaults are passed as CSS custom properties via cssVars(). The edge
+   fade is the upstream 12-stop smootherstep mask, parameterised by --logoloop-fade. */
+.logoloop {
+  --logoloop-gap: 64px;
+  --logoloop-logoHeight: 32px;
+  --logoloop-fade: 12%;
+}
+.logoloop-fade-x {
+  --logoloop-mask: linear-gradient(to right,
+    rgba(0,0,0,0.0000) calc(var(--logoloop-fade) * 0.0000),
+    rgba(0,0,0,0.0051) calc(var(--logoloop-fade) * 0.0833),
+    rgba(0,0,0,0.0355) calc(var(--logoloop-fade) * 0.1667),
+    rgba(0,0,0,0.1035) calc(var(--logoloop-fade) * 0.2500),
+    rgba(0,0,0,0.2099) calc(var(--logoloop-fade) * 0.3333),
+    rgba(0,0,0,0.3466) calc(var(--logoloop-fade) * 0.4167),
+    rgba(0,0,0,0.5000) calc(var(--logoloop-fade) * 0.5000),
+    rgba(0,0,0,0.6534) calc(var(--logoloop-fade) * 0.5833),
+    rgba(0,0,0,0.7901) calc(var(--logoloop-fade) * 0.6667),
+    rgba(0,0,0,0.8965) calc(var(--logoloop-fade) * 0.7500),
+    rgba(0,0,0,0.9645) calc(var(--logoloop-fade) * 0.8333),
+    rgba(0,0,0,0.9949) calc(var(--logoloop-fade) * 0.9167),
+    rgba(0,0,0,1.0000) calc(var(--logoloop-fade) * 1.0000),
+    rgba(0,0,0,1.0000) calc(100% - var(--logoloop-fade) * 1.0000),
+    rgba(0,0,0,0.9949) calc(100% - var(--logoloop-fade) * 0.9167),
+    rgba(0,0,0,0.9645) calc(100% - var(--logoloop-fade) * 0.8333),
+    rgba(0,0,0,0.8965) calc(100% - var(--logoloop-fade) * 0.7500),
+    rgba(0,0,0,0.7901) calc(100% - var(--logoloop-fade) * 0.6667),
+    rgba(0,0,0,0.6534) calc(100% - var(--logoloop-fade) * 0.5833),
+    rgba(0,0,0,0.5000) calc(100% - var(--logoloop-fade) * 0.5000),
+    rgba(0,0,0,0.3466) calc(100% - var(--logoloop-fade) * 0.4167),
+    rgba(0,0,0,0.2099) calc(100% - var(--logoloop-fade) * 0.3333),
+    rgba(0,0,0,0.1035) calc(100% - var(--logoloop-fade) * 0.2500),
+    rgba(0,0,0,0.0355) calc(100% - var(--logoloop-fade) * 0.1667),
+    rgba(0,0,0,0.0051) calc(100% - var(--logoloop-fade) * 0.0833),
+    rgba(0,0,0,0.0000) calc(100% - var(--logoloop-fade) * 0.0000));
+  -webkit-mask-image: var(--logoloop-mask);
+  mask-image: var(--logoloop-mask);
+}
+.logoloop-fade-y {
+  --logoloop-mask: linear-gradient(to bottom,
+    rgba(0,0,0,0.0000) calc(var(--logoloop-fade) * 0.0000),
+    rgba(0,0,0,0.0051) calc(var(--logoloop-fade) * 0.0833),
+    rgba(0,0,0,0.0355) calc(var(--logoloop-fade) * 0.1667),
+    rgba(0,0,0,0.1035) calc(var(--logoloop-fade) * 0.2500),
+    rgba(0,0,0,0.2099) calc(var(--logoloop-fade) * 0.3333),
+    rgba(0,0,0,0.3466) calc(var(--logoloop-fade) * 0.4167),
+    rgba(0,0,0,0.5000) calc(var(--logoloop-fade) * 0.5000),
+    rgba(0,0,0,0.6534) calc(var(--logoloop-fade) * 0.5833),
+    rgba(0,0,0,0.7901) calc(var(--logoloop-fade) * 0.6667),
+    rgba(0,0,0,0.8965) calc(var(--logoloop-fade) * 0.7500),
+    rgba(0,0,0,0.9645) calc(var(--logoloop-fade) * 0.8333),
+    rgba(0,0,0,0.9949) calc(var(--logoloop-fade) * 0.9167),
+    rgba(0,0,0,1.0000) calc(var(--logoloop-fade) * 1.0000),
+    rgba(0,0,0,1.0000) calc(100% - var(--logoloop-fade) * 1.0000),
+    rgba(0,0,0,0.9949) calc(100% - var(--logoloop-fade) * 0.9167),
+    rgba(0,0,0,0.9645) calc(100% - var(--logoloop-fade) * 0.8333),
+    rgba(0,0,0,0.8965) calc(100% - var(--logoloop-fade) * 0.7500),
+    rgba(0,0,0,0.7901) calc(100% - var(--logoloop-fade) * 0.6667),
+    rgba(0,0,0,0.6534) calc(100% - var(--logoloop-fade) * 0.5833),
+    rgba(0,0,0,0.5000) calc(100% - var(--logoloop-fade) * 0.5000),
+    rgba(0,0,0,0.3466) calc(100% - var(--logoloop-fade) * 0.4167),
+    rgba(0,0,0,0.2099) calc(100% - var(--logoloop-fade) * 0.3333),
+    rgba(0,0,0,0.1035) calc(100% - var(--logoloop-fade) * 0.2500),
+    rgba(0,0,0,0.0355) calc(100% - var(--logoloop-fade) * 0.1667),
+    rgba(0,0,0,0.0051) calc(100% - var(--logoloop-fade) * 0.0833),
+    rgba(0,0,0,0.0000) calc(100% - var(--logoloop-fade) * 0.0000));
+  -webkit-mask-image: var(--logoloop-mask);
+  mask-image: var(--logoloop-mask);
+}
+
 /* Reduced motion: hard stop for any CSS transition/animation in motion-layer elements. */
 html[data-motion="reduce"] :is([data-animate], [data-motion-el]),
 html[data-motion="reduce"] :is([data-animate], [data-motion-el]) * {
   transition-duration: 0.001ms !important;
   animation: none !important;
 }
+
+/* Drawer (components/motion/Drawer.tsx): scroll lock while open. */
+html[data-drawer-open] { overflow: hidden; }

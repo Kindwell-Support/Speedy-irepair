@@ -378,6 +378,7 @@ const TargetCursor = ({
       className="pointer-events-none fixed inset-0 z-[2147483647]"
       style={{ mixBlendMode: blendMode, opacity: 0 }}
       aria-hidden="true"
+      data-cursor-follower=""
     >
       {CORNER_ANGLES.map((angle, i) => (
         <span

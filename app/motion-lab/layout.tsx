@@ -17,6 +17,7 @@ const LINKS = [
   ["/motion-lab/shop", "Shop"],
   ["/motion-lab/quote", "Quote"],
   ["/motion-lab/faq", "FAQ"],
+  ["/motion-lab/drawer", "Drawer"],
 ] as const;
 
 export default function LabLayout({ children }: { children: ReactNode }) {
