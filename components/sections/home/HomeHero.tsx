@@ -1,14 +1,11 @@
 import type { HeroChip, PageHero } from "@/lib/sanity/types";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { MagneticButton } from "@/components/motion/MagneticButton";
-import { HeroDevice } from "@/components/3d/HeroDevice";
+import { DEFAULT_POSTER, HeroDevice } from "@/components/3d/HeroDevice";
 import { HeroChips } from "./HeroChips";
 
 /** Presentational line breaks at sentence ends of the CMS headline (design .hero__h1 .l). */
 const headlineLines = (text: string) => text.split(/(?<=[?.!])\s+/).filter(Boolean);
-
-/** Placeholder poster art until Design/Motion ship /hero/phone-poster.{avif,webp,png}. */
-const POSTER = { png: "/hero/phone-poster.svg", width: 960, height: 1200 };
 
 /**
  * Spec 2.1.1. H1 + subline + magnetic CTAs (server-rendered text = LCP), 3D device lazily mounted
@@ -67,7 +64,11 @@ export function HomeHero({ hero, chips }: { hero: PageHero; chips: HeroChip[] })
           <HeroChips chips={chips} />
         </div>
         <div className="mx-auto w-full max-w-[480px]">
-          <HeroDevice poster={POSTER} alt="Illustration of a smartphone with a repair checkmark" />
+          {/* Rendered poster (avif → webp → png <picture>, 960×1200, ~10 kB avif, fetchPriority high). The H1 text stays the LCP candidate. */}
+          <HeroDevice
+            poster={DEFAULT_POSTER}
+            alt="Illustration of a smartphone with a repair checkmark"
+          />
         </div>
       </div>
     </section>
