@@ -36,7 +36,7 @@ export default async function PolicyPage({ params }: Params) {
     <>
       <JsonLd data={jsonLdForPolicy(`/policies/${slug}`)} />
       <Breadcrumbs data={jsonLdForPolicy(`/policies/${slug}`)} />
-      <article className="container-site max-w-3xl py-16 md:py-24">
+      <article className="container-site max-w-3xl break-words py-16 md:py-24">
         <h1 className="text-h1">{page.title}</h1>
         {page.isPlaceholder ? (
           <Notice tone="staging" className="mt-6">
