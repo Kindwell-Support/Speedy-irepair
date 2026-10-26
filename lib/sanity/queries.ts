@@ -22,7 +22,7 @@ const image = /* groq */ `{
 const cta = /* groq */ `{
   label,
   "href": select(linkType == "external" => externalUrl, internalPath),
-  "external": linkType == "external",
+  "external": linkType == "external" && !string::startsWith(coalesce(externalUrl, ""), "tel:") && !string::startsWith(coalesce(externalUrl, ""), "mailto:"),
   "variant": select(variant == "ghost" => "link", variant)
 }`;
 
@@ -170,7 +170,7 @@ export const pageSingletonQuery = defineQuery(`*[_id == $type][0]{
 }`);
 
 export const policyPageQuery = defineQuery(`*[_type == "policyPage" && slug.current == $slug][0]{
-  "slug": slug.current, eyebrow, title, body, sourceUrl, lastUpdated, isPlaceholder,
+  "slug": slug.current, eyebrow, title, subline, body, sourceUrl, lastUpdated, isPlaceholder,
   "needsReview": coalesce(needsReview, false), reviewNote, ${seo}
 }`);
 
@@ -193,8 +193,74 @@ export const shopCategoriesQuery = defineQuery(`select(
  * Cache tags = contract `_type` names (contract §5.3). /api/revalidate revalidates the changed `_type`
  * plus "sanity", "seo" (and "llms" for llmsContent). siteSettings/navigation are also tagged on every page.
  */
+// ---------- v1.4 chrome copy (was fixture-only). Shapes = types.ts LeadFlowPageCopy / EmbedCopy / … ----------
+/** quoteConfig option → LeadOption (key = the value the form submits). */
+const leadOption = /* groq */ `{ key, label, description, icon }`;
+const qc = /* groq */ `*[_id == "quoteConfig"][0]`;
+
+/** $pageId = "instantQuotePage" | "sellYourDevicePage", $kind = "quote" | "tradein". Options come from quoteConfig. */
+export const leadFlowQuery = defineQuery(`*[_id == $pageId][0]{
+  "flow": leadFlow{
+    ariaLabel, stepCounter,
+    "steps": steps[]{ "id": stepId, label, title, lede },
+    model{ searchLabel, inputLabel, placeholder, notSureLabel, help, error },
+    "contact": contact{ nameLabel, phoneLabel, emailLabel, detailsLabel, "consentLabel": coalesce(consentLabel, ${qc}.consentLabel), consentError },
+    chooseError,
+    buttons{ back, next, submit, submitting, retry },
+    submittingLede,
+    "success": success{ title, body, "ctas": ctas[]${cta} },
+    submitError{ title, body },
+    stagingNote,
+    "options": select(
+      $kind == "quote" => { "device": ${qc}.deviceTypes[]${leadOption}, "issue": ${qc}.repairIssues[]${leadOption} },
+      { "device": ${qc}.tradeInDeviceTypes[]${leadOption}, "condition": ${qc}.tradeInConditions[]${leadOption} }
+    )
+  },
+  "asideLabel": leadFlow.asideLabel,
+  "aside": leadFlow.aside[]{ label, "items": items[]{ strong, text }, body },
+  "contactCardLabel": leadFlow.contactCardLabel
+}`);
+
+const embedFields = /* groq */ `{ title, barLabel, loadLabel, description, directLabel, fallbackTitle, fallbackBody, callLabel, loadingLabel }`;
+/** $kind = "square" | "jotform" | "map" */
+export const embedCopyQuery = defineQuery(`*[_id == "uiCopy"][0]{
+  "copy": select($kind == "square" => embeds.square${embedFields}, $kind == "jotform" => embeds.jotform${embedFields}, embeds.map${embedFields})
+}.copy`);
+
+export const footerCopyQuery = defineQuery(`*[_id == "uiCopy"][0].footer{
+  quickLinksLabel, legalLabel, paymentsLabel, hoursLabel, socialLabel, spectrumLabel, locality,
+  paymentLabels{ paypal, venmo, visa, mastercard, amex, discover }
+}`);
+
+/** labels from uiCopy.policyChrome + per-policy sublines from policyPage.subline (flattened in content.ts). */
+export const policyChromeQuery = defineQuery(`{
+  "labels": *[_id == "uiCopy"][0].policyChrome{ tocLabel, introLabel, lastUpdatedLabel, sourceLabel, otherPoliciesLabel, reviewLabel },
+  "sublines": {
+    "privacy": *[_type == "policyPage" && slug.current == "privacy"][0].subline,
+    "terms": *[_type == "policyPage" && slug.current == "terms"][0].subline,
+    "shipping-return": *[_type == "policyPage" && slug.current == "shipping-return"][0].subline
+  }
+}`);
+
+export const heroChipsQuery = defineQuery(`*[_id == "homePage"][0].heroChips[]{ icon, label }`);
+
+export const servicesChromeQuery = defineQuery(`*[_id == "servicesPage"][0]{
+  indexLabel, indexAriaLabel, chipsAriaLabel,
+  "ctaSection": ctaHeading{ eyebrow, heading, "intro": subheading, "ctas": ^.ctas[]${cta} }
+}`);
+
+export const shopChromeQuery = defineQuery(`*[_id == "shopPage"][0]{
+  categoriesHeading, productsHeading, filterAriaLabel, allLabel, sortLabel,
+  sortOptions{ featured, newest, priceAsc, priceDesc },
+  loadingLabel,
+  emptyCategory{ title, body, callLabel, showAllLabel },
+  emptyCatalog{ title, body, ebayLabel }
+}`);
+
 export const TAGS = {
   shopCollectionConfig: "shopCollectionConfig",
+  quoteConfig: "quoteConfig",
+  uiCopy: "uiCopy",
   siteSettings: "siteSettings",
   navigation: "navigation",
   promotion: "promotion",

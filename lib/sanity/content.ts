@@ -70,6 +70,13 @@ export function mergeFallback<T>(data: unknown, fallback: T): T {
   return data as T;
 }
 
+/** Removes null-valued keys (deep) so optional `?: string` view-model fields are absent, never null. */
+function dropNulls<T>(v: T): T {
+  if (Array.isArray(v)) return v.map(dropNulls) as T;
+  if (isObj(v)) return Object.fromEntries(Object.entries(v).filter(([, x]) => x !== null).map(([k, x]) => [k, dropNulls(x)])) as T;
+  return v;
+}
+
 async function fromSanity<T>(
   query: string,
   params: Record<string, unknown>,
@@ -193,30 +200,55 @@ export const getServicesPage = singleton<ServicesPage>("servicesPage", fx.servic
 export const getShopPage = singleton<ShopPage>("shopPage", fx.shopPage);
 export const getSellPage = singleton<SellPage>("sellYourDevicePage", fx.sellPage);
 export const getQuotePage = singleton<QuotePage>("instantQuotePage", fx.quotePage);
-/** Lead-flow copy (steps, options, states). Fixture until the CMS contract adds the fields (quoteConfig + page singletons). */
-export const getLeadFlow = cache(async (kind: "quote" | "tradein"): Promise<LeadFlowPageCopy> =>
-  kind === "quote" ? fx.quoteFlow : fx.tradeInFlow,
+/** Lead-flow copy (steps, options, states). CMS v1.4: <page>.leadFlow + quoteConfig options; fixture back-fill. */
+export const getLeadFlow = cache(
+  (kind: "quote" | "tradein"): Promise<LeadFlowPageCopy> =>
+    fromSanity(
+      q.leadFlowQuery,
+      { pageId: kind === "quote" ? "instantQuotePage" : "sellYourDevicePage", kind },
+      [kind === "quote" ? q.TAGS.instantQuotePage : q.TAGS.sellYourDevicePage, q.TAGS.quoteConfig],
+      kind === "quote" ? fx.quoteFlow : fx.tradeInFlow,
+    ).then(dropNulls),
 );
-/** Embed frame copy (fixture-backed; additive, Frontend). */
-export const getEmbedCopy = cache(async (kind: EmbedKind): Promise<EmbedCopy> => fx.embedCopy[kind]);
+/** Embed frame copy. CMS v1.4: uiCopy.embeds.<kind>; fixture back-fill. */
+export const getEmbedCopy = cache(
+  (kind: EmbedKind): Promise<EmbedCopy> =>
+    fromSanity(q.embedCopyQuery, { kind }, [q.TAGS.uiCopy], fx.embedCopy[kind]).then(dropNulls),
+);
 export const getSchedulePage = singleton<SchedulePage>("scheduleRepairPage", fx.schedulePage);
 export const getFaqPage = singleton<FaqPage>("faqPage", fx.faqPage);
 export const getAboutPage = singleton<AboutPage>("aboutPage", fx.aboutPage);
 export const getFinancingPage = singleton<FinancingPage>("financingPage", fx.financingPage);
 export const getHomeInternetPage = singleton<HomeInternetPage>("homeInternetPage", fx.homeInternetPage);
 
-/** Homepage hero trust chips (fixture-backed; additive, Frontend). */
-export const getHeroChips = cache(async (): Promise<HeroChip[]> => fx.heroChips);
-/** /services index + CTA band (fixture-backed; additive, Frontend). */
-export const getServicesChrome = cache(async (): Promise<ServicesChromeCopy> => fx.servicesChrome);
-/** /shop chrome (fixture-backed; additive, Frontend). */
-export const getShopChrome = cache(async (): Promise<ShopChromeCopy> => fx.shopChrome);
+/** Homepage hero trust chips. CMS v1.4: homePage.heroChips (empty → fixture). */
+export const getHeroChips = cache(
+  (): Promise<HeroChip[]> => fromSanity(q.heroChipsQuery, {}, [q.TAGS.homePage], fx.heroChips),
+);
+/** /services index + CTA band. CMS v1.4: servicesPage chrome fields. */
+export const getServicesChrome = cache(
+  (): Promise<ServicesChromeCopy> =>
+    fromSanity(q.servicesChromeQuery, {}, [q.TAGS.servicesPage], fx.servicesChrome).then(dropNulls),
+);
+/** /shop chrome. CMS v1.4: shopPage chrome fields. */
+export const getShopChrome = cache(
+  (): Promise<ShopChromeCopy> => fromSanity(q.shopChromeQuery, {}, [q.TAGS.shopPage], fx.shopChrome).then(dropNulls),
+);
 /** /shop/[product] buy box + cart drawer (fixture-backed; additive, Frontend). */
 export const getPdpChrome = cache(async (): Promise<PdpChromeCopy> => fx.pdpChrome);
-/** Footer chrome labels (fixture-backed; additive, Frontend). */
-export const getFooterCopy = cache(async (): Promise<FooterCopy> => fx.footerCopy);
-/** PolicyLayout chrome (fixture-backed; additive, Frontend). */
-export const getPolicyChrome = cache(async (): Promise<PolicyChromeCopy> => fx.policyChrome);
+/** Footer chrome labels. CMS v1.4: uiCopy.footer. */
+export const getFooterCopy = cache(
+  (): Promise<FooterCopy> => fromSanity(q.footerCopyQuery, {}, [q.TAGS.uiCopy], fx.footerCopy).then(dropNulls),
+);
+/** PolicyLayout chrome. CMS v1.4: uiCopy.policyChrome + policyPage.subline. */
+export const getPolicyChrome = cache(async (): Promise<PolicyChromeCopy> => {
+  const raw = await sanityFetch<{ labels?: Partial<PolicyChromeCopy> | null; sublines?: Partial<PolicyChromeCopy["sublines"]> | null } | null>(
+    q.policyChromeQuery,
+    {} as never,
+    [q.TAGS.uiCopy, q.TAGS.policyPage],
+  );
+  return dropNulls(mergeFallback<PolicyChromeCopy>(raw ? { ...(raw.labels ?? {}), sublines: raw.sublines ?? {} } : null, fx.policyChrome));
+});
 export const getPolicyPage = cache(
   (slug: PolicySlug): Promise<PolicyPage> =>
     fromSanity(q.policyPageQuery, { slug }, [q.TAGS.policyPage], fx.policyPages[slug]),

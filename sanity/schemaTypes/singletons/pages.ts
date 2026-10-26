@@ -25,6 +25,15 @@ const page = (name: string, title: string, fields: ReturnType<typeof defineField
 export const homePage = page('homePage', 'Home', [
   defineField({name: 'heroPoster', title: 'Hero poster image (3D fallback / LCP)', type: 'image', group: g, fields: [defineField({name: 'alt', type: 'string'})]}),
   defineField({name: 'speakable', type: 'boolean', group: g, initialValue: true}),
+  defineField({
+    name: 'heroChips',
+    title: 'Hero trust chips',
+    type: 'array',
+    group: g,
+    description: 'Design .hero__trust. No rating chip until the Google rating is verified (P4).',
+    of: [defineArrayMember({type: 'object', name: 'heroChip', fields: [defineField({name: 'icon', type: 'string', options: {list: ['shield', 'wallet']}, validation: (r) => r.required()}), defineField({name: 'label', type: 'string', validation: (r) => r.required()})], preview: {select: {title: 'label', subtitle: 'icon'}}})],
+    validation: (r) => r.max(3),
+  }),
   heading('servicesHeading'),
   refs('services', 'service', {validation: (r: {length: (n: number) => unknown}) => r.length(8)}),
   heading('howItWorksHeading'),
@@ -67,6 +76,11 @@ export const servicesPage = page('servicesPage', 'Services', [
   refs('services', 'service', {validation: (r: {length: (n: number) => unknown}) => r.length(14)}),
   heading('faqHeading'),
   refs('faqs', 'faq'),
+  defineField({name: 'indexLabel', title: 'Services index label', type: 'string', group: g, description: '{count} = number of services, e.g. "{count} services".'}),
+  defineField({name: 'indexAriaLabel', type: 'string', group: g}),
+  defineField({name: 'chipsAriaLabel', type: 'string', group: g}),
+  heading('ctaHeading'),
+  ctas(),
 ])
 
 export const shopPage = page('shopPage', 'Shop', [
@@ -86,8 +100,23 @@ export const shopPage = page('shopPage', 'Shop', [
       }),
     ],
   }),
-  defineField({name: 'emptyStateText', type: 'string', group: g}),
+  defineField({name: 'emptyStateText', type: 'string', group: g, description: 'Deprecated (v1.4): use Empty catalog below.'}),
   defineField({name: 'ctaFallback', type: 'cta', group: g}),
+  defineField({name: 'categoriesHeading', type: 'string', group: g}),
+  defineField({name: 'productsHeading', type: 'string', group: g}),
+  defineField({name: 'filterAriaLabel', type: 'string', group: g}),
+  defineField({name: 'allLabel', title: '"All" filter label', type: 'string', group: g}),
+  defineField({name: 'sortLabel', type: 'string', group: g}),
+  defineField({
+    name: 'sortOptions',
+    type: 'object',
+    group: g,
+    description: '"Newest" sorts by Shopify publishedAt/createdAt (Storefront API); leave empty to hide it.',
+    fields: ['featured', 'newest', 'priceAsc', 'priceDesc'].map((n) => defineField({name: n, type: 'string'})),
+  }),
+  defineField({name: 'loadingLabel', type: 'string', group: g}),
+  defineField({name: 'emptyCategory', type: 'object', group: g, fields: ['title', 'body', 'callLabel', 'showAllLabel'].map((n) => defineField({name: n, type: 'string'}))}),
+  defineField({name: 'emptyCatalog', type: 'object', group: g, fields: ['title', 'body', 'ebayLabel'].map((n) => defineField({name: n, type: 'string'}))}),
 ])
 
 export const sellYourDevicePage = page('sellYourDevicePage', 'Sell Your Device', [
@@ -98,6 +127,7 @@ export const sellYourDevicePage = page('sellYourDevicePage', 'Sell Your Device',
   heading('brandsHeading'),
   refs('brandsAccepted', 'brand'),
   ctas(),
+  defineField({name: 'leadFlow', title: 'Lead form copy', type: 'leadFlowCopy', group: g}),
 ])
 
 export const instantQuotePage = page('instantQuotePage', 'Instant Quote', [
@@ -106,6 +136,7 @@ export const instantQuotePage = page('instantQuotePage', 'Instant Quote', [
   strings('stepLabels'),
   defineField({name: 'noPricingNote', type: 'text', group: g}),
   defineField({name: 'ctaAfterSubmit', type: 'cta', group: g}),
+  defineField({name: 'leadFlow', title: 'Lead form copy', type: 'leadFlowCopy', group: g}),
 ])
 
 export const scheduleRepairPage = page('scheduleRepairPage', 'Schedule Repair', [

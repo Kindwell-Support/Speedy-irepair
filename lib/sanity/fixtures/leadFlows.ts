@@ -161,23 +161,24 @@ export const tradeInFlow: LeadFlowPageCopy = {
         { key: "Laptop", label: "Laptop", icon: "laptop" },
         { key: "Other", label: "Other", icon: "other" },
       ],
-      // Labels/descriptions are Design's proposal (HANDOFF open issue 5); keys = CMS quoteConfig.tradeInConditions seed.
+      // PM decision (Oct 27): Like new / Good / Cracked or damaged / Does not power on. key = submitted value
+      // = lib/forms/schemas.ts tradeInSchema.condition = CMS quoteConfig.tradeInConditions[].key.
       condition: [
         {
-          key: "Like New",
+          key: "Like new",
           label: "Like new",
           description: "No scratches, works perfectly",
           icon: "badge",
         },
         { key: "Good", label: "Good", description: "Light wear, works perfectly", icon: "check" },
         {
-          key: "Fair",
+          key: "Cracked or damaged",
           label: "Cracked or damaged",
           description: "Screen or body damage",
           icon: "phone",
         },
         {
-          key: "Broken",
+          key: "Does not power on",
           label: "Does not power on",
           description: "Dead or unknown",
           icon: "power",

@@ -171,4 +171,85 @@ export const hero = defineType({
   ],
 })
 
-export const objectTypes = [seo, link, navLink, cta, richText, riveIcon, step, openingHours, sectionHeading, hero]
+
+// ---------- v1.4: chrome copy (was Frontend fixtures only). Field names = web/lib/sanity/types.ts keys. ----------
+const str = (name: string, title?: string, description?: string) => defineField({name, type: 'string', ...(title ? {title} : {}), ...(description ? {description} : {})})
+const obj = (name: string, fields: ReturnType<typeof defineField>[], title?: string) => defineField({name, type: 'object', ...(title ? {title} : {}), options: {collapsible: true, collapsed: true}, fields})
+
+/** Icon keys the site can draw (LeadIconKey). Not free text: the icon set lives in code. */
+export const LEAD_ICONS = ['phone', 'tablet', 'watch', 'laptop', 'other', 'battery', 'port', 'camera', 'water', 'badge', 'check', 'power']
+
+/** Multi-step lead form copy (instantQuotePage.leadFlow, sellYourDevicePage.leadFlow). Options come from Quote & trade-in options. */
+export const leadFlowCopy = defineType({
+  name: 'leadFlowCopy',
+  title: 'Lead form copy',
+  type: 'object',
+  fields: [
+    str('ariaLabel', 'Form name (screen readers)'),
+    str('stepCounter', 'Step counter', 'Use {n} and {total}, e.g. "Step {n} of {total}".'),
+    defineField({
+      name: 'steps',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'leadStep',
+          fields: [
+            defineField({name: 'stepId', title: 'Step id', type: 'string', readOnly: true, description: 'Fixed by the form (device, brand, model, issue, condition, contact). Do not change.', options: {list: ['device', 'brand', 'model', 'issue', 'condition', 'contact']}, validation: (r) => r.required()}),
+            defineField({name: 'label', title: 'Short label (stepper)', type: 'string', validation: (r) => r.required()}),
+            defineField({name: 'title', title: 'Step heading', type: 'string', validation: (r) => r.required()}),
+            defineField({name: 'lede', title: 'Step intro', type: 'string'}),
+          ],
+          preview: {select: {title: 'title', subtitle: 'stepId'}},
+        }),
+      ],
+    }),
+    obj('model', [str('searchLabel'), str('inputLabel'), str('placeholder'), str('notSureLabel'), str('help'), str('error')], 'Model step'),
+    obj('contact', [str('nameLabel'), str('phoneLabel'), str('emailLabel'), str('detailsLabel'), str('consentLabel'), str('consentError')], 'Contact step'),
+    str('chooseError', 'Error when nothing is chosen'),
+    obj('buttons', [str('back'), str('next'), str('submit'), str('submitting'), str('retry')]),
+    str('submittingLede', 'Text while sending'),
+    obj('success', [str('title'), defineField({name: 'body', type: 'text', rows: 2}), defineField({name: 'ctas', type: 'array', of: [defineArrayMember({type: 'cta'})], validation: (r) => r.max(2)})], 'Success message'),
+    obj('submitError', [str('title'), defineField({name: 'body', type: 'text', rows: 2, description: 'The phone number is appended by the site.'})], 'Send error message'),
+    defineField({name: 'stagingNote', type: 'text', rows: 2, description: 'Shown only on staging when a submission is validated but not stored.'}),
+    str('asideLabel', 'Sidebar name (screen readers)'),
+    defineField({
+      name: 'aside',
+      title: 'Sidebar cards',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'leadAsideCard',
+          fields: [
+            defineField({name: 'label', type: 'string', validation: (r) => r.required()}),
+            defineField({name: 'items', type: 'array', of: [defineArrayMember({type: 'object', name: 'leadAsideItem', fields: [str('strong', 'Bold lead-in'), defineField({name: 'text', type: 'string', validation: (r) => r.required()})], preview: {select: {title: 'strong', subtitle: 'text'}}})]}),
+            defineField({name: 'body', type: 'text', rows: 2}),
+          ],
+        }),
+      ],
+    }),
+    str('contactCardLabel', 'Phone card label'),
+  ],
+})
+
+/** Third-party embed frame copy (Square / Jotform / map). Lives on Site labels (uiCopy.embeds). */
+export const embedCopy = defineType({
+  name: 'embedCopy',
+  title: 'Embed frame copy',
+  type: 'object',
+  options: {collapsible: true, collapsed: true},
+  fields: [
+    str('title', 'Frame title (screen readers)'),
+    str('barLabel', 'Bar caption'),
+    str('loadLabel', 'Load button'),
+    str('description', 'Cookie notice (before loading)'),
+    str('directLabel', 'Open-directly link'),
+    str('fallbackTitle', 'Fallback title (did not load)'),
+    str('fallbackBody', 'Fallback text', '{phone} is replaced with the business phone.'),
+    str('callLabel', 'Call button'),
+    str('loadingLabel', 'Loading text (screen readers)'),
+  ],
+})
+
+export const objectTypes = [seo, link, navLink, cta, richText, riveIcon, step, openingHours, sectionHeading, hero, leadFlowCopy, embedCopy]

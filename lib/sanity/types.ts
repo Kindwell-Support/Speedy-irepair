@@ -351,6 +351,8 @@ export interface PolicyPage extends Placeholderable {
   title: string;
   body: PortableTextBlock[];
   sourceUrl?: string | null;
+  /** v1.4 hero sub-line (Sanity policyPage.subline); PolicyChromeCopy.sublines is built from the same field. */
+  subline?: string | null;
   /** Sanity `lastUpdated` (date, YYYY-MM-DD). Additive (Frontend): exposed for the policy-meta row. */
   lastUpdated?: string | null;
   /** contract v1.2: live-site text kept verbatim but pending legal/client review (privacy, terms, shipping-return). */
@@ -421,7 +423,7 @@ export interface LeadStepCopy {
   lede?: string | null;
 }
 
-/** All copy for a lead flow. Fixture today; CMS fields to follow (quoteConfig + page singletons). */
+/** All copy for a lead flow. CMS v1.4: <page>.leadFlow (leadFlowCopy) + quoteConfig options; fixture back-fill. */
 export interface LeadFlowCopy {
   ariaLabel: string;
   steps: LeadStepCopy[];
@@ -463,7 +465,7 @@ export interface LeadFlowPageCopy {
   contactCardLabel: string;
 }
 
-/** Frontend: copy for an EmbedFacade frame set (Square / Jotform / map). Fixture-backed until a CMS field exists. */
+/** Frontend: copy for an EmbedFacade frame set (Square / Jotform / map). CMS v1.4: uiCopy.embeds.<kind>. */
 export interface EmbedCopy {
   /** iframe title (a11y) */
   title: string;
@@ -481,7 +483,7 @@ export interface EmbedCopy {
 }
 export type EmbedKind = "square" | "jotform" | "map";
 
-/** Frontend: shared PolicyLayout chrome (fixture-backed until CMS fields exist). */
+/** Frontend: shared PolicyLayout chrome. CMS v1.4: uiCopy.policyChrome + policyPage.subline. */
 export interface PolicyChromeCopy {
   tocLabel: string;
   introLabel: string;
@@ -494,7 +496,7 @@ export interface PolicyChromeCopy {
   sublines: Record<PolicySlug, string>;
 }
 
-/** Frontend: footer chrome labels (fixture-backed until CMS fields exist). */
+/** Frontend: footer chrome labels. CMS v1.4: uiCopy.footer. */
 export interface FooterCopy {
   quickLinksLabel: string;
   legalLabel: string;
@@ -506,13 +508,13 @@ export interface FooterCopy {
   paymentLabels: Record<PaymentMethod, string>;
 }
 
-/** Frontend: homepage hero trust chips (design .hero__trust). Fixture-backed; rating chip omitted until P4 is verified (D2). */
+/** Frontend: homepage hero trust chips (design .hero__trust). CMS v1.4: homePage.heroChips; rating chip omitted until P4 is verified (D2). */
 export interface HeroChip {
   icon: "shield" | "wallet";
   label: string;
 }
 
-/** Frontend: /services index + pre-footer CTA band (fixture-backed until CMS fields exist). */
+/** Frontend: /services index + pre-footer CTA band. CMS v1.4: servicesPage.{indexLabel,indexAriaLabel,chipsAriaLabel,ctaHeading,ctas}. */
 export interface ServicesChromeCopy {
   /** "{count} services" */
   indexLabel: string;
@@ -521,14 +523,15 @@ export interface ServicesChromeCopy {
   ctaSection: SectionCopy & { ctas: CtaLink[] };
 }
 
-/** Frontend: /shop chrome (category tiles, toolbar, empty frames). Fixture-backed until CMS fields exist. */
+/** Frontend: /shop chrome (category tiles, toolbar, empty frames). CMS v1.4: shopPage chrome fields. */
 export interface ShopChromeCopy {
   categoriesHeading: string;
   productsHeading: string;
   filterAriaLabel: string;
   allLabel: string;
   sortLabel: string;
-  sortOptions: { featured: string; priceAsc: string; priceDesc: string };
+  /** v1.4: `newest` (optional) sorts by Shopify publishedAt/createdAt from the Storefront API; empty = hide the option. */
+  sortOptions: { featured: string; priceAsc: string; priceDesc: string; newest?: string | null };
   loadingLabel: string;
   emptyCategory: { title: string; body: string; callLabel: string; showAllLabel: string };
   emptyCatalog: { title: string; body: string; ebayLabel: string };

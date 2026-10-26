@@ -82,6 +82,7 @@ export const structure: StructureResolver = (S, context) => {
               singleton('siteSettings', 'Business info & hours'),
               singleton('navigation', 'Navigation & footer'),
               singleton('quoteConfig', 'Quote & trade-in options'),
+              singleton('uiCopy', 'Site labels (embeds, footer, policies)'),
               ordered('brand', 'Brands', {id: 'brands'}),
             ]),
         ),

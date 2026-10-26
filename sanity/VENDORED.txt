@@ -1,1 +1,1 @@
-Vendored from cms/ (SCHEMA_CONTRACT v1.3) on 2026-10-26T22:16Z by scripts/sync-cms-schema.sh. Edit in cms/, then re-sync.
+Vendored from cms/ (SCHEMA_CONTRACT v1.4) on 2026-10-26T23:02Z by scripts/sync-cms-schema.sh. Edit in cms/, then re-sync.

@@ -43,8 +43,8 @@ export const tradeInSchema = z.object({
   deviceType: z.enum(["Phone", "Tablet", "Smartwatch", "Laptop", "Other"]),
   brand: z.enum(["Apple", "Samsung", "LG", "Google", "Motorola", "OnePlus", "Other"]),
   model: z.string().trim().min(1, "Please enter your model").max(120),
-  /** = cms quoteConfig.tradeInConditions seed (contract §2.4). */
-  condition: z.enum(["Like New", "Good", "Fair", "Broken"]),
+  /** = cms quoteConfig.tradeInConditions[].key (contract v1.4; PM decision Oct 27). */
+  condition: z.enum(["Like new", "Good", "Cracked or damaged", "Does not power on"]),
   details: z.string().trim().max(2000).optional(),
   name,
   phone,

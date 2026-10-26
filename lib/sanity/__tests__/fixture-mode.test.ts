@@ -9,6 +9,8 @@ import { fixtureFetch, FIXTURE_DOC_COUNT } from "../fixture";
 import * as q from "../queries";
 import { client } from "@/sanity/lib/client";
 import * as seo from "@/sanity/lib/seoQueries";
+import * as fx from "../fixtures";
+import { tradeInSchema } from "@/lib/forms/schemas";
 import { LLMS_TXT_DEFAULT } from "@/lib/seo/llms-defaults";
 
 const PH = /\[Placeholder/;
@@ -125,7 +127,7 @@ test("v1.3 fields: nav (7 + Services dropdown), eyebrows, page intro, valueProp 
   const quote = await c.getQuotePage();
   assert.match(quote.intro ?? "", /^Request a smartphone repair quote/);
   assert.match((await c.getSchedulePage()).intro ?? "", /^Book a smartphone repair appointment/);
-  assert.equal((await c.getSellPage()).formSection.eyebrow, "Trade-in form");
+  assert.equal((await c.getSellPage()).formSection.eyebrow, "Trade-in form · Lead capture");
   assert.equal((await c.getFinancingPage()).faqSection.eyebrow, "Financing FAQ");
   assert.equal((await c.getHomeInternetPage()).signUpSection?.heading, "Sign up for Home Internet.");
   assert.equal((await c.getAboutPage()).contactSection.eyebrow, "Contact");
@@ -137,4 +139,66 @@ test("v1.3 fields: nav (7 + Services dropdown), eyebrows, page intro, valueProp 
 test("no hand-fixture placeholder leaks into seeded fields", async () => {
   const s = await c.getServices();
   for (const x of s) assert.doesNotMatch(x.title, PH);
+});
+
+/** Raw GROQ result vs Frontend fixture: drop null/undefined/false-external so only real content differences fail. */
+const norm = (v: unknown): unknown => {
+  if (Array.isArray(v)) return v.map(norm);
+  if (v && typeof v === "object")
+    return Object.fromEntries(
+      Object.entries(v)
+        .filter(([k, x]) => x !== null && x !== undefined && !(k === "external" && x === false))
+        .map(([k, x]) => [k, norm(x)]),
+    );
+  return v;
+};
+
+test("v1.4: chrome copy comes from the seed (raw GROQ == Frontend fixture shapes), not back-fill", async () => {
+  for (const [kind, pageId, fixture] of [
+    ["quote", "instantQuotePage", fx.quoteFlow],
+    ["tradein", "sellYourDevicePage", fx.tradeInFlow],
+  ] as const) {
+    const raw = await fixtureFetch<Record<string, unknown>>(q.leadFlowQuery, { pageId, kind });
+    const { models: _m, ...flow } = fixture.flow;
+    assert.deepEqual(norm(raw), norm({ ...fixture, flow }), `leadFlow ${kind}`);
+  }
+  for (const kind of ["square", "jotform", "map"] as const)
+    assert.deepEqual(norm(await fixtureFetch(q.embedCopyQuery, { kind })), norm(fx.embedCopy[kind]), `embed ${kind}`);
+  assert.deepEqual(norm(await fixtureFetch(q.footerCopyQuery, {})), norm(fx.footerCopy));
+  const pc = await fixtureFetch<{ labels: object; sublines: object }>(q.policyChromeQuery, {});
+  assert.deepEqual(norm({ ...pc.labels, sublines: pc.sublines }), norm(fx.policyChrome));
+  assert.deepEqual(norm(await fixtureFetch(q.heroChipsQuery, {})), norm(fx.heroChips));
+  assert.deepEqual(norm(await fixtureFetch(q.servicesChromeQuery, {})), norm(fx.servicesChrome));
+  const shop = await fixtureFetch<{ sortOptions: { newest?: string } }>(q.shopChromeQuery, {});
+  assert.equal(shop.sortOptions.newest, "Newest");
+  assert.deepEqual(norm(shop), norm({ ...fx.shopChrome, sortOptions: { ...fx.shopChrome.sortOptions, newest: "Newest" } }));
+});
+
+test("v1.4: trade-in conditions (PM), option keys = form enums, policy dates, shop hero CTAs, design H1s", async () => {
+  const t = await c.getLeadFlow("tradein");
+  assert.deepEqual(t.flow.options.condition?.map((o) => o.label), ["Like new", "Good", "Cracked or damaged", "Does not power on"]);
+  assert.deepEqual(t.flow.options.condition?.map((o) => o.key), [...tradeInSchema.shape.condition.options]);
+  const qf = await c.getLeadFlow("quote");
+  assert.equal(qf.flow.success.ctas[1].external, false); // tel: is not an external (new-tab) link
+  for (const slug of ["privacy", "terms", "shipping-return"] as const) {
+    const p = await c.getPolicyPage(slug);
+    assert.equal(p.lastUpdated, "2026-10-27");
+    assert.equal(p.needsReview, true);
+    assert.match(p.reviewNote ?? "", /import date/);
+    assert.equal(p.subline, fx.policyChrome.sublines[slug]);
+  }
+  const shop = await c.getShopPage();
+  assert.deepEqual([shop.hero.primaryCta?.label, shop.hero.primaryCta?.href], ["Browse products", "/shop#products"]);
+  assert.deepEqual([shop.hero.secondaryCta?.label, shop.hero.secondaryCta?.href, shop.hero.secondaryCta?.external], [
+    "Finance with Acima",
+    "https://ecom.acimacredit.com/views/phone-auth/ecom-merchant-813293c2-9f1e-4987-8b83-6691e6baf75e?redirect=application",
+    true,
+  ]);
+  const quote = await c.getQuotePage();
+  assert.equal(quote.hero.headline, "Get a repair quote in four steps.");
+  assert.equal(quote.hero.subline, "Tell us your device, model and issue. We will contact you with your quote.");
+  assert.equal((await c.getHomePage()).hero.headline, "Cracked screen? Dead battery? We fix it in 45 minutes."); // spec-verbatim
+  assert.equal((await c.getSellPage()).hero.headline, "Get top dollar for your old device."); // spec-verbatim
+  const vp = await c.getValueProps();
+  assert.equal(vp.filter((v) => v.stat).length, 2);
 });

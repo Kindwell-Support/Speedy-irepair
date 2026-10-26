@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {LEAD_ICONS} from '../objects'
 
 export const siteSettings = defineType({
   name: 'siteSettings',
@@ -128,8 +129,10 @@ export const llmsContent = defineType({
 })
 
 const keyLabel = [
-  defineField({name: 'key', type: 'string', validation: (r) => r.required()}),
+  defineField({name: 'key', type: 'string', readOnly: true, description: 'The value the form submits. Must match the site form schema (lib/forms/schemas.ts); change only with a code change.', validation: (r) => r.required()}),
   defineField({name: 'label', type: 'string', validation: (r) => r.required()}),
+  defineField({name: 'description', type: 'string', description: 'Optional line under the option (v1.4).'}),
+  defineField({name: 'icon', type: 'string', options: {list: LEAD_ICONS}, description: 'Icon drawn by the site (v1.4).'}),
 ]
 
 export const quoteConfig = defineType({
@@ -149,7 +152,7 @@ export const quoteConfig = defineType({
     defineField({
       name: 'tradeInConditions',
       type: 'array',
-      of: [defineArrayMember({type: 'object', name: 'condition', fields: [...keyLabel, defineField({name: 'description', type: 'string'})]})],
+      of: [defineArrayMember({type: 'object', name: 'condition', fields: keyLabel})],
     }),
     defineField({
       name: 'tradeInModels',
@@ -164,4 +167,32 @@ export const quoteConfig = defineType({
     defineField({name: 'errorMessage', type: 'string'}),
   ],
   preview: {prepare: () => ({title: 'Quote & Trade-in Options'})},
+})
+
+/** v1.4 shared UI labels that were Frontend fixtures: embed frames, footer, policy layout. Field names = web types. */
+const lbl = (name: string, title?: string) => defineField({name, type: 'string', ...(title ? {title} : {})})
+export const uiCopy = defineType({
+  name: 'uiCopy',
+  title: 'Site labels',
+  type: 'document',
+  groups: [
+    {name: 'embeds', title: 'Embeds', default: true},
+    {name: 'footer', title: 'Footer'},
+    {name: 'policies', title: 'Policy pages'},
+  ],
+  fields: [
+    defineField({name: 'embeds', type: 'object', group: 'embeds', fields: [
+      defineField({name: 'square', title: 'Square booking', type: 'embedCopy'}),
+      defineField({name: 'jotform', title: 'Jotform Home Internet sign-up', type: 'embedCopy'}),
+      defineField({name: 'map', title: 'Google map', type: 'embedCopy'}),
+    ]}),
+    defineField({name: 'footer', type: 'object', group: 'footer', fields: [
+      lbl('quickLinksLabel'), lbl('legalLabel'), lbl('paymentsLabel'), lbl('hoursLabel'), lbl('socialLabel'), lbl('spectrumLabel'), lbl('locality', 'Locality line'),
+      defineField({name: 'paymentLabels', type: 'object', fields: ['paypal', 'venmo', 'visa', 'mastercard', 'amex', 'discover'].map((m) => lbl(m))}),
+    ]}),
+    defineField({name: 'policyChrome', title: 'Policy page labels', type: 'object', group: 'policies', description: 'Per-policy sub-lines live on each Policy page (subline).', fields: [
+      lbl('tocLabel'), lbl('introLabel'), lbl('lastUpdatedLabel'), lbl('sourceLabel'), lbl('otherPoliciesLabel'), lbl('reviewLabel', 'Pending-review note'),
+    ]}),
+  ],
+  preview: {prepare: () => ({title: 'Site labels'})},
 })
