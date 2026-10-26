@@ -5,7 +5,12 @@ import { EmbedFacade } from "@/components/ui/EmbedFacade";
 import { buttonClasses } from "@/components/ui/ButtonLink";
 import { telHref } from "@/lib/utils/format";
 import { HoursList } from "@/components/sections/global/HoursList";
-import { ContactForm } from "@/components/sections/forms/ContactForm";
+import dynamic from "next/dynamic";
+
+/** Below the fold on every route that uses it: split the client form into its own chunk (first-load JS budget). */
+const ContactForm = dynamic(() =>
+  import("@/components/sections/forms/ContactForm").then((m) => m.ContactForm),
+);
 
 /** Spec 2.1.9 location + contact (also used on /about and /schedule-repair). */
 export function LocationContact({
@@ -47,7 +52,12 @@ export function LocationContact({
             <h3 className="mb-3 text-h5">Hours</h3>
             <HoursList business={business} />
           </div>
-          <a href={business.externalLinks.maps} target="_blank" rel="noopener noreferrer" className={buttonClasses("primary", "lg")}>
+          <a
+            href={business.externalLinks.maps}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonClasses("primary", "lg")}
+          >
             {directionsLabel}
             <span className="sr-only"> (opens Google Maps in a new tab)</span>
           </a>
