@@ -1,9 +1,14 @@
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import type { PortableTextBlock } from "@/lib/sanity/types";
+import { blockText, headingId } from "./headingId";
 
 const components: PortableTextComponents = {
   block: {
-    h2: ({ children }) => <h2 className="mb-4 mt-10 text-h3">{children}</h2>,
+    h2: ({ children, value }) => (
+      <h2 id={headingId(blockText(value)) || undefined} className="mb-4 mt-10 scroll-mt-24 text-h3">
+        {children}
+      </h2>
+    ),
     h3: ({ children }) => <h3 className="mb-3 mt-8 text-h4">{children}</h3>,
     normal: ({ children }) => <p className="mb-4 text-body text-text-primary">{children}</p>,
   },

@@ -341,6 +341,8 @@ export interface PolicyPage extends Placeholderable {
   title: string;
   body: PortableTextBlock[];
   sourceUrl?: string | null;
+  /** Sanity `lastUpdated` (date, YYYY-MM-DD). Additive (Frontend): exposed for the policy-meta row. */
+  lastUpdated?: string | null;
   /** contract v1.2: live-site text kept verbatim but pending legal/client review (privacy, terms, shipping-return). */
   needsReview?: boolean;
   reviewNote?: string | null;
@@ -468,3 +470,16 @@ export interface EmbedCopy {
   loadingLabel: string;
 }
 export type EmbedKind = "square" | "jotform" | "map";
+
+/** Frontend: shared PolicyLayout chrome (fixture-backed until CMS fields exist). */
+export interface PolicyChromeCopy {
+  tocLabel: string;
+  introLabel: string;
+  lastUpdatedLabel: string;
+  sourceLabel: string;
+  otherPoliciesLabel: string;
+  /** Visible when policyPage.needsReview */
+  reviewLabel: string;
+  /** Hero sub-line per policy (design) */
+  sublines: Record<PolicySlug, string>;
+}

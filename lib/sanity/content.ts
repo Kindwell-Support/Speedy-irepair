@@ -11,6 +11,7 @@ import type {
   LeadFlowPageCopy,
   EmbedCopy,
   EmbedKind,
+  PolicyChromeCopy,
   FaqCategory,
   FaqPage,
   FinancingPage,
@@ -199,6 +200,8 @@ export const getAboutPage = singleton<AboutPage>("aboutPage", fx.aboutPage);
 export const getFinancingPage = singleton<FinancingPage>("financingPage", fx.financingPage);
 export const getHomeInternetPage = singleton<HomeInternetPage>("homeInternetPage", fx.homeInternetPage);
 
+/** PolicyLayout chrome (fixture-backed; additive, Frontend). */
+export const getPolicyChrome = cache(async (): Promise<PolicyChromeCopy> => fx.policyChrome);
 export const getPolicyPage = cache(
   (slug: PolicySlug): Promise<PolicyPage> =>
     fromSanity(q.policyPageQuery, { slug }, [q.TAGS.policyPage], fx.policyPages[slug]),

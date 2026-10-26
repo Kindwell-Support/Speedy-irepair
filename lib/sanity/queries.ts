@@ -170,7 +170,7 @@ export const pageSingletonQuery = defineQuery(`*[_id == $type][0]{
 }`);
 
 export const policyPageQuery = defineQuery(`*[_type == "policyPage" && slug.current == $slug][0]{
-  "slug": slug.current, eyebrow, title, body, sourceUrl, isPlaceholder,
+  "slug": slug.current, eyebrow, title, body, sourceUrl, lastUpdated, isPlaceholder,
   "needsReview": coalesce(needsReview, false), reviewNote, ${seo}
 }`);
 
