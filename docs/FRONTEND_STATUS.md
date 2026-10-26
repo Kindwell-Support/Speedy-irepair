@@ -1,56 +1,54 @@
 # FRONTEND_STATUS — Speedy iRepair (web/)
 
-Last updated: 2026-10-27, PKT (UTC+5). Owner: Frontend Engineer. Branch: `feature/foundation`. The `origin` remote now exists (github.com/Kindwell-Support/Speedy-irepair) but this box has no credentials, so **nothing was pushed** and `git pull --rebase` was skipped; DevOps pushes. Nothing has been deployed.
+Last updated: 2026-10-27 (batch 3), PKT (UTC+5). Owner: Frontend Engineer. Branch: `feature/foundation`. The `origin` remote now exists (github.com/Kindwell-Support/Speedy-irepair) but this box has no credentials, so **nothing was pushed** and `git pull --rebase` was skipped; DevOps pushes. Nothing has been deployed.
 
-## 1. Check / build status (batch 2, verified on committed HEAD `fb64602` via `git archive`, incl. CMS v1.4 `e49cbc5`)
+## 1. Check / build status (batch 3, verified on committed HEAD `2f3f943` via `git archive`, incl. CMS v1.5 `4561b28`)
 
 | Check | Status |
 |---|---|
-| `pnpm build` (clean, isolated copy `/tmp/fe-verify`) | **PASS**. First-load JS: `/` **146 kB** (target ≤ ~150), `/shop` 145, `/instant-quote` 143, `/sell-your-device` 143, `/services` 138, `/about` 127, `/shop/[product]` 126 (drawer is `next/dynamic`, loaded after first add), `/financing` 125, `/policies/[slug]` 108. Shared 104 kB |
-| `pnpm lint` | PASS |
-| `pnpm typecheck` | PASS |
-| `pnpm test:unit` | PASS (20) |
-| Overflow + one-H1 + HTTP 200 | **PASS 84/84**: 14 routes × 375/768/1024/1280/1440/1920, `scrollWidth ≤ clientWidth`, exactly one `<h1>` |
-| LeadFlow functional (Playwright) | PASS. `/instant-quote` (4 steps) and `/sell-your-device` (5 steps) reach the success frame with `x-qa-dry-run: 1` (staging-preview note shown); aborted `/api/forms/*` shows the error alert with answers kept + phone |
-| Shop functional | PASS. Category tile filters in place and writes `?category=`; deep link `/shop?category=ipads` preselects and shows the empty-category frame; sort select present (`data-testid="shop-sort"`) |
-| Cart drawer (Playwright, `/shop/iphone-xr-64gb-unlocked`) | PASS. Add to Cart opens `cart-drawer` (`data-state=open`) with the staging notice (fixture mode); Esc and `cart-drawer-close` close it; focus returns to `add-to-cart`; no overflow at 375 |
+| `pnpm build` (clean, isolated copy `/tmp/fe-verify`) | **PASS**. First-load JS: `/` **146 kB** (target ≤ ~150), `/shop` 146, `/instant-quote` 143, `/sell-your-device` 143, `/services` 138, `/home-internet` 137, `/about` 127, `/shop/[product]` 127 (Motion `<Drawer>` still `next/dynamic`, `ssr:false`), `/faq` 125, `/financing` 125, `/policies/[slug]` 108. Shared 104 kB |
+| `pnpm lint` / `pnpm typecheck` | PASS |
+| `pnpm test:unit` | **20/21**. `fixture-mode.test.ts` "v1.5" (CMS lane's test, line 228) compares the GROQ projection of the **seed** `uiCopy.productPage` with `fx.pdpChrome`. My additive optional fields (`inStockLabel`, `viewLabel`, `acimaLabel`, `acimaNote`, `assurances`, `related`) are in the fixture but not in the seed/schema/query yet. `getPdpChrome()` itself still equals the fixture (line 229 passes). Needs the CMS lane to add the fields (section 6) |
+| Overflow + one-H1 + HTTP 200 | **PASS 84/84** (14 routes × 375/768/1024/1280/1440/1920) |
+| axe (wcag2a/aa + best-practice, 14 routes + a 404 URL, 375 and 1280) | Clean except **`/` colour-contrast**: Motion's `ValueProps` sets inactive Why-detail lines to inline `opacity: 0.6` (Motion-owned, section 6) |
+| LeadFlow functional | PASS. Both flows reach success with `x-qa-dry-run: 1`; an aborted `/api/forms/*` shows the error alert, keeps answers, shows the phone number; `form-progress` present on both routes |
+| WebKit keyboard focus (Tab ×70 on /sell-your-device, /instant-quote, /shop, PDP, /policies/privacy at 375 and 1280) | PASS. Every focused element shows an outline or box-shadow; `<select>` shows a 2px solid outline |
+| Shop | PASS. Default "Featured" lists 8 in-stock items, then Extended Phone Warranty (sold out) last; `?category=ipads` shows the empty frame |
+| Cart drawer + buy box (`/shop/iphone-xr-64gb-unlocked`, 375 and 1280) | PASS. `pdp-qty`, `pdp-acima` (Acima URL, new tab), `pdp-assurances`, `related-products`, `stock-badge` present. Add to Cart opens the Motion Drawer (`[data-drawer][data-state=open]`, `cart-drawer`) with the staging notice. Esc and `cart-drawer-close` both close it, and focus returns to `add-to-cart`. No overflow at 375 |
+| Banner / nav | Rendered banner `<a href="https://form.jotform.com/253200750312037">` (new tab). Header order: Services, Shop, Sell Your Device, Home Internet, Financing, FAQ, About + Schedule Repair CTA |
 
 ## 2. Routes
 
 All 14 routes have one H1, `<JsonLd/>`, `generateMetadata`, and breadcrumb UI rendered from the page's BreadcrumbList. Staging is `noindex`; no raw `<img>`.
 
-## 3. Commits this batch (on `feature/foundation`, not pushed)
+## 3. Commits this batch (batch 3, on `feature/foundation` on top of `bfbf28d`, not pushed)
 
 | Commit | What |
 |---|---|
-| `b744be6` | LeadFlow copy types + fixtures (design verbatim, no prices), `getLeadFlow`; additive MultiStepForm props |
-| `76c4849` | Multi-step LeadFlow for /instant-quote and /sell-your-device (stepper, `form-progress`/`form-option`, validation, submitting/success/error; submits via `/api/forms/[type]` with shared zod schemas); NumberedSteps, BrandStrip, CtaBand |
-| `3a1fd36` | CMS v1.3: 7 nav links + Services dropdown, contact heading from contactSection, G4 text from page.intro |
-| **`e774b82`** | **Merge `perf/first-load-js`** — kept LeadFlow + lazy-zod; enum option lists computed server-side (`components/sections/forms/lead/enumOptions.ts`, `server-only`) and passed as props; TradeInForm removed |
-| `e2a98a9` | EmbedShell parity: branded bar, **8 s fallback** alert (direct link + call), static skeleton with shimmer hook |
-| `74390e9` | PolicyLayout: sub-line, **Last updated** + Source meta, sticky contents list ≥lg / disclosure below, h2 anchors, visible **pending-legal-review** note, Other policies |
-| `d1f2ae4` | Home Why ruled grid + `valueProp.stat` big numbers |
-| `5711cf6` | Footer (4/2/3/3 grid, social icon buttons, payment-method chips, oversized wordmark, bottom row) + hero eyebrow, line-split H1, trust chips |
-| `57f591d` | /services sticky numbered contents ≥lg, jump chips <lg, row styling, pre-footer CTA band |
-| `8850a66` | /shop category tiles, sticky shop-bar with sort select, empty-category / empty-catalog frames, skeleton loading frame |
-| `5eaa6ab` | Home How It Works step visuals (rail + progress track, tall tiles, outlined numerals, step icons, `data-state` active/done styles) and promo cards (feature card with glow + optional badge, link-style cards); `LineIcon` set |
-| `793c4dc` | /about (split with lede + Spectrum badge, value info cards, story split, 4-up team grid, CTA band) and /financing (split with check-list + partner panel, numbered steps, finance info cards, CTA band) |
-| `3e82938` | /shop/[product] cart drawer markup (native `<dialog>`, line items with qty stepper, subtotal, checkout, empty/staging/error states, `data-animate="drawer"`); buy-box states (Adding / Added / Sold out) from `getPdpChrome`; sr-only a11y strings moved to `components/ui/a11yStrings.ts`; shop sort renders only implemented keys |
-| **`fb64602`** | Drawer: focus returns to Add to Cart on close |
+| `c3bc8fe` | `data-testid="star-rating"` on the per-review star row (still only rendered for verified non-placeholder ratings, so D2 is unchanged). Review button label comes from CMS navigation. sr-only strings consolidated in `components/ui/a11yStrings` (`A11Y`, `A11yProps`). `/shop` passes `getA11yCopy()` to ShopBrowser |
+| `b383e9a` | Motion `CountUp` on purely numeric Why stats and on the `/home-internet` $40 figure (parsed from the CMS item text; SSR renders the final value). New `OfferCard` (`offer-card`) |
+| `d62dce2` | HomeHero passes the rendered `/hero/phone-poster.{avif,webp,png}` poster (`DEFAULT_POSTER`). SVG placeholder removed |
+| `0d34870` | Cart drawer now uses Motion `<Drawer>` (focus trap, Esc, aria-modal, inert, scroll lock). Native `<dialog>` code removed. Same content, states and testids (own sticky header keeps `cart-drawer-close`). Still lazy |
+| `6775cbe` | Shop "Featured" sort puts sold-out items last (**decision for the Design Lead to confirm**). ProductCard "View" / "Sold out" labels come from pdpChrome. Additive `PdpChromeCopy` fields + fixture values |
+| `1e6fae3` | PDP buy box: category eyebrow, In stock badge, option button groups (`variant-options`), `QuantityStepper` (`pdp-qty`, also used in cart lines), Finance with Acima + note (`pdp-acima`), assurances (`pdp-assurances`; the store row shows the siteSettings address), related products (`related-products`; same category first, in-stock first, max 4). The price still reads "Price from Shopify" |
+| `511fdcf` | Fixture fallback nav fixed to Services, Shop, Sell Your Device, Home Internet, Financing, FAQ, About (removed Instant Quote, swapped Financing/Home Internet). The seed was already correct |
+| `a7db485` | WebKit: real `outline` on `select`/`input`/`textarea` focus, since native selects ignore box-shadow (BUG-005/006). The announcement banner is a named `role="region"` (BUG-032) and its link gets a white focus outline (a red ring on the red bar was invisible). Small red text uses `primary-text` |
+| `bc7cbff` | axe: /faq questions are h2 (BUG-033). PDP Shopify description headings normalised under the H1 with no skipped levels. The `/` brands section is a plain section because the marquee is already the "Brands we repair" region (BUG-031). Services index numbers changed to `text-tertiary` (AA) |
+| `2f3f943` | `app/(site)/[...missing]` so unknown URLs render the branded 404 inside the header/main/footer landmarks (they previously got Next's bare root 404) |
+| *(this doc)* | FRONTEND_STATUS + screenshots |
 
-All chrome copy comes from Sanity-shaped fixture getters (`getLeadFlow`, `getEmbedCopy`, `getPolicyChrome`, `getFooterCopy`, `getHeroChips`, `getServicesChrome`, `getShopChrome`) — no hardcoded editable copy in components. The sr-only "Loading" / "(opens in a new tab)" strings are a11y chrome, kept as constants in `components/ui/a11yStrings.ts`. Icons are decorative and picked by index/href. Not editable copy.
+### Architect / Motion / CMS-owned files touched (smallest additive changes)
 
-### Architect / Motion-owned files touched (smallest additive changes)
+Batch 3:
+1. `lib/sanity/types.ts`: optional `PdpChromeCopy.inStockLabel/viewLabel/acimaLabel/acimaNote/assurances/related`; new `PdpAssurance`, `PdpAssuranceKey`.
+2. `lib/sanity/fixtures/pdpChrome.ts`: values for those fields (assurance copy from design/pages; return link `/policies/shipping-return`).
+3. `lib/sanity/fixtures/business.ts`: `navigation.primary` order (fallback only; the seed already matched).
+4. `styles/globals.css`: added the form-control `outline` focus rule (global wiring).
+5. No Motion files changed this batch (Drawer, CountUp and HeroDevice are used as delivered).
 
-1. `components/motion/MultiStepForm.tsx`: optional `header`, `progressTestId`, `titleClassName`.
-2. `components/motion/ValueProps.tsx`: optional `lead?: ReactNode` slot.
-3. `components/motion/ShopGrid.tsx`: optional controlled `value`, `emptyState`, `toolbarEnd`, `barClassName` (uncontrolled behaviour unchanged).
-4. `lib/sanity/types.ts`: LeadFlow, EmbedCopy/EmbedKind, PolicyChromeCopy, `PolicyPage.lastUpdated`, FooterCopy, HeroChip, ServicesChromeCopy, ShopChromeCopy.
-5. `lib/sanity/fixtures/*`: leadFlows, embeds, policyChrome, footer, heroChips, servicesChrome, shopChrome (+ index exports).
-6. `lib/sanity/content.ts`: the seven `cache()` getters above.
-7. `lib/sanity/queries.ts`: policy `lastUpdated` projection.
-8. Batch 2: `Promotion.badge?` (type + `promotionsQuery`); `valuesSection.items` projected from `values[]{title, description}`; FinancingPage `whatIsSection.highlights/visualLabel`, `whatYouCanFinanceSection.itemBodies`, `ctaSection`; About `ctaSection` + values bodies in `fixtures/pages.ts`; `PdpChromeCopy` type, `fixtures/pdpChrome.ts`, `getPdpChrome` (the CMS lane has since wired it to GROQ in `e49cbc5`).
-9. Earlier: `lib/utils/cn.ts` tailwind-merge font-size keys; `SectionCopy.eyebrow` + query.
+Earlier batches:
+1. `components/motion/MultiStepForm.tsx` (header/progressTestId/titleClassName), `ValueProps.tsx` (`lead`), `ShopGrid.tsx` (controlled value/emptyState/toolbarEnd/barClassName).
+2. `lib/sanity/*`: LeadFlow, EmbedCopy, PolicyChromeCopy, FooterCopy, HeroChip, ServicesChromeCopy, ShopChromeCopy, PdpChromeCopy types/fixtures/getters; `Promotion.badge?`; about/financing projections; policy `lastUpdated`; `lib/utils/cn.ts` font-size keys.
 
 ## 4. SEO G-items
 
@@ -68,7 +66,7 @@ All chrome copy comes from Sanity-shaped fixture getters (`getLeadFlow`, `getEmb
 
 ## 5. Design parity (for the UI/UX Design Lead)
 
-Comparisons (design left, build right): `docs/screenshots/compare/<slug>-{1440,375}.png` (28 pairs, regenerated on `fb64602`).
+Comparisons (design left, build right): `docs/screenshots/compare/<slug>-{1440,375}.png` (28 pairs, regenerated on `2f3f943`).
 
 **Now matching design**
 - /instant-quote, /sell-your-device: multi-step LeadFlow (progress, stepper, option cards, model field, consent, success/error frames), sticky aside, no prices.
@@ -81,7 +79,8 @@ Comparisons (design left, build right): `docs/screenshots/compare/<slug>-{1440,3
 - Home How It Works: step rail, tall step tiles with numerals + icons, active/done visual states (driven by Motion's `data-state`).
 - Home Promotions: 6/3/3 grid, feature card with glow, link-style secondary cards.
 - /about, /financing: design block order and layouts (see `793c4dc`).
-- /shop/[product]: cart drawer panel (header, lines, subtotal, checkout note, Checkout / Keep shopping).
+- /shop/[product]: full buy box (eyebrow, stock badge, options, qty stepper, Acima line, assurances, related products) and the Motion drawer.
+- /home-internet: offer cards with icons and the CountUp $40 figure.
 
 **Still deviates**
 | Area | Gap | Owner / note |
@@ -90,9 +89,9 @@ Comparisons (design left, build right): `docs/screenshots/compare/<slug>-{1440,3
 | Home Promotions | Feature "Home Internet" badge needs CMS `promotion.badge`; no card imagery (none in CMS) | CMS |
 | /about | Hero headline/CTAs from seed differ from design; 2 team members in fixtures vs 4 in design; story/team copy and photos TBD (P8); design's separate map + "Send us a message" blocks are the shared LocationContact block | CMS / Content |
 | /financing | Highlights, partner label, item bodies and CTA band are fixture values until CMS fields exist; hero copy from seed | CMS |
-| /shop/[product] | Only the drawer was built. The full design buy box (qty stepper, Acima line, assurances, related products) is not built. Drawer slide-in is Motion's. With no Storefront token the drawer shows the staging notice and an empty cart (no real lines to review) | Frontend next / Motion / DevOps (token) |
-| /shop "Featured" | Sold-out items can sort first (Extended Phone Warranty) | Design/PM to decide |
-| /shop hero | "Browse products / Finance with Acima" CTAs come from CMS hero ctas (empty in seed); no "Newest" sort (no createdAt) | CMS / Shopify |
+| /shop/[product] | The buy box is built. With no Storefront token: price reads "Price from Shopify", the drawer shows the staging notice and an empty cart, and fixture products have no option groups (the `variant-options` UI renders only when Shopify returns options). The related-products list uses the fixture catalog | DevOps (token) |
+| /shop "Featured" | **Decision to confirm:** in-stock first, sold-out last (Extended Phone Warranty now sorts last). Price sorts leave stock order alone | Design Lead |
+| /shop hero | "Browse products / Finance with Acima" CTAs come from CMS hero ctas (empty in seed); "Newest" stays hidden: `CatalogProvider` has no sort parameter. When it exists, map to Storefront `sortKey: CREATED_AT, reverse: true` (products) / `CREATED` (collection products) | CMS / **Architect** |
 | Home hero H1 | Design's 4 fixed lines approximated by sentence splits | Design accept or CMS line field |
 | Why | Icons not rendered; `valueProp.stat` has no seed values | CMS |
 | Policies | `lastUpdated` has no seed values (meta row hides) | CMS |
@@ -100,34 +99,62 @@ Comparisons (design left, build right): `docs/screenshots/compare/<slug>-{1440,3
 | Embeds | Idle click-to-load facade kept (privacy/perf) | Design Lead to accept |
 | Lead aside | Icons, static shimmer (no animation code) | Motion |
 | Quote H1 | Seed differs from design text | CMS |
-| Testimonials | Rating hidden (D2) | — |
+| Testimonials | Rating hidden (D2); `star-rating` row renders only for verified ratings | — |
+| Home Why | Inactive detail lines at inline `opacity:0.6` fail AA contrast (axe serious) | **Motion** (`ValueProps`) |
+| 404 page | Heading/body/button copy is hardcoded in `app/(site)/not-found.tsx` (pre-existing) | CMS field wanted (`uiCopy.notFound`) |
+| Shop | "Other" category fallback label is hardcoded in ShopBrowser | CMS (shopChrome) |
+| Hero poster | HeroDevice renders a raw `<picture>` (Motion-owned); the H1 remains the LCP candidate | Motion |
 
 Decisions in force: D1 4px scale, D2 rating hidden, D3 7 links + Services dropdown.
 
 ## 6. Contract gaps / blockers (with owners)
 
-- **CMS & Content Engineer:** `promotion.badge`; about `intro`/values descriptions/`ctaSection`; financing `highlights`, `visualLabel`, `itemBodies`, `ctaSection`; 4 team members + bios (some of these may already be covered by the in-progress v1.4 work). Earlier: schema fields for the chrome-copy fixtures (leadFlow, embeds, policyChrome, footer, heroChips, servicesChrome, shopChrome); seed values for `policyPage.lastUpdated`, `valueProp.stat`, shop hero ctas; quote H1 text.
-- **Technical Architect:** repo-wide `format:check` (other lanes' files).
-- **SEO:** `public/og/default.jpg`.
-- **DevOps:** push `feature/foundation` (no credentials on this box).
+- **CMS & Content Engineer:**
+  - Add `uiCopy.productPage` fields `inStockLabel`, `viewLabel`, `acimaLabel`, `acimaNote`, `assurances[] {key: shipping|returns|store|payments, title, body?, linkLabel?, linkHref?}` and `related {eyebrow?, heading}` to the schema, seed and `pdpChromeQuery`. Copy the values from `fixtures/pdpChrome.ts`. This makes the v1.5 unit test pass again.
+  - Banner: the seed `promotion-free-smartphone` (placements banner+homepage) already links to `https://form.jotform.com/253200750312037`, and so does the fixture. No change needed.
+  - Nav: the seed `navigation.headerLinks` order is correct. Only the fixture fallback was wrong (fixed in `511fdcf`).
+  - Still open from earlier: `uiCopy.notFound`, the shopChrome "Other" label, `valueProp.stat` / `policyPage.lastUpdated` seed values, about team (4), quote H1.
+- **Technical Architect:** `CatalogProvider` sort support (`sortKey`/`reverse`) before "Newest" can ship; repo-wide `format:check`.
+- **Motion:**
+  - `ValueProps` inactive opacity 0.6 fails AA (raise to about 0.8 or animate colour instead).
+  - `LogoLoop` is `role="region"` with the same name as the section heading. Frontend dropped the section's name to avoid duplication; if Motion removes the role, tell Frontend so the section label comes back.
+- **Design Lead:** confirm "Featured" = in-stock first.
+- **DevOps:** push `feature/foundation` (no credentials on this box); Storefront token.
 
-## 7. QA hooks (qa/README.md)
+## 7. QA
 
-All Frontend hooks present, including `form-progress`, `form-option`, `quote-form`, `trade-in-form`, `field-error`, `form-success`, `footer-wordmark`, `payment-methods`, `shop-sort`, `shop-loading`, `promo-card`, `spectrum-badge`, `team-grid`, `check-list`, `cta-band`, `buy-box`, `add-to-cart`, `cart-drawer`, `cart-drawer-close`, `cart-empty`, `cart-line`, `cart-checkout`, `data-section` ×12, `service-section` ×14, `product-card`. `x-qa-dry-run` is honoured by `/api/forms` (verified). Pending: `star-rating` (P4), `window.__QA__` (Motion).
+### Bug status (qa-bugs/INDEX.md, Frontend-assigned; QA ran against `e53843d`)
+| Bug | Status at `2f3f943` | Evidence / fix |
+|---|---|---|
+| BUG-001 /instant-quote multi-step + progress (Critical) | **Fixed** (`76c4849`, batch 2) | `form-progress` present; flow reaches success / error frames |
+| BUG-002 /sell-your-device multi-step (Critical) | **Fixed** (`76c4849`) | Same as BUG-001, 5 steps |
+| BUG-004 step-1 device types + progress, no prices | **Fixed** (`76c4849`) | Progress bar present; no prices on /instant-quote |
+| BUG-005 /sell-your-device WebKit focus on selects | **Fixed** (`a7db485`) | WebKit Tab sweep: 0 elements without an indicator; select outline 2px solid |
+| BUG-006 /instant-quote WebKit focus | **Fixed** (`a7db485`) | Same sweep |
+| BUG-007 /policies/privacy overflow at 375 | **Fixed** (`63aeac4`) | 84/84 overflow check incl. privacy at 375 |
+| BUG-031 axe landmark-unique on / | **Fixed** (`bc7cbff`) | axe clean for this rule |
+| BUG-032 axe region (14 routes) | **Fixed** (`a7db485`, `2f3f943`) | Banner is now a named region; the 404 renders inside the landmarks |
+| BUG-033 axe heading-order /faq, /shop | **Fixed** (`bc7cbff`) | /faq questions h2; /shop clean at HEAD; PDP description normalised |
+
+These need a QA re-run on a fresh snapshot to close formally. Not fixed by Frontend: the `/` colour-contrast item from Motion's ValueProps (above).
+
+### Colour rule audit (#D9161E for normal text / white-text fills; #ED1C24 only for large text, logo, icons, focus ring, decoration)
+- White-text fills: the banner, primary buttons and the checkout button use `bg-primary` (#D9161E). No `bg-brand` sits behind text anywhere in app/ or components/ (outside motion-lab).
+- `text-brand` remains only on icons (LineIcon/LeadIcon/CategoryIcon, the star glyphs), decorative eyebrow squares, borders and progress fills.
+- Fixed: `hover:text-brand` on the phone/email links (LocationContact) and the active services-index number now use `primary-text` (#FF4D53, the small-red-text token on dark).
+- Not touched (Motion-owned `/motion-lab/*` demo pages): `text-brand` labels and numerals. These routes are not part of the site.
+
+### Hooks
+New this batch: `star-rating`, `offer-card`, `pdp-qty`, `variant-options`, `pdp-acima`, `pdp-assurances`, `related-products`, `stock-badge`, `cart-drawer` (on the Motion Drawer panel; portal root `[data-drawer][data-state]`). All earlier hooks are unchanged (`form-progress`, `form-option`, `quote-form`, `trade-in-form`, `shop-sort`, `buy-box`, `add-to-cart`, `cart-drawer-close`, `cart-empty`, `cart-line`, `cart-checkout`, `product-card`, `data-section` ×12, …).
 
 ## 8. Markup ready for Motion & 3D
 
-- `/` (hero split + chips, `data-pin="how"`/`data-step`, Why stagger, HeroDevice poster)
-- `/instant-quote`, `/sell-your-device` (MultiStepForm step transitions, progress)
-- `/services` (reveal per section, `data-animate="toc-spy"` + `data-toc-link`)
-- `/policies/*` (toc-spy)
-- `/shop` (ShopGrid layout animation, `data-animate="shimmer"` skeletons)
-- `/faq` (Accordion), `/schedule-repair` + `/home-internet` (embed shimmer)
-- `/` How It Works: `[data-steps-progress]` track + `data-state="active|done"` styles on `[data-step]`; promos `data-animate="stagger"`
-- `/shop/[product]`: cart `<dialog data-animate="drawer" data-state="open|closed">` (no animation code; native open/close today)
-- `/about`, `/financing`: section reveal hooks on the new blocks
+- `/` hero (rendered poster), How It Works `data-step`/`data-state`, Why `CountUp`, promos stagger
+- `/home-internet` offer cards `data-animate="stagger"` + CountUp
+- `/shop/[product]` Motion `<Drawer>` (slide-in is Motion's)
+- `/instant-quote`, `/sell-your-device`, `/services`, `/policies/*`, `/shop`, `/faq`, embeds, as before
 
 ## 9. Screenshots
 
-- Build: `docs/screenshots/frontend/<slug>-{375,768,1024,1280,1440,1920}.png`, 14 routes, regenerated on `fb64602` (reduced motion). Drawer: `shop-product-drawer-{1280,375}.png`.
-- Design vs build: `docs/screenshots/compare/` (28 pairs).
+- Build: `docs/screenshots/frontend/<slug>-{375,768,1024,1280,1440,1920}.png`, 14 routes, regenerated on `2f3f943` (reduced motion).
+- Design vs build: `docs/screenshots/compare/` (28 pairs, regenerated on `2f3f943`).
