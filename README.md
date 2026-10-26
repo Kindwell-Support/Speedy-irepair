@@ -93,3 +93,17 @@ build → **QA PASS → QC PASS → Abdullah explicit "deploy"** → DevOps depl
 ## Credentials still needed
 
 See `STAGING_SETUP.md`.
+
+## Architecture docs (Technical Architect)
+
+| Doc | What |
+|---|---|
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Stack, ownership map, routes, Sanity/Shopify/forms, perf budgets, noindex ×3, decisions D1–D9 |
+| [`docs/CONTRACT_SANITY.md`](docs/CONTRACT_SANITY.md) | How web/ consumes `cms/SCHEMA_CONTRACT.md` (the schema source of truth), `pnpm sync:cms`, field mapping |
+| [`docs/CONTRACT_FRONTEND.md`](docs/CONTRACT_FRONTEND.md) | Page checklist, content getters, shop states, forms, embeds, motion wiring |
+| [`docs/CONTRACT_MOTION.md`](docs/CONTRACT_MOTION.md) | Motion lane contract (→ `docs/motion/`) |
+| [`docs/CODE_REVIEW.md`](docs/CODE_REVIEW.md) | ESLint-enforced rules 1–6 + PR checklist |
+| [`docs/ENV.md`](docs/ENV.md) | Every env var per environment |
+| [`docs/DESIGN_TOKENS.md`](docs/DESIGN_TOKENS.md) | `design/tokens.css` → Tailwind mapping, brand vs primary red, spacing |
+| [`docs/HANDOFF_DEVOPS.md`](docs/HANDOFF_DEVOPS.md) | Vercel settings, blockers, noindex checks, LHCI |
+| [`docs/REVIEW_FINDINGS.md`](docs/REVIEW_FINDINGS.md) | Contract conflicts + code-review findings with owners |

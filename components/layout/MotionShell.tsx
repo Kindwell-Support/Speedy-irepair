@@ -5,7 +5,7 @@ import { MotionProvider } from "@/components/motion/MotionProvider";
 import { PageTransition } from "@/components/motion/PageTransition";
 
 /**
- * Root motion wiring (keeps the Motion lane's three pieces, see docs/MOTION_CONTRACT.md):
+ * Root motion wiring (keeps the Motion lane's three pieces, see docs/CONTRACT_MOTION.md):
  *  - /studio: no Lenis, no cursor, no transitions (Sanity Studio owns its own scrolling).
  *  - /motion-lab (QA harness, not a site page): MotionProvider + PageTransition here.
  *  - site routes: MotionProvider here; PageTransition sits in app/(site)/layout.tsx around <main>

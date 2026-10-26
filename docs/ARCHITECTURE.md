@@ -44,7 +44,7 @@ lib/
   seo/                      metadata, JSON-LD builders, route SEO, llms defaults        [SEO]
   motion/                   gsap registration, bindings, tokens, reduced-motion         [Motion]
   env.ts / env.server.ts    typed env (server secrets never imported client-side)       [Architect]
-sanity/                     schemas (to be replaced by cms/schemaTypes, §4), desk, preview [CMS]
+sanity/                     schemaTypes/, structure.ts, presentation.ts vendored from cms/ by `pnpm sync:cms` (never hand-edit); lib/ (SEO adapter) [CMS/SEO]
 styles/                     tokens.css (Design, verbatim), globals.css                  [Design/Frontend]
 tests/e2e/                  smoke (DevOps), a11y + contract (Architect)                 [DevOps/QA]
 docs/                       this folder                                                 [Architect]
@@ -73,7 +73,7 @@ An owner is the person who approves changes to their area. Others may open PRs a
 Invariants (checked in tests): each route has **exactly one `<h1>`**, at least one valid JSON-LD block, metadata built by `lib/seo/metadata.buildMetadata`, and a canonical made from `NEXT_PUBLIC_SITE_URL` + path. Merchant HTML (Shopify descriptions) has its `<h1>` demoted to `<h2>`.
 
 ## 4. Content: Sanity
-- **The schema source of truth is `cms/SCHEMA_CONTRACT.md` (v1.1, frozen, CMS Engineer).** The schema code lives in `cms/schemaTypes/`, the SEO adapter in `cms/adapters/seoQueries.ts`, and the seed in `cms/seed/seed.ndjson`. `web/` does not keep a second schema set. `web/sanity/schemas` is replaced by `cms/schemaTypes` when the CMS lane moves it in. Until then, CONTRACT_SANITY lists every field-name mismatch between `lib/sanity/queries.ts` and the contract.
+- **The schema source of truth is `cms/SCHEMA_CONTRACT.md` (v1.1; v1.2 in progress, CMS Engineer).** The schema code lives in `cms/schemaTypes/`, the SEO adapter in `cms/adapters/seoQueries.ts`, and the seed in `cms/seed/seed.ndjson`. `web/` does not keep a second schema set. `web/sanity/schemaTypes` is a vendored copy, refreshed by `pnpm sync:cms` (`sanity/VENDORED.txt`). `lib/sanity/queries.ts` adapts contract fields to the view types. The full mapping is in CONTRACT_SANITY. Without a project id, the same GROQ runs over the committed seed (fixture mode).
 - **Fixture fallback.** When `NEXT_PUBLIC_SANITY_PROJECT_ID` is unset, every getter in `lib/sanity/content.ts` returns typed fixtures (`lib/sanity/fixtures`), seeded with spec facts and placeholders. The site builds and runs with zero credentials. A Sanity fetch error also falls back to fixtures, never to a 500.
 - **Caching.** Use `sanityFetch` with `next: { tags: [_type, …] }`. The webhook calls `/api/revalidate` (HMAC check through `next-sanity/webhook`), which calls `revalidateTag` (CMS contract §5.3). The time-based safety net is 60 s.
 - **Draft mode.** `/api/draft-mode/enable` uses `defineEnableDraftMode` with the Viewer token. Stega and visual editing load only in draft mode.
@@ -135,6 +135,6 @@ In production with no delivery configured, the route returns `503 not_configured
 | D9 | Embedded Studio at `/studio` | One deploy, one domain; noindexed and excluded from sitemap. |
 
 ## 10. Known risks / open items
-- Home first-load JS was ≈254 kB before the Motion lane's LazyMotion change and is **225 kB** after (last build). Keep watching it: the root layout carries the motion stack for every route.
+- Home first-load JS was ≈254 kB before the Motion lane's LazyMotion change and was 225 kB after it. After the async motion-engine chunk it is **178 kB** (shared 103 kB, PDP 122 kB; last build Oct 27). Keep watching it: the root layout carries the motion stack for every route.
 - Hours: SEO/CMS seed Mon–Sat 12:00–18:00 "verified" from Square and Google mirrors, while the web fixtures show the "Hours coming soon" placeholder. The client must confirm. Until then the fixtures stay as placeholders (no-invention rule).
 - Blockers (ClickUp): Vercel auth, GitHub auth, Shopify Storefront token, Sanity project and tokens. None of them blocks development, because of D7 and the fixtures.

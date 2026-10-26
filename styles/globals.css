@@ -12,6 +12,7 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    font-feature-settings: "cv11", "ss03"; /* Design HANDOFF: Inter alternates */
   }
   /* Lenis recommended base styles (scroll owner = Lenis; see components/motion/LenisProvider) */
   html.lenis,
