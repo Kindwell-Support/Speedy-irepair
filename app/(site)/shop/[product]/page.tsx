@@ -3,13 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCatalog } from "@/lib/shop";
-import type { Product } from "@/lib/shop/types";
 import { pageMetadata } from "@/lib/page/meta";
 import { productMetaDescription, productMetaTitle } from "@/lib/seo/content";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForProduct } from "@/lib/seo/routes";
-import type { ProductInput } from "@/lib/seo/jsonld";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { formatPrice, PRICE_PLACEHOLDER } from "@/lib/utils/format";
 import { AddToCart } from "./AddToCart";
@@ -37,20 +35,6 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 /** Merchant HTML may contain <h1>; the page must keep exactly one h1 (the product title). */
 const demoteHeadings = (html: string) => html.replace(/<(\/?)h1\b/gi, "<$1h2");
 
-function toProductInput(p: Product): ProductInput {
-  return {
-    handle: p.handle,
-    name: p.title,
-    description: p.descriptionHtml.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() || undefined,
-    image: p.images.map((i) => i.url),
-    brand: p.vendor || undefined,
-    price: p.priceRange.min.amount ?? undefined,
-    priceCurrency: p.priceRange.min.currencyCode,
-    availability: p.availableForSale ? "InStock" : "OutOfStock",
-    category: p.productType || undefined,
-  };
-}
-
 /** R04 — on-site PDP (Decision: headless Shopify via CatalogProvider; checkout hands off to Shopify). */
 export default async function ProductPage({ params }: Params) {
   const { product: handle } = await params;
@@ -61,7 +45,8 @@ export default async function ProductPage({ params }: Params) {
   const fallback = p.source === "fixture" ? PRICE_PLACEHOLDER : "Contact us";
   return (
     <>
-      <JsonLd data={jsonLdForProduct(seo, toProductInput(p))} />
+      {/* Product markup only for live Shopify items; fixture/placeholder => BreadcrumbList only (lib/seo/catalog.ts). */}
+      <JsonLd data={jsonLdForProduct(seo, { item: p, source: catalog.name })} />
       <div className="container-site py-12">
         <nav aria-label="Breadcrumb" className="mb-8 text-body-sm text-text-secondary">
           <Link href="/" className="hover:text-text">Home</Link> / <Link href="/shop" className="hover:text-text">Shop</Link> /{" "}

@@ -28,7 +28,8 @@ export default async function ShopPage() {
   ]);
   return (
     <>
-      <JsonLd data={jsonLdForShop(seo)} />
+      {/* Product markup only for live Shopify items; fixture catalog => BreadcrumbList only. */}
+      <JsonLd data={jsonLdForShop(seo, { items: products, source: catalog.name })} />
       <Breadcrumbs data={jsonLdForShop(seo)} />
       <PageHero hero={page.hero} />
       <div className="container-site py-12">
