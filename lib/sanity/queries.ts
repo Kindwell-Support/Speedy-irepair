@@ -15,7 +15,7 @@ const image = /* groq */ `{
   "width": asset->metadata.dimensions.width,
   "height": asset->metadata.dimensions.height,
   "lqip": asset->metadata.lqip,
-  "isSanity": true
+  "isSanity": string::startsWith(coalesce(asset->url, ""), "https://cdn.sanity.io")
 }`;
 
 /** contract `link`/`cta` → CtaLink */
@@ -149,21 +149,31 @@ export const pageSingletonQuery = defineQuery(`*[_id == $type][0]{
 }`);
 
 export const policyPageQuery = defineQuery(`*[_type == "policyPage" && slug.current == $slug][0]{
-  "slug": slug.current, title, body, sourceUrl, isPlaceholder, ${seo}
+  "slug": slug.current, title, body, sourceUrl, isPlaceholder,
+  "needsReview": coalesce(needsReview, false), reviewNote, ${seo}
 }`);
 
 export const llmsDocumentQuery = defineQuery(`*[_id == "llmsContent"][0]{ "llms": shortVersion, "llmsFull": fullVersion }`);
 
-/** Shop category labels + Shopify collection handles (contract §2.5 shopPage.categories, §3.6 option b). */
-export const shopCategoriesQuery = defineQuery(`*[_id == "shopPage"][0].categories[]{
-  "handle": coalesce(shopifyCollectionHandle, key), "title": label, "featuredProductHandles": [], "order": 0
-}`);
+/**
+ * Shop category editorial (contract v1.2 §3.6, headless Shopify): one `shopCollectionConfig` per Shopify
+ * collection, in Studio drag order. Falls back to the v1.1 `shopPage.categories` list while none exist.
+ */
+export const shopCategoriesQuery = defineQuery(`select(
+  count(*[_type == "shopCollectionConfig"]) > 0 => *[_type == "shopCollectionConfig"] | order(orderRank asc){
+    handle, title, description, "heroImage": heroImage${image}, "featuredProductHandles": coalesce(featuredProductHandles, []), "order": 0, ${seo}
+  },
+  *[_id == "shopPage"][0].categories[]{
+    "handle": coalesce(shopifyCollectionHandle, key), "title": label, "featuredProductHandles": [], "order": 0
+  }
+)`);
 
 /**
  * Cache tags = contract `_type` names (contract §5.3). /api/revalidate revalidates the changed `_type`
  * plus "sanity", "seo" (and "llms" for llmsContent). siteSettings/navigation are also tagged on every page.
  */
 export const TAGS = {
+  shopCollectionConfig: "shopCollectionConfig",
   siteSettings: "siteSettings",
   navigation: "navigation",
   promotion: "promotion",

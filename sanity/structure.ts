@@ -34,7 +34,8 @@ export const structure: StructureResolver = (S, context) => {
           S.list()
             .title('Shop')
             .items([
-              singleton('shopPage', 'Shop page & categories'),
+              singleton('shopPage', 'Shop page'),
+              ordered('shopCollectionConfig', 'Categories (Shopify collections, editorial)', {id: 'shop-categories'}),
               ...(SHOP_SOURCE === 'sanity' ? [ordered('product', 'Products', {id: 'products'})] : []),
             ]),
         ),
@@ -94,12 +95,12 @@ export const structure: StructureResolver = (S, context) => {
             .items([
               S.listItem().id('sub-new').title('New (all forms)').child(S.documentList().title('New').schemaType('formSubmission').filter('_type == "formSubmission" && status == "new"').defaultOrdering([{field: 'submittedAt', direction: 'desc'}])),
               ...[
-                ['instantQuote', 'Instant quotes'],
+                ['quote', 'Instant quotes'],
                 ['tradeIn', 'Trade-ins'],
                 ['contact', 'Contact'],
                 ['newsletter', 'Newsletter'],
               ].map(([k, t]) =>
-                S.listItem().id(`sub-${k}`).title(t).child(S.documentList().title(t).schemaType('formSubmission').filter('_type == "formSubmission" && formType == $k').params({k}).defaultOrdering([{field: 'submittedAt', direction: 'desc'}])),
+                S.listItem().id(`sub-${k}`).title(t).child(S.documentList().title(t).schemaType('formSubmission').filter('_type == "formSubmission" && type == $k').params({k}).defaultOrdering([{field: 'submittedAt', direction: 'desc'}])),
               ),
             ]),
         ),

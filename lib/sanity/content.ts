@@ -161,7 +161,7 @@ export const getPromotions = cache(
 
 export const getShopCategories = cache(
   (): Promise<ShopCategoryEditorial[]> =>
-    fromSanity<ShopCategoryEditorial[]>(q.shopCategoriesQuery, {}, [q.TAGS.shopPage], []),
+    fromSanity<ShopCategoryEditorial[]>(q.shopCategoriesQuery, {}, [q.TAGS.shopCollectionConfig, q.TAGS.shopPage], []).then(indexOrder),
 );
 
 // ---------- Page singletons (ids = contract §2) ----------

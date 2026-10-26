@@ -328,6 +328,9 @@ export interface PolicyPage extends Placeholderable {
   title: string;
   body: PortableTextBlock[];
   sourceUrl?: string | null;
+  /** contract v1.2: live-site text kept verbatim but pending legal/client review (privacy, terms, shipping-return). */
+  needsReview?: boolean;
+  reviewNote?: string | null;
   seo: Seo;
 }
 

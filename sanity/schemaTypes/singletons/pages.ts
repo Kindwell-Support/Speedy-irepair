@@ -136,6 +136,7 @@ export const financingPage = page('financingPage', 'Financing', [
   steps('howItWorksSteps', 3),
   strings('whatYouCanFinance'),
   defineField({name: 'applyCta', type: 'cta', group: g}),
+  defineField({name: 'acimaLogo', type: 'image', group: g, description: 'Licensed Acima logo (design open issue 7).', fields: [defineField({name: 'alt', type: 'string'})]}),
   refs('faqs', 'faq'),
 ])
 
@@ -145,6 +146,7 @@ export const homeInternetPage = page('homeInternetPage', 'Home Internet', [
   defineField({name: 'howToSignUp', type: 'text', group: g}),
   defineField({name: 'embedMode', type: 'string', group: g, options: {list: ['iframe', 'wrapper']}, initialValue: 'iframe'}),
   defineField({name: 'jotformUrl', type: 'url', group: g}),
+  defineField({name: 'spectrumBadge', type: 'image', group: g, description: 'Licensed Spectrum Authorized Retailer badge.', fields: [defineField({name: 'alt', type: 'string'})]}),
   refs('faqs', 'faq'),
 ])
 

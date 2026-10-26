@@ -18,7 +18,9 @@
     "lhci": "lhci autorun",
     "check": "pnpm lint && pnpm typecheck && pnpm format:check",
     "rive:manifest": "node scripts/gen-rive-manifest.mjs",
-    "sync:cms": "bash scripts/sync-cms-schema.sh"
+    "sync:cms": "bash scripts/sync-cms-schema.sh",
+    "fixture:build": "node scripts/build-sanity-fixture.mjs",
+    "test:unit": "tsx --conditions=react-server --test lib/sanity/__tests__/*.test.ts lib/sanity/__tests__/*.test.mts"
   },
   "dependencies": {
     "@portabletext/react": "^8.0.1",

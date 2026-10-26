@@ -161,6 +161,8 @@ export const policyPage = defineType({
     defineField({name: 'sourceUrl', type: 'url', group: 'content'}),
     defineField({name: 'lastUpdated', type: 'date', group: 'content'}),
     {...isPlaceholderField, group: 'content'},
+    defineField({name: 'needsReview', title: 'Pending legal / client review', type: 'boolean', group: 'content', initialValue: false, description: 'Live-site text kept verbatim but not yet approved. Site shows a "pending review" note on staging.'}),
+    defineField({name: 'reviewNote', type: 'string', group: 'content', hidden: ({document}) => !document?.needsReview}),
     seoField,
   ],
 })
@@ -205,12 +207,21 @@ export const formSubmission = defineType({
   title: 'Form submission',
   type: 'document',
   readOnly: false,
+  // v1.2: ONE type for every site form, written only by app/api/forms/[type] with the server-only write token.
+  // _id is always `submissions.<uuid>` (dot path = private: never returned to unauthenticated/public reads).
   fields: [
-    defineField({name: 'formType', type: 'string', readOnly: true, options: {list: ['instantQuote', 'tradeIn', 'contact', 'newsletter']}}),
+    defineField({
+      name: 'type',
+      title: 'Form',
+      type: 'string',
+      readOnly: true,
+      options: {list: [{title: 'Instant quote', value: 'quote'}, {title: 'Trade-in', value: 'tradeIn'}, {title: 'Contact', value: 'contact'}, {title: 'Newsletter', value: 'newsletter'}]},
+      validation: (r) => r.required(),
+    }),
     defineField({name: 'name', type: 'string', readOnly: true}),
     defineField({name: 'email', type: 'string', readOnly: true}),
     defineField({name: 'phone', type: 'string', readOnly: true}),
-    defineField({name: 'message', type: 'text', readOnly: true}),
+    defineField({name: 'message', type: 'text', readOnly: true, description: 'Contact message, or the optional "details" on quote / trade-in.'}),
     defineField({
       name: 'payload',
       type: 'object',
@@ -221,9 +232,31 @@ export const formSubmission = defineType({
     defineField({name: 'submittedAt', type: 'datetime', readOnly: true}),
     defineField({name: 'webhookDelivered', type: 'boolean', readOnly: true}),
     defineField({name: 'userAgent', type: 'string', readOnly: true}),
-    defineField({name: 'status', type: 'string', options: {list: ['new', 'contacted', 'closed']}, initialValue: 'new'}),
+    defineField({name: 'status', type: 'string', options: {list: ['new', 'contacted', 'closed', 'spam']}, initialValue: 'new'}),
     defineField({name: 'internalNotes', type: 'text'}),
   ],
   orderings: [{title: 'Newest', name: 'newest', by: [{field: 'submittedAt', direction: 'desc'}]}],
-  preview: {select: {title: 'name', subtitle: 'formType', email: 'email'}, prepare: ({title, subtitle, email}) => ({title: title || email || 'Submission', subtitle})},
+  preview: {select: {title: 'name', subtitle: 'type', email: 'email'}, prepare: ({title, subtitle, email}) => ({title: title || email || 'Submission', subtitle})},
+})
+
+/**
+ * v1.2: headless Shopify (SANITY_STUDIO_SHOP_SOURCE=shopify). Shopify owns products, prices and stock.
+ * Sanity holds editorial only, one doc per Shopify collection: copy, order (drag), featured handles, SEO.
+ */
+export const shopCollectionConfig = defineType({
+  name: 'shopCollectionConfig',
+  title: 'Shop category (editorial)',
+  type: 'document',
+  groups: seoGroups,
+  fields: [
+    defineField({name: 'handle', title: 'Shopify collection handle', type: 'string', group: 'content', description: 'Must match the collection handle in Shopify exactly.', validation: (r) => r.required().regex(/^[a-z0-9-]+$/, {name: 'handle'})}),
+    defineField({name: 'title', type: 'string', group: 'content', validation: (r) => r.required()}),
+    defineField({name: 'description', type: 'text', rows: 3, group: 'content'}),
+    defineField({name: 'heroImage', type: 'image', group: 'content', options: {hotspot: true}, fields: [defineField({name: 'alt', type: 'string'})]}),
+    defineField({name: 'featuredProductHandles', title: 'Featured Shopify product handles', type: 'array', group: 'content', of: [defineArrayMember({type: 'string'})]}),
+    defineField({name: 'emptyStateText', type: 'string', group: 'content', description: 'Shown when the Shopify collection has no products. Defaults to Shop page empty-state text.'}),
+    rankField('shopCollectionConfig'),
+    defineField({...seoField, validation: undefined, description: 'Optional: only used if category pages are added.'}),
+  ],
+  preview: {select: {title: 'title', subtitle: 'handle'}},
 })

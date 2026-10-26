@@ -2,6 +2,7 @@ import "server-only";
 import { draftMode } from "next/headers";
 import type { QueryParams } from "next-sanity";
 import { sanityClient } from "./client";
+import { fixtureFetch } from "./fixture";
 import { serverEnv } from "@/lib/env.server";
 
 /** Default ISR window for Sanity-backed pages (seconds). On-demand revalidation via /api/revalidate. */
@@ -9,14 +10,15 @@ export const SANITY_REVALIDATE_SECONDS = 60;
 
 /**
  * Fetch from Sanity with ISR tags; in draft mode uses the read token + drafts perspective (no cache).
- * Returns null when Sanity is not configured or the request fails, so callers fall back to fixtures.
+ * Not configured (NEXT_PUBLIC_SANITY_PROJECT_ID unset) => FIXTURE MODE: the same query runs over the committed
+ * seed with groq-js (./fixture.ts). A failed live request returns null, so callers back-fill from fixtures.
  */
 export async function sanityFetch<T>(
   query: string,
   params: QueryParams = {},
   tags: string[] = [],
 ): Promise<T | null> {
-  if (!sanityClient) return null;
+  if (!sanityClient) return fixtureFetch<T>(query, params);
   let isDraft = false;
   try {
     isDraft = (await draftMode()).isEnabled;

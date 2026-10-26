@@ -8,3 +8,5 @@ test-results
 components/motion/reactbits
 lib/shop/fixtures/*.json
 .arch-backup
+lib/sanity/fixtures/dataset.json
+sanity/seed/seed.ndjson

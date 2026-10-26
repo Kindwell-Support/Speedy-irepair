@@ -82,7 +82,7 @@ export type FormPayloads = {
 
 /** API response shape for every form route. */
 export type FormResponse =
-  | { ok: true; stored: boolean; notified: boolean; staging: boolean }
+  | { ok: true; stored: boolean; notified: boolean; staging: boolean; dryRun?: boolean }
   | { ok: false; error: "validation"; fieldErrors: Record<string, string[] | undefined> }
   | { ok: false; error: "spam" | "rate_limited" | "server" | "not_configured"; message: string };
 
