@@ -9,6 +9,9 @@ export function decide3D(): ThreeDecision {
   const mobile = !window.matchMedia("(hover: hover) and (pointer: fine)").matches || window.innerWidth < 768;
   if (/[?&]no3d=1/.test(window.location.search)) return { ok: false, reason: "disabled", mobile, force };
   if (prefersReducedMotion()) return { ok: false, reason: "reduced-motion", mobile, force };
+  const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  if (conn?.saveData || window.matchMedia("(prefers-reduced-data: reduce)").matches)
+    return { ok: false, reason: "save-data", mobile, force }; // never overridden by ?force3d
   if (!force && isLowPowerDevice()) return { ok: false, reason: "low-power", mobile, force };
   try {
     const c = document.createElement("canvas");

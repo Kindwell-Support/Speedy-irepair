@@ -6,8 +6,8 @@
  *
  * Required .riv contract (for whoever authors them in the Rive editor):
  *   - Artboard 24x24 (or square), transparent background, white + #ED1C24 accent
- *   - State machine name: "icon" (override per icon via `stateMachine`)
- *   - Inputs: `hover` (Boolean), `click` (Trigger); default state = idle (static, no loop)
+ *   - State machine name: "State Machine 1" (Rive default; override per icon via `stateMachine`)
+ *   - Inputs: `hover` (Boolean), `press` (Trigger; `click` accepted as alias); default state = idle (static, no loop)
  *   - Under reduced motion we never mount Rive (static SVG shown)
  */
 import { AVAILABLE_RIV } from "./available.generated";
@@ -85,7 +85,7 @@ export function resolveRiveIcon(key: RiveIconKey) {
     id,
     art: ICON_ART[entry.art],
     riveSrc: hasRiv ? (entry.riveSrc ?? `/rive/${id}.riv`) : undefined,
-    stateMachine: entry.stateMachine ?? "icon",
+    stateMachine: entry.stateMachine ?? "State Machine 1",
   };
 }
 

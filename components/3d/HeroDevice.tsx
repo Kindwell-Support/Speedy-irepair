@@ -9,14 +9,20 @@
  * Pauses (frameloop "never") when offscreen or tab hidden.
  */
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { decide3D } from "./capabilities";
 import { cn } from "@/lib/utils/cn";
 import { cssVars } from "@/lib/utils/css-vars";
 
 const PhoneScene = dynamic(() => import("./PhoneScene"), { ssr: false, loading: () => null });
 
-export type HeroPoster = { avif?: string; webp?: string; png: string; width: number; height: number };
+export type HeroPoster = {
+  avif?: string;
+  webp?: string;
+  png: string;
+  width: number;
+  height: number;
+};
 
 export const DEFAULT_POSTER: HeroPoster = {
   avif: "/hero/phone-poster.avif",
@@ -30,7 +36,11 @@ type Props = { poster?: HeroPoster; alt?: string; className?: string };
 
 type Phase = "poster" | "mounting" | "live" | "degraded";
 
-export function HeroDevice({ poster = DEFAULT_POSTER, alt = "Smartphone showing a completed 45-minute screen repair", className }: Props) {
+export function HeroDevice({
+  poster = DEFAULT_POSTER,
+  alt = "Smartphone showing a completed 45-minute screen repair",
+  className,
+}: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<Phase>("poster");
   const [env, setEnv] = useState({ mobile: false, force: false });
@@ -43,8 +53,11 @@ export function HeroDevice({ poster = DEFAULT_POSTER, alt = "Smartphone showing 
     setEnv({ mobile: d.mobile, force: d.force });
     let cancelled = false;
     let io: IntersectionObserver | null = null;
-    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
-    const whenIdle = (cb: () => void) => (w.requestIdleCallback ? w.requestIdleCallback(cb, { timeout: 2000 }) : setTimeout(cb, 300));
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+    };
+    const whenIdle = (cb: () => void) =>
+      w.requestIdleCallback ? w.requestIdleCallback(cb, { timeout: 2000 }) : setTimeout(cb, 300);
     const start = () =>
       whenIdle(() => {
         if (cancelled || !box.current) return;
@@ -103,25 +116,33 @@ export function HeroDevice({ poster = DEFAULT_POSTER, alt = "Smartphone showing 
           fetchPriority="high"
           decoding="async"
           data-testid="hero-poster"
-          className={cn("absolute inset-0 h-full w-full object-contain transition-opacity duration-base ease-out", live ? "opacity-0" : "opacity-100")}
+          className={cn(
+            "absolute inset-0 h-full w-full object-contain transition-opacity duration-base ease-out",
+            live ? "opacity-0" : "opacity-100",
+          )}
         />
       </picture>
       {(phase === "mounting" || live) && (
         <div
           aria-hidden
-          className={cn("absolute inset-0 transition-opacity duration-base ease-out", live ? "opacity-100" : "opacity-0")}
+          className={cn(
+            "absolute inset-0 transition-opacity duration-base ease-out",
+            live ? "opacity-100" : "opacity-0",
+          )}
         >
-          <PhoneScene
-            active={active}
-            interactive={!env.mobile}
-            mobile={env.mobile}
-            skipFpsGuard={env.force}
-            onFirstFrame={() => setPhase((p) => (p === "mounting" ? "live" : p))}
-            onDegrade={(reason) => {
-              box.current?.setAttribute("data-3d", `off:${reason}`);
-              setPhase("degraded");
-            }}
-          />
+          <Suspense fallback={null}>
+            <PhoneScene
+              active={active}
+              interactive={!env.mobile}
+              mobile={env.mobile}
+              skipFpsGuard={env.force}
+              onFirstFrame={() => setPhase((p) => (p === "mounting" ? "live" : p))}
+              onDegrade={(reason) => {
+                box.current?.setAttribute("data-3d", `off:${reason}`);
+                setPhase("degraded");
+              }}
+            />
+          </Suspense>
         </div>
       )}
     </div>

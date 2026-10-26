@@ -17,7 +17,7 @@ type Props = {
   src: string;
   stateMachine: string;
   hover?: boolean;
-  /** increment to fire the `click` trigger */
+  /** increment to fire the `press` trigger (alias `click`) */
   clickCount?: number;
   /** generic boolean/number inputs (e.g. loader `loading`, button `state`) */
   inputs?: Record<string, boolean | number>;
@@ -34,7 +34,10 @@ export default function RiveCanvas({ src, stateMachine, hover, clickCount = 0, i
     onLoad: () => onReady?.(),
   });
   const hoverInput = useStateMachineInput(rive, stateMachine, "hover");
-  const clickInput = useStateMachineInput(rive, stateMachine, "click");
+  // trigger name: `press` (public/rive/README.md, Architect) — `click` accepted as an alias.
+  const pressInput = useStateMachineInput(rive, stateMachine, "press");
+  const clickAlias = useStateMachineInput(rive, stateMachine, "click");
+  const clickInput = pressInput ?? clickAlias;
   const lastClick = useRef(clickCount);
 
   useEffect(() => {
