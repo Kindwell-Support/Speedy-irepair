@@ -1,5 +1,5 @@
 import "server-only";
-import { createHmac } from "node:crypto";
+import { createHmac, randomUUID } from "node:crypto";
 import { createClient } from "next-sanity";
 import { publicEnv, isSanityConfigured } from "@/lib/env";
 import { serverEnv } from "@/lib/env.server";
@@ -20,6 +20,14 @@ export interface DeliveryResult {
 
 export const SIGNATURE_HEADER = "x-speedy-signature";
 
+/** URL segment → contract formSubmission.formType enum. */
+const CONTRACT_FORM_TYPE: Record<FormTypeKey, "instantQuote" | "tradeIn" | "contact" | "newsletter"> = {
+  quote: "instantQuote",
+  tradein: "tradeIn",
+  contact: "contact",
+  newsletter: "newsletter",
+};
+
 export function signPayload(body: string, secret: string): string {
   return `sha256=${createHmac("sha256", secret).update(body).digest("hex")}`;
 }
@@ -27,32 +35,13 @@ export function signPayload(body: string, secret: string): string {
 export async function deliverSubmission(
   type: FormTypeKey,
   payload: Record<string, unknown>,
-  meta: { pagePath?: string; notificationEmail: string },
+  meta: { pagePath?: string; notificationEmail: string; userAgent?: string },
 ): Promise<DeliveryResult> {
   const createdAt = new Date().toISOString();
   const canStore = isSanityConfigured && serverEnv.sanityWriteToken.length > 0;
   const canNotify = serverEnv.formWebhookUrl.length > 0;
   let stored = false;
   let notified = false;
-
-  if (canStore) {
-    const writeClient = createClient({
-      projectId: publicEnv.sanityProjectId,
-      dataset: publicEnv.sanityDataset,
-      apiVersion: publicEnv.sanityApiVersion,
-      token: serverEnv.sanityWriteToken,
-      useCdn: false,
-    });
-    await writeClient.create({
-      _type: "formSubmission",
-      type,
-      payload: JSON.stringify(payload),
-      createdAt,
-      status: "new",
-      pagePath: meta.pagePath,
-    });
-    stored = true;
-  }
 
   if (canNotify) {
     const body = JSON.stringify({
@@ -78,6 +67,34 @@ export async function deliverSubmission(
     });
     notified = res.ok;
     if (!res.ok) console.error(`[forms] webhook responded ${res.status}`);
+  }
+
+  if (canStore) {
+    const writeClient = createClient({
+      projectId: publicEnv.sanityProjectId,
+      dataset: publicEnv.sanityDataset,
+      apiVersion: publicEnv.sanityApiVersion,
+      token: serverEnv.sanityWriteToken,
+      useCdn: false,
+    });
+    // Shape = cms SCHEMA_CONTRACT §3.9 (private `submissions.` id path, no IP stored).
+    const p = payload as Record<string, string | undefined>;
+    await writeClient.create({
+      _id: `submissions.${randomUUID()}`,
+      _type: "formSubmission",
+      formType: CONTRACT_FORM_TYPE[type],
+      name: p.name,
+      email: p.email,
+      phone: p.phone || undefined,
+      message: p.message ?? p.details,
+      payload: { deviceType: p.deviceType, brand: p.brand, model: p.model, issue: p.issue, condition: p.condition },
+      pagePath: meta.pagePath,
+      submittedAt: createdAt,
+      status: "new",
+      webhookDelivered: notified,
+      userAgent: meta.userAgent?.slice(0, 300),
+    });
+    stored = true;
   }
 
   return { stored, notified, configured: canStore || canNotify };

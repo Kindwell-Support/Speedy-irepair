@@ -10,7 +10,7 @@ export const publicEnv = {
   siteEnv: (process.env.NEXT_PUBLIC_SITE_ENV === "production" ? "production" : "staging") as SiteEnv,
   sanityProjectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "",
   sanityDataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
-  sanityApiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? "2025-10-01",
+  sanityApiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? "2026-10-01",
   googleMapsEmbedUrl: process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL ?? "",
   turnstileSiteKey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "",
 } as const;

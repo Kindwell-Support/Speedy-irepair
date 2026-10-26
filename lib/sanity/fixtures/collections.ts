@@ -125,9 +125,9 @@ export const brands: Brand[] = [
 export const testimonials: Testimonial[] = [1, 2, 3].map((n) => ({
   id: `testimonial-placeholder-${n}`,
   author: PLACEHOLDER(`Reviewer name ${n}`),
-  rating: 5,
+  rating: null,
   text: PLACEHOLDER("real Google review text, entered verbatim in Sanity with source URL"),
-  source: "google",
+  source: "placeholder",
   sourceUrl: null,
   date: null,
   isPlaceholder: true,

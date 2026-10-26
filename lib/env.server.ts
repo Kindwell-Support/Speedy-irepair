@@ -3,7 +3,8 @@ import "server-only";
 /** Server-only secrets. Importing this file from a client component fails the build (server-only). */
 export const serverEnv = {
   sanityReadToken: process.env.SANITY_API_READ_TOKEN ?? "",
-  sanityWriteToken: process.env.SANITY_API_WRITE_TOKEN ?? "",
+  /** Contract name SANITY_WRITE_TOKEN (cms §5.2); SANITY_API_WRITE_TOKEN accepted as an alias. */
+  sanityWriteToken: process.env.SANITY_WRITE_TOKEN ?? process.env.SANITY_API_WRITE_TOKEN ?? "",
   sanityRevalidateSecret: process.env.SANITY_REVALIDATE_SECRET ?? "",
   shopifyStoreDomain: process.env.SHOPIFY_STORE_DOMAIN ?? "",
   shopifyStorefrontToken: process.env.SHOPIFY_STOREFRONT_TOKEN ?? "",

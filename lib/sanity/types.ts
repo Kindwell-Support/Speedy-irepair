@@ -174,9 +174,11 @@ export interface Faq extends Placeholderable {
 export interface Testimonial extends Placeholderable {
   id: string;
   author: string;
-  rating: 1 | 2 | 3 | 4 | 5;
+  /** null for placeholders: never render or emit stars without a real rating (contract §3.3). */
+  rating: 1 | 2 | 3 | 4 | 5 | null;
   text: string;
-  source: "google" | "facebook" | "other";
+  /** contract §3.3: placeholder ⇔ isPlaceholder. */
+  source: "google" | "manual" | "placeholder";
   sourceUrl?: string | null;
   date?: string | null;
 }

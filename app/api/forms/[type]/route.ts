@@ -43,6 +43,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ typ
     const settings = await getSiteSettings();
     const result = await deliverSubmission(type, parsed.data as Record<string, unknown>, {
       pagePath: spam.data.pagePath,
+      userAgent: req.headers.get("user-agent") ?? undefined,
       notificationEmail: settings.business.notificationEmail,
     });
     if (!result.configured && isProductionSite)
