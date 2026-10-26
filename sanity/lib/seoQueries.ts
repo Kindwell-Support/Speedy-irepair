@@ -8,10 +8,11 @@ export const SETTINGS_QUERY = /* groq */ `*[_id == "siteSettings"][0]{
   "name": businessName, legalName, description,
   telephoneE164, telephoneDisplay, email,
   "address": {
-    "streetAddress": address.street + select(defined(address.unit) => " " + address.unit, ""),
+    "streetAddress": address.street,
     "addressLocality": address.city, "addressRegion": address.region,
     "postalCode": address.postalCode, "addressCountry": coalesce(address.country, "US")
   },
+  "suite": address.unit,
   "hasMap": mapsUrl,
   "geo": select(defined(geo.lat) => {"latitude": geo.lat, "longitude": geo.lng}),
   "openingHours": hours[]{ days, opens, closes, closed },

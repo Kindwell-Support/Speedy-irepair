@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
+import { redirects } from "./lib/seo/redirects";
 
-const isProductionSite = process.env.NEXT_PUBLIC_SITE_ENV === "production";
+// Same rule as lib/seo/metadata.ts isIndexable(): Vercel previews stay noindex even if the env is mis-set.
+const isProductionSite =
+  process.env.NEXT_PUBLIC_SITE_ENV === "production" &&
+  (process.env.VERCEL_ENV === undefined || process.env.VERCEL_ENV === "production");
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -22,6 +26,8 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["@react-three/drei", "framer-motion"],
   },
+  // Old Shopify URLs -> new routes (SEO lane, lib/seo/redirects.ts).
+  redirects,
   async headers() {
     return [
       {
@@ -29,7 +35,9 @@ const nextConfig: NextConfig = {
         headers: [
           ...securityHeaders,
           // noindex layer 2 of 3 (robots.ts + meta robots are the others). Removed only in production.
-          ...(isProductionSite ? [] : [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }]),
+          ...(isProductionSite
+            ? []
+            : [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }]),
         ],
       },
       { source: "/studio/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },

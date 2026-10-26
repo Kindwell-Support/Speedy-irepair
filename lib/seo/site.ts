@@ -52,7 +52,10 @@ export interface SiteSettings {
   telephoneE164: string; // schema.org
   telephoneDisplay: string; // visible copy
   email: string;
+  /** Suite / unit, Sanity-editable (siteSettings.address.unit in CMS contract). Default "#27". Appended to streetAddress by fullStreetAddress(). */
+  suite?: string;
   address: {
+    /** Street WITHOUT the suite, e.g. "1650 W Market St". (If an adapter passes it already combined, the suite is not appended twice.) */
     streetAddress: string;
     addressLocality: string;
     addressRegion: string;
@@ -92,6 +95,20 @@ export const VERIFIED_HOURS: OpeningHoursRow[] = [
   { days: ["Sunday"], closed: true },
 ];
 
+/** PM decision (Oct 27 2026): schema address stays "1650 W Market St #27"; suite is one editable field. */
+export const DEFAULT_SUITE = "#27";
+
+/** "1650 W Market St" + " #27" -> "1650 W Market St #27" (never duplicates the suite). */
+export function fullStreetAddress(s: Pick<SiteSettings, "address" | "suite">): string {
+  const street = s.address.streetAddress.trim();
+  const suite = (s.suite ?? "").trim();
+  if (!suite || street.toLowerCase().endsWith(suite.toLowerCase())) return street;
+  return `${street} ${suite}`;
+}
+/** One-line NAP address, e.g. "1650 W Market St #27, Akron, OH 44313". */
+export const oneLineAddress = (s: Pick<SiteSettings, "address" | "suite">) =>
+  `${fullStreetAddress(s)}, ${s.address.addressLocality}, ${s.address.addressRegion} ${s.address.postalCode}`;
+
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   name: "Speedy iRepair",
   legalName: "Speedy iRepair LLC",
@@ -101,8 +118,9 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
   telephoneE164: "+1-855-377-3339",
   telephoneDisplay: "1.855.377.3339",
   email: "info@speedyirepair.com",
+  suite: DEFAULT_SUITE,
   address: {
-    streetAddress: "1650 W Market St #27",
+    streetAddress: "1650 W Market St",
     addressLocality: "Akron",
     addressRegion: "OH",
     postalCode: "44313",

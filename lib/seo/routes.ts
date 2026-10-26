@@ -24,7 +24,13 @@ import {
   type ProductInput,
   type ReviewInput,
 } from "./jsonld";
-import type { SiteSettings } from "./site";
+import { oneLineAddress, type SiteSettings } from "./site";
+import {
+  productInputFromCatalog,
+  productInputsFromCatalog,
+  type CatalogProductLike,
+  type CatalogSource,
+} from "./catalog";
 import {
   CORE_FAQS,
   FINANCING_FAQS,
@@ -48,12 +54,13 @@ export interface SeoData {
   servicesFaqs: FaqItem[];
   financingFaqs: FaqItem[];
   homeInternetFaqs: FaqItem[];
-  products: ProductInput[];
   team: PersonInput[]; // ONLY real team members; [] => no Person nodes
   reviews: ReviewInput[]; // ONLY real reviews; [] => no rating schema
   reviewsRenderedOnPage: boolean;
   /** Visible header nav (navigation.headerLinks + headerCta). Defaults to MAIN_NAV. */
   nav?: { name: string; path: string }[];
+  /** Visible page intros (CMS v1.1 G4). Used as the Service description so schema = visible copy. */
+  intros?: { instantQuote?: string; scheduleRepair?: string };
 }
 
 export const defaultSeoData = (site: SiteSettings): SeoData => ({
@@ -64,7 +71,6 @@ export const defaultSeoData = (site: SiteSettings): SeoData => ({
   servicesFaqs: SERVICES_FAQS,
   financingFaqs: FINANCING_FAQS,
   homeInternetFaqs: HOME_INTERNET_FAQS,
-  products: [],
   team: [],
   reviews: [],
   reviewsRenderedOnPage: false,
@@ -111,22 +117,40 @@ export function jsonLdForServices(d: SeoData): JsonLdGraph {
   );
 }
 
-/* R03 /shop — Product per product + BreadcrumbList */
-export function jsonLdForShop(d: SeoData): JsonLdGraph {
+/* R03 /shop — Product per LIVE catalog product + BreadcrumbList.
+   Fixture/placeholder catalog (no Storefront token yet) => BreadcrumbList ONLY. */
+export function jsonLdForShop(
+  _d: SeoData,
+  catalog?: { items: CatalogProductLike[]; source: CatalogSource },
+): JsonLdGraph {
+  // No catalog passed => no Product markup (safe default): BreadcrumbList only.
+  const live = catalog ? productInputsFromCatalog(catalog.items, catalog.source) : [];
+  if (live.length === 0) return graph(crumbs("/shop", "Shop"));
   return graph(
     page("/shop", "/shop", { type: "CollectionPage" }),
-    d.products.map(product),
+    live.map(product),
     crumbs("/shop", "Shop"),
   );
 }
 
-/* R04 /shop/[product] — Product + BreadcrumbList */
-export function jsonLdForProduct(d: SeoData, p: ProductInput): JsonLdGraph {
-  const path = `/shop/${p.handle}`;
+/* R04 /shop/[product] — Product (live only) + BreadcrumbList. Placeholder item => BreadcrumbList only. */
+export function jsonLdForProduct(
+  d: SeoData,
+  p: { item: CatalogProductLike; source: CatalogSource } | ProductInput,
+): JsonLdGraph {
+  const input = "item" in p ? productInputFromCatalog(p.item, p.source) : p;
+  const handle = "item" in p ? p.item.handle : p.handle;
+  const name = "item" in p ? p.item.title : p.name;
+  const path = `/shop/${handle}`;
+  const trail = crumbs(path, name, [{ name: "Shop", path: "/shop" }]);
+  if (!input) return graph(trail);
   return graph(
-    webPage(path, p.name, p.description ?? p.name, { breadcrumb: true, type: "ItemPage" }),
-    product(p),
-    crumbs(path, p.name, [{ name: "Shop", path: "/shop" }]),
+    webPage(path, input.name, input.description ?? input.name, {
+      breadcrumb: true,
+      type: "ItemPage",
+    }),
+    product(input),
+    trail,
   );
 }
 
@@ -146,7 +170,7 @@ export function jsonLdForSellYourDevice(d: SeoData): JsonLdGraph {
     crumbs("/sell-your-device", "Sell Your Device"),
   );
 }
-export function jsonLdForInstantQuote(_d: SeoData): JsonLdGraph {
+export function jsonLdForInstantQuote(d: SeoData): JsonLdGraph {
   return graph(
     page("/instant-quote", "/instant-quote"),
     service({
@@ -155,13 +179,15 @@ export function jsonLdForInstantQuote(_d: SeoData): JsonLdGraph {
       url: "/instant-quote",
       name: "Phone Repair Quote",
       serviceType: "Smartphone repair quote",
+      // CMS v1.1 G4: the page's visible `intro` (seeded with this same text) wins.
       description:
+        d.intros?.instantQuote ??
         "Request a smartphone repair quote from Speedy iRepair in Akron, Ohio. Choose your device type (iPhone, iPad, Samsung, LG, Google, or other), model, and issue (cracked screen, battery, charger port, camera, water damage, or other), then leave your contact details and we will follow up.",
     }),
     crumbs("/instant-quote", "Instant Quote"),
   );
 }
-export function jsonLdForScheduleRepair(_d: SeoData): JsonLdGraph {
+export function jsonLdForScheduleRepair(d: SeoData): JsonLdGraph {
   return graph(
     page("/schedule-repair", "/schedule-repair"),
     service({
@@ -171,7 +197,8 @@ export function jsonLdForScheduleRepair(_d: SeoData): JsonLdGraph {
       name: "Smartphone Repair Appointment",
       serviceType: "Smartphone repair",
       description:
-        "Book a smartphone repair appointment at Speedy iRepair, 1650 W Market St #27, Akron, OH 44313. Most repairs are done the same day in 45 minutes, and all repairs are covered under our 90-day warranty.",
+        d.intros?.scheduleRepair ??
+        `Book a smartphone repair appointment at Speedy iRepair, ${oneLineAddress(d.site)}. Most repairs are done the same day in 45 minutes, and all repairs are covered under our 90-day warranty.`,
     }),
     crumbs("/schedule-repair", "Schedule Repair"),
   );

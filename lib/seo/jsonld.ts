@@ -14,7 +14,7 @@
  *    Offer helper is homeInternetOffer() ($40/month, brief-supplied, visible in the hero).
  *  - Spectrum Authorized Retailer appears as description text only (no fabricated relationship).
  */
-import { IDS, SITE_URL, type OpeningHoursRow, type SiteSettings } from "./site";
+import { fullStreetAddress, IDS, SITE_URL, type OpeningHoursRow, type SiteSettings } from "./site";
 import type { FaqItem } from "./content";
 
 export type JsonLdNode = Record<string, unknown> & { "@type": string | string[] };
@@ -44,7 +44,8 @@ export function graph(
 /* ------------------------------------------------------------------ shared pieces */
 
 export function postalAddress(s: SiteSettings) {
-  return { "@type": "PostalAddress", ...s.address };
+  // Suite comes from the single editable siteSettings field (default "#27").
+  return { "@type": "PostalAddress", ...s.address, streetAddress: fullStreetAddress(s) };
 }
 
 export const AREA_SERVED_AKRON = {
@@ -315,8 +316,11 @@ export interface ProductInput {
   image?: string[];
   brand?: string;
   sku?: string;
-  /** Real price from Shopify/Sanity. If absent, no Offer is emitted (never invent). */
+  /** Real price from Shopify. If absent, no Offer is emitted (never invent). */
   price?: string;
+  /** When variants differ in price: emits AggregateOffer lowPrice=price, highPrice. */
+  highPrice?: string;
+  offerCount?: number;
   priceCurrency?: string;
   availability?: "InStock" | "OutOfStock" | "PreOrder" | "BackOrder";
   condition?: "UsedCondition" | "RefurbishedCondition" | "NewCondition";
@@ -338,17 +342,30 @@ export function product(p: ProductInput): JsonLdNode {
     brand: p.brand ? { "@type": "Brand", name: p.brand } : undefined,
     url,
     itemCondition: p.condition ? `https://schema.org/${p.condition}` : undefined,
-    offers: p.price
-      ? compact({
-          "@type": "Offer",
-          url,
-          price: p.price,
-          priceCurrency: p.priceCurrency ?? "USD",
-          availability: p.availability ? `https://schema.org/${p.availability}` : undefined,
-          itemCondition: p.condition ? `https://schema.org/${p.condition}` : undefined,
-          seller: { "@id": IDS.localBusiness },
-        })
-      : undefined,
+    offers:
+      p.price && p.highPrice
+        ? compact({
+            "@type": "AggregateOffer",
+            url,
+            lowPrice: p.price,
+            highPrice: p.highPrice,
+            offerCount: p.offerCount,
+            priceCurrency: p.priceCurrency ?? "USD",
+            availability: p.availability ? `https://schema.org/${p.availability}` : undefined,
+            itemCondition: p.condition ? `https://schema.org/${p.condition}` : undefined,
+            seller: { "@id": IDS.localBusiness },
+          })
+        : p.price
+          ? compact({
+              "@type": "Offer",
+              url,
+              price: p.price,
+              priceCurrency: p.priceCurrency ?? "USD",
+              availability: p.availability ? `https://schema.org/${p.availability}` : undefined,
+              itemCondition: p.condition ? `https://schema.org/${p.condition}` : undefined,
+              seller: { "@id": IDS.localBusiness },
+            })
+          : undefined,
   });
 }
 

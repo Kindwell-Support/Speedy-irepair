@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo/site";
 import { isIndexable } from "@/lib/seo/metadata";
 import { client } from "@/sanity/lib/client";
+import { getCatalog } from "@/lib/shop";
 import { SITEMAP_DOCS_QUERY } from "@/sanity/lib/seoQueries"; // cms/adapters/seoQueries.ts
 
 export const revalidate = 3600;
@@ -66,40 +67,42 @@ const STATIC_ROUTES: {
   },
 ];
 
-/** Products come from Shopify or Sanity per the Tech Architect's shop decision (OQ-09/OQ-12). */
+/** Products from the CatalogProvider (headless Shopify). Fixture/placeholder catalog => no PDP URLs listed. */
 async function getProductEntries(): Promise<{ handle: string; updatedAt?: string }[]> {
   try {
-    // Sanity-catalog variant; for headless Shopify replace with a Storefront API query (products { handle updatedAt }).
-    const rows = await client.fetch<{ handle: string; updatedAt?: string }[]>(
-      `*[_type == "product" && defined(slug.current) && seo.noindex != true]{ "handle": slug.current, "updatedAt": _updatedAt }`,
-    );
-    return rows ?? [];
+    const catalog = getCatalog();
+    if (catalog.name !== "shopify") return [];
+    const items = await catalog.listProducts({ first: 250 });
+    return items.map((p) => ({ handle: p.handle }));
   } catch {
     return [];
   }
 }
 
-type DocRow = { _type: string; _updatedAt: string; noindex?: boolean | null; slug?: string | null };
+type DocRow = {
+  _type: string;
+  _updatedAt: string;
+  noindex?: boolean | null;
+  slug?: string | null;
+  isPlaceholder?: boolean | null;
+};
 const keyOf = (type: string, slug?: string | null) => (slug ? `${type}:${slug}` : type);
 
-/** lastModified per doc + set of noindexed docs (dropped from the sitemap). */
+/** lastModified per doc + set of excluded docs (seo.noindex or placeholder). CMS v1.1 (G1): rows carry `slug`. */
 async function getDocState(): Promise<{ updated: Record<string, string>; noindex: Set<string> }> {
   try {
     const types = [...new Set(STATIC_ROUTES.map((r) => r.sanityType).filter(Boolean))];
-    // SITEMAP_DOCS_QUERY returns { _type, _updatedAt, noindex }; policy pages share one type, so we
-    // also read slugs for policyPage with a tiny companion query.
-    const [rows, policies] = await Promise.all([
-      client.fetch<DocRow[]>(SITEMAP_DOCS_QUERY, { types }),
-      client.fetch<DocRow[]>(
-        `*[_type == "policyPage"]{ _type, _updatedAt, "noindex": seo.noindex, "slug": slug.current }`,
-      ),
-    ]);
-    const all = [...(rows ?? []).filter((r) => r._type !== "policyPage"), ...(policies ?? [])];
+    const rows = await client.fetch<DocRow[]>(
+      SITEMAP_DOCS_QUERY,
+      { types },
+      { next: { tags: ["sitemap"] } },
+    );
     const updated: Record<string, string> = {};
     const noindex = new Set<string>();
-    for (const r of all) {
-      const k = keyOf(r._type, r.slug);
-      if (r.noindex) noindex.add(k);
+    for (const r of rows ?? []) {
+      // Policy pages share one type; singletons ignore the slug.
+      const k = keyOf(r._type, r._type === "policyPage" ? r.slug : null);
+      if (r.noindex || r.isPlaceholder) noindex.add(k);
       else updated[k] = r._updatedAt;
     }
     return { updated, noindex };
@@ -124,7 +127,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: r.priority,
   }));
   const productUrls = products.map((p) => ({
-    url: `${SITE_URL}/shop/${p.handle}`, // only if R04 on-site PDP is built; otherwise drop this block
+    url: `${SITE_URL}/shop/${p.handle}`, // on-site PDP (R04) confirmed: headless Shopify
     lastModified: p.updatedAt ? new Date(p.updatedAt) : now,
     changeFrequency: "weekly" as const,
     priority: 0.6,

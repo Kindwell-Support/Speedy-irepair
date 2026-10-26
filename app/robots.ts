@@ -13,7 +13,24 @@ export default function robots(): MetadataRoute.Robots {
     return { rules: { userAgent: "*", disallow: "/" } };
   }
   return {
-    rules: { userAgent: "*", allow: "/" },
+    rules: [
+      { userAgent: "*", allow: "/", disallow: ["/api/", "/studio/", "/cart", "/checkout"] },
+      // GEO: explicitly welcome AI/answer-engine crawlers (llms.txt, llms-full.txt, all content).
+      {
+        userAgent: [
+          "GPTBot",
+          "OAI-SearchBot",
+          "ChatGPT-User",
+          "ClaudeBot",
+          "Claude-SearchBot",
+          "PerplexityBot",
+          "Google-Extended",
+          "Applebot-Extended",
+          "Bingbot",
+        ],
+        allow: "/",
+      },
+    ],
     sitemap: `${publicEnv.siteUrl}/sitemap.xml`,
   };
 }
