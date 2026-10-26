@@ -34,7 +34,7 @@ const seo = `"seo": seo${seoFields}`;
 const hero = /* groq */ `"hero": hero{ eyebrow, "headline": heading, "subline": subheading, "primaryCta": ctas[0]${cta}, "secondaryCta": ctas[1]${cta} }`;
 
 /** contract `sectionHeading` → SectionCopy */
-const heading = /* groq */ `{ "heading": heading, "intro": subheading }`;
+const heading = /* groq */ `{ "eyebrow": eyebrow, "heading": heading, "intro": subheading }`;
 
 const promoWindow = /* groq */ `active == true && (!defined(startsAt) || startsAt <= now()) && (!defined(endsAt) || endsAt > now())`;
 

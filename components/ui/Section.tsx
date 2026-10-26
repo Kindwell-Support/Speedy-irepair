@@ -36,12 +36,24 @@ export function Section({
     >
       <div className="container-site">
         {copy ? (
-          <header className="mb-10 max-w-prose md:mb-12">
-            <h2 id={headingId} className="text-h2">
-              {copy.heading}
-            </h2>
+          <header
+            className={cn(
+              "mb-16 grid gap-4",
+              copy.intro ? "lg:grid-cols-[7fr_5fr] lg:items-end lg:gap-8" : "max-w-[760px]",
+            )}
+          >
+            <div className="grid gap-4">
+              {copy.eyebrow ? (
+                <p className="inline-flex items-center gap-2 text-label font-semibold uppercase text-text-secondary before:size-2 before:rounded-[2px] before:bg-brand before:content-['']">
+                  {copy.eyebrow}
+                </p>
+              ) : null}
+              <h2 id={headingId} className="text-h2">
+                {copy.heading}
+              </h2>
+            </div>
             {copy.intro ? (
-              <p className="mt-4 text-body-lg text-text-secondary">
+              <p className="text-body-lg text-text-secondary">
                 <PlaceholderMark show={copy.isPlaceholder}>{copy.intro}</PlaceholderMark>
               </p>
             ) : null}

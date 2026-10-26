@@ -233,6 +233,8 @@ export interface PageHero {
 
 /** A titled copy block inside a page (section heading + optional intro). */
 export interface SectionCopy extends Placeholderable {
+  /** Small label above the h2 (design `.eyebrow`). Optional until the CMS adds the field. */
+  eyebrow?: string | null;
   heading: string;
   intro?: string | null;
   body?: PortableTextBlock[] | null;
