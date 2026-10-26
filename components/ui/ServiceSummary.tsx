@@ -1,13 +1,9 @@
-import type { JsonLdGraph } from "@/lib/seo/jsonld";
-
-/** Renders the page's Service description visibly (SEO G4) from the same graph passed to <JsonLd/>, so text and schema match. */
-export function ServiceSummary({ data }: { data: JsonLdGraph }) {
-  const node = data["@graph"].find((n) => n["@type"] === "Service");
-  const description = node?.description;
-  if (typeof description !== "string" || !description) return null;
+/** Visible page intro under the hero (SEO G4). CMS `intro` (contract v1.3); on quote/schedule it carries the Service description. */
+export function ServiceSummary({ text }: { text?: string | null }) {
+  if (!text) return null;
   return (
     <div className="container-site pt-10">
-      <p className="max-w-prose text-body-lg text-text-secondary">{description}</p>
+      <p className="max-w-prose text-body-lg text-text-secondary">{text}</p>
     </div>
   );
 }

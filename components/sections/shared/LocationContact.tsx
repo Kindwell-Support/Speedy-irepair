@@ -20,8 +20,11 @@ export function LocationContact({
   showForm = true,
   id = "location",
   section,
+  contactCopy,
 }: {
   copy: SectionCopy;
+  /** Heading/intro above the contact form (CMS homePage/aboutPage.contactHeading, contract v1.3). */
+  contactCopy?: SectionCopy | null;
   business: BusinessInfo;
   directionsLabel?: string;
   showForm?: boolean;
@@ -79,7 +82,14 @@ export function LocationContact({
         </div>
         {showForm ? (
           <div className="rounded-xl border border-border bg-surface p-6 md:p-8">
-            <h3 className="mb-6 text-h4">Send us a message</h3>
+            {contactCopy ? (
+              <div className="mb-6 grid gap-2">
+                <h3 className="text-h4">{contactCopy.heading}</h3>
+                {contactCopy.intro ? (
+                  <p className="text-body-sm text-text-secondary">{contactCopy.intro}</p>
+                ) : null}
+              </div>
+            ) : null}
             <ContactForm idPrefix={`${id}-contact`} />
           </div>
         ) : null}

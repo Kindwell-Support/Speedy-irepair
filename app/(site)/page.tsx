@@ -71,6 +71,7 @@ export default async function HomePage() {
         section="location"
         business={settings.business}
         directionsLabel={page.locationSection.directionsLabel}
+        contactCopy={page.contactSection}
       />
       <Section id="newsletter" section="newsletter" tone="raised" className="text-center">
         <h2 className="text-h3">{page.newsletter.heading}</h2>

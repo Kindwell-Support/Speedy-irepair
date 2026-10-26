@@ -28,7 +28,7 @@ export default async function ScheduleRepairPage() {
       <JsonLd data={jsonLdForScheduleRepair(seo)} />
       <Breadcrumbs data={jsonLdForScheduleRepair(seo)} />
       <PageHero hero={page.hero} />
-      <ServiceSummary data={jsonLdForScheduleRepair(seo)} />
+      <ServiceSummary text={page.intro} />
       <Section id="booking">
         <EmbedFacade
           src={page.squareBookingUrl}

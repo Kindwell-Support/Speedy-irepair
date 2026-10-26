@@ -70,7 +70,12 @@ export default async function AboutPage() {
           ))}
         </div>
       </Section>
-      <LocationContact copy={page.contactSection} business={settings.business} id="about-contact" />
+      <LocationContact
+        copy={page.locationSection ?? page.contactSection}
+        contactCopy={page.contactSection}
+        business={settings.business}
+        id="about-contact"
+      />
     </>
   );
 }

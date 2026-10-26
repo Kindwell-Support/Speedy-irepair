@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useState } from "react";
-import type { CtaLink } from "@/lib/sanity/types";
+import type { CtaLink, NavLink } from "@/lib/sanity/types";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 
 /** Disclosure-pattern mobile menu (<1280px). Closes on route change and Escape. */
-export function MobileNav({ items, cta }: { items: CtaLink[]; cta: CtaLink }) {
+export function MobileNav({ items, cta }: { items: NavLink[]; cta: CtaLink }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const id = useId();
@@ -60,6 +60,23 @@ export function MobileNav({ items, cta }: { items: CtaLink[]; cta: CtaLink }) {
                 >
                   {item.label}
                 </Link>
+                {item.children?.length ? (
+                  <ul
+                    aria-label={item.label}
+                    className="mb-2 ml-3 grid gap-1 border-l border-border-subtle pl-3"
+                  >
+                    {item.children.map((child) => (
+                      <li key={child.href}>
+                        <Link
+                          href={child.href}
+                          className="block rounded-md px-3 py-2 text-body text-text-secondary hover:bg-surface hover:text-text"
+                        >
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             ))}
           </ul>
