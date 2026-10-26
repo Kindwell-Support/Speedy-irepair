@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {
   getBrands,
   getEmbedCopy,
+  getHeroChips,
   getFaqs,
   getHomePage,
   getHowItWorksSteps,
@@ -38,23 +39,35 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** R01 — section order per spec 2.1.0–2.1.11 (banner/header/footer live in the (site) layout). */
 export default async function HomePage() {
-  const [page, settings, steps, brands, values, testimonials, promotions, faqs, seo, mapCopy] =
-    await Promise.all([
-      getHomePage(),
-      getSiteSettings(),
-      getHowItWorksSteps("home"),
-      getBrands(),
-      getValueProps(),
-      getTestimonials(),
-      getPromotions(),
-      getFaqs("general"),
-      getSeoData(),
-      getEmbedCopy("map"),
-    ]);
+  const [
+    page,
+    settings,
+    steps,
+    brands,
+    values,
+    testimonials,
+    promotions,
+    faqs,
+    seo,
+    mapCopy,
+    heroChips,
+  ] = await Promise.all([
+    getHomePage(),
+    getSiteSettings(),
+    getHowItWorksSteps("home"),
+    getBrands(),
+    getValueProps(),
+    getTestimonials(),
+    getPromotions(),
+    getFaqs("general"),
+    getSeoData(),
+    getEmbedCopy("map"),
+    getHeroChips(),
+  ]);
   return (
     <>
       <JsonLd data={jsonLdForHome(seo)} />
-      <HomeHero hero={page.hero} />
+      <HomeHero hero={page.hero} chips={heroChips} />
       <ServicesGrid copy={page.serviceCardsSection} cards={page.serviceCards} />
       <HowItWorks copy={page.howItWorksSection} steps={steps} />
       <Brands copy={page.brandsSection} brands={brands.filter((b) => b.repairs)} />

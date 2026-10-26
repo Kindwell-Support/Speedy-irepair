@@ -12,6 +12,8 @@ import type {
   EmbedCopy,
   EmbedKind,
   PolicyChromeCopy,
+  FooterCopy,
+  HeroChip,
   FaqCategory,
   FaqPage,
   FinancingPage,
@@ -200,6 +202,10 @@ export const getAboutPage = singleton<AboutPage>("aboutPage", fx.aboutPage);
 export const getFinancingPage = singleton<FinancingPage>("financingPage", fx.financingPage);
 export const getHomeInternetPage = singleton<HomeInternetPage>("homeInternetPage", fx.homeInternetPage);
 
+/** Homepage hero trust chips (fixture-backed; additive, Frontend). */
+export const getHeroChips = cache(async (): Promise<HeroChip[]> => fx.heroChips);
+/** Footer chrome labels (fixture-backed; additive, Frontend). */
+export const getFooterCopy = cache(async (): Promise<FooterCopy> => fx.footerCopy);
 /** PolicyLayout chrome (fixture-backed; additive, Frontend). */
 export const getPolicyChrome = cache(async (): Promise<PolicyChromeCopy> => fx.policyChrome);
 export const getPolicyPage = cache(

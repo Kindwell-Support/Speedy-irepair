@@ -483,3 +483,21 @@ export interface PolicyChromeCopy {
   /** Hero sub-line per policy (design) */
   sublines: Record<PolicySlug, string>;
 }
+
+/** Frontend: footer chrome labels (fixture-backed until CMS fields exist). */
+export interface FooterCopy {
+  quickLinksLabel: string;
+  legalLabel: string;
+  paymentsLabel: string;
+  hoursLabel: string;
+  socialLabel: string;
+  spectrumLabel: string;
+  locality: string;
+  paymentLabels: Record<PaymentMethod, string>;
+}
+
+/** Frontend: homepage hero trust chips (design .hero__trust). Fixture-backed; rating chip omitted until P4 is verified (D2). */
+export interface HeroChip {
+  icon: "shield" | "wallet";
+  label: string;
+}
