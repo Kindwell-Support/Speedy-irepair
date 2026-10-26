@@ -9,6 +9,11 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { EmbedFacade } from "@/components/ui/EmbedFacade";
 import { FaqList } from "@/components/sections/shared/FaqList";
+import { OfferCard } from "@/components/sections/home-internet/OfferCard";
+import type { LineIconName } from "@/components/ui/LineIcon";
+
+/** Decorative, by position (design: wifi, gift, phone). */
+const OFFER_ICONS: LineIconName[] = ["wifi", "gift", "phone"];
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("/home-internet", (await getHomeInternetPage()).seo);
@@ -34,12 +39,16 @@ export default async function HomeInternetPage() {
       <PageHero hero={page.hero} />
       {lists.map(({ id, s }) => (
         <Section key={id} id={id} copy={s}>
-          <ul className="grid gap-3 md:grid-cols-3">
-            {s.items.map((i) => (
-              <li key={i} className="rounded-xl border border-border bg-surface p-6">
-                {i}
-              </li>
-            ))}
+          <ul className="grid gap-3 md:grid-cols-3" data-animate="stagger">
+            {s.items.map((i, n) =>
+              id === "what-you-get" ? (
+                <OfferCard key={i} item={i} icon={OFFER_ICONS[n % OFFER_ICONS.length]} />
+              ) : (
+                <li key={i} className="rounded-xl border border-border bg-surface p-6">
+                  {i}
+                </li>
+              ),
+            )}
           </ul>
         </Section>
       ))}
