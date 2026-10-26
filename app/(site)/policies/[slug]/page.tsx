@@ -5,6 +5,7 @@ import type { PolicySlug } from "@/lib/sanity/types";
 import { pageMetadata } from "@/lib/page/meta";
 import { jsonLdForPolicy } from "@/lib/seo/routes";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { RichText } from "@/components/ui/RichText";
 import { Notice } from "@/components/ui/Notice";
 
@@ -34,6 +35,7 @@ export default async function PolicyPage({ params }: Params) {
   return (
     <>
       <JsonLd data={jsonLdForPolicy(`/policies/${slug}`)} />
+      <Breadcrumbs data={jsonLdForPolicy(`/policies/${slug}`)} />
       <article className="container-site max-w-3xl py-16 md:py-24">
         <h1 className="text-h1">{page.title}</h1>
         {page.isPlaceholder ? (

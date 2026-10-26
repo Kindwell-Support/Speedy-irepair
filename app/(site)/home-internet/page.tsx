@@ -4,6 +4,7 @@ import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForHomeInternet } from "@/lib/seo/routes";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { EmbedFacade } from "@/components/ui/EmbedFacade";
@@ -15,7 +16,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** R11 — $40/mo, first month free, free smartphone (spec facts); Jotform behind a click-to-load facade. */
 export default async function HomeInternetPage() {
-  const [page, faqs, seo] = await Promise.all([getHomeInternetPage(), getFaqs("internet"), getSeoData()]);
+  const [page, faqs, seo] = await Promise.all([
+    getHomeInternetPage(),
+    getFaqs("internet"),
+    getSeoData(),
+  ]);
   const lists = [
     { id: "who-its-for", s: page.whoItsForSection },
     { id: "what-you-get", s: page.whatYouGetSection },
@@ -23,6 +28,7 @@ export default async function HomeInternetPage() {
   return (
     <>
       <JsonLd data={jsonLdForHomeInternet(seo)} />
+      <Breadcrumbs data={jsonLdForHomeInternet(seo)} />
       <PageHero hero={page.hero} />
       {lists.map(({ id, s }) => (
         <Section key={id} id={id} copy={s}>

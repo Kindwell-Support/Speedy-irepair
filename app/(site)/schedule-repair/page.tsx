@@ -4,6 +4,8 @@ import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForScheduleRepair } from "@/lib/seo/routes";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { ServiceSummary } from "@/components/ui/ServiceSummary";
 import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { RichText } from "@/components/ui/RichText";
@@ -16,11 +18,17 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** R07 — branded wrapper; Square booking stays on-site (click-to-load iframe, direct link fallback). */
 export default async function ScheduleRepairPage() {
-  const [page, settings, seo] = await Promise.all([getSchedulePage(), getSiteSettings(), getSeoData()]);
+  const [page, settings, seo] = await Promise.all([
+    getSchedulePage(),
+    getSiteSettings(),
+    getSeoData(),
+  ]);
   return (
     <>
       <JsonLd data={jsonLdForScheduleRepair(seo)} />
+      <Breadcrumbs data={jsonLdForScheduleRepair(seo)} />
       <PageHero hero={page.hero} />
+      <ServiceSummary data={jsonLdForScheduleRepair(seo)} />
       <Section id="booking">
         <EmbedFacade
           src={page.squareBookingUrl}
@@ -45,7 +53,12 @@ export default async function ScheduleRepairPage() {
           </section>
         ))}
       </div>
-      <LocationContact copy={page.locationSection} business={settings.business} showForm={false} id="schedule-location" />
+      <LocationContact
+        copy={page.locationSection}
+        business={settings.business}
+        showForm={false}
+        id="schedule-location"
+      />
     </>
   );
 }

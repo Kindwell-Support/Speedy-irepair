@@ -4,6 +4,8 @@ import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForInstantQuote } from "@/lib/seo/routes";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { ServiceSummary } from "@/components/ui/ServiceSummary";
 import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { QuoteForm } from "@/components/sections/forms/QuoteForm";
@@ -18,10 +20,16 @@ export default async function InstantQuotePage() {
   return (
     <>
       <JsonLd data={jsonLdForInstantQuote(seo)} />
+      <Breadcrumbs data={jsonLdForInstantQuote(seo)} />
       <PageHero hero={page.hero} />
+      <ServiceSummary data={jsonLdForInstantQuote(seo)} />
       <Section id="quote" copy={page.formSection}>
         <div className="max-w-2xl rounded-xl border border-border bg-surface p-6 md:p-8">
-          <QuoteForm deviceTypes={page.deviceTypes} issues={page.issues} successMessage={page.successMessage} />
+          <QuoteForm
+            deviceTypes={page.deviceTypes}
+            issues={page.issues}
+            successMessage={page.successMessage}
+          />
         </div>
       </Section>
     </>

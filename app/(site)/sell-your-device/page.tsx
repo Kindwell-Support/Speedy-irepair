@@ -4,6 +4,7 @@ import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForSellYourDevice } from "@/lib/seo/routes";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -16,11 +17,17 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** R05 — hero, 3 steps, trade-in multi-step form (lead capture; quote values TBD), brands, CTA. */
 export default async function SellYourDevicePage() {
-  const [page, steps, brands, seo] = await Promise.all([getSellPage(), getHowItWorksSteps("sell"), getBrands(), getSeoData()]);
+  const [page, steps, brands, seo] = await Promise.all([
+    getSellPage(),
+    getHowItWorksSteps("sell"),
+    getBrands(),
+    getSeoData(),
+  ]);
   const accepted = brands.filter((b) => b.acceptsTradeIn);
   return (
     <>
       <JsonLd data={jsonLdForSellYourDevice(seo)} />
+      <Breadcrumbs data={jsonLdForSellYourDevice(seo)} />
       <PageHero hero={page.hero} />
       <HowItWorks id="sell-steps" copy={page.howItWorksSection} steps={steps} />
       <Section id="trade-in" copy={page.formSection}>
