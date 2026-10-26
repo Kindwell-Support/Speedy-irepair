@@ -1,0 +1,90 @@
+# Speedy iRepair — CI quality gates.
+#
+# DEPLOYMENT POLICY (read before editing):
+#   * This workflow NEVER deploys. It only runs quality gates.
+#   * Staging/preview deploys are done by Vercel's Git integration
+#     (push to `staging` / feature branches / PRs -> Vercel Preview).
+#   * PRODUCTION DEPLOYS ARE MANUAL ONLY, after the sign-off chain
+#     (QA PASS -> QC PASS -> Abdullah explicit "deploy"). vercel.json disables
+#     Git-triggered deploys of `main`. Do NOT add a production deploy step,
+#     a `vercel --prod` call, or a VERCEL_TOKEN secret to any workflow.
+name: CI
+
+on:
+  push:
+    branches: [main, staging, "feature/**"]
+  pull_request:
+    branches: [main, staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-gates:
+    name: typecheck · lint · build · playwright
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: "true"
+      NEXT_TELEMETRY_DISABLED: "1"
+      # CI builds are never production: noindex stays ON and is asserted by e2e.
+      NEXT_PUBLIC_SITE_ENV: ci
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4 # version read from package.json "packageManager"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Next.js route types
+        run: pnpm exec next typegen
+
+      - name: Typecheck
+        run: pnpm exec tsc --noEmit
+
+      - name: Lint (zero warnings)
+        run: pnpm exec eslint . --max-warnings 0
+
+      - name: Build
+        run: pnpm exec next build
+
+      - name: Get Playwright version
+        id: pw
+        run: echo "version=$(pnpm exec playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
+
+      - name: Install Playwright Chromium
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Install Playwright system deps (cache hit)
+        if: steps.pw-cache.outputs.cache-hit == 'true'
+        run: pnpm exec playwright install-deps chromium
+
+      - name: Playwright tests (375 / 768 / 1280 / 1440 / 1920)
+        run: pnpm exec playwright test
+
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
