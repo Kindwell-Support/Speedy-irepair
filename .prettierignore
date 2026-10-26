@@ -1,0 +1,10 @@
+node_modules
+.next
+pnpm-lock.yaml
+public
+playwright-report
+test-results
+.lighthouseci
+components/motion/reactbits
+lib/shop/fixtures/*.json
+.arch-backup

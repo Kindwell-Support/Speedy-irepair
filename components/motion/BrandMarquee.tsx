@@ -1,0 +1,56 @@
+"use client";
+/**
+ * A7 — Infinite brand marquee (React Bits <LogoLoop>) + A4 BrandLogo hover colorize.
+ * Brands (spec 2.1.4): Apple, Samsung, LG, Google Pixel, Motorola, OnePlus.
+ * Reduced motion: LogoLoop's own reduced-motion check holds speed at 0; we additionally
+ * render a static, wrapped row (no loop clones) so nothing moves.
+ */
+import type { ReactNode } from "react";
+import LogoLoop from "./reactbits/LogoLoop";
+import { BrandLogo } from "./BrandLogo";
+import { useReducedMotion } from "@/lib/motion/reduced-motion";
+import { cn } from "@/lib/utils/cn";
+
+export type Brand = { name: string; logo: ReactNode; href?: string };
+
+type Props = { brands: Brand[]; speed?: number; logoHeight?: number; gap?: number; className?: string };
+
+export function BrandMarquee({ brands, speed = 60, logoHeight = 32, gap = 64, className }: Props) {
+  const reduced = useReducedMotion();
+  if (reduced) {
+    return (
+      <ul
+        className={cn("m-0 flex list-none flex-wrap justify-center gap-x-12 gap-y-6 p-0", className)}
+        aria-label="Brands we repair"
+        data-marquee="static"
+      >
+        {brands.map((b) => (
+          <li key={b.name}>
+            <BrandLogo name={b.name} height={logoHeight}>{b.logo}</BrandLogo>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  return (
+    <div className={className} data-marquee="loop">
+      <LogoLoop
+        logos={brands.map((b) => ({ node: b.logo, title: b.name, ariaLabel: b.name, href: b.href }))}
+        speed={speed}
+        direction="left"
+        logoHeight={logoHeight}
+        gap={gap}
+        pauseOnHover
+        fadeOut
+        fadeOutColor="#0a0a0a"
+        intro={false}
+        ariaLabel="Brands we repair"
+        renderItem={(item) => (
+          <BrandLogo name={"title" in item && item.title ? item.title : ""} height={logoHeight}>
+            {"node" in item ? item.node : null}
+          </BrandLogo>
+        )}
+      />
+    </div>
+  );
+}

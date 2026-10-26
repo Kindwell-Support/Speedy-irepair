@@ -1,0 +1,1063 @@
+{
+ "_source": "https://speedyirepair.com/products.json?limit=250 and /collections.json (public Shopify storefront JSON)",
+ "_fetchedAt": "2026-10-27T02:35:00+05:00",
+ "_note": "Verbatim snapshot (trimmed fields). Prices exactly as returned by Shopify at fetch time. Do not edit by hand; re-run scripts/snapshot-shop.mjs.",
+ "products": [
+  {
+   "id": 6727070548065,
+   "handle": "extended-phone-warranty",
+   "title": "Extended Phone Warranty",
+   "vendor": "speedyirepair",
+   "product_type": "",
+   "tags": [
+    "apple",
+    "iPhone 11",
+    "iPhone 11 64GB",
+    "iPhone 11 PRO",
+    "iPhone 11 Pro Max",
+    "iPhone 11 Pro Max 64GB",
+    "iPhone 12",
+    "iPhone 12 64GB",
+    "iPhone 12 Pro",
+    "iPhone 12 Pro Max",
+    "iPhone 12 Pro Max 128GB",
+    "iPhone 6/6S",
+    "iPhone 6S",
+    "iPhone 6S 32GB",
+    "iPhone 6S Plus",
+    "iPhone 7",
+    "iPhone 7 32GB",
+    "iPhone 7 Plus",
+    "iPhone 7 Plus 32GB",
+    "iPhone 8",
+    "iPhone 8 64GB",
+    "iPhone 8 Plus",
+    "iPhone 8 Plus 64GB",
+    "iPhone X",
+    "iPhone X 64GB",
+    "iPhone XR",
+    "iPhone XR 64GB",
+    "iPhone XS",
+    "iPhone XS Max",
+    "iPhone XS Max 64GB",
+    "​ iPhone 5/5S/SE"
+   ],
+   "body_html": "<p>This warranty is <strong>ONLY</strong> valid for devices purchased during checkout. Warranty must be purchased at the same time as the device to be covered. </p>\n<p>Warranty covers any malfunctions your device may experience (battery issues, charging port, unresponsive screen, camera not working, etc.)</p>\n<p>Damage to your device such as cracks, drops, liquid  damage, and lost/stolen devices will <strong>NOT</strong> be covered under this warranty.</p>",
+   "options": [
+    {
+     "name": "Term",
+     "values": [
+      "3 month",
+      "6 month",
+      "12 month"
+     ]
+    }
+   ],
+   "variants": [
+    {
+     "id": 39782127992929,
+     "title": "3 month",
+     "price": "49.99",
+     "compare_at_price": null,
+     "available": false,
+     "option1": "3 month",
+     "option2": null,
+     "option3": null,
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/image_3b343266-b91e-4f23-8e42-57662c436a6e.jpg?v=1643011576"
+    },
+    {
+     "id": 39782128025697,
+     "title": "6 month",
+     "price": "79.99",
+     "compare_at_price": null,
+     "available": false,
+     "option1": "6 month",
+     "option2": null,
+     "option3": null,
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/image_3b343266-b91e-4f23-8e42-57662c436a6e.jpg?v=1643011576"
+    },
+    {
+     "id": 39782128058465,
+     "title": "12 month",
+     "price": "119.99",
+     "compare_at_price": null,
+     "available": false,
+     "option1": "12 month",
+     "option2": null,
+     "option3": null,
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/image_3b343266-b91e-4f23-8e42-57662c436a6e.jpg?v=1643011576"
+    }
+   ],
+   "images": [
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/image_3b343266-b91e-4f23-8e42-57662c436a6e.jpg?v=1643011576",
+     "width": 368,
+     "height": 253,
+     "alt": null
+    }
+   ]
+  },
+  {
+   "id": 6619659862113,
+   "handle": "iphone-xr-64gb-unlocked",
+   "title": "iPhone XR 64GB Unlocked",
+   "vendor": "speedyirepair",
+   "product_type": "iPhones",
+   "tags": [
+    "iphone",
+    "iPhone XR",
+    "iPhone XR 64GB"
+   ],
+   "body_html": "<p>Apple iPhone XR comes with the latest iOS 12. It offers a 6.1-inch IPS LCD capacitive touchscreen with a good screen-to-body ratio of 79% and Multitouch in it. Its display has average pixel density for its HD resolution(~326 PPI) with 19.5:9 aspect ratio. Supports True-tone display, Wide color gamut display, 120 Hz touch-sensing. . The device is slightly heavy to carry with 194g and 7.3 mm in thickness. It provides 3 GB of RAM with the powerful Apple A12 Bionic Chipset. It encompasses a Hexa-core processor and Apple GPU (4-core graphics) GPU. and internal memory of 64 GB It offers 12 MP (f/1.8, 28mm, 1/2.55″, 1.4µm, OIS, PDAF) with additional features like Quad-LED dual-tone flash, HDR (photo/panorama). It offers a 7 MP front-facing camera with additional features like f/2.2, 32m. Supports quad HD video recording at 2160p@24/30/60fps, 1080p@30/60/120/240fps, HDR video. It has a battery capacity of 2942 mAh(Non-removable), Supports fast battery charging, 50% in 30 min and Qi Wireless charging. Supports almost all connectives like Wi-Fi, Bluetooth, USB, 3G, 4G, NFC.</p>\n<p> </p>\n<div id=\"description-section\" class=\"row-fluid section\">\n<div id=\"description\">\n<div id=\"description-section\" class=\"row-fluid section\">\n<div id=\"description\">\n<p normal=\"\" line-height:=\"\" font-size:=\"\" grande=\"\" lucida=\"\"><strong>Specifications:</strong></p>\n<ul>\n<li>3GB RAM</li>\n<li>64 GB Storage</li>\n<li>\n<span>A12 Bionic Processor</span><br>\n</li>\n<li>12-Megapixel Rear Camera.</li>\n<li>Li-Ion 2942 Mah Non-Removable Battery</li>\n<li>Wireless Charging</li>\n<li>3D Touchscreen</li>\n<li>Liquid Retina Ips Lcd Display</li>\n<li>Black, Red, Yellow, Blue, Coral And White Colors</li>\n</ul>\n<p normal=\"\" line-height:=\"\" font-size:=\"\" grande=\"\" lucida=\"\"><strong>What’s in the box?</strong></p>\n<ul>\n<li>Apple iPhone XR</li>\n<li>USB Power Cable</li>\n</ul>\n</div>\n</div>\n<div id=\"inkfrogShowcase\"><br></div>\n</div>\n</div>\n<div class=\"row-fluid section\">\n<div id=\"text-tkMmmCiua\" class=\"text_section text-container editable\">\n<hr>\n<h1><strong>FAQs:</strong></h1>\n<p><strong>What is the item condition?</strong></p>\n<p>-This product is in the condition specified in the \"condition\" section of this listing.  Check with your sales rep for the exact item condition and quality of the product.</p>\n<p>Cosmetic Grading System:</p>\n<p>GRADE A: A Grade A unit is generally considered ‘very good’ or ‘like new.’ Please note that this does not mean that a machine will come with OEM packaging. A Grade A cosmetic condition indicates that there may be very few and faint scratches or scuffs, if any. While a Grade A machine will not be flawless, you should not expect to find any significant, noticeable cosmetic blemishes.</p>\n<p>GRADE B: For this cosmetic grade, cosmetic blemishes will be present and noticeable. These blemishes include scratches, scuffs, and nicks. Minor denting is possible, although this does not include large dents. Blemishes might occur more noticeably on areas that are not as often seen (such as the bottom of a laptop or desktop) but can be present on other areas of the machine. Keys may be slightly worn. A Grade B unit would be equivalent to a ‘good condition.</p>\n<p>GRADE C: This grade is an ‘acceptable’ condition. Cosmetic blemishes will be noticeable and can be large. This does include scratching, scuffing, chipping, and denting. A Grade C unit will function perfectly, despite any cosmetic issues. Keys may be worn enough that letters are not recognizable. Hinges or feet may be missing. Scratching and laminate problems may exist on the screen and bezel; LCD issues such as pressure marks or dead pixels are usually explicitly mentioned, although there is a chance that LCD issues may be present in a Grade C machine.</p>\n<p><strong>How long before I will get my product?</strong></p>\n<p>-Depending on your location, you should receive your purchase within 1-7 business days. You can always contact us for precise shipping quotes and transit times, or for information on upgraded shipping.</p>\n<p><strong>Do you ship worldwide?</strong></p>\n<p>-Yes, we do. Please contact us for a precise shipping quote. Duties and taxes are the sole responsibility of the buyer.</p>\n<p><strong>If I am not happy, can I return the product?</strong></p>\n<p>-Yes, we want the buyer to be happy. We encourage asking all questions prior to committing to buy.</p>\n<p>We can accept a return within 30 days of purchase. Return shipping costs are the responsibility of the buyer. Items returned for a refund are subject to a 10% restocking fee. Our products are guaranteed in 100% working condition upon receipt. Please understand that we sell at a discount for a reason. We specialize in offering high-grade previous generation, refurb, and open box hardware. We want you to be happy and we do our very best to deliver the product you want. Please address any and all concerns before purchasing and before leaving any comments about our transaction. We will resolve each and every issue to the best of our ability. We have a high success rate and a loyal repeat customer base, and we would like to earn your repeat business as well. We have been in the business for nearly 10 years and are here to stay.</p>\n<p>More than anything, we want our customers to be pleased with their purchase, and it is our goal to close a 5-star transaction each and every time. If you are not happy, please contact us and we'll work with you to find a solution.</p>\n<hr>\n<h4><strong>Payment, Shipping and Handling:</strong></h4>\n<p>Payment is due immediately upon auction closing. We reserve the right to relist this item or offer it to the next qualified buyer when payment does not clear with 24 hours of purchase.</p>\n<p>All of our orders have a 1-3 day handling time for processing. Additionally, we ship from Southern California with UPS Ground, which has a 1-7 day delivery window. Please feel free to contact us if you have any questions about the status of your order.</p>\n<h4><strong>Warranty:</strong></h4>\n<p>Our products are guaranteed in 100% working condition upon receipt. Most products are no longer under factory warranty, but iPower Resale Group covers all products for 90 days (3 Year Extensions Available!) under our standard warranty policy. Please see our policy page for further information:</p>\n<h4><strong>INTERNATIONAL SHIPPING DISCLAIMER/POLICIES:</strong></h4>\n<p>The buyer is responsible for any and all customs duties, fees taxes, and other assessments at the time of importation. Certain locations are not serviced by UPS and can only be offered at a surcharge, or might not have available service options at all. Please contact us for a specialized shipping quote prior to bidding or placing an international order.</p>\n<h4><strong>RETURN POLICY:</strong></h4>\n<p>This product is in guaranteed working condition. If for some reason you are unhappy with your purchase please notify us immediately. We can accept a return within 30 days of purchase, preferably for exchange or merchandise credit. Items returned for a refund are subject to a 10% restocking fee. The buyer is responsible for all return shipping costs (insured via UPS or FedEx only).</p>\n<p>All returned items must be in their original condition and packaging. Unfortunately, we cannot take returns of products that have been disassembled or modified.</p>\n<p>All returns are subject to approval via Return Merchandise Authorization (RMA). You can email or call us to set up an RMA. Note that this is a relatively expensive process, so please assure yourself ahead of time that this is the right product for your needs.</p>\n</div>\n</div>",
+   "options": [
+    {
+     "name": "Color",
+     "values": [
+      "Blue",
+      "White",
+      "Coral",
+      "Black",
+      "Yellow",
+      "Red"
+     ]
+    },
+    {
+     "name": "Storage",
+     "values": [
+      "64GB"
+     ]
+    },
+    {
+     "name": "Status",
+     "values": [
+      "Unlocked"
+     ]
+    }
+   ],
+   "variants": [
+    {
+     "id": 39473416929377,
+     "title": "Blue / 64GB / Unlocked",
+     "price": "199.99",
+     "compare_at_price": "0.00",
+     "available": true,
+     "option1": "Blue",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBBlue.png?v=1632292970"
+    },
+    {
+     "id": 39473416863841,
+     "title": "White / 64GB / Unlocked",
+     "price": "199.99",
+     "compare_at_price": "0.00",
+     "available": true,
+     "option1": "White",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBWhite.png?v=1632292970"
+    },
+    {
+     "id": 39473416962145,
+     "title": "Coral / 64GB / Unlocked",
+     "price": "199.99",
+     "compare_at_price": "0.00",
+     "available": true,
+     "option1": "Coral",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBCoral.png?v=1632292970"
+    },
+    {
+     "id": 39473416896609,
+     "title": "Black / 64GB / Unlocked",
+     "price": "199.99",
+     "compare_at_price": "0.00",
+     "available": true,
+     "option1": "Black",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBBlack.png?v=1632292970"
+    },
+    {
+     "id": 39473416994913,
+     "title": "Yellow / 64GB / Unlocked",
+     "price": "199.99",
+     "compare_at_price": "0.00",
+     "available": true,
+     "option1": "Yellow",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBYellow.png?v=1632292970"
+    },
+    {
+     "id": 39473417027681,
+     "title": "Red / 64GB / Unlocked",
+     "price": "199.99",
+     "compare_at_price": "0.00",
+     "available": true,
+     "option1": "Red",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBRED.png?v=1632292970"
+    }
+   ],
+   "images": [
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBBlack.png?v=1632292970",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBBlue.png?v=1632292970",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBCoral.png?v=1632292970",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBRED.png?v=1632292970",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBWhite.png?v=1632292970",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhoneXR64GBYellow.png?v=1632292970",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    }
+   ]
+  },
+  {
+   "id": 6619988721761,
+   "handle": "iphone-8-64gb-unlocked",
+   "title": "iPhone 8 64GB Unlocked",
+   "vendor": "speedyirepair",
+   "product_type": "iPhones",
+   "tags": [
+    "apple",
+    "iphone",
+    "iPhone 8",
+    "iPhone 8 64GB"
+   ],
+   "body_html": "<p>The iPhone 8 is the first smartphone by Apple made exclusively of durable glass front and back, engineered to endure dust and water splash. Retina IPS LCD Display with  625 nits (typ) , 4.7 inches, 60.9 cm2 (~65.4% screen-to-body ratio), 750 x 1334 pixels, 16:9 ratio (~326 PPI density). The phone size is 138.4 x 67.3 x 7.3 mm (5.45 x 2.65 x 0.29 in). The weight is 148 g (5.22 oz). It is powered by the 64-bit “Apple A11 Bionic” processor and has two internal storage available: 64 GB flash storage. It features a 4.7-inch widescreen multi-touch IPS display (“Retina HD”) and dual cameras – a back 12-megapixel 4K camera with optical image stabilization and a front 7-megapixel “FaceTime HD” camera with 1080p video support. IP67 dust and water-resistant (up to 1m for 30 mins) under the water. Most powerful CPU Hexa-core (2x Monsoon + 4x Mistral) use on iPhone 8. The iPhone 8 has 12 MP camera with f/1.8, 28mm (wide), PDAF, OIS, Quad-LED dual-tone flash, HDR. Fingerprint (front-mounted), accelerometer, gyro, proximity, compass, barometer. </p>\n<p> </p>\n<div class=\"row-fluid section\" id=\"description-section\">\n<div id=\"description\">\n<div class=\"row-fluid section\" id=\"description-section\">\n<div id=\"description\">\n<p lucida=\"\" grande=\"\" font-size:=\"\" line-height:=\"\" normal=\"\"><strong>Specifications:</strong></p>\n<ul>\n<li>2GB RAM</li>\n<li>64 GB Storage <br>\n</li>\n<li>A11 Bionic Processor</li>\n<li>12-Megapixel Rear Camera<br>\n</li>\n<li>Li-Ion 1821 Mah Non-Removable Battery<br>\n</li>\n<li>3D Touch display &amp; home button<br data-mce-fragment=\"1\">True-tone<br>\n</li>\n<li>Fingerprint (Front-Mounted) Sensor<br>\n</li>\n<li>Red, Gold, Silver and Space Gray Colors</li>\n</ul>\n<p lucida=\"\" grande=\"\" font-size:=\"\" line-height:=\"\" normal=\"\"><strong>What’s in the box?</strong></p>\n<ul>\n<li>Apple iPhone 8</li>\n<li>USB Power Cable</li>\n</ul>\n</div>\n</div>\n<div id=\"inkfrogShowcase\"><br></div>\n</div>\n</div>\n<div class=\"row-fluid section\">\n<div class=\"text_section text-container editable\" id=\"text-tkMmmCiua\">\n<hr>\n<h1><strong>FAQs:</strong></h1>\n<p><strong>What is the item condition?</strong></p>\n<p>-This product is in the condition specified in the \"condition\" section of this listing.  Check with your sales rep for the exact item condition and quality of the product.</p>\n<p>Cosmetic Grading System:</p>\n<p>GRADE A: A Grade A unit is generally considered ‘very good’ or ‘like new.’ Please note that this does not mean that a machine will come with OEM packaging. A Grade A cosmetic condition indicates that there may be very few and faint scratches or scuffs, if any. While a Grade A machine will not be flawless, you should not expect to find any significant, noticeable cosmetic blemishes.</p>\n<p>GRADE B: For this cosmetic grade, cosmetic blemishes will be present and noticeable. These blemishes include scratches, scuffs, and nicks. Minor denting is possible, although this does not include large dents. Blemishes might occur more noticeably on areas that are not as often seen (such as the bottom of a laptop or desktop) but can be present on other areas of the machine. Keys may be slightly worn. A Grade B unit would be equivalent to a ‘good condition.</p>\n<p>GRADE C: This grade is an ‘acceptable’ condition. Cosmetic blemishes will be noticeable and can be large. This does include scratching, scuffing, chipping, and denting. A Grade C unit will function perfectly, despite any cosmetic issues. Keys may be worn enough that letters are not recognizable. Hinges or feet may be missing. Scratching and laminate problems may exist on the screen and bezel; LCD issues such as pressure marks or dead pixels are usually explicitly mentioned, although there is a chance that LCD issues may be present in a Grade C machine.</p>\n<p><strong>How long before I will get my product?</strong></p>\n<p>-Depending on your location, you should receive your purchase within 1-7 business days. You can always contact us for precise shipping quotes and transit times, or for information on upgraded shipping.</p>\n<p><strong>Do you ship worldwide?</strong></p>\n<p>-Yes, we do. Please contact us for a precise shipping quote. Duties and taxes are the sole responsibility of the buyer.</p>\n<p><strong>If I am not happy, can I return the product?</strong></p>\n<p>-Yes, we want the buyer to be happy. We encourage asking all questions prior to committing to buy.</p>\n<p>We can accept a return within 30 days of purchase. Return shipping costs are the responsibility of the buyer. Items returned for a refund are subject to a 10% restocking fee. Our products are guaranteed in 100% working condition upon receipt. Please understand that we sell at a discount for a reason. We specialize in offering high-grade previous generation, refurb, and open box hardware. We want you to be happy and we do our very best to deliver the product you want. Please address any and all concerns before purchasing and before leaving any commentary about our transaction. We will resolve each and every issue to the best of our ability. We have a high success rate and a loyal repeat customer base, and we would like to earn your repeat business as well. We have been in the business for nearly 10 years and are here to stay.</p>\n<p>More than anything, we want our customers to be pleased with their purchase, and it is our goal to close a 5-star transaction each and every time. If you are not happy, please contact us and we'll work with you to find a solution.</p>\n<hr>\n<h4><strong>Payment, Shipping and Handling:</strong></h4>\n<p>Payment is due immediately upon auction closing. We reserve the right to relist this item or offer it to the next qualified buyer when payment does not clear with 24 hours of purchase.</p>\n<p>All of our orders have a 1-3 day handling time for processing. Additionally, we ship from Southern California with UPS Ground, which has a 1-7 day delivery window. Please feel free to contact us if you have any questions about the status of your order.</p>\n<h4><strong>Warranty:</strong></h4>\n<p>Our products are guaranteed in 100% working condition upon receipt. Most products are no longer under factory warranty, but iPower Resale Group covers all products for 90 days (3 Year Extensions Available!) under our standard warranty policy. Please see our policy page for further information:</p>\n<h4><strong>INTERNATIONAL SHIPPING DISCLAIMER/POLICIES:</strong></h4>\n<p>The buyer is responsible for any and all customs duties, fees taxes, and other assessments at the time of importation. Certain locations are not serviced by UPS and can only be offered at a surcharge, or might not have available service options at all. Please contact us for a specialized shipping quote prior to bidding or placing an international order.</p>\n<h4><strong>RETURN POLICY:</strong></h4>\n<p>This product is in guaranteed working condition. If for some reason you are unhappy with your purchase please notify us immediately. We can accept a return within 30 days of purchase, preferably for exchange or merchandise credit. Items returned for a refund are subject to a 10% restocking fee. The buyer is responsible for all return shipping costs (insured via UPS or FedEx only).</p>\n<p>All returned items must be in their original condition and packaging. Unfortunately, we cannot take returns of products that have been disassembled or modified.</p>\n<p>All returns are subject to approval via Return Merchandise Authorization (RMA). You can email or call us to set up an RMA. Note that this is a relatively expensive process, so please assure yourself ahead of time that this is the right product for your needs.</p>\n</div>\n</div>",
+   "options": [
+    {
+     "name": "Color",
+     "values": [
+      "Silver",
+      "Gold",
+      "Space Gray",
+      "Red"
+     ]
+    },
+    {
+     "name": "Storage",
+     "values": [
+      "64GB"
+     ]
+    },
+    {
+     "name": "Status",
+     "values": [
+      "Unlocked"
+     ]
+    }
+   ],
+   "variants": [
+    {
+     "id": 39474644779105,
+     "title": "Silver / 64GB / Unlocked",
+     "price": "119.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Silver",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone864GBSilver.png?v=1627442982"
+    },
+    {
+     "id": 39474644811873,
+     "title": "Gold / 64GB / Unlocked",
+     "price": "119.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Gold",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone864GBGold.png?v=1627442982"
+    },
+    {
+     "id": 39474644746337,
+     "title": "Space Gray / 64GB / Unlocked",
+     "price": "119.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Space Gray",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone864GBSpaceGray.png?v=1627442982"
+    },
+    {
+     "id": 39474644844641,
+     "title": "Red / 64GB / Unlocked",
+     "price": "119.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Red",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-8-64GB-Red.jpg?v=1627442982"
+    }
+   ],
+   "images": [
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone864GBSilver.png?v=1627442982",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone864GBGold.png?v=1627442982",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone864GBSpaceGray.png?v=1627442982",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-8-64GB-Red.jpg?v=1627442982",
+     "width": 540,
+     "height": 540,
+     "alt": null
+    }
+   ]
+  },
+  {
+   "id": 6619677655137,
+   "handle": "iphone-8-plus-64gb-unlocked",
+   "title": "iPhone 8 Plus 64GB Unlocked",
+   "vendor": "speedyirepair",
+   "product_type": "iPhones",
+   "tags": [
+    "apple",
+    "iphone",
+    "iPhone 8 Plus",
+    "iPhone 8 Plus 64GB"
+   ],
+   "body_html": "<p>The iPhone 8 Plus is designed with the most durable glass and a stronger aerospace-grade aluminum band. Charges wirelessly. Resists water and dust. 5.5-inch (~67.4% screen-to-body ratio) Retina IPS LCD, 625 nits (typ) , 1080 x 1920 pixels, 16:9 ratio (~401 PPI density) HD display with True Tone. 3D Touch display &amp; home button 12MP dual cameras 12 MP, f/1.8, 28mm (wide), PDAF, OIS and  12 MP, f/2.8, 57mm (telephoto), PDAF, 2x optical zoom offer improved Portrait mode and new Portrait Lighting. Powered by A11 Bionic, the most powerful smartphone chip.</p>\n<p> </p>\n<div id=\"description-section\" class=\"row-fluid section\">\n<div id=\"description\">\n<div id=\"description-section\" class=\"row-fluid section\">\n<div id=\"description\">\n<p normal=\"\" line-height:=\"\" font-size:=\"\" grande=\"\" lucida=\"\"><strong>Specifications:</strong></p>\n<ul>\n<li>3GB RAM</li>\n<li>64 GB Storage</li>\n<li><span data-mce-fragment=\"1\">A11 Bionic Processor</span></li>\n<li>Dual 12-Megapixel Rear Camera.</li>\n<li>Li-Ion 2691 mAh Non-Removable Battery</li>\n<li>Wireless Charging</li>\n<li>3D Touch display &amp; home button<br>True-tone</li>\n<li>Fingerprint (Front-Mounted) Sensor</li>\n<li>Red, Gold, Silver, Space Gray Colors</li>\n</ul>\n<p normal=\"\" line-height:=\"\" font-size:=\"\" grande=\"\" lucida=\"\"><strong>What’s in the box?</strong></p>\n<ul>\n<li>Apple iPhone 8 Plus</li>\n<li>USB Power Cable</li>\n</ul>\n</div>\n</div>\n<div id=\"inkfrogShowcase\"><br></div>\n</div>\n</div>\n<div class=\"row-fluid section\">\n<div id=\"text-tkMmmCiua\" class=\"text_section text-container editable\">\n<hr>\n<h1><strong>FAQs:</strong></h1>\n<p><strong>What is the item condition?</strong></p>\n<p>-This product is in the condition specified in the \"condition\" section of this listing.  Check with your sales rep for the exact item condition and quality of the product.</p>\n<p>Cosmetic Grading System:</p>\n<p>GRADE A: A Grade A unit is generally considered ‘very good’ or ‘like new.’ Please note that this does not mean that a machine will come with OEM packaging. A Grade A cosmetic condition indicates that there may be very few and faint scratches or scuffs, if any. While a Grade A machine will not be flawless, you should not expect to find any significant, noticeable cosmetic blemishes.</p>\n<p>GRADE B: For this cosmetic grade, cosmetic blemishes will be present and noticeable. These blemishes include scratches, scuffs, and nicks. Minor denting is possible, although this does not include large dents. Blemishes might occur more noticeably on areas that are not as often seen (such as the bottom of a laptop or desktop) but can be present on other areas of the machine. Keys may be slightly worn. A Grade B unit would be equivalent to a ‘good condition.</p>\n<p>GRADE C: This grade is an ‘acceptable’ condition. Cosmetic blemishes will be noticeable and can be large. This does include scratching, scuffing, chipping, and denting. A Grade C unit will function perfectly, despite any cosmetic issues. Keys may be worn enough that letters are not recognizable. Hinges or feet may be missing. Scratching and laminate problems may exist on the screen and bezel; LCD issues such as pressure marks or dead pixels are usually explicitly mentioned, although there is a chance that LCD issues may be present in a Grade C machine.</p>\n<p><strong>How long before I will get my product?</strong></p>\n<p>-Depending on your location, you should receive your purchase within 1-7 business days. You can always contact us for precise shipping quotes and transit times, or for information on upgraded shipping.</p>\n<p><strong>Do you ship worldwide?</strong></p>\n<p>-Yes, we do. Please contact us for a precise shipping quote. Duties and taxes are the sole responsibility of the buyer.</p>\n<p><strong>If I am not happy, can I return the product?</strong></p>\n<p>-Yes, we want the buyer to be happy. We encourage asking all questions prior to committing to buy.</p>\n<p>We can accept a return within 30 days of purchase. Return shipping costs are the responsibility of the buyer. Items returned for a refund are subject to a 10% restocking fee. Our products are guaranteed in 100% working condition upon receipt. Please understand that we sell at a discount for a reason. We specialize in offering high-grade previous generation, refurb, and open box hardware. We want you to be happy and we do our very best to deliver the product you want. Please address any and all concerns before purchasing and before leaving any commentary about our transaction. We will resolve each and every issue to the best of our ability. We have a high success rate and a loyal repeat customer base, and we would like to earn your repeat business as well. We have been in the business for nearly 10 years and are here to stay.</p>\n<p>More than anything, we want our customers to be pleased with their purchase, and it is our goal to close a 5-star transaction each and every time. If you are not happy, please contact us and we'll work with you to find a solution.</p>\n<hr>\n<h4><strong>Payment, Shipping and Handling:</strong></h4>\n<p>Payment is due immediately upon auction closing. We reserve the right to relist this item or offer it to the next qualified buyer when payment does not clear with 24 hours of purchase.</p>\n<p>All of our orders have a 1-3 day handling time for processing. Additionally, we ship from Southern California with UPS Ground, which has a 1-7 day delivery window. Please feel free to contact us if you have any questions about the status of your order.</p>\n<h4><strong>Warranty:</strong></h4>\n<p>Our products are guaranteed in 100% working condition upon receipt. Most products are no longer under factory warranty, but iPower Resale Group covers all products for 90 days (3 Year Extensions Available!) under our standard warranty policy. Please see our policy page for further information:</p>\n<h4><strong>INTERNATIONAL SHIPPING DISCLAIMER/POLICIES:</strong></h4>\n<p>The buyer is responsible for any and all customs duties, fees taxes, and other assessments at the time of importation. Certain locations are not serviced by UPS and can only be offered at a surcharge, or might not have available service options at all. Please contact us for a specialized shipping quote prior to bidding or placing an international order.</p>\n<h4><strong>RETURN POLICY:</strong></h4>\n<p>This product is in guaranteed working condition. If for some reason you are unhappy with your purchase please notify us immediately. We can accept a return within 30 days of purchase, preferably for exchange or merchandise credit. Items returned for a refund are subject to a 10% restocking fee. The buyer is responsible for all return shipping costs (insured via UPS or FedEx only).</p>\n<p>All returned items must be in their original condition and packaging. Unfortunately, we cannot take returns of products that have been disassembled or modified.</p>\n<p>All returns are subject to approval via Return Merchandise Authorization (RMA). You can email or call us to set up an RMA. Note that this is a relatively expensive process, so please assure yourself ahead of time that this is the right product for your needs.</p>\n</div>\n</div>",
+   "options": [
+    {
+     "name": "Color",
+     "values": [
+      "Gold",
+      "Red",
+      "Silver",
+      "Space Grey"
+     ]
+    },
+    {
+     "name": "Storage",
+     "values": [
+      "64GB"
+     ]
+    },
+    {
+     "name": "Status",
+     "values": [
+      "Unlocked"
+     ]
+    }
+   ],
+   "variants": [
+    {
+     "id": 39473596006497,
+     "title": "Gold / 64GB / Unlocked",
+     "price": "149.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Gold",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone8Plus64GBGold.jpg?v=1627388122"
+    },
+    {
+     "id": 39473596039265,
+     "title": "Red / 64GB / Unlocked",
+     "price": "149.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Red",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-8-Plus-64GB-Red.jpg?v=1627388122"
+    },
+    {
+     "id": 39473596072033,
+     "title": "Silver / 64GB / Unlocked",
+     "price": "149.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Silver",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-8-Plus-64GB-Silver.jpg?v=1627388122"
+    },
+    {
+     "id": 39473596104801,
+     "title": "Space Grey / 64GB / Unlocked",
+     "price": "149.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Space Grey",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone8Plus64GBSpaceGrey.jpg?v=1627388122"
+    }
+   ],
+   "images": [
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone8Plus64GBGold.jpg?v=1627388122",
+     "width": 540,
+     "height": 540,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone8Plus64GBSpaceGrey.jpg?v=1627388122",
+     "width": 540,
+     "height": 540,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-8-Plus-64GB-Red.jpg?v=1627388122",
+     "width": 540,
+     "height": 540,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-8-Plus-64GB-Silver.jpg?v=1627388122",
+     "width": 540,
+     "height": 540,
+     "alt": null
+    }
+   ]
+  },
+  {
+   "id": 6619673493601,
+   "handle": "iphone-x-64gb-unlocked",
+   "title": "iPhone X 64GB Unlocked",
+   "vendor": "speedyirepair",
+   "product_type": "iPhones",
+   "tags": [
+    "apple",
+    "iphone",
+    "iPhone X",
+    "iPhone X 64GB"
+   ],
+   "body_html": "<p>Apple iPhone X comes with the latest iOS 11. It offers 5.8-inch Super AMOLED capacitive touchscreen with Multitouch, Wide color gamut display, 3D Touch display, True-tone display and Dolby Vision in it. Comes with Scratch-resistant glass as a screen protection feature. It provides 3 GB RAM with a Hexa-core processor. It is built with a powerful chipset Apple A11 Bionic chipset and internal memory of 64 GB and Comes with  Dual 12 MP rear camera and with additional features like f/1.8 &amp; f/2.4, phase detection autofocus, OIS, 2x optical zoom, quad-LED (dual tone) flash, Geo-tagging, simultaneous 4K video and 8MP image recording, touch focus, face/smile detection, HDR (photo/panorama). Comes with 7 MP front camera and with additional features like f/2.2, 1080p@30fps, 720p@240fps, face detection, HDR Its display has good pixel density for its resolution (~458 PPI pixel density) which is required for its 5.8-inch screen. Quad HD video recording at 2160p@30/60fps, 1080p@30/60/120fps, 720p@240fps Apple iPhone X is IP67 certified – dust and water-resistant up to 1 meter and 30 minutes. It comes with Super AMOLED Full HD Display which is the brightest, more colorful display. The battery capacity of 2716 mAh which is good for heavy usage. Supports almost all connectives like Wi-Fi, Bluetooth, USB, 3G, 4G, NFC.</p>\n<p> </p>\n<div class=\"row-fluid section\" id=\"description-section\">\n<div id=\"description\">\n<div class=\"row-fluid section\" id=\"description-section\">\n<div id=\"description\">\n<p lucida=\"\" grande=\"\" font-size:=\"\" line-height:=\"\" normal=\"\"><strong>Specifications:</strong></p>\n<ul>\n<li>3GB RAM</li>\n<li>64 GB Storage</li>\n<li>Faster A11 Bionic processor</li>\n<li><span data-mce-fragment=\"1\">5.8\" OLED display</span></li>\n<li>Dual 12-Megapixel Rear Camera.</li>\n<li>Li-Ion 2716 mAh Battery</li>\n<li>Wireless Charging</li>\n<li>3D Touchscreen</li>\n<li>Edge-to-edge display</li>\n<li>Facial Recognition</li>\n<li>Super Retina Oled Display</li>\n<li>Silver And Space Gray Colors</li>\n</ul>\n<p lucida=\"\" grande=\"\" font-size:=\"\" line-height:=\"\" normal=\"\"><strong>What’s in the box?</strong></p>\n<ul>\n<li>Apple iPhone X</li>\n<li>USB Power Cable</li>\n</ul>\n</div>\n</div>\n<div id=\"inkfrogShowcase\"><br></div>\n</div>\n</div>\n<div class=\"row-fluid section\">\n<div class=\"text_section text-container editable\" id=\"text-tkMmmCiua\">\n<hr>\n<h1><strong>FAQs:</strong></h1>\n<p><strong>What is the item condition?</strong></p>\n<p>-This product is in the condition specified in the \"condition\" section of this listing.  Check with your sales rep for the exact item condition and quality of the product.</p>\n<p>Cosmetic Grading System:</p>\n<p>GRADE A: A Grade A unit is generally considered ‘very good’ or ‘like new.’ Please note that this does not mean that a machine will come with OEM packaging. A Grade A cosmetic condition indicates that there may be very few and faint scratches or scuffs, if any. While a Grade A machine will not be flawless, you should not expect to find any significant, noticeable cosmetic blemishes.</p>\n<p>GRADE B: For this cosmetic grade, cosmetic blemishes will be present and noticeable. These blemishes include scratches, scuffs, and nicks. Minor denting is possible, although this does not include large dents. Blemishes might occur more noticeably on areas that are not as often seen (such as the bottom of a laptop or desktop) but can be present on other areas of the machine. Keys may be slightly worn. A Grade B unit would be equivalent to a ‘good condition.</p>\n<p>GRADE C: This grade is an ‘acceptable’ condition. Cosmetic blemishes will be noticeable and can be large. This does include scratching, scuffing, chipping, and denting. A Grade C unit will function perfectly, despite any cosmetic issues. Keys may be worn enough that letters are not recognizable. Hinges or feet may be missing. Scratching and laminate problems may exist on the screen and bezel; LCD issues such as pressure marks or dead pixels are usually explicitly mentioned, although there is a chance that LCD issues may be present in a Grade C machine.</p>\n<p><strong>How long before I will get my product?</strong></p>\n<p>-Depending on your location, you should receive your purchase within 1-7 business days. You can always contact us for precise shipping quotes and transit times, or for information on upgraded shipping.</p>\n<p><strong>Do you ship worldwide?</strong></p>\n<p>-Yes, we do. Please contact us for a precise shipping quote. Duties and taxes are the sole responsibility of the buyer.</p>\n<p><strong>If I am not happy, can I return the product?</strong></p>\n<p>-Yes, we want the buyer to be happy. We encourage asking all questions prior to committing to buy.</p>\n<p>We can accept a return within 30 days of purchase. Return shipping costs are the responsibility of the buyer. Items returned for a refund are subject to a 10% restocking fee. Our products are guaranteed in 100% working condition upon receipt. Please understand that we sell at a discount for a reason. We specialize in offering high-grade previous generation, refurb, and open box hardware. We want you to be happy and we do our very best to deliver the product you want. Please address any and all concerns before purchasing and before leaving any comments about our transaction. We will resolve each and every issue to the best of our ability. We have a high success rate and a loyal repeat customer base, and we would like to earn your repeat business as well. We have been in the business for nearly 10 years and are here to stay.</p>\n<p>More than anything, we want our customers to be pleased with their purchase, and it is our goal to close a 5-star transaction each and every time. If you are not happy, please contact us and we'll work with you to find a solution.</p>\n<hr>\n<h4><strong>Payment, Shipping and Handling:</strong></h4>\n<p>Payment is due immediately upon auction closing. We reserve the right to relist this item or offer it to the next qualified buyer when payment does not clear with 24 hours of purchase.</p>\n<p>All of our orders have a 1-3 day handling time for processing. Additionally, we ship from Southern California with UPS Ground, which has a 1-7 day delivery window. Please feel free to contact us if you have any questions about the status of your order.</p>\n<h4><strong>Warranty:</strong></h4>\n<p>Our products are guaranteed in 100% working condition upon receipt. Most products are no longer under factory warranty, but iPower Resale Group covers all products for 90 days (3 Year Extensions Available!) under our standard warranty policy. Please see our policy page for further information:</p>\n<h4><strong>INTERNATIONAL SHIPPING DISCLAIMER/POLICIES:</strong></h4>\n<p>The buyer is responsible for any and all customs duties, fees taxes, and other assessments at the time of importation. Certain locations are not serviced by UPS and can only be offered at a surcharge, or might not have available service options at all. Please contact us for a specialized shipping quote prior to bidding or placing an international order.</p>\n<h4><strong>RETURN POLICY:</strong></h4>\n<p>This product is in guaranteed working condition. If for some reason you are unhappy with your purchase please notify us immediately. We can accept a return within 30 days of purchase, preferably for exchange or merchandise credit. Items returned for a refund are subject to a 10% restocking fee. The buyer is responsible for all return shipping costs (insured via UPS or FedEx only).</p>\n<p>All returned items must be in their original condition and packaging. Unfortunately, we cannot take returns of products that have been disassembled or modified.</p>\n<p>All returns are subject to approval via Return Merchandise Authorization (RMA). You can email or call us to set up an RMA. Note that this is a relatively expensive process, so please assure yourself ahead of time that this is the right product for your needs.</p>\n</div>\n</div>",
+   "options": [
+    {
+     "name": "Color",
+     "values": [
+      "Space Gray",
+      "Silver"
+     ]
+    },
+    {
+     "name": "Storage",
+     "values": [
+      "64GB"
+     ]
+    },
+    {
+     "name": "Status",
+     "values": [
+      "Unlocked"
+     ]
+    }
+   ],
+   "variants": [
+    {
+     "id": 39473512939617,
+     "title": "Space Gray / 64GB / Unlocked",
+     "price": "199.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Space Gray",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-X-Space-Gray.jpg?v=1627385461"
+    },
+    {
+     "id": 39473512972385,
+     "title": "Silver / 64GB / Unlocked",
+     "price": "199.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Silver",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-X-Silver.jpg?v=1627385461"
+    }
+   ],
+   "images": [
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-X-Silver.jpg?v=1627385461",
+     "width": 540,
+     "height": 540,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-X-Space-Gray.jpg?v=1627385461",
+     "width": 540,
+     "height": 540,
+     "alt": null
+    }
+   ]
+  },
+  {
+   "id": 6619651407969,
+   "handle": "iphone-11-64gb-unlocked",
+   "title": "iPhone 11 64GB Unlocked",
+   "vendor": "speedyirepair",
+   "product_type": "iPhones",
+   "tags": [
+    "apple",
+    "iphone",
+    "iPhone 11",
+    "iPhone 11 64GB"
+   ],
+   "body_html": "<p>Apple iPhone 11 comes with 6.1 inches Liquid Retina IPS LCD screen. It has a classical Apple iPhone notch design. The back camera is of Dual 12+12 MP with powerful image processing capability and Ultra HD 4K video recording. The front camera is of Dual 12 MP and SL 3D camera. Apple iPhone 11 comes with 3110 mAh battery with 18W fast charging solution. It has 4 GB RAM, up to 2.65 GHz Hexa-core CPU and Apple GPU. It is powered by Apple A13 Bionic (7 nm+) chipset. The device comes with 64 internal storage. There is no fingerprint sensor on this device. Among other features, there is Face ID, Apple Pay, Siri, Qi Wireless Charging, etc. There is no FM Radio, 3.5mm jack and MicroSD slot in this phone. The device is IP68 certified waterproof.<br data-mce-fragment=\"1\"><br data-mce-fragment=\"1\"></p>\n<div id=\"description-section\" class=\"row-fluid section\">\n<div id=\"description\">\n<div id=\"description-section\" class=\"row-fluid section\">\n<div id=\"description\">\n<p normal=\"\" line-height:=\"\" font-size:=\"\" grande=\"\" lucida=\"\"><strong>Specifications:</strong></p>\n<ul>\n<li>4GB RAM</li>\n<li>64 GB Storage<br>\n</li>\n<li><span data-mce-fragment=\"1\">A13 Bionic Processor</span></li>\n<li>Dual 12Megapixel Rear Camera.</li>\n<li>LiIon 3110 Mah NonRemovable Battery</li>\n<li>Wireless Charging</li>\n<li>Scratch Resistant Glass Protection</li>\n<li>Liquid Retina Ips Lcd Display</li>\n<li>Black, Green, Yellow, Purple, Red And White Colors.</li>\n</ul>\n<p normal=\"\" line-height:=\"\" font-size:=\"\" grande=\"\" lucida=\"\"><strong>What’s in the box?</strong></p>\n<ul>\n<li>Apple iPhone 11</li>\n<li>USB Power Cable</li>\n</ul>\n</div>\n</div>\n<div id=\"inkfrogShowcase\"><br></div>\n</div>\n</div>\n<div class=\"row-fluid section\">\n<div id=\"text-tkMmmCiua\" class=\"text_section text-container editable\">\n<hr>\n<h1><strong>FAQs:</strong></h1>\n<p><strong>What is the item condition?</strong></p>\n<p>-This product is in the condition specified in the \"condition\" section of this listing.  Check with your sales rep for the exact item condition and quality of the product.</p>\n<p>Cosmetic Grading System:</p>\n<p>GRADE A: A Grade A unit is generally considered ‘very good’ or ‘like new.’ Please note that this does not mean that a machine will come with OEM packaging. A Grade A cosmetic condition indicates that there may be very few and faint scratches or scuffs, if any. While a Grade A machine will not be flawless, you should not expect to find any significant, noticeable cosmetic blemishes.</p>\n<p>GRADE B: For this cosmetic grade, cosmetic blemishes will be present and noticeable. These blemishes include scratches, scuffs, and nicks. Minor denting is possible, although this does not include large dents. Blemishes might occur more noticeably on areas that are not as often seen (such as the bottom of a laptop or desktop) but can be present on other areas of the machine. Keys may be slightly worn. A Grade B unit would be equivalent to a ‘good condition.</p>\n<p>GRADE C: This grade is an ‘acceptable’ condition. Cosmetic blemishes will be noticeable and can be large. This does include scratching, scuffing, chipping, and denting. A Grade C unit will function perfectly, despite any cosmetic issues. Keys may be worn enough that letters are not recognizable. Hinges or feet may be missing. Scratching and laminate problems may exist on the screen and bezel; LCD issues such as pressure marks or dead pixels are usually explicitly mentioned, although there is a chance that LCD issues may be present in a Grade C machine.</p>\n<p><strong>How long before I will get my product?</strong></p>\n<p>-Depending on your location, you should receive your purchase within 1-7 business days. You can always contact us for precise shipping quotes and transit times, or for information on upgraded shipping.</p>\n<p><strong>Do you ship worldwide?</strong></p>\n<p>-Yes, we do. Please contact us for a precise shipping quote. Duties and taxes are the sole responsibility of the buyer.</p>\n<p><strong>If I am not happy, can I return the product?</strong></p>\n<p>-Yes, we want the buyer to be happy. We encourage asking all questions prior to committing to buy.</p>\n<p>We can accept a return within 30 days of purchase. Return shipping costs are the responsibility of the buyer. Items returned for a refund are subject to a 10% restocking fee. Our products are guaranteed in 100% working condition upon receipt. Please understand that we sell at a discount for a reason. We specialize in offering high-grade previous generation, refurb, and open box hardware. We want you to be happy and we do our very best to deliver the product you want. Please address any and all concerns before purchasing and before leaving any commentary about our transaction. We will resolve each and every issue to the best of our ability. We have a high success rate and a loyal repeat customer base, and we would like to earn your repeat business as well. We have been in the business for nearly 10 years and are here to stay.</p>\n<p>More than anything, we want our customers to be pleased with their purchase, and it is our goal to close a 5-star transaction each and every time. If you are not happy, please contact us and we'll work with you to find a solution.</p>\n<hr>\n<h4><strong>Payment, Shipping and Handling:</strong></h4>\n<p>Payment is due immediately upon auction closing. We reserve the right to relist this item or offer it to the next qualified buyer when payment does not clear with 24 hours of purchase.</p>\n<p>All of our orders have a 1-3 day handling time for processing. Additionally, we ship from Southern California with UPS Ground, which has a 1-7 day delivery window. Please feel free to contact us if you have any questions about the status of your order.</p>\n<h4><strong>Warranty:</strong></h4>\n<p>Our products are guaranteed in 100% working condition upon receipt. Most products are no longer under factory warranty, but iPower Resale Group covers all products for 90 days (3 Year Extensions Available!) under our standard warranty policy. Please see our policy page for further information:</p>\n<h4><strong>INTERNATIONAL SHIPPING DISCLAIMER/POLICIES:</strong></h4>\n<p>The buyer is responsible for any and all customs duties, fees taxes, and other assessments at the time of importation. Certain locations are not serviced by UPS and can only be offered at a surcharge, or might not have available service options at all. Please contact us for a specialized shipping quote prior to bidding or placing an international order.</p>\n<h4><strong>RETURN POLICY:</strong></h4>\n<p>This product is in guaranteed working condition. If for some reason you are unhappy with your purchase please notify us immediately. We can accept a return within 30 days of purchase, preferably for exchange or merchandise credit. Items returned for a refund are subject to a 10% restocking fee. The buyer is responsible for all return shipping costs (insured via UPS or FedEx only).</p>\n<p>All returned items must be in their original condition and packaging. Unfortunately, we cannot take returns of products that have been disassembled or modified.</p>\n<p>All returns are subject to approval via Return Merchandise Authorization (RMA). You can email or call us to set up an RMA. Note that this is a relatively expensive process, so please assure yourself ahead of time that this is the right product for your needs.</p>\n</div>\n</div>",
+   "options": [
+    {
+     "name": "Color",
+     "values": [
+      "Green",
+      "White",
+      "Black",
+      "Yellow",
+      "Purple",
+      "Red"
+     ]
+    },
+    {
+     "name": "Storage",
+     "values": [
+      "64GB"
+     ]
+    },
+    {
+     "name": "Status",
+     "values": [
+      "Unlocked"
+     ]
+    }
+   ],
+   "variants": [
+    {
+     "id": 39473329733729,
+     "title": "Green / 64GB / Unlocked",
+     "price": "219.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Green",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBGreen.png?v=1627381919"
+    },
+    {
+     "id": 39473329668193,
+     "title": "White / 64GB / Unlocked",
+     "price": "219.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "White",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBWhite.png?v=1627381920"
+    },
+    {
+     "id": 39473329700961,
+     "title": "Black / 64GB / Unlocked",
+     "price": "219.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Black",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBBlack.png?v=1627381919"
+    },
+    {
+     "id": 39473329766497,
+     "title": "Yellow / 64GB / Unlocked",
+     "price": "219.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Yellow",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBYellow.png?v=1627381920"
+    },
+    {
+     "id": 39473329799265,
+     "title": "Purple / 64GB / Unlocked",
+     "price": "219.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Purple",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBPurple.png?v=1627381919"
+    },
+    {
+     "id": 39473329832033,
+     "title": "Red / 64GB / Unlocked",
+     "price": "219.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Red",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBRED.png?v=1627381920"
+    }
+   ],
+   "images": [
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBBlack.png?v=1627381919",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBGreen.png?v=1627381919",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBPurple.png?v=1627381919",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBRED.png?v=1627381920",
+     "width": 470,
+     "height": 556,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBWhite.png?v=1627381920",
+     "width": 470,
+     "height": 556,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone1164GBYellow.png?v=1627381920",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    }
+   ]
+  },
+  {
+   "id": 6619644133473,
+   "handle": "iphone-11-pro-max-64gb-unlocked",
+   "title": "iPhone 11 Pro Max 64GB Unlocked",
+   "vendor": "speedyirepair",
+   "product_type": "iPhones",
+   "tags": [
+    "apple",
+    "iphone",
+    "iPhone 11 Pro Max",
+    "iPhone 11 Pro Max 64GB"
+   ],
+   "body_html": "<p>Apple iPhone 11 Pro Max is powered by the Apple A13 Bionic processor. The smartphone comes with a 6.5 inches Super Retina XDR OLED capacitive touchscreen and 1242 x 2688 pixels resolutions. The device's screen is protected by scratch-resistant glass and an oleophobic coating. The rear camera consists of a 12 MP (wide) + 12 MP (telephoto) 2x optical zoom + 12 MP (ultrawide) lenses.The front camera has a 12 MP + TOF 3D camera sensor. The phone’s sensors include Face ID, accelerometer, gyro, proximity, compass, and barometer. The smartphone is fueled by a Non-removable Li-Ion 3500 mAh battery + Fast battery charging 18W: 50% in 30 min + USB Power Delivery 2.0 + Qi wireless charging. The phone runs on iOS 13. The Apple iPhone 11 Pro Max comes in different colors like Space Gray, Silver, Gold, and Midnight Green. It features a 2.0, a proprietary reversible connector.</p>\n<p> </p>\n<div class=\"row-fluid section\" id=\"description-section\">\n<div id=\"description\">\n<div class=\"row-fluid section\" id=\"description-section\">\n<div id=\"description\">\n<p lucida=\"\" grande=\"\" font-size:=\"\" line-height:=\"\" normal=\"\"><strong>Specifications:</strong></p>\n<ul>\n<li>4GB RAM</li>\n<li>64 GB Storage</li>\n<li><span data-mce-fragment=\"1\">A13 Bionic Processor</span></li>\n<li>Triple12-Megapixel Rear Camera.</li>\n<li>Li-Ion 3969 mAh Battery</li>\n<li>Wireless Charging</li>\n<li>Scratch Resistant Glass Protection</li>\n<li>Super Retina XDR OLED Display</li>\n<li>Space Gray, Silver, Midnight Green And Gold Colors</li>\n</ul>\n<p lucida=\"\" grande=\"\" font-size:=\"\" line-height:=\"\" normal=\"\"><strong>What’s in the box?</strong></p>\n<ul>\n<li>Apple iPhone 11 Pro Max</li>\n<li>USB Power Cable</li>\n</ul>\n</div>\n</div>\n<div id=\"inkfrogShowcase\"><br></div>\n</div>\n</div>\n<div class=\"row-fluid section\">\n<div class=\"text_section text-container editable\" id=\"text-tkMmmCiua\">\n<hr>\n<h1><strong>FAQs:</strong></h1>\n<p><strong>What is the item condition?</strong></p>\n<p>-This product is in the condition specified in the \"condition\" section of this listing.  Check with your sales rep for the exact item condition and quality of the product.</p>\n<p>Cosmetic Grading System:</p>\n<p>GRADE A: A Grade A unit is generally considered ‘very good’ or ‘like new.’ Please note that this does not mean that a machine will come with OEM packaging. A Grade A cosmetic condition indicates that there may be very few and faint scratches or scuffs, if any. While a Grade A machine will not be flawless, you should not expect to find any significant, noticeable cosmetic blemishes.</p>\n<p>GRADE B: For this cosmetic grade, cosmetic blemishes will be present and noticeable. These blemishes include scratches, scuffs, and nicks. Minor denting is possible, although this does not include large dents. Blemishes might occur more noticeably on areas that are not as often seen (such as the bottom of a laptop or desktop) but can be present on other areas of the machine. Keys may be slightly worn. A Grade B unit would be equivalent to a ‘good condition.</p>\n<p>GRADE C: This grade is an ‘acceptable’ condition. Cosmetic blemishes will be noticeable and can be large. This does include scratching, scuffing, chipping, and denting. A Grade C unit will function perfectly, despite any cosmetic issues. Keys may be worn enough that letters are not recognizable. Hinges or feet may be missing. Scratching and laminate problems may exist on the screen and bezel; LCD issues such as pressure marks or dead pixels are usually explicitly mentioned, although there is a chance that LCD issues may be present in a Grade C machine.</p>\n<p><strong>How long before I will get my product?</strong></p>\n<p>-Depending on your location, you should receive your purchase within 1-7 business days. You can always contact us for precise shipping quotes and transit times, or for information on upgraded shipping.</p>\n<p><strong>Do you ship worldwide?</strong></p>\n<p>-Yes, we do. Please contact us for a precise shipping quote. Duties and taxes are the sole responsibility of the buyer.</p>\n<p><strong>If I am not happy, can I return the product?</strong></p>\n<p>-Yes, we want the buyer to be happy. We encourage asking all questions prior to committing to buy.</p>\n<p>We can accept a return within 30 days of purchase. Return shipping costs are the responsibility of the buyer. Items returned for a refund are subject to a 10% restocking fee. Our products are guaranteed in 100% working condition upon receipt. Please understand that we sell at a discount for a reason. We specialize in offering high-grade previous generation, refurb, and open box hardware. We want you to be happy and we do our very best to deliver the product you want. Please address any and all concerns before purchasing and before leaving any commentary about our transaction. We will resolve each and every issue to the best of our ability. We have a high success rate and a loyal repeat customer base, and we would like to earn your repeat business as well. We have been in the business for nearly 10 years and are here to stay.</p>\n<p>More than anything, we want our customers to be pleased with their purchase, and it is our goal to close a 5-star transaction each and every time. If you are not happy, please contact us and we'll work with you to find a solution.</p>\n<hr>\n<h4><strong>Payment, Shipping and Handling:</strong></h4>\n<p>Payment is due immediately upon auction closing. We reserve the right to relist this item or offer it to the next qualified buyer when payment does not clear with 24 hours of purchase.</p>\n<p>All of our orders have a 1-3 day handling time for processing. Additionally, we ship from Southern California with UPS Ground, which has a 1-7 day delivery window. Please feel free to contact us if you have any questions about the status of your order.</p>\n<h4><strong>Warranty:</strong></h4>\n<p>Our products are guaranteed in 100% working condition upon receipt. Most products are no longer under factory warranty, but iPower Resale Group covers all products for 90 days (3 Year Extensions Available!) under our standard warranty policy. Please see our policy page for further information:</p>\n<h4><strong>INTERNATIONAL SHIPPING DISCLAIMER/POLICIES:</strong></h4>\n<p>The buyer is responsible for any and all customs duties, fees taxes, and other assessments at the time of importation. Certain locations are not serviced by UPS and can only be offered at a surcharge, or might not have available service options at all. Please contact us for a specialized shipping quote prior to bidding or placing an international order.</p>\n<h4><strong>RETURN POLICY:</strong></h4>\n<p>This product is in guaranteed working condition. If for some reason you are unhappy with your purchase please notify us immediately. We can accept a return within 30 days of purchase, preferably for exchange or merchandise credit. Items returned for a refund are subject to a 10% restocking fee. The buyer is responsible for all return shipping costs (insured via UPS or FedEx only).</p>\n<p>All returned items must be in their original condition and packaging. Unfortunately, we cannot take returns of products that have been disassembled or modified.</p>\n<p>All returns are subject to approval via Return Merchandise Authorization (RMA). You can email or call us to set up an RMA. Note that this is a relatively expensive process, so please assure yourself ahead of time that this is the right product for your needs.</p>\n</div>\n</div>",
+   "options": [
+    {
+     "name": "Color",
+     "values": [
+      "Midnight Green",
+      "Space Gray",
+      "Silver",
+      "Gold"
+     ]
+    },
+    {
+     "name": "Storage",
+     "values": [
+      "64GB"
+     ]
+    },
+    {
+     "name": "Status",
+     "values": [
+      "Unlocked"
+     ]
+    }
+   ],
+   "variants": [
+    {
+     "id": 39473206755425,
+     "title": "Midnight Green / 64GB / Unlocked",
+     "price": "699.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Midnight Green",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-11-Pro-Max-Space-Gray.jpg?v=1627380587"
+    },
+    {
+     "id": 39473206657121,
+     "title": "Space Gray / 64GB / Unlocked",
+     "price": "699.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Space Gray",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-11-Pro-Max-Midnight-Green.jpg?v=1627380586"
+    },
+    {
+     "id": 39473206689889,
+     "title": "Silver / 64GB / Unlocked",
+     "price": "699.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Silver",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-11-Pro-Max-Silver.jpg?v=1627380586"
+    },
+    {
+     "id": 39473206722657,
+     "title": "Gold / 64GB / Unlocked",
+     "price": "699.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Gold",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-11-Pro-Max-Gold.jpg?v=1627380586"
+    }
+   ],
+   "images": [
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-11-Pro-Max-Gold.jpg?v=1627380586",
+     "width": 540,
+     "height": 540,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-11-Pro-Max-Midnight-Green.jpg?v=1627380586",
+     "width": 540,
+     "height": 540,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-11-Pro-Max-Silver.jpg?v=1627380586",
+     "width": 540,
+     "height": 540,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iPhone-11-Pro-Max-Space-Gray.jpg?v=1627380587",
+     "width": 540,
+     "height": 540,
+     "alt": null
+    }
+   ]
+  },
+  {
+   "id": 6619626995809,
+   "handle": "iphone-12-64gb-unlocked",
+   "title": "iPhone 12 64GB Unlocked",
+   "vendor": "speedyirepair",
+   "product_type": "iPhones",
+   "tags": [
+    "apple",
+    "iphone",
+    "iPhone 12",
+    "iPhone 12 64GB"
+   ],
+   "body_html": "<p>iPhone 12. 5G to download movies on the fly and stream high-quality video. Apple iPhone 12 comes with a 6.1-inch Super Retina XDR OLED capacitive touchscreen with a good screen-to-body ratio of 86% and Multitouch in it. Display is superb pixel density for its HD resolution(~460 PPI) with a 19:5:9 aspect ratio. Supports Dolby Vision, Wide color gamut, True-tone, and HDR10, 625 nits (typ), 1200 nits (peak). The device is very lightweight to carry with just 164g and 7.4 mm in thickness. It supports Single SIM (Nano-SIM and/or eSIM). Apple iPhone 12 is equipped with a powerful Apple A14 Bionic (5 nm) Chipset and Hexa-core processor and Apple GPU (4-core graphics) GPU. It provides 4 GB RAM and internal memory of 64 GB It offers Dual 12 MP (f/1.6, 26mm (wide), 1.4µm, dual pixel PDAF, OIS) + 12 MP (f/2.4, 120˚, 13mm (ultrawide), 1/3.6″) rear camera with additional features like Dual-LED dual-tone flash, HDR (photo/panorama). The main camera supports quad HD video recording at 4K@24/30/60fps, 1080p@30/60/120/240fps, HDR, Dolby Vision HDR (up to 30fps), stereo sound rec. It offers Dual 12 MP (f/2.2, 23mm (wide), 1/3.6″) + SL 3D, (depth/biometrics sensor) front-facing camera with additional features like HDR. . It has a battery capacity of 2815 mAh(Non-removable) and Supports Fast charging 20W, 50% in 30 min (advertised), and Qi magnetic fast wireless charging 15W. Supports almost all connectives like Wi-Fi 6, Bluetooth 5.0, 3G, 4G, 5G, and NFC.<span style=\"font-size: 1.4em;\"> </span></p>\n<div class=\"row-fluid section\" id=\"description-section\">\n<div id=\"description\">\n<div class=\"row-fluid section\" id=\"description-section\">\n<div id=\"description\">\n<p lucida=\"\" grande=\"\" font-size:=\"\" line-height:=\"\" normal=\"\"><strong>Specifications:</strong></p>\n<ul>\n<li>A14 Bionic Processor</li>\n<li>4GB RAM</li>\n<li>64 GB Flash Storage</li>\n<li>Dual12-Megapixel Rear Camera</li>\n<li>Li-Ion 2815 Mah Non-Removable Battery</li>\n<li>Magnetic fast wireless charging</li>\n<li>Scratch-resistant ceramic glass Protection</li>\n<li>Super Retina XDR OLED Display</li>\n<li>White, Black, Blue, Green, Purple and Red Colors</li>\n</ul>\n<p lucida=\"\" grande=\"\" font-size:=\"\" line-height:=\"\" normal=\"\"> </p>\n<p lucida=\"\" grande=\"\" font-size:=\"\" line-height:=\"\" normal=\"\"><strong>What’s in the box?</strong></p>\n<ul>\n<li>Apple iPhone 12</li>\n<li>USB Power Cable</li>\n</ul>\n</div>\n</div>\n<div id=\"inkfrogShowcase\"><br></div>\n</div>\n</div>\n<div class=\"row-fluid section\">\n<div class=\"text_section text-container editable\" id=\"text-tkMmmCiua\">\n<hr>\n<h1><strong>FAQs:</strong></h1>\n<p><strong>What is the item condition?</strong></p>\n<p>-This product is in the condition specified in the \"condition\" section of this listing.  Check with your sales rep for the exact item condition and quality of the product.</p>\n<p>Cosmetic Grading System:</p>\n<p>GRADE A: A Grade A unit is generally considered ‘very good’ or ‘like new.’ Please note that this does not mean that a machine will come with OEM packaging. A Grade A cosmetic condition indicates that there may be very few and faint scratches or scuffs, if any. While a Grade A machine will not be flawless, you should not expect to find any significant, noticeable cosmetic blemishes.</p>\n<p>GRADE B: For this cosmetic grade, cosmetic blemishes will be present and noticeable. These blemishes include scratches, scuffs, and nicks. Minor denting is possible, although this does not include large dents. Blemishes might occur more noticeably on areas that are not as often seen (such as the bottom of a laptop or desktop) but can be present on other areas of the machine. Keys may be slightly worn. A Grade B unit would be equivalent to a ‘good condition.</p>\n<p>GRADE C: This grade is an ‘acceptable’ condition. Cosmetic blemishes will be noticeable and can be large. This does include scratching, scuffing, chipping, and denting. A Grade C unit will function perfectly, despite any cosmetic issues. Keys may be worn enough that letters are not recognizable. Hinges or feet may be missing. Scratching and laminate problems may exist on the screen and bezel; LCD issues such as pressure marks or dead pixels are usually explicitly mentioned, although there is a chance that LCD issues may be present in a Grade C machine.</p>\n<p><strong>How long before I will get my product?</strong></p>\n<p>-Depending on your location, you should receive your purchase within 1-7 business days. You can always contact us for precise shipping quotes and transit times, or for information on upgraded shipping.</p>\n<p><strong>Do you ship worldwide?</strong></p>\n<p>-Yes, we do. Please contact us for a precise shipping quote. Duties and taxes are the sole responsibility of the buyer.</p>\n<p><strong>If I am not happy, can I return the product?</strong></p>\n<p>-Yes, we want the buyer to be happy. We encourage asking all questions prior to committing to buy.</p>\n<p>We can accept a return within 30 days of purchase. Return shipping costs are the responsibility of the buyer. Items returned for a refund are subject to a 10% restocking fee. Our products are guaranteed in 100% working condition upon receipt. Please understand that we sell at a discount for a reason. We specialize in offering high-grade previous generation, refurb, and open box hardware. We want you to be happy and we do our very best to deliver the product you want. Please address any and all concerns before purchasing and before leaving any commentary about our transaction. We will resolve each and every issue to the best of our ability. We have a high success rate and a loyal repeat customer base, and we would like to earn your repeat business as well. We have been in the business for nearly 10 years and are here to stay.</p>\n<p>More than anything, we want our customers to be pleased with their purchase, and it is our goal to close a 5-star transaction each and every time. If you are not happy, please contact us and we'll work with you to find a solution.</p>\n<hr>\n<h4><strong>Payment, Shipping and Handling:</strong></h4>\n<p>Payment is due immediately upon auction closing. We reserve the right to relist this item or offer it to the next qualified buyer when payment does not clear with 24 hours of purchase.</p>\n<p>All of our orders have a 1-3 day handling time for processing. Additionally, we ship from Southern California with UPS Ground, which has a 1-7 day delivery window. Please feel free to contact us if you have any questions about the status of your order.</p>\n<h4><strong>Warranty:</strong></h4>\n<p>Our products are guaranteed in 100% working condition upon receipt. Most products are no longer under factory warranty, but iPower Resale Group covers all products for 90 days (3 Year Extensions Available!) under our standard warranty policy. Please see our policy page for further information:</p>\n<h4><strong>INTERNATIONAL SHIPPING DISCLAIMER/POLICIES:</strong></h4>\n<p>The buyer is responsible for any and all customs duties, fees taxes, and other assessments at the time of importation. Certain locations are not serviced by UPS and can only be offered at a surcharge, or might not have available service options at all. Please contact us for a specialized shipping quote prior to bidding or placing an international order.</p>\n<h4><strong>RETURN POLICY:</strong></h4>\n<p>This product is in guaranteed working condition. If for some reason you are unhappy with your purchase please notify us immediately. We can accept a return within 30 days of purchase, preferably for exchange or merchandise credit. Items returned for a refund are subject to a 10% restocking fee. The buyer is responsible for all return shipping costs (insured via UPS or FedEx only).</p>\n<p>All returned items must be in their original condition and packaging. Unfortunately, we cannot take returns of products that have been disassembled or modified.</p>\n<p>All returns are subject to approval via Return Merchandise Authorization (RMA). You can email or call us to set up an RMA. Note that this is a relatively expensive process, so please assure yourself ahead of time that this is the right product for your needs.</p>\n</div>\n</div>",
+   "options": [
+    {
+     "name": "Color",
+     "values": [
+      "Green",
+      "Purple",
+      "White",
+      "Black",
+      "Blue",
+      "Red"
+     ]
+    },
+    {
+     "name": "Storage",
+     "values": [
+      "64GB"
+     ]
+    },
+    {
+     "name": "Status",
+     "values": [
+      "Unlocked"
+     ]
+    }
+   ],
+   "variants": [
+    {
+     "id": 39473035739233,
+     "title": "Green / 64GB / Unlocked",
+     "price": "249.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Green",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-green-select-2020.jpg?v=1627375752"
+    },
+    {
+     "id": 39473035772001,
+     "title": "Purple / 64GB / Unlocked",
+     "price": "249.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Purple",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-purple-select-2021.jpg?v=1627375751"
+    },
+    {
+     "id": 39473035640929,
+     "title": "White / 64GB / Unlocked",
+     "price": "249.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "White",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-white-select-2020.jpg?v=1627375752"
+    },
+    {
+     "id": 39473035673697,
+     "title": "Black / 64GB / Unlocked",
+     "price": "249.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Black",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-black-select-2020.jpg?v=1627375752"
+    },
+    {
+     "id": 39473035706465,
+     "title": "Blue / 64GB / Unlocked",
+     "price": "249.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Blue",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-blue-select-2020.jpg?v=1627375751"
+    },
+    {
+     "id": 39473035804769,
+     "title": "Red / 64GB / Unlocked",
+     "price": "249.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Red",
+     "option2": "64GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-red-select-2020.jpg?v=1627375752"
+    }
+   ],
+   "images": [
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-blue-select-2020.jpg?v=1627375751",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-purple-select-2021.jpg?v=1627375751",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-green-select-2020.jpg?v=1627375752",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-black-select-2020.jpg?v=1627375752",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-red-select-2020.jpg?v=1627375752",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-white-select-2020.jpg?v=1627375752",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    }
+   ]
+  },
+  {
+   "id": 6619584069729,
+   "handle": "iphone-12-pro-max-128gb-unlocked",
+   "title": "iPhone 12 Pro Max 128GB Unlocked",
+   "vendor": "speedyirepair",
+   "product_type": "iPhones",
+   "tags": [
+    "apple",
+    "iPhone 12 Pro Max",
+    "iPhone 12 Pro Max 128GB"
+   ],
+   "body_html": "<p> Apple iPhone 12 Pro Max comes with the latest OS iOS 14.1, upgradable to iOS 14.2. It offers a 6.7-inch Super Retina XDR OLED, HDR10 touchscreen and  screen-to-body ratio of 83.3%. Display pixel density is full HD resolution(~458 PPI) with a 19:5:9 aspect ratio and protected by Scratch-resistant ceramic glass. Supports Dolby Vision, Wide color gamut, True-tone. Apple iPhone 12 Pro Max is built with a glass front/back that is made up of Gorilla Glass and surrounded by a steel frame. It supports 5G connectivity for faster internet speeds. Apple iPhone 12 Pro Max has equipped with a powerful Apple A14 Bionic (5 nm) Chipset and Hexa-core (2×3.1 GHz Firestorm + 4×1.8 GHz Icestorm) processor and Apple GPU (4-core graphics) GPU. It has 6 GB of RAM and brings an internal memory of 128/256/512 GB. iPhone 12 Pro Max offers a Quad 12 MP, f/1.6, 26mm (wide), 1.7µm, dual pixel PDAF, sensor-shift stabilization (IBIS) + 12 MP, f/2.2, 65mm (telephoto), 1/3.4″, 1.0µm, PDAF, OIS, 2.5x optical zoom + 12 MP, f/2.4, 120˚, 13mm (ultrawide), 1/3.6″ + TOF 3D LiDAR scanner (depth) rear camera. The battery capacity of Li-Ion 3687 mAh, non-removable (14.13 Wh). Supports other connectives like Wi-Fi 6, Bluetooth 5.0, USB Type C, 3G, 4G, NFC.<br data-mce-fragment=\"1\"></p>\n<div id=\"template_wrapper\">\n<div class=\"container-fluid\">\n<div id=\"template_content\">\n<div id=\"drag_area\">\n<div class=\"row-fluid section\" id=\"description-section\">\n<div id=\"description\">\n<div class=\"row-fluid section\" id=\"description-section\">\n<div id=\"description\">\n<p lucida=\"\" grande=\"\" font-size:=\"\" line-height:=\"\" normal=\"\"><strong>Specifications:</strong></p>\n<ul>\n<li>Apple A14 Bionic (5 Nm) Chipset</li>\n<li>12Mp Camera</li>\n<li>6GB RAM</li>\n<li>Battery 3687 Mah</li>\n<li>Weight 228 G</li>\n<li>Qi Magnetic Fast Wireless Charging 15W</li>\n<li>\n<span data-mce-fragment=\"1\">128GB Flash </span>Storage<br>\n</li>\n</ul>\n<p lucida=\"\" grande=\"\" font-size:=\"\" line-height:=\"\" normal=\"\"><strong>What’s in the box?</strong></p>\n<ul>\n<li>Apple iPhone 12 Pro Max</li>\n<li>USB Power Cable</li>\n</ul>\n</div>\n</div>\n<div id=\"inkfrogShowcase\"><br></div>\n</div>\n</div>\n<div class=\"row-fluid section\">\n<div class=\"text_section text-container editable\" id=\"text-tkMmmCiua\">\n<hr>\n<h1><strong>FAQs:</strong></h1>\n<p><strong>What is the item condition?</strong></p>\n<p>-This product is in the condition specified in the \"condition\" section of this listing.  Check with your sales rep for the exact item condition and quality of the product.</p>\n<p>Cosmetic Grading System:</p>\n<p>GRADE A: A Grade A unit is generally considered ‘very good’ or ‘like new.’ Please note that this does not mean that a machine will come with OEM packaging. A Grade A cosmetic condition indicates that there may be very few and faint scratches or scuffs, if any. While a Grade A machine will not be flawless, you should not expect to find any significant, noticeable cosmetic blemishes.</p>\n<p>GRADE B: For this cosmetic grade, cosmetic blemishes will be present and noticeable. These blemishes include scratches, scuffs, and nicks. Minor denting is possible, although this does not include large dents. Blemishes might occur more noticeably on areas that are not as often seen (such as the bottom of a laptop or desktop) but can be present on other areas of the machine. Keys may be slightly worn. A Grade B unit would be equivalent to a ‘good condition.</p>\n<p>GRADE C: This grade is an ‘acceptable’ condition. Cosmetic blemishes will be noticeable and can be large. This does include scratching, scuffing, chipping, and denting. A Grade C unit will function perfectly, despite any cosmetic issues. Keys may be worn enough that letters are not recognizable. Hinges or feet may be missing. Scratching and laminate problems may exist on the screen and bezel; LCD issues such as pressure marks or dead pixels are usually explicitly mentioned, although there is a chance that LCD issues may be present in a Grade C machine.</p>\n<p><strong>How long before I will get my product?</strong></p>\n<p>-Depending on your location, you should receive your purchase within 1-7 business days. You can always contact us for precise shipping quotes and transit times, or for information on upgraded shipping.</p>\n<p><strong>Do you ship worldwide?</strong></p>\n<p>-Yes, we do. Please contact us for a precise shipping quote. Duties and taxes are the sole responsibility of the buyer.</p>\n<p><strong>If I am not happy, can I return the product?</strong></p>\n<p>-Yes, we want the buyer to be happy. We encourage asking all questions prior to committing to buy.</p>\n<p>We can accept a return within 30 days of purchase. Return shipping costs are the responsibility of the buyer. Items returned for a refund are subject to a 10% restocking fee. Our products are guaranteed in 100% working condition upon receipt. Please understand that we sell at a discount for a reason. We specialize in offering high-grade previous generation, refurb, and open box hardware. We want you to be happy and we do our very best to deliver the product you want. Please address any and all concerns before purchasing and before leaving any commentary about our transaction. We will resolve each and every issue to the best of our ability. We have a high success rate and a loyal repeat customer base, and we would like to earn your repeat business as well. We have been in the business for nearly 10 years and are here to stay.</p>\n<p>More than anything, we want our customers to be pleased with their purchase, and it is our goal to close a 5-star transaction each and every time. If you are not happy, please contact us and we'll work with you to find a solution.</p>\n<hr>\n<h4><strong>Payment, Shipping and Handling:</strong></h4>\n<p>Payment is due immediately upon auction closing. We reserve the right to relist this item or offer it to the next qualified buyer when payment does not clear with 24 hours of purchase.</p>\n<p>All of our orders have a 1-3 day handling time for processing. Additionally, we ship from Southern California with UPS Ground, which has a 1-7 day delivery window. Please feel free to contact us if you have any questions about the status of your order.</p>\n<h4><strong>Warranty:</strong></h4>\n<p>Our products are guaranteed in 100% working condition upon receipt. Most products are no longer under factory warranty, but iPower Resale Group covers all products for 90 days (3 Year Extensions Available!) under our standard warranty policy. Please see our policy page for further information:</p>\n<h4><strong>INTERNATIONAL SHIPPING DISCLAIMER/POLICIES:</strong></h4>\n<p>The buyer is responsible for any and all customs duties, fees taxes, and other assessments at the time of importation. Certain locations are not serviced by UPS and can only be offered at a surcharge, or might not have available service options at all. Please contact us for a specialized shipping quote prior to bidding or placing an international order.</p>\n<h4><strong>RETURN POLICY:</strong></h4>\n<p>This product is in guaranteed working condition. If for some reason you are unhappy with your purchase please notify us immediately. We can accept a return within 30 days of purchase, preferably for exchange or merchandise credit. Items returned for a refund are subject to a 10% restocking fee. The buyer is responsible for all return shipping costs (insured via UPS or FedEx only).</p>\n<p>All returned items must be in their original condition and packaging. Unfortunately, we cannot take returns of products that have been disassembled or modified.</p>\n<p>All returns are subject to approval via Return Merchandise Authorization (RMA). You can email or call us to set up an RMA. Note that this is a relatively expensive process, so please assure yourself ahead of time that this is the right product for your needs.</p>\n</div>\n</div>\n</div>\n</div>\n</div>\n</div>\n<div id=\"inkfrog_gallery\"><br></div>\n<div id=\"inkfrog_crosspromo_bottom\"><br></div>\n<div id=\"inkfrog_credit\"><br></div>\n<p> </p>",
+   "options": [
+    {
+     "name": "Color",
+     "values": [
+      "Graphite",
+      "Silver",
+      "Gold",
+      "Pacific Blue"
+     ]
+    },
+    {
+     "name": "Storage",
+     "values": [
+      "128GB"
+     ]
+    },
+    {
+     "name": "Status",
+     "values": [
+      "Unlocked"
+     ]
+    }
+   ],
+   "variants": [
+    {
+     "id": 39472340959329,
+     "title": "Graphite / 128GB / Unlocked",
+     "price": "399.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Graphite",
+     "option2": "128GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-pro-max-graphite-hero.jpg?v=1627360302"
+    },
+    {
+     "id": 39472340992097,
+     "title": "Silver / 128GB / Unlocked",
+     "price": "399.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Silver",
+     "option2": "128GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-pro-max-silver-hero.jpg?v=1627360302"
+    },
+    {
+     "id": 39472341024865,
+     "title": "Gold / 128GB / Unlocked",
+     "price": "399.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Gold",
+     "option2": "128GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-pro-max-gold-hero.jpg?v=1627360301"
+    },
+    {
+     "id": 39472341057633,
+     "title": "Pacific Blue / 128GB / Unlocked",
+     "price": "399.99",
+     "compare_at_price": null,
+     "available": true,
+     "option1": "Pacific Blue",
+     "option2": "128GB",
+     "option3": "Unlocked",
+     "image_src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-pro-max-blue-hero.jpg?v=1627360301"
+    }
+   ],
+   "images": [
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-pro-max-blue-hero.jpg?v=1627360301",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-pro-max-gold-hero.jpg?v=1627360301",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-pro-max-graphite-hero.jpg?v=1627360302",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    },
+    {
+     "src": "https://cdn.shopify.com/s/files/1/0024/6520/2233/products/iphone-12-pro-max-silver-hero.jpg?v=1627360302",
+     "width": 1080,
+     "height": 1080,
+     "alt": null
+    }
+   ]
+  }
+ ],
+ "collections": [
+  {
+   "handle": "apple-ipads",
+   "title": "Apple iPads",
+   "products_count": 0,
+   "image": "https://cdn.shopify.com/s/files/1/0024/6520/2233/collections/image_084d6b09-f117-4ebb-9356-54c925b1c2ec.jpg?v=1639903011"
+  },
+  {
+   "handle": "iphones",
+   "title": "Apple iPhones",
+   "products_count": 10,
+   "image": "https://cdn.shopify.com/s/files/1/0024/6520/2233/collections/image.jpg?v=1639902721"
+  },
+  {
+   "handle": "screen-protectors",
+   "title": "Screen Protectors",
+   "products_count": 0,
+   "image": "https://cdn.shopify.com/s/files/1/0024/6520/2233/collections/image_41dedc1d-5844-42d1-ae59-cf188c4a976c.jpg?v=1626588763"
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Motion layer CSS. Imported once from styles/globals.css (after tokens).
+   Lenis base styles live in globals.css (Architect) and are not duplicated here.
+
+   "Before" states are gated on html[data-motion="ok"], which is ONLY set by the
+   pre-hydration MotionBootScript when JS runs and reduced motion is NOT requested.
+   => no-JS, reduced-motion and failsafe ("fallback", 2.5s) users see content immediately.
+   Only opacity is pre-set; JS animates opacity + transform to the final state.
+   ========================================================================== */
+
+html[data-motion="ok"] [data-animate="reveal"]:not([data-reveal="children"]):not([data-animated]),
+html[data-motion="ok"] [data-animate="reveal"][data-reveal="children"]:not([data-animated]) > *,
+html[data-motion="ok"] :is([data-animate="stagger"], [data-stagger]):not([data-animated]) > *,
+html[data-motion="ok"] :is([data-animate="split-heading"], [data-split]):not([data-animated]) {
+  opacity: 0;
+}
+
+/* How It Works: progress fill is transform-driven (scaleX), never width. */
+:is([data-animate="steps"], [data-pin="how"]) :is([data-steps-progress], .progress__fill) {
+  transform-origin: left center;
+}
+html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]) [data-step] {
+  will-change: transform;
+}
+/* Mobile: pinned card stack. Tiles share one grid cell (tallest sets the height, so no jump);
+   bindings.ts cross-fades them. Only when motion is OK -> no-JS / reduced = plain list. */
+@media (max-width: 767.98px) {
+  html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]) :has(> [data-step]) {
+    display: grid;
+  }
+  html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]) :has(> [data-step]) > [data-step] {
+    grid-area: 1 / 1;
+  }
+  html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]):not([data-animated]) [data-step]:not(:first-child) {
+    opacity: 0;
+  }
+}
+
+/* Parallax media: compositor hint. */
+:is([data-animate="parallax"], [data-parallax]) { will-change: transform; }
+
+/* SplitText line masks: keep descenders visible */
+:is([data-animate="split-heading"], [data-split]) [class*="-mask"] {
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+/* Accordion panels (Accordion.tsx + [data-faq] details): the one height animation; isolated. */
+[data-accordion-panel],
+[data-faq] .accordion__panel {
+  overflow: hidden;
+  contain: layout paint;
+}
+
+/* Reduced motion: hard stop for any CSS transition/animation in motion-layer elements. */
+html[data-motion="reduce"] :is([data-animate], [data-motion-el]),
+html[data-motion="reduce"] :is([data-animate], [data-motion-el]) * {
+  transition-duration: 0.001ms !important;
+  animation: none !important;
+}

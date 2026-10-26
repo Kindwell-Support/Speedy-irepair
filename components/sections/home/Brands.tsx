@@ -1,0 +1,17 @@
+import type { Brand, SectionCopy } from "@/lib/sanity/types";
+import { Section } from "@/components/ui/Section";
+import { BrandMarquee } from "@/components/motion/BrandMarquee";
+
+/** Spec 2.1.4. Wordmarks render as text until monochrome logo assets are added in Sanity (brand.logo). */
+export function Brands({ copy, brands }: { copy: SectionCopy; brands: Brand[] }) {
+  return (
+    <Section id="brands" copy={copy}>
+      <BrandMarquee
+        brands={brands.map((b) => ({
+          name: b.name,
+          logo: <span className="whitespace-nowrap text-h4 font-semibold">{b.name}</span>,
+        }))}
+      />
+    </Section>
+  );
+}

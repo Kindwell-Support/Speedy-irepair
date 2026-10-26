@@ -1,0 +1,1252 @@
+{
+ "shipping-return": {
+  "title": "Shipping & Return Policy",
+  "sourceUrl": "https://speedyirepair.com/pages/return-policy",
+  "body": [
+   {
+    "_type": "block",
+    "_key": "shi0",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi0s",
+      "text": "SHIPPING | DOMESTIC",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi1",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi1s",
+      "text": "Orders are processed 7 days a week and most orders will ship within 7-10 business days after your payment is authorized and verified this doesn’t include weekends or holidays. All orders placed for delivery to the United States are shipped using ePacket Mail (first class) with a tracking number emailed to the customer upon shipment. Items noted as “PRE-ORDER” will ship upon arrival from the manufacturer or date provided in the item description. If there is a delay in ability to ship the order you will be contacted via email. We are not responsible for any packages lost, stolen or delayed by the postal service.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi2",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi2s",
+      "text": "Returns",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi3",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi3s",
+      "text": "Our policy lasts 30 days. If 30 days have gone by since your purchase, unfortunately we can’t offer you a refund or exchange.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi4",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi4s",
+      "text": "To be eligible for a return, your item must be unused and in the same condition that you received it. It must also be in the original packaging.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi5",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi5s",
+      "text": "Several types of goods are exempt from being returned. Phone accessories, chargers, screen protectors, SIM cards and items with no serial number cannot be returned.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi6",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi6s",
+      "text": "Additional non-returnable items:",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi7",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi7s",
+      "text": "Gift cards",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi8",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi8s",
+      "text": "Downloadable software products",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi9",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi9s",
+      "text": "To complete your return, we require a receipt or proof of purchase.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi10",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi10s",
+      "text": "Please do not send your purchase back to the manufacturer.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi11",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi11s",
+      "text": "There are certain situations where only partial refunds are granted (if applicable)",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi12",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi12s",
+      "text": "Devices with obvious signs of use or damage.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi13",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi13s",
+      "text": "Any item not in its original condition, is damaged or missing parts for reasons not due to our error WILL NOT BE ACCEPTED FOR RETURNS!",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi14",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi14s",
+      "text": "Any item that is returned more than 30 days after delivery WILL NOT BE ACCEPTED FOR RETURNS!",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi15",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi15s",
+      "text": "Refunds (if applicable)",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi16",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi16s",
+      "text": "Once your return is received and inspected, we will send you an email to notify you that we have received your returned item. We will also notify you of the approval or rejection of your refund.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi17",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi17s",
+      "text": "If you are approved, then your refund will be processed, and a credit will automatically be applied to your credit card or original method of payment, within a 3 business days.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi18",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi18s",
+      "text": "Late or missing refunds (if applicable)",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi19",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi19s",
+      "text": "If you haven’t received a refund yet, first check your bank account again.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi20",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi20s",
+      "text": "Then contact your credit card company, it may take some time before your refund is officially posted.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi21",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi21s",
+      "text": "Next contact your bank. There is often some processing time before a refund is posted.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi22",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi22s",
+      "text": "If you’ve done all of this and you still have not received your refund yet, please contact us at info@speedyirepair.com.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi23",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi23s",
+      "text": "Sale items (if applicable)",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi24",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi24s",
+      "text": "Only regular priced items may be refunded, unfortunately sale items cannot be refunded except electronics devices found to not work properly.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi25",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi25s",
+      "text": "Exchanges (if applicable)",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi26",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi26s",
+      "text": "We only replace items if they are defective or damaged. If you need to exchange it for the same item, send us an email at info@speedyirepair.com and send your item to:",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi27",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi27s",
+      "text": "ATTN: RMA Dept",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi28",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi28s",
+      "text": "Speedy iRepair LLC,",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi29",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi29s",
+      "text": "1650 W Market St., Ste 23,",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi30",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi30s",
+      "text": "Akron OH 44313, United States.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi31",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi31s",
+      "text": "Shipping",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi32",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi32s",
+      "text": "To return your product, you should mail your product to:",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi33",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi33s",
+      "text": "ATTN: RMA Dept",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi34",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi34s",
+      "text": "Speedy iRepair LLC,",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi35",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi35s",
+      "text": "1650 W Market St., Ste 23,",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi36",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi36s",
+      "text": "Akron OH 44313, United States.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi37",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi37s",
+      "text": "Shipping labels will be provided by Speedy iRepair LLC for any defective electronics devices.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi38",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi38s",
+      "text": "Depending on where you live, the time it may take for your exchanged product to reach you, may vary.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi39",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi39s",
+      "text": "SHIPPING | INTERNATIONAL",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi40",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi40s",
+      "text": "International orders are shipped First Class Mail (14-30 days). Tracking information is not available for International Orders however customers will be provided with a customs number that may be used at usps.com to show postal service acceptance. Any custom fees or taxes associated international orders are the responsibility of the customer. Please note that customs authorities require us to state the value of the item directly onto the package. Orders will ship out within 9-12 days after your payment is authorized and verified this doesn’t include weekends or holidays. Items noted as “PRE-ORDER” will ship upon arrival from the manufacturer unless otherwise time is listed in product description. If there is a delay in ability to ship the order you will be contacted via email. We are not responsible for any packages lost, stolen or delayed by the postal service.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi41",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi41s",
+      "text": "PACKAGE RETURNED TO SENDER POLICY",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "shi42",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "shi42s",
+      "text": "If an invalid address is provided to us, the Postal Service will return the package to our offices. You will be contacted by a customer service representative to arrange for re-shipment at your expense. Initial shipping costs are non-refundable as the post office does not reimburse us for returned to sender packages.",
+      "marks": []
+     }
+    ]
+   }
+  ]
+ },
+ "privacy": {
+  "title": "Privacy policy",
+  "sourceUrl": "https://speedyirepair.com/policies/privacy-policy",
+  "body": [
+   {
+    "_type": "block",
+    "_key": "pri0",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri0s",
+      "text": "This Privacy Policy describes how your personal information is collected, used, and shared when you visit or make a purchase from speedyirepair.com (the “Site”).",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri1",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri1s",
+      "text": "PERSONAL INFORMATION WE COLLECT",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri2",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri2s",
+      "text": "When you visit the Site, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the cookies that are installed on your device. Additionally, as you browse the Site, we collect information about the individual web pages or products that you view, what websites or search terms referred you to the Site, and information about how you interact with the Site. We refer to this automatically-collected information as “Device Information”.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri3",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri3s",
+      "text": "We collect Device Information using the following technologies:",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri4",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri4s",
+      "text": "- “Cookies” are data files that are placed on your device or computer and often include an anonymous unique identifier. For more information about cookies, and how to disable cookies, visit http://www.allaboutcookies.org.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri5",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri5s",
+      "text": "- “Log files” track actions occurring on the Site, and collect data including your IP address, browser type, Internet service provider, referring/exit pages, and date/time stamps.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri6",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri6s",
+      "text": "- “Web beacons”, “tags”, and “pixels” are electronic files used to record information about how you browse the Site.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri7",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri7s",
+      "text": "Additionally when you make a purchase or attempt to make a purchase through the Site, we collect certain information from you, including your name, billing address, shipping address, payment information (including credit card numbers, email address, and phone number. We refer to this information as “Order Information”.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri8",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri8s",
+      "text": "When we talk about “Personal Information” in this Privacy Policy, we are talking both about Device Information and Order Information.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri9",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri9s",
+      "text": "HOW DO WE USE YOUR PERSONAL INFORMATION?",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri10",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri10s",
+      "text": "We use the Order Information that we collect generally to fulfill any orders placed through the Site (including processing your payment information, arranging for shipping, and providing you with invoices and/or order confirmations). Additionally, we use this Order Information to:",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri11",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri11s",
+      "text": "- Communicate with you;",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri12",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri12s",
+      "text": "- Screen our orders for potential risk or fraud; and",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri13",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri13s",
+      "text": "- When in line with the preferences you have shared with us, provide you with information or advertising relating to our products or services.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri14",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri14s",
+      "text": "We use the Device Information that we collect to help us screen for potential risk and fraud (in particular, your IP address), and more generally to improve and optimize our Site (for example, by generating analytics about how our customers browse and interact with the Site, and to assess the success of our marketing and advertising campaigns).",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri15",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri15s",
+      "text": "SHARING YOUR PERSONAL INFORMATION",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri16",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri16s",
+      "text": "We share your Personal Information with third parties to help us use your Personal Information, as described above. For example, we use Shopify to power our online store--you can read more about how Shopify uses your Personal Information here: https://www.shopify.com/legal/privacy. We also use Google Analytics to help us understand how our customers use the Site -- you can read more about how Google uses your Personal Information here: https://www.google.com/intl/en/policies/privacy/. You can also opt-out of Google Analytics here: https://tools.google.com/dlpage/gaoptout.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri17",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri17s",
+      "text": "Finally, we may also share your Personal Information to comply with applicable laws and regulations, to respond to a subpoena, search warrant or other lawful request for information we receive, or to otherwise protect our rights.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri18",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri18s",
+      "text": "BEHAVIOURAL ADVERTISING",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri19",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri19s",
+      "text": "As described above, we use your Personal Information to provide you with targeted advertisements or marketing communications we believe may be of interest to you. For more information about how targeted advertising works, you can visit the Network Advertising Initiative’s (“NAI”) educational page at http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri20",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri20s",
+      "text": "You can opt out of targeted advertising by using the links below:",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri21",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri21s",
+      "text": "- Facebook: https://www.facebook.com/settings/?tab=ads",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri22",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri22s",
+      "text": "- Google: https://www.google.com/settings/ads/anonymous",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri23",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri23s",
+      "text": "- Bing: https://advertise.bingads.microsoft.com/en-us/resources/policies/personalized-ads",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri24",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri24s",
+      "text": "Additionally, you can opt out of some of these services by visiting the Digital Advertising Alliance’s opt-out portal at: http://optout.aboutads.info/.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri25",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri25s",
+      "text": "DO NOT TRACK",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri26",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri26s",
+      "text": "Please note that we do not alter our Site’s data collection and use practices when we see a Do Not Track signal from your browser.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri27",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri27s",
+      "text": "YOUR RIGHTS",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri28",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri28s",
+      "text": "If you are a European resident, you have the right to access personal information we hold about you and to ask that your personal information be corrected, updated, or deleted. If you would like to exercise this right, please contact us through the contact information below.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri29",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri29s",
+      "text": "Additionally, if you are a European resident we note that we are processing your information in order to fulfill contracts we might have with you (for example if you make an order through the Site), or otherwise to pursue our legitimate business interests listed above. Additionally, please note that your information will be transferred outside of Europe, including to Canada and the United States.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri30",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri30s",
+      "text": "DATA RETENTION",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri31",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri31s",
+      "text": "When you place an order through the Site, we will maintain your Order Information for our records unless and until you ask us to delete this information.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri32",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri32s",
+      "text": "CHANGES",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri33",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri33s",
+      "text": "We may update this privacy policy from time to time in order to reflect, for example, changes to our practices or for other operational, legal or regulatory reasons.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri34",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri34s",
+      "text": "MINORS",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri35",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri35s",
+      "text": "The Site is not intended for individuals under the age of [[INSERT AGE]] .",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri36",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri36s",
+      "text": "CONTACT US",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri37",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri37s",
+      "text": "For more information about our privacy practices, if you have questions, or if you would like to make a complaint, please contact us by e‑mail at info@speedyirepair.com or by mail using the details provided below:",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri38",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri38s",
+      "text": "speedyirepair",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri39",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri39s",
+      "text": "[Re: Privacy Compliance Officer]",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri40",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri40s",
+      "text": "Speedy iRepair LLC,",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri41",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri41s",
+      "text": "1650 W Market St., Ste 23,",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "pri42",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "pri42s",
+      "text": "Akron OH 44313, United States",
+      "marks": []
+     }
+    ]
+   }
+  ]
+ },
+ "terms": {
+  "title": "Terms & Conditions",
+  "sourceUrl": "https://speedyirepair.com/pages/terms-conditions",
+  "body": [
+   {
+    "_type": "block",
+    "_key": "ter0",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "ter0s",
+      "text": "Speedy iRepair Terms and Conditions",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "ter1",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "ter1s",
+      "text": "Speedy iRepair is not responsible for any loss, corruption, or breach of data; the loss of data may occur as a result of the service provided. It is the customer’s responsibility to do a backup/copy of the data before bringing their device to Speedy iRepair. I understand Speedy iRepair is a 3rd party repair shop, and is not responsible for factory/service provider warranty voiding that may occur doing repairs. Devices not claimed within 14 days after the repair date shall be considered forfeited and will become property of Speedy iRepair to recover lost expenses. Warranty will only be provided for the parts that were serviced for up to 90 days. Speedy iRepair will not provide warranty on any devices previously serviced by other companies, or on damages occurring after the repair is completed. By signing this agreement in-store, I agree to these Terms & Conditions, and also agree to pay the amount indicated below to receive my device back after my repair is completed.",
+      "marks": []
+     }
+    ]
+   }
+  ]
+ }
+}
