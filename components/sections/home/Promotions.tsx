@@ -6,10 +6,13 @@ import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
 /** Spec 2.1.7 */
 export function Promotions({ copy, items }: { copy: SectionCopy; items: Promotion[] }) {
   return (
-    <Section id="promotions" copy={copy} tone="raised">
+    <Section id="promotions" copy={copy} tone="raised" section="promotions" testId="promotions">
       <ul className="grid gap-4 md:grid-cols-3" data-animate="stagger">
         {items.map((p) => (
-          <li key={p.id} className="flex flex-col gap-4 rounded-xl border border-border bg-surface p-6">
+          <li
+            key={p.id}
+            className="flex flex-col gap-4 rounded-xl border border-border bg-surface p-6"
+          >
             <h3 className="text-h5">
               <PlaceholderMark show={p.isPlaceholder}>{p.title}</PlaceholderMark>
             </h3>

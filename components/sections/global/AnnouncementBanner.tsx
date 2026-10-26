@@ -4,8 +4,12 @@ import type { Announcement } from "@/lib/sanity/types";
 export function AnnouncementBanner({ announcement }: { announcement: Announcement | null }) {
   if (!announcement?.enabled) return null;
   return (
-    <div className="relative z-banner bg-primary text-text">
-      <div className="container-site flex min-h-banner items-center justify-center py-2 text-center text-body-sm font-semibold">
+    <div
+      data-section="banner"
+      data-testid="announcement-banner"
+      className="relative z-banner bg-primary text-text"
+    >
+      <div className="container-site min-h-banner flex items-center justify-center py-2 text-center text-body-sm font-semibold">
         <a
           href={announcement.href}
           className="underline-offset-4 hover:underline"

@@ -63,15 +63,16 @@ export default async function HomePage() {
         reviewUrl={settings.business.externalLinks.review}
       />
       <Promotions copy={page.promotionsSection} items={promotions} />
-      <Section id="faq" copy={page.faqSection}>
+      <Section id="faq" copy={page.faqSection} section="faq">
         <FaqList faqs={faqs} />
       </Section>
       <LocationContact
         copy={page.locationSection}
+        section="location"
         business={settings.business}
         directionsLabel={page.locationSection.directionsLabel}
       />
-      <Section id="newsletter" tone="raised" className="text-center">
+      <Section id="newsletter" section="newsletter" tone="raised" className="text-center">
         <h2 className="text-h3">{page.newsletter.heading}</h2>
         <div className="mx-auto mt-6 max-w-md">
           <NewsletterForm

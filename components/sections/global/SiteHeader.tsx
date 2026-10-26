@@ -11,7 +11,12 @@ export function SiteHeader({ settings }: { settings: SiteSettings }) {
   return (
     <header className="sticky top-0 z-nav border-b border-border-subtle bg-overlay backdrop-blur-md">
       <div className="container-site flex h-nav items-center justify-between gap-6 lg:h-nav-desktop">
-        <Link href="/" className="shrink-0" aria-label={`${business.name}, home`}>
+        <Link
+          href="/"
+          data-testid="logo"
+          className="shrink-0"
+          aria-label={`${business.name}, home`}
+        >
           <Image
             src={business.logo.src}
             alt={business.logo.alt}

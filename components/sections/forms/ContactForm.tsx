@@ -11,6 +11,7 @@ export function ContactForm({ idPrefix = "contact" }: { idPrefix?: string }) {
   const f = (k: string) => `${idPrefix}-${k}`;
   return (
     <FormShell
+      testId="contact-form"
       label="Contact us"
       state={state}
       honeypotProps={honeypotProps}
@@ -27,11 +28,35 @@ export function ContactForm({ idPrefix = "contact" }: { idPrefix?: string }) {
       }
     >
       <div className="grid gap-5 md:grid-cols-2">
-        <TextField id={f("name")} label="Name" autoComplete="name" required error={fieldError(errors, "name")} />
-        <TextField id={f("email")} label="Email" type="email" autoComplete="email" required error={fieldError(errors, "email")} />
+        <TextField
+          id={f("name")}
+          label="Name"
+          autoComplete="name"
+          required
+          error={fieldError(errors, "name")}
+        />
+        <TextField
+          id={f("email")}
+          label="Email"
+          type="email"
+          autoComplete="email"
+          required
+          error={fieldError(errors, "email")}
+        />
       </div>
-      <TextField id={f("phone")} label="Phone (optional)" type="tel" autoComplete="tel" error={fieldError(errors, "phone")} />
-      <TextAreaField id={f("message")} label="Message" required error={fieldError(errors, "message")} />
+      <TextField
+        id={f("phone")}
+        label="Phone (optional)"
+        type="tel"
+        autoComplete="tel"
+        error={fieldError(errors, "phone")}
+      />
+      <TextAreaField
+        id={f("message")}
+        label="Message"
+        required
+        error={fieldError(errors, "message")}
+      />
     </FormShell>
   );
 }

@@ -5,7 +5,7 @@ import { BrandMarquee } from "@/components/motion/BrandMarquee";
 /** Spec 2.1.4. Wordmarks render as text until monochrome logo assets are added in Sanity (brand.logo). */
 export function Brands({ copy, brands }: { copy: SectionCopy; brands: Brand[] }) {
   return (
-    <Section id="brands" copy={copy}>
+    <Section id="brands" copy={copy} section="brands" testId="brands-marquee">
       <BrandMarquee
         brands={brands.map((b) => ({
           name: b.name,

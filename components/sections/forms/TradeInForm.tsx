@@ -15,6 +15,7 @@ export function TradeInForm({ brands }: { brands: string[] }) {
   const brandOptions = [...brands, "Other"];
   return (
     <FormShell
+      testId="trade-in-form"
       label="Sell or trade in your device"
       state={state}
       honeypotProps={honeypotProps}
@@ -35,16 +36,64 @@ export function TradeInForm({ brands }: { brands: string[] }) {
       }
     >
       <div className="grid gap-5 md:grid-cols-2">
-        <SelectField id="t-device" label="Device type" options={DEVICE_TYPES} required error={fieldError(errors, "deviceType")} />
-        <SelectField id="t-brand" label="Brand" options={brandOptions} required error={fieldError(errors, "brand")} />
-        <TextField id="t-model" label="Model" placeholder="e.g. Galaxy S22" required error={fieldError(errors, "model")} />
-        <SelectField id="t-condition" label="Condition" options={CONDITIONS} required error={fieldError(errors, "condition")} />
+        <SelectField
+          id="t-device"
+          label="Device type"
+          options={DEVICE_TYPES}
+          required
+          error={fieldError(errors, "deviceType")}
+        />
+        <SelectField
+          id="t-brand"
+          label="Brand"
+          options={brandOptions}
+          required
+          error={fieldError(errors, "brand")}
+        />
+        <TextField
+          id="t-model"
+          label="Model"
+          placeholder="e.g. Galaxy S22"
+          required
+          error={fieldError(errors, "model")}
+        />
+        <SelectField
+          id="t-condition"
+          label="Condition"
+          options={CONDITIONS}
+          required
+          error={fieldError(errors, "condition")}
+        />
       </div>
-      <TextAreaField id="t-details" label="Anything else? (optional)" error={fieldError(errors, "details")} />
+      <TextAreaField
+        id="t-details"
+        label="Anything else? (optional)"
+        error={fieldError(errors, "details")}
+      />
       <div className="grid gap-5 md:grid-cols-3">
-        <TextField id="t-name" label="Name" autoComplete="name" required error={fieldError(errors, "name")} />
-        <TextField id="t-phone" label="Phone" type="tel" autoComplete="tel" required error={fieldError(errors, "phone")} />
-        <TextField id="t-email" label="Email" type="email" autoComplete="email" required error={fieldError(errors, "email")} />
+        <TextField
+          id="t-name"
+          label="Name"
+          autoComplete="name"
+          required
+          error={fieldError(errors, "name")}
+        />
+        <TextField
+          id="t-phone"
+          label="Phone"
+          type="tel"
+          autoComplete="tel"
+          required
+          error={fieldError(errors, "phone")}
+        />
+        <TextField
+          id="t-email"
+          label="Email"
+          type="email"
+          autoComplete="email"
+          required
+          error={fieldError(errors, "email")}
+        />
       </div>
     </FormShell>
   );

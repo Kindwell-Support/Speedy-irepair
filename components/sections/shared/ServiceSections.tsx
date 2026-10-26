@@ -12,7 +12,14 @@ export function ServiceSections({ services }: { services: Service[] }) {
       {services.map((s) => {
         const icon = toRiveIconId(s.riveIcon);
         return (
-          <section key={s.id} id={s.slug} aria-labelledby={`${s.slug}-heading`} className="scroll-mt-28 py-16" data-animate="reveal">
+          <section
+            key={s.id}
+            id={s.slug}
+            data-testid="service-section"
+            aria-labelledby={`${s.slug}-heading`}
+            className="scroll-mt-28 py-16"
+            data-animate="reveal"
+          >
             <div className="grid gap-8 lg:grid-cols-[96px_1fr]" data-rive-host>
               <div>{icon ? <RiveIcon id={icon} size={56} /> : null}</div>
               <div>

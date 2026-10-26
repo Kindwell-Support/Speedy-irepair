@@ -11,6 +11,8 @@ export function Section({
   className,
   tone = "default",
   labelledBy,
+  section,
+  testId,
 }: {
   id?: string;
   copy?: SectionCopy | null;
@@ -18,11 +20,17 @@ export function Section({
   className?: string;
   tone?: "default" | "raised";
   labelledBy?: string;
+  /** QA hook: data-section (homepage order check). */
+  section?: string;
+  /** QA hook: data-testid. */
+  testId?: string;
 }) {
   const headingId = labelledBy ?? (id ? `${id}-heading` : undefined);
   return (
     <section
       id={id}
+      data-section={section}
+      data-testid={testId}
       aria-labelledby={copy ? headingId : undefined}
       className={cn("py-section", tone === "raised" && "bg-bg-raised", className)}
     >

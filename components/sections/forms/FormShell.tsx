@@ -17,6 +17,7 @@ export function FormShell({
   successMessage,
   children,
   className,
+  testId,
 }: {
   label: string;
   state: SubmitState;
@@ -27,6 +28,8 @@ export function FormShell({
   successMessage: string;
   children: ReactNode;
   className?: string;
+  /** QA hook: data-testid on the <form> (e.g. contact-form). */
+  testId?: string;
 }) {
   const handle = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,23 +37,35 @@ export function FormShell({
   };
   if (state.status === "success")
     return (
-      <div className="space-y-3">
+      <div className="space-y-3" data-testid="form-success">
         <Notice tone="success">{successMessage}</Notice>
         {state.staging ? (
           <Notice tone="staging">
-            Staging preview: this submission was validated but not stored or sent (form delivery is not configured yet).
+            Staging preview: this submission was validated but not stored or sent (form delivery is
+            not configured yet).
           </Notice>
         ) : null}
       </div>
     );
   return (
-    <form aria-label={label} noValidate onSubmit={handle} onFocusCapture={onFocusCapture} className={className}>
+    <form
+      data-testid={testId}
+      aria-label={label}
+      noValidate
+      onSubmit={handle}
+      onFocusCapture={onFocusCapture}
+      className={className}
+    >
       <div className="relative grid gap-5">
         <Honeypot {...honeypotProps} />
         {children}
         {state.status === "error" ? <Notice tone="error">{state.message}</Notice> : null}
         <div>
-          <button type="submit" className={buttonClasses("primary", "lg")} disabled={state.status === "submitting"}>
+          <button
+            type="submit"
+            className={buttonClasses("primary", "lg")}
+            disabled={state.status === "submitting"}
+          >
             {state.status === "submitting" ? "Sending…" : submitLabel}
           </button>
         </div>

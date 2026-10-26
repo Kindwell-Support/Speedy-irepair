@@ -10,7 +10,13 @@ function to12h(t: string): string {
 }
 
 /** Opening hours from siteSettings (Decision #2). Falls back to the placeholder text when flagged. */
-export function HoursList({ business, compact = false }: { business: BusinessInfo; compact?: boolean }) {
+export function HoursList({
+  business,
+  compact = false,
+}: {
+  business: BusinessInfo;
+  compact?: boolean;
+}) {
   if (business.hoursIsPlaceholder)
     return (
       <p className="text-body-sm text-text-secondary">
@@ -22,7 +28,11 @@ export function HoursList({ business, compact = false }: { business: BusinessInf
       {business.hours.map((h) => (
         <div key={h.day} className="flex justify-between gap-6">
           <dt className="text-text-secondary">{h.day}</dt>
-          <dd className="text-text-primary">{h.closed || !h.opens || !h.closes ? "Closed" : `${to12h(h.opens)} – ${to12h(h.closes)}`}</dd>
+          <dd className="text-text-primary">
+            {h.closed || !h.opens || !h.closes
+              ? "Closed"
+              : `${to12h(h.opens)} – ${to12h(h.closes)}`}
+          </dd>
         </div>
       ))}
     </dl>

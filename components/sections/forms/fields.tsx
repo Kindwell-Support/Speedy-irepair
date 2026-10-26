@@ -1,10 +1,27 @@
-import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
+import type {
+  InputHTMLAttributes,
+  ReactNode,
+  SelectHTMLAttributes,
+  TextareaHTMLAttributes,
+} from "react";
 import { cn } from "@/lib/utils/cn";
 
 const control =
   "w-full rounded-md border border-border bg-surface-2 px-4 text-body text-text placeholder:text-text-tertiary focus-visible:border-brand aria-[invalid=true]:border-error";
 
-function Wrap({ id, label, error, children, hint }: { id: string; label: string; error?: string; hint?: string; children: ReactNode }) {
+function Wrap({
+  id,
+  label,
+  error,
+  children,
+  hint,
+}: {
+  id: string;
+  label: string;
+  error?: string;
+  hint?: string;
+  children: ReactNode;
+}) {
   return (
     <div className="flex flex-col gap-2">
       <label htmlFor={id} className="text-body-sm font-medium text-text-primary">
@@ -13,7 +30,7 @@ function Wrap({ id, label, error, children, hint }: { id: string; label: string;
       {children}
       {hint ? <p className="text-caption text-text-tertiary">{hint}</p> : null}
       {error ? (
-        <p id={`${id}-error`} className="text-caption text-error">
+        <p id={`${id}-error`} data-testid="field-error" className="text-caption text-error">
           {error}
         </p>
       ) : null}
@@ -23,7 +40,14 @@ function Wrap({ id, label, error, children, hint }: { id: string; label: string;
 
 type Common = { id: string; label: string; error?: string; hint?: string };
 
-export function TextField({ id, label, error, hint, className, ...rest }: Common & InputHTMLAttributes<HTMLInputElement>) {
+export function TextField({
+  id,
+  label,
+  error,
+  hint,
+  className,
+  ...rest
+}: Common & InputHTMLAttributes<HTMLInputElement>) {
   return (
     <Wrap id={id} label={label} error={error} hint={hint}>
       <input
@@ -38,7 +62,14 @@ export function TextField({ id, label, error, hint, className, ...rest }: Common
   );
 }
 
-export function TextAreaField({ id, label, error, hint, className, ...rest }: Common & TextareaHTMLAttributes<HTMLTextAreaElement>) {
+export function TextAreaField({
+  id,
+  label,
+  error,
+  hint,
+  className,
+  ...rest
+}: Common & TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <Wrap id={id} label={label} error={error} hint={hint}>
       <textarea
@@ -88,7 +119,9 @@ export function SelectField({
 }
 
 /** Visually hidden honeypot. Bots fill it; humans never see it. */
-export function Honeypot(props: InputHTMLAttributes<HTMLInputElement> & { ref?: React.Ref<HTMLInputElement> }) {
+export function Honeypot(
+  props: InputHTMLAttributes<HTMLInputElement> & { ref?: React.Ref<HTMLInputElement> },
+) {
   return (
     <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden>
       <label htmlFor="company_website">Company website</label>
@@ -97,5 +130,7 @@ export function Honeypot(props: InputHTMLAttributes<HTMLInputElement> & { ref?: 
   );
 }
 
-export const fieldError = (errors: Record<string, string[] | undefined> | undefined, key: string): string | undefined =>
-  errors?.[key]?.[0];
+export const fieldError = (
+  errors: Record<string, string[] | undefined> | undefined,
+  key: string,
+): string | undefined => errors?.[key]?.[0];

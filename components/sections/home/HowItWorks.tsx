@@ -7,9 +7,17 @@ import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
  * Behaviour (pin on >=768px, stacked reveal on mobile, none under reduced motion) is bound by
  * lib/motion/bindings.ts (Motion & 3D lane). Markup stays a plain ordered list without JS.
  */
-export function HowItWorks({ copy, steps, id = "how-it-works" }: { copy: SectionCopy; steps: HowItWorksStep[]; id?: string }) {
+export function HowItWorks({
+  copy,
+  steps,
+  id = "how-it-works",
+}: {
+  copy: SectionCopy;
+  steps: HowItWorksStep[];
+  id?: string;
+}) {
   return (
-    <Section id={id} copy={copy} tone="raised">
+    <Section id={id} copy={copy} tone="raised" section="how-it-works" testId="how-it-works">
       <div data-pin="how">
         <div data-steps-pin>
           <div className="mb-8 h-1 overflow-hidden rounded-full bg-surface-3" aria-hidden>

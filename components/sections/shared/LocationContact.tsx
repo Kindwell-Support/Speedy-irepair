@@ -19,17 +19,20 @@ export function LocationContact({
   directionsLabel = "Get Directions",
   showForm = true,
   id = "location",
+  section,
 }: {
   copy: SectionCopy;
   business: BusinessInfo;
   directionsLabel?: string;
   showForm?: boolean;
   id?: string;
+  /** QA hook (homepage only). */
+  section?: string;
 }) {
   const embed = business.googleMapsEmbedUrl || publicEnv.googleMapsEmbedUrl;
   const a = business.address;
   return (
-    <Section id={id} copy={copy}>
+    <Section id={id} copy={copy} section={section}>
       <div className="grid gap-10 lg:grid-cols-2">
         <div className="space-y-8">
           <address className="space-y-2 text-body-lg not-italic">
@@ -62,14 +65,16 @@ export function LocationContact({
             <span className="sr-only"> (opens Google Maps in a new tab)</span>
           </a>
           {embed ? (
-            <EmbedFacade
-              src={embed}
-              title={`Map: ${business.name}`}
-              loadLabel="Show map"
-              directHref={business.externalLinks.maps}
-              directLabel="Open in Google Maps"
-              heightClass="h-[320px]"
-            />
+            <div data-testid="map-embed" data-qa-mask>
+              <EmbedFacade
+                src={embed}
+                title={`Map: ${business.name}`}
+                loadLabel="Show map"
+                directHref={business.externalLinks.maps}
+                directLabel="Open in Google Maps"
+                heightClass="h-[320px]"
+              />
+            </div>
           ) : null}
         </div>
         {showForm ? (

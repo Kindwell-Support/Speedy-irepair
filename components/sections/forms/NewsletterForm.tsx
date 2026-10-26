@@ -18,6 +18,7 @@ export function NewsletterForm({
   const errors = state.status === "error" ? state.fieldErrors : undefined;
   return (
     <FormShell
+      testId="newsletter-form"
       label="Newsletter signup"
       state={state}
       honeypotProps={honeypotProps}
@@ -26,7 +27,14 @@ export function NewsletterForm({
       successMessage={successMessage}
       onSubmit={(d) => submit({ email: String(d.get("newsletter-email") ?? "") })}
     >
-      <TextField id="newsletter-email" label={emailLabel} type="email" autoComplete="email" required error={fieldError(errors, "email")} />
+      <TextField
+        id="newsletter-email"
+        label={emailLabel}
+        type="email"
+        autoComplete="email"
+        required
+        error={fieldError(errors, "email")}
+      />
     </FormShell>
   );
 }

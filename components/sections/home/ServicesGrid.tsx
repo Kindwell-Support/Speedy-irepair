@@ -7,12 +7,17 @@ import { toRiveIconId } from "@/components/sections/shared/rive";
 /** Spec 2.1.2: all 8 cards (C1–C8), GSAP stagger reveal via data-animate="stagger". */
 export function ServicesGrid({ copy, cards }: { copy: SectionCopy; cards: ServiceCard[] }) {
   return (
-    <Section id="services" copy={copy}>
+    <Section id="services" copy={copy} section="services">
       <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-4" data-animate="stagger">
         {cards.map((card) => {
           const icon = toRiveIconId(card.riveIcon);
           return (
-            <li key={card.id} data-rive-host className="group relative flex flex-col gap-4 rounded-xl border border-border bg-surface p-6 transition-colors duration-fast hover:bg-surface-2">
+            <li
+              key={card.id}
+              data-testid="service-card"
+              data-rive-host
+              className="group relative flex flex-col gap-4 rounded-xl border border-border bg-surface p-6 transition-colors duration-fast hover:bg-surface-2"
+            >
               {icon ? <RiveIcon id={icon} size={40} /> : null}
               <h3 className="text-h5">
                 <Link href={card.href} className="after:absolute after:inset-0">
