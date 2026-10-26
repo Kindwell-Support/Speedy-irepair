@@ -25,7 +25,10 @@ export function SiteHeader({ settings }: { settings: SiteSettings }) {
           <ul className="flex items-center gap-6">
             {navigation.primary.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="text-body-sm text-text-secondary transition-colors duration-fast hover:text-text">
+                <Link
+                  href={item.href}
+                  className="text-body-sm text-text-secondary transition-colors duration-fast hover:text-text"
+                >
                   <ScrambleText text={item.label} />
                 </Link>
               </li>
@@ -33,7 +36,7 @@ export function SiteHeader({ settings }: { settings: SiteSettings }) {
           </ul>
         </nav>
         <div className="flex items-center gap-3">
-          <ButtonLink cta={navigation.headerCta} className="hidden sm:inline-flex" />
+          <ButtonLink cta={navigation.headerCta} className="hidden md:inline-flex" />
           <MobileNav items={navigation.primary} cta={navigation.headerCta} />
         </div>
       </div>
