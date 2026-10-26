@@ -501,3 +501,12 @@ export interface HeroChip {
   icon: "shield" | "wallet";
   label: string;
 }
+
+/** Frontend: /services index + pre-footer CTA band (fixture-backed until CMS fields exist). */
+export interface ServicesChromeCopy {
+  /** "{count} services" */
+  indexLabel: string;
+  indexAriaLabel: string;
+  chipsAriaLabel: string;
+  ctaSection: SectionCopy & { ctas: CtaLink[] };
+}

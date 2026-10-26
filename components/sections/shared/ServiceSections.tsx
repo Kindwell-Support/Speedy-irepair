@@ -5,10 +5,10 @@ import { RichText } from "@/components/ui/RichText";
 import { RiveIcon } from "@/components/rive/RiveIcon";
 import { toRiveIconId } from "./rive";
 
-/** Spec 2.2: one section per service (all 14, in order), anchor = slug. */
+/** Spec 2.2 / design .svc: one section per service (all 14, in order), anchor = slug. Rendered inside the page's .svc-layout column. */
 export function ServiceSections({ services }: { services: Service[] }) {
   return (
-    <div className="container-site divide-y divide-border-subtle">
+    <div>
       {services.map((s) => {
         const icon = toRiveIconId(s.riveIcon);
         return (
@@ -17,11 +17,17 @@ export function ServiceSections({ services }: { services: Service[] }) {
             id={s.slug}
             data-testid="service-section"
             aria-labelledby={`${s.slug}-heading`}
-            className="scroll-mt-28 py-16"
+            className="scroll-mt-24 border-t border-border-subtle py-12 first:border-t-0 first:pt-0"
             data-animate="reveal"
           >
-            <div className="grid gap-8 lg:grid-cols-[96px_1fr]" data-rive-host>
-              <div>{icon ? <RiveIcon id={icon} size={56} /> : null}</div>
+            <div className="grid gap-6 md:grid-cols-[96px_1fr] md:gap-8" data-rive-host>
+              <div>
+                {icon ? (
+                  <span className="grid size-16 place-items-center rounded-lg border border-border bg-surface text-text-secondary">
+                    <RiveIcon id={icon} size={40} />
+                  </span>
+                ) : null}
+              </div>
               <div>
                 <h2 id={`${s.slug}-heading`} className="text-h3">
                   {s.title}
