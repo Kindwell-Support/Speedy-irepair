@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getAboutPage, getSiteSettings, getTeamMembers } from "@/lib/sanity/content";
+import { getAboutPage, getEmbedCopy, getSiteSettings, getTeamMembers } from "@/lib/sanity/content";
 import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForAbout } from "@/lib/seo/routes";
@@ -18,11 +18,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** R09 — story/team content is TBD -> Sanity placeholders (visibly marked, no Person schema). */
 export default async function AboutPage() {
-  const [page, settings, team, seo] = await Promise.all([
+  const [page, settings, team, seo, mapCopy] = await Promise.all([
     getAboutPage(),
     getSiteSettings(),
     getTeamMembers(),
     getSeoData(),
+    getEmbedCopy("map"),
   ]);
   return (
     <>
@@ -74,6 +75,7 @@ export default async function AboutPage() {
         copy={page.locationSection ?? page.contactSection}
         contactCopy={page.contactSection}
         business={settings.business}
+        mapCopy={mapCopy}
         id="about-contact"
       />
     </>

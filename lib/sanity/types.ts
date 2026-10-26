@@ -450,3 +450,21 @@ export interface LeadFlowPageCopy {
   /** Label above the phone number card ("Rather talk?") */
   contactCardLabel: string;
 }
+
+/** Frontend: copy for an EmbedFacade frame set (Square / Jotform / map). Fixture-backed until a CMS field exists. */
+export interface EmbedCopy {
+  /** iframe title (a11y) */
+  title: string;
+  /** Branded bar caption ("Book an appointment · powered by Square"); omitted = no bar */
+  barLabel?: string;
+  loadLabel: string;
+  /** Shown on the idle facade (third-party cookie notice) */
+  description?: string;
+  directLabel: string;
+  fallbackTitle: string;
+  /** "{phone}" is replaced with the business phone */
+  fallbackBody: string;
+  callLabel?: string;
+  loadingLabel: string;
+}
+export type EmbedKind = "square" | "jotform" | "map";

@@ -1,4 +1,4 @@
-import type { BusinessInfo, SectionCopy } from "@/lib/sanity/types";
+import type { BusinessInfo, EmbedCopy, SectionCopy } from "@/lib/sanity/types";
 import { publicEnv } from "@/lib/env";
 import { Section } from "@/components/ui/Section";
 import { EmbedFacade } from "@/components/ui/EmbedFacade";
@@ -21,11 +21,14 @@ export function LocationContact({
   id = "location",
   section,
   contactCopy,
+  mapCopy,
 }: {
   copy: SectionCopy;
   /** Heading/intro above the contact form (CMS homePage/aboutPage.contactHeading, contract v1.3). */
   contactCopy?: SectionCopy | null;
   business: BusinessInfo;
+  /** Map facade copy (getEmbedCopy("map")). */
+  mapCopy: EmbedCopy;
   directionsLabel?: string;
   showForm?: boolean;
   id?: string;
@@ -71,10 +74,8 @@ export function LocationContact({
             <div data-testid="map-embed" data-qa-mask>
               <EmbedFacade
                 src={embed}
-                title={`Map: ${business.name}`}
-                loadLabel="Show map"
+                copy={mapCopy}
                 directHref={business.externalLinks.maps}
-                directLabel="Open in Google Maps"
                 heightClass="h-[320px]"
               />
             </div>

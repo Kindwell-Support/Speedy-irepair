@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getFaqs, getHomeInternetPage } from "@/lib/sanity/content";
+import { getEmbedCopy, getFaqs, getHomeInternetPage, getSiteSettings } from "@/lib/sanity/content";
 import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForHomeInternet } from "@/lib/seo/routes";
@@ -16,10 +16,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** R11 — $40/mo, first month free, free smartphone (spec facts); Jotform behind a click-to-load facade. */
 export default async function HomeInternetPage() {
-  const [page, faqs, seo] = await Promise.all([
+  const [page, faqs, seo, jotformCopy, settings] = await Promise.all([
     getHomeInternetPage(),
     getFaqs("internet"),
     getSeoData(),
+    getEmbedCopy("jotform"),
+    getSiteSettings(),
   ]);
   const lists = [
     { id: "who-its-for", s: page.whoItsForSection },
@@ -44,10 +46,9 @@ export default async function HomeInternetPage() {
       <Section id="sign-up" copy={page.howToSignUpSection} tone="raised">
         <EmbedFacade
           src={page.jotformUrl}
-          title="Home Internet sign-up form (Jotform)"
-          loadLabel="Load sign-up form"
           directHref={page.jotformUrl}
-          directLabel="Open the sign-up form in a new tab"
+          copy={jotformCopy}
+          phone={settings.business.phone}
           heightClass="h-[1100px]"
         />
       </Section>

@@ -9,6 +9,8 @@ import type {
   Brand,
   Faq,
   LeadFlowPageCopy,
+  EmbedCopy,
+  EmbedKind,
   FaqCategory,
   FaqPage,
   FinancingPage,
@@ -189,6 +191,8 @@ export const getQuotePage = singleton<QuotePage>("instantQuotePage", fx.quotePag
 export const getLeadFlow = cache(async (kind: "quote" | "tradein"): Promise<LeadFlowPageCopy> =>
   kind === "quote" ? fx.quoteFlow : fx.tradeInFlow,
 );
+/** Embed frame copy (fixture-backed; additive, Frontend). */
+export const getEmbedCopy = cache(async (kind: EmbedKind): Promise<EmbedCopy> => fx.embedCopy[kind]);
 export const getSchedulePage = singleton<SchedulePage>("scheduleRepairPage", fx.schedulePage);
 export const getFaqPage = singleton<FaqPage>("faqPage", fx.faqPage);
 export const getAboutPage = singleton<AboutPage>("aboutPage", fx.aboutPage);

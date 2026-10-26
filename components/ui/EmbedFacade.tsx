@@ -1,89 +1,171 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { buttonClasses } from "./ButtonLink";
+import type { EmbedCopy } from "@/lib/sanity/types";
+import { telHref } from "@/lib/utils/format";
 import { cn } from "@/lib/utils/cn";
+import { buttonClasses } from "./ButtonLink";
 
 /**
- * Click-to-load facade for third-party iframes (Google Maps, Square booking, Jotform).
- * Nothing third-party loads until the user asks (performance + privacy). Always offers a direct link.
- * The iframe gets data-lenis-prevent so it scrolls natively inside Lenis.
- * Frames (Design HANDOFF): idle facade → skeleton while the iframe loads → loaded; if the iframe has not
- * fired onLoad within FALLBACK_MS (blocked by an extension/CSP/offline), a fallback frame with the direct link shows.
+ * Click-to-load facade for third-party iframes (Square booking, Jotform, Google Maps), styled as the
+ * design's EmbedShell (.embed + .embed__bar). Nothing third-party loads until the user asks (perf + privacy).
+ * Frames: idle facade → skeleton while the iframe loads → loaded; if onLoad has not fired within
+ * FALLBACK_MS (design: 8 s; blocked by an extension/CSP/offline) the fallback alert shows with the
+ * direct link and, when a phone is given, a call action. Copy comes from getEmbedCopy(kind).
+ * Skeleton blocks are static; data-animate="shimmer" is the Motion lane hook (no animation code here).
  */
-const FALLBACK_MS = 12_000;
+const FALLBACK_MS = 8_000;
 type Phase = "idle" | "loading" | "loaded" | "fallback";
+
+function Skeleton({ className }: { className: string }) {
+  return <div data-animate="shimmer" className={cn("bg-surface-2", className)} />;
+}
 
 export function EmbedFacade({
   src,
-  title,
-  loadLabel,
   directHref,
-  directLabel,
+  copy,
+  phone,
   heightClass = "h-[640px]",
-  description,
 }: {
   src: string;
-  title: string;
-  loadLabel: string;
   directHref: string;
-  directLabel: string;
+  copy: EmbedCopy;
+  /** Display phone; enables the "Call us" action and fills {phone} in the fallback body */
+  phone?: string;
   heightClass?: string;
-  description?: string;
 }) {
   const [phase, setPhase] = useState<Phase>("idle");
   useEffect(() => {
     if (phase !== "loading") return;
-    const t = window.setTimeout(() => setPhase((p) => (p === "loading" ? "fallback" : p)), FALLBACK_MS);
+    const t = window.setTimeout(
+      () => setPhase((p) => (p === "loading" ? "fallback" : p)),
+      FALLBACK_MS,
+    );
     return () => window.clearTimeout(t);
   }, [phase]);
-  const directLink = (
-    <a href={directHref} target="_blank" rel="noopener noreferrer" className={buttonClasses("link")}>
-      {directLabel}
-      <span className="sr-only"> (opens in a new tab)</span>
-    </a>
-  );
+
+  const [before, after] = copy.fallbackBody.split("{phone}");
+  const newTab = <span className="sr-only"> (opens in a new tab)</span>;
+
   return (
     <div
-      className={cn("relative w-full overflow-hidden rounded-xl border border-border bg-surface", heightClass)}
+      className="overflow-hidden rounded-xl border border-border bg-surface"
+      data-testid="embed-shell"
       data-embed-state={phase}
-      aria-busy={phase === "loading"}
     >
-      {phase !== "idle" ? (
-        <iframe
-          src={src}
-          title={title}
-          className="h-full w-full border-0"
-          loading="lazy"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allow="payment; clipboard-write"
-          data-lenis-prevent
-          onLoad={() => setPhase("loaded")}
-        />
-      ) : null}
-      {phase === "loading" ? (
-        <div className="absolute inset-0 flex flex-col gap-4 bg-surface p-8" role="status">
-          <span className="sr-only">Loading {title}…</span>
-          <div className="h-8 w-1/2 animate-pulse rounded bg-surface-2" />
-          <div className="h-4 w-3/4 animate-pulse rounded bg-surface-2" />
-          <div className="flex-1 animate-pulse rounded-lg bg-surface-2" />
+      {copy.barLabel ? (
+        <div className="flex items-center justify-between gap-4 border-b border-border-subtle px-6 py-4 text-caption text-text-tertiary">
+          <span>{copy.barLabel}</span>
         </div>
       ) : null}
-      {phase === "fallback" ? (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-surface p-8 text-center" role="alert">
-          <p className="max-w-prose text-body text-text-secondary">This embed didn&rsquo;t load here. You can open it directly instead.</p>
-          {directLink}
-        </div>
-      ) : null}
-      {phase === "idle" ? (
-        <div className="flex h-full flex-col items-center justify-center gap-4 p-8 text-center">
-          {description ? <p className="max-w-prose text-body text-text-secondary">{description}</p> : null}
-          <button type="button" className={buttonClasses("primary", "lg")} onClick={() => setPhase("loading")}>
-            {loadLabel}
-          </button>
-          {directLink}
-        </div>
-      ) : null}
+      <div className={cn("relative w-full", heightClass)} aria-busy={phase === "loading"}>
+        {phase !== "idle" ? (
+          <iframe
+            src={src}
+            title={copy.title}
+            className="h-full w-full border-0"
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allow="payment; clipboard-write"
+            data-lenis-prevent
+            onLoad={() => setPhase("loaded")}
+          />
+        ) : null}
+        {phase === "loading" ? (
+          <div
+            className="absolute inset-0 grid content-start gap-4 bg-surface px-6 py-8"
+            role="status"
+          >
+            <span className="sr-only">{copy.loadingLabel}</span>
+            <Skeleton className="h-6 w-2/5 rounded-full" />
+            <Skeleton className="h-16 rounded-lg" />
+            <Skeleton className="h-16 rounded-lg" />
+            <Skeleton className="mt-2 h-6 w-[30%] rounded-full" />
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+              {Array.from({ length: 8 }, (_, i) => (
+                <Skeleton key={i} className="h-12 rounded-md" />
+              ))}
+            </div>
+          </div>
+        ) : null}
+        {phase === "fallback" ? (
+          <div className="absolute inset-0 grid content-start gap-4 bg-surface px-6 py-8">
+            <div
+              role="alert"
+              className="border-error/35 flex items-start gap-4 rounded-md border bg-error-tint px-6 py-4 text-body-sm text-text"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className="mt-px shrink-0 text-error"
+              >
+                <circle cx="12" cy="12" r="8.5" />
+                <path d="M12 8v4.5" />
+                <path d="M12 15.8h.01" strokeWidth="2.2" />
+              </svg>
+              <div>
+                <strong className="block font-semibold">{copy.fallbackTitle}</strong>
+                {before}
+                {after !== undefined && phone ? (
+                  <>
+                    <a className="tabular-nums underline" href={telHref(phone)}>
+                      {phone}
+                    </a>
+                    {after}
+                  </>
+                ) : null}
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href={directHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={buttonClasses("primary")}
+              >
+                {copy.directLabel}
+                {newTab}
+              </a>
+              {phone && copy.callLabel ? (
+                <a href={telHref(phone)} className={buttonClasses("secondary")}>
+                  {copy.callLabel}
+                </a>
+              ) : null}
+            </div>
+          </div>
+        ) : null}
+        {phase === "idle" ? (
+          <div className="flex h-full flex-col items-center justify-center gap-4 p-8 text-center">
+            {copy.description ? (
+              <p className="max-w-prose text-body text-text-secondary">{copy.description}</p>
+            ) : null}
+            <button
+              type="button"
+              className={buttonClasses("primary", "lg")}
+              onClick={() => setPhase("loading")}
+            >
+              {copy.loadLabel}
+            </button>
+            <a
+              href={directHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonClasses("link")}
+            >
+              {copy.directLabel}
+              {newTab}
+            </a>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

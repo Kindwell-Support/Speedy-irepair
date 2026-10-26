@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {
   getBrands,
+  getEmbedCopy,
   getFaqs,
   getHomePage,
   getHowItWorksSteps,
@@ -37,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** R01 — section order per spec 2.1.0–2.1.11 (banner/header/footer live in the (site) layout). */
 export default async function HomePage() {
-  const [page, settings, steps, brands, values, testimonials, promotions, faqs, seo] =
+  const [page, settings, steps, brands, values, testimonials, promotions, faqs, seo, mapCopy] =
     await Promise.all([
       getHomePage(),
       getSiteSettings(),
@@ -48,6 +49,7 @@ export default async function HomePage() {
       getPromotions(),
       getFaqs("general"),
       getSeoData(),
+      getEmbedCopy("map"),
     ]);
   return (
     <>
@@ -70,6 +72,7 @@ export default async function HomePage() {
         copy={page.locationSection}
         section="location"
         business={settings.business}
+        mapCopy={mapCopy}
         directionsLabel={page.locationSection.directionsLabel}
         contactCopy={page.contactSection}
       />

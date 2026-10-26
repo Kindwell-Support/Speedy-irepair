@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getSchedulePage, getSiteSettings } from "@/lib/sanity/content";
+import { getEmbedCopy, getSchedulePage, getSiteSettings } from "@/lib/sanity/content";
 import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForScheduleRepair } from "@/lib/seo/routes";
@@ -18,10 +18,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** R07 — branded wrapper; Square booking stays on-site (click-to-load iframe, direct link fallback). */
 export default async function ScheduleRepairPage() {
-  const [page, settings, seo] = await Promise.all([
+  const [page, settings, seo, squareCopy, mapCopy] = await Promise.all([
     getSchedulePage(),
     getSiteSettings(),
     getSeoData(),
+    getEmbedCopy("square"),
+    getEmbedCopy("map"),
   ]);
   return (
     <>
@@ -32,12 +34,10 @@ export default async function ScheduleRepairPage() {
       <Section id="booking">
         <EmbedFacade
           src={page.squareBookingUrl}
-          title="Book a repair appointment with Speedy iRepair (Square)"
-          loadLabel="Load booking calendar"
           directHref={page.squareBookingUrl}
-          directLabel="Open booking in a new tab"
+          copy={squareCopy}
+          phone={settings.business.phone}
           heightClass="h-[900px]"
-          description="Booking is provided by Square. Loading it sets Square cookies."
         />
       </Section>
       <div className="container-site grid gap-10 pb-8 md:grid-cols-2">
@@ -56,6 +56,7 @@ export default async function ScheduleRepairPage() {
       <LocationContact
         copy={page.locationSection}
         business={settings.business}
+        mapCopy={mapCopy}
         showForm={false}
         id="schedule-location"
       />
