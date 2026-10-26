@@ -556,12 +556,14 @@ export const HERO = {
 
 /** Primary navigation (SiteNavigationElement). Mirrors header nav — keep in sync with Frontend. */
 export const MAIN_NAV: { name: string; path: string }[] = [
-  // = cms/SCHEMA_CONTRACT.md §2.2 navigation.headerLinks (7) + headerCta (Schedule Repair). Visible header only.
-  { name: "Home", path: "/" },
+  // = CMS contract v1.3 navigation fixture (web commit 2f1c1d7): 7 headerLinks + headerCta, = NAV_QUERY's 8 items.
+  // The Services dropdown's 14 children (/services#<slug>) are NOT listed: same page as "Services", and NAV_QUERY skips them.
+  // "Schedule Repair" is the visible header CTA (a real nav item, unique path), so it stays.
   { name: "Services", path: "/services" },
   { name: "Shop", path: "/shop" },
   { name: "Sell Your Device", path: "/sell-your-device" },
-  { name: "Instant Quote", path: "/instant-quote" },
+  { name: "Home Internet", path: "/home-internet" },
+  { name: "Financing", path: "/financing" },
   { name: "FAQ", path: "/faq" },
   { name: "About", path: "/about" },
   { name: "Schedule Repair", path: "/schedule-repair" },
