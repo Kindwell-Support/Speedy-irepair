@@ -1,3 +1,4 @@
+import { QuantityStepper } from "./QuantityStepper";
 import Image from "next/image";
 import type { CartLine } from "@/lib/shop/types";
 import type { PdpChromeCopy } from "@/lib/sanity/types";
@@ -33,32 +34,19 @@ export function CartLineItem({
         {line.variantTitle ? (
           <p className="text-caption text-text-tertiary">{line.variantTitle}</p>
         ) : null}
-        <div
-          role="group"
-          aria-label={copy.quantityLabel}
-          className="mt-2 inline-flex h-10 items-center self-start rounded-full border border-border"
-        >
-          <button
-            type="button"
-            aria-label={copy.decreaseLabel}
+        <div className="mt-2">
+          <QuantityStepper
+            value={line.quantity}
+            min={0}
+            max={99}
             disabled={busy}
-            onClick={() => onQuantity(line.id, line.quantity - 1)}
-            className="size-10 rounded-full text-body disabled:text-text-disabled"
-          >
-            −
-          </button>
-          <span className="min-w-8 text-center text-body-sm tabular-nums" aria-live="polite">
-            {line.quantity}
-          </span>
-          <button
-            type="button"
-            aria-label={copy.increaseLabel}
-            disabled={busy}
-            onClick={() => onQuantity(line.id, line.quantity + 1)}
-            className="size-10 rounded-full text-body disabled:text-text-disabled"
-          >
-            +
-          </button>
+            onChange={(q) => onQuantity(line.id, q)}
+            labels={{
+              group: copy.quantityLabel,
+              decrease: copy.decreaseLabel,
+              increase: copy.increaseLabel,
+            }}
+          />
         </div>
       </div>
       <p className="text-body-sm tabular-nums">

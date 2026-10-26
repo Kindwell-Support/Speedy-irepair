@@ -47,6 +47,22 @@ const PATHS = {
       <path d="M7 14.5h4" />
     </>
   ),
+  truck: (
+    <>
+      <path d="M3 6.5h11v9H3z" />
+      <path d="M14 9.5h3.5l3 3v3H14" />
+      <circle cx="7" cy="17.5" r="1.6" />
+      <circle cx="17" cy="17.5" r="1.6" />
+    </>
+  ),
+  refresh: (
+    <>
+      <path d="M4.5 12a7.5 7.5 0 0 1 13-5.1L20 9.5" />
+      <path d="M20 4.5v5h-5" />
+      <path d="M19.5 12a7.5 7.5 0 0 1-13 5.1L4 14.5" />
+      <path d="M4 19.5v-5h5" />
+    </>
+  ),
   bolt: <path d="M13 3L5 13.5h6L10 21l8-10.5h-6z" />,
   tag: (
     <>
