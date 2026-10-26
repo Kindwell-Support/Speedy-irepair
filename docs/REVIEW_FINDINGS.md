@@ -28,7 +28,7 @@ Severity: **H** = fix before QA sign-off · **M** = fix this phase · **L** = fo
 | R9 | L | ~22 odd spacing steps (`p-5`, `gap-7`…) are off Design's 8px scale (DESIGN_TOKENS). | Normalise them during the Design QA pass. Frontend |
 | R10 | L | `tailwind.config.ts` has a raw `placeholder: "#f5b700"`. It is a staging-only marker, but it is not a design token. | Ask Design for a `--color-placeholder` token. Design |
 | R11 | L | `.github/workflows/ci.yml` runs `next typegen` before `tsc`, but `pnpm typecheck` locally doesn't, so local and CI can differ on route types. | Make `typecheck` = `next typegen && tsc --noEmit`. DevOps |
-| R12 | H (fixed 2f965c0) | Commit `0a6e076` (fixture mode) broke `next build`: `/services` prerender crashed on `s.ctas.map`/`s.body.length`, because seed services have no `ctas`. Nobody ran the build before the sweep commit. | Fixed in `servicesQuery` with `coalesce(…, [])`. Rule: every array projection in an adapter is coalesced, and lanes run `pnpm build` before DevOps sweeps. All lanes |
+| R12 | H (fixed 2f965c0) | Commit `0a6e076` (fixture mode) broke `next build`: `/services` prerender crashed on `s.ctas.map`/`s.body.length`, because seed services have no `ctas`. The sweep commit did not pass `next build` at the time I checked. | Fixed in `servicesQuery` with `coalesce(…, [])`. Rule: every array projection in an adapter is coalesced, and lanes run `pnpm build` before DevOps sweeps. All lanes |
 
 ## Ops note (Architect, self-reported)
 - While freeing port 3417 for e2e, I ran `pkill -f next-server --oldest`, which may have stopped another lane's `next start` (ports 3100/3111 were no longer listening afterwards). If a lane's preview server disappeared around 03:00 PKT, restart it. Since then I only use port 3417.
