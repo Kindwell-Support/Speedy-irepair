@@ -11,7 +11,7 @@ import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForProduct } from "@/lib/seo/routes";
 import type { ProductInput } from "@/lib/seo/jsonld";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { formatPrice } from "@/lib/utils/format";
+import { formatPrice, PRICE_PLACEHOLDER } from "@/lib/utils/format";
 import { AddToCart } from "./AddToCart";
 
 export const revalidate = 300;
@@ -58,6 +58,7 @@ export default async function ProductPage({ params }: Params) {
   const [p, seo] = await Promise.all([catalog.getProduct(handle), getSeoData()]);
   if (!p) notFound();
   const img = p.featuredImage;
+  const fallback = p.source === "fixture" ? PRICE_PLACEHOLDER : "Contact us";
   return (
     <>
       <JsonLd data={jsonLdForProduct(seo, toProductInput(p))} />
@@ -74,9 +75,9 @@ export default async function ProductPage({ params }: Params) {
           </div>
           <div>
             <h1 className="text-h2">{p.title}</h1>
-            <p className="mt-4 text-h4">{formatPrice(p.priceRange.min.amount, p.priceRange.min.currencyCode)}</p>
+            <p className="mt-4 text-h4">{formatPrice(p.priceRange.min.amount, p.priceRange.min.currencyCode, fallback)}</p>
             <AddToCart
-              variants={p.variants.map((v) => ({ id: v.id, title: v.title, available: v.availableForSale, price: formatPrice(v.price.amount, v.price.currencyCode) }))}
+              variants={p.variants.map((v) => ({ id: v.id, title: v.title, available: v.availableForSale, price: formatPrice(v.price.amount, v.price.currencyCode, fallback) }))}
               checkoutEnabled={catalog.supportsCheckout}
             />
             {/* Shopify-authored HTML (trusted merchant content). */}

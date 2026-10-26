@@ -16,9 +16,8 @@ function toImage(img: { src: string; width: number; height: number; alt?: string
 }
 
 function toProduct(p: SnapshotProduct): Product {
-  const prices = p.variants.map((v) => Number.parseFloat(v.price)).filter((n) => !Number.isNaN(n));
-  const min = prices.length ? p.variants.find((v) => Number.parseFloat(v.price) === Math.min(...prices))?.price ?? null : null;
-  const max = prices.length ? p.variants.find((v) => Number.parseFloat(v.price) === Math.max(...prices))?.price ?? null : null;
+  // Prices are deliberately dropped: a snapshot price can be stale, and Shopify is the only price
+  // authority (ARCHITECTURE §5). The UI shows "Price from Shopify"; JSON-LD emits no Offer.
   const images = p.images.map(toImage);
   return {
     id: `fixture-${p.id}`,
@@ -35,14 +34,15 @@ function toProduct(p: SnapshotProduct): Product {
       id: `fixture-variant-${v.id}`,
       title: v.title,
       availableForSale: v.available,
-      price: money(v.price),
-      compareAtPrice: v.compare_at_price && v.compare_at_price !== "0.00" ? money(v.compare_at_price) : null,
+      price: money(null),
+      compareAtPrice: null,
       selectedOptions: p.options
         .map((o, i) => ({ name: o.name, value: [v.option1, v.option2, v.option3][i] ?? "" }))
         .filter((o) => o.value),
       image: v.image_src ? (images.find((i) => i.url === v.image_src) ?? null) : null,
     })),
-    priceRange: { min: money(min), max: money(max) },
+    priceRange: { min: money(null), max: money(null) },
+    source: "fixture",
     availableForSale: p.variants.some((v) => v.available),
     category: categoryForProductType(p.product_type),
   };

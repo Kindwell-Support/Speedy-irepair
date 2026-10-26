@@ -4,9 +4,28 @@ import { ShopGrid } from "@/components/motion/ShopGrid";
 import { ProductCard } from "@/components/sections/shared/ProductCard";
 
 /** Client wrapper: category filter with Framer layout animation (ShopGrid, Motion lane). */
-export function ShopBrowser({ products, categories }: { products: Product[]; categories: { key: CategoryKey; label: string }[] }) {
+export function ShopBrowser({
+  products,
+  categories,
+  ebayHref,
+}: {
+  products: Product[];
+  categories: { key: CategoryKey; label: string }[];
+  ebayHref?: string;
+}) {
   const labelFor = (k: CategoryKey | null) => categories.find((c) => c.key === k)?.label ?? "Other";
-  if (!products.length) return <p className="text-body text-text-secondary">No products are available right now.</p>;
+  if (!products.length)
+    return (
+      <div className="rounded-xl border border-border bg-surface p-8 text-center" role="status">
+        <p className="text-h5">No devices listed right now</p>
+        <p className="mt-2 text-body text-text-secondary">New stock is added regularly. Meanwhile, browse our eBay store.</p>
+        {ebayHref ? (
+          <a href={ebayHref} target="_blank" rel="noopener noreferrer" className="mt-6 inline-block rounded-full bg-primary px-6 py-3 font-semibold text-white hover:bg-primary-hover">
+            Shop on eBay
+          </a>
+        ) : null}
+      </div>
+    );
   return (
     <ShopGrid
       items={products}

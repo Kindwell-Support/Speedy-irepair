@@ -36,6 +36,8 @@ export interface Product {
   featuredImage: ProductImage | null;
   priceRange: { min: Money; max: Money };
   availableForSale: boolean;
+  /** Where the record came from. Fixture records never carry prices (Design: "Price from Shopify" placeholder). */
+  source: "shopify" | "fixture";
   /** Our category key (lib/shop/config.ts), resolved from collection membership / product type. */
   category: CategoryKey | null;
 }

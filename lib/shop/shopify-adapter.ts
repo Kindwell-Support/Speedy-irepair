@@ -123,6 +123,7 @@ function toProduct(p: GqlProduct, category: CategoryKey | null = null): Product 
       max: money(p.priceRange.maxVariantPrice) ?? { amount: null, currencyCode: "USD" },
     },
     category: category ?? categoryForProductType(p.productType),
+    source: "shopify",
   };
 }
 

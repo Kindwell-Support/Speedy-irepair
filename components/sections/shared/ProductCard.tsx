@@ -1,16 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Product } from "@/lib/shop/types";
-import { formatPrice } from "@/lib/utils/format";
+import { formatPrice, PRICE_PLACEHOLDER } from "@/lib/utils/format";
 
 /** Shop product card: image, name, price (from Shopify / snapshot only), View CTA. */
 export function ProductCard({ product }: { product: Product }) {
   const img = product.featuredImage;
   const { min, max } = product.priceRange;
   const price =
-    min.amount && max.amount && min.amount !== max.amount
+    product.source === "fixture"
+      ? PRICE_PLACEHOLDER
+      : min.amount && max.amount && min.amount !== max.amount
       ? `From ${formatPrice(min.amount, min.currencyCode)}`
-      : formatPrice(min.amount, min.currencyCode);
+        : formatPrice(min.amount, min.currencyCode);
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-surface">
       <div className="aspect-square bg-surface-2">
