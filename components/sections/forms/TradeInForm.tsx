@@ -1,15 +1,19 @@
 "use client";
 
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
-import { tradeInSchema, type TradeInInput } from "@/lib/forms/schemas";
+import type { TradeInInput } from "@/lib/forms/schemas";
 import { FormShell } from "./FormShell";
 import { fieldError, SelectField, TextAreaField, TextField } from "./fields";
 
-const DEVICE_TYPES = tradeInSchema.shape.deviceType.options;
-const CONDITIONS = tradeInSchema.shape.condition.options;
+type Props = {
+  brands: string[];
+  /** From tradeInSchema in the Server Component, so zod never ships in this page's first-load JS. */
+  deviceTypes: readonly TradeInInput["deviceType"][];
+  conditions: readonly TradeInInput["condition"][];
+};
 
 /** F5 Trade-in (spec 2.5, Decision #5): device type → brand → model → condition → contact. No prices. */
-export function TradeInForm({ brands }: { brands: string[] }) {
+export function TradeInForm({ brands, deviceTypes, conditions }: Props) {
   const { state, submit, markStarted, honeypotProps } = useFormSubmit("tradein");
   const errors = state.status === "error" ? state.fieldErrors : undefined;
   const brandOptions = [...brands, "Other"];
@@ -39,7 +43,7 @@ export function TradeInForm({ brands }: { brands: string[] }) {
         <SelectField
           id="t-device"
           label="Device type"
-          options={DEVICE_TYPES}
+          options={deviceTypes}
           required
           error={fieldError(errors, "deviceType")}
         />
@@ -60,7 +64,7 @@ export function TradeInForm({ brands }: { brands: string[] }) {
         <SelectField
           id="t-condition"
           label="Condition"
-          options={CONDITIONS}
+          options={conditions}
           required
           error={fieldError(errors, "condition")}
         />

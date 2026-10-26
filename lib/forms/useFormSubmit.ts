@@ -2,7 +2,12 @@
 
 import { useCallback, useRef, useState } from "react";
 import type { FormPayloads, FormResponse, FormTypeKey } from "./schemas";
-import { formSchemas } from "./schemas";
+
+/**
+ * zod (~24 KB gz) is loaded on demand, never in first-load JS: prefetched on the first focus inside a
+ * form (markStarted) and awaited on submit. Same shared schemas as the API route, so validation is unchanged.
+ */
+const loadSchemas = () => import("./schemas").then((mod) => mod.formSchemas);
 
 export type SubmitState =
   | { status: "idle" }
@@ -11,7 +16,7 @@ export type SubmitState =
   | { status: "error"; message: string; fieldErrors?: Record<string, string[] | undefined> };
 
 /**
- * Client hook shared by all custom forms. Validates with the shared zod schema, adds spam fields
+ * Client hook shared by all custom forms. Validates with the shared zod schema (lazy-loaded), adds spam fields
  * (honeypot value + startedAt), POSTs to /api/forms/[type]. No data fetching on mount.
  *
  *   const { state, submit, markStarted, honeypotProps } = useFormSubmit("contact");
@@ -22,11 +27,21 @@ export function useFormSubmit<T extends FormTypeKey>(type: T) {
   const honeypot = useRef<HTMLInputElement | null>(null);
 
   const markStarted = useCallback(() => {
-    if (startedAt.current === null) startedAt.current = Date.now();
+    if (startedAt.current === null) {
+      startedAt.current = Date.now();
+      void loadSchemas().catch(() => {});
+    }
   }, []);
 
   const submit = useCallback(
     async (values: FormPayloads[T], extra?: { turnstileToken?: string }) => {
+      let formSchemas: Awaited<ReturnType<typeof loadSchemas>>;
+      try {
+        formSchemas = await loadSchemas();
+      } catch {
+        setState({ status: "error", message: "Something went wrong. Please try again or call the store." });
+        return;
+      }
       const parsed = formSchemas[type].safeParse(values);
       if (!parsed.success) {
         setState({

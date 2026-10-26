@@ -10,6 +10,7 @@ import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { HowItWorks } from "@/components/sections/home/HowItWorks";
 import { TradeInForm } from "@/components/sections/forms/TradeInForm";
+import { tradeInSchema } from "@/lib/forms/schemas";
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("/sell-your-device", (await getSellPage()).seo);
@@ -32,7 +33,11 @@ export default async function SellYourDevicePage() {
       <HowItWorks id="sell-steps" copy={page.howItWorksSection} steps={steps} />
       <Section id="trade-in" copy={page.formSection}>
         <div className="max-w-2xl rounded-xl border border-border bg-surface p-6 md:p-8">
-          <TradeInForm brands={accepted.map((b) => b.shortName)} />
+          <TradeInForm
+            brands={accepted.map((b) => b.shortName)}
+            deviceTypes={tradeInSchema.shape.deviceType.options}
+            conditions={tradeInSchema.shape.condition.options}
+          />
         </div>
       </Section>
       <Section id="brands-accepted" copy={page.brandsSection} tone="raised">
