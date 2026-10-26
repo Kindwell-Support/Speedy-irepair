@@ -2,16 +2,16 @@ import { expect, test } from "@playwright/test";
 
 /**
  * DevOps smoke suite. REQ-001: all 14 routes in PROJECT_SPEC §2.0 return 200.
- * R04 uses a sample slug until the shop data source is decided (OQ-09 / OQ-12);
- * update SAMPLE_PRODUCT_SLUG to a real fixture/Shopify handle when available.
+ * R04 (/shop/[product]) uses the first product link found on /shop (works with the
+ * fixture adapter and with Shopify), or E2E_PRODUCT_SLUG if set.
  */
-const SAMPLE_PRODUCT_SLUG = process.env.E2E_PRODUCT_SLUG ?? "sample-product";
+const PRODUCT_PLACEHOLDER = "__first_product__";
 
 const ROUTES: Array<[id: string, path: string]> = [
   ["R01", "/"],
   ["R02", "/services"],
   ["R03", "/shop"],
-  ["R04", `/shop/${SAMPLE_PRODUCT_SLUG}`],
+  ["R04", `/shop/${PRODUCT_PLACEHOLDER}`],
   ["R05", "/sell-your-device"],
   ["R06", "/instant-quote"],
   ["R07", "/schedule-repair"],
@@ -30,7 +30,18 @@ test("route map covers all 14 spec routes", () => {
 
 for (const [id, path] of ROUTES) {
   test(`${id} ${path} returns 200 and has one H1`, async ({ page }) => {
-    const res = await page.goto(path);
+    let url = path;
+    if (path.includes(PRODUCT_PLACEHOLDER)) {
+      let slug = process.env.E2E_PRODUCT_SLUG;
+      if (!slug) {
+        await page.goto("/shop");
+        const href = await page.locator('a[href^="/shop/"]').first().getAttribute("href");
+        expect(href, "no product link found on /shop").toBeTruthy();
+        slug = href!.replace(/^\/shop\//, "").split(/[?#]/)[0];
+      }
+      url = `/shop/${slug}`;
+    }
+    const res = await page.goto(url);
     expect(res?.status()).toBe(200);
     await expect(page.locator("h1")).toHaveCount(1);
   });
