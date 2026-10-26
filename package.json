@@ -25,7 +25,7 @@
     "@rive-app/react-canvas": "^4.37.1",
     "@sanity/client": "^7.28.0",
     "@sanity/image-url": "^1.2.0",
-    "@sanity/vision": "^5.31.2",
+    "@sanity/vision": "^4.22.1",
     "@splinetool/react-spline": "^4.1.0",
     "@splinetool/runtime": "^2.0.113",
     "clsx": "^2.1.1",
@@ -36,7 +36,7 @@
     "next-sanity": "11.6.13",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "sanity": "^5.31.2",
+    "sanity": "^4.22.1",
     "server-only": "^0.0.1",
     "styled-components": "^6.6.0",
     "tailwind-merge": "^3.7.0",
@@ -60,5 +60,10 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "3.4.19",
     "typescript": "^5.9.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "@portabletext/sanity-bridge": "1.2.14"
+    }
   }
 }

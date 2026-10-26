@@ -34,6 +34,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   });
 }
 
+/** Merchant HTML may contain <h1>; the page must keep exactly one h1 (the product title). */
+const demoteHeadings = (html: string) => html.replace(/<(\/?)h1\b/gi, "<$1h2");
+
 function toProductInput(p: Product): ProductInput {
   return {
     handle: p.handle,
@@ -77,7 +80,7 @@ export default async function ProductPage({ params }: Params) {
               checkoutEnabled={catalog.supportsCheckout}
             />
             {/* Shopify-authored HTML (trusted merchant content). */}
-            <div className="prose-site mt-10 text-body text-text-secondary" dangerouslySetInnerHTML={{ __html: p.descriptionHtml }} />
+            <div className="prose-site mt-10 text-body text-text-secondary" dangerouslySetInnerHTML={{ __html: demoteHeadings(p.descriptionHtml) }} />
           </div>
         </div>
       </div>
