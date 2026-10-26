@@ -11,7 +11,11 @@ interface FetchOptions {
 }
 
 export const client = {
-  async fetch<T>(query: string, params: QueryParams = {}, options: FetchOptions = {}): Promise<T | null> {
+  async fetch<T>(
+    query: string,
+    params: QueryParams = {},
+    options: FetchOptions = {},
+  ): Promise<T | null> {
     if (!sanityClient) return null;
     return sanityClient.fetch<T>(query, params, options);
   },

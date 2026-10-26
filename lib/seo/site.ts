@@ -13,7 +13,10 @@
  *  - No prices on repair / trade-in services.
  */
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://speedyirepair.com').replace(/\/$/, '');
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://speedyirepair.com").replace(
+  /\/$/,
+  "",
+);
 
 /** Stable JSON-LD @id values. Never change these once live. */
 export const IDS = {
@@ -21,16 +24,16 @@ export const IDS = {
   localBusiness: `${SITE_URL}/#localbusiness`,
   website: `${SITE_URL}/#website`,
   mainNav: `${SITE_URL}/#main-navigation`,
-  webpage: (path: string) => `${SITE_URL}${path === '/' ? '/' : path}#webpage`,
-  breadcrumb: (path: string) => `${SITE_URL}${path === '/' ? '/' : path}#breadcrumb`,
-  faq: (path: string) => `${SITE_URL}${path === '/' ? '/' : path}#faq`,
-  service: (slug: string, path = '/services') => `${SITE_URL}${path}#${slug}`,
+  webpage: (path: string) => `${SITE_URL}${path === "/" ? "/" : path}#webpage`,
+  breadcrumb: (path: string) => `${SITE_URL}${path === "/" ? "/" : path}#breadcrumb`,
+  faq: (path: string) => `${SITE_URL}${path === "/" ? "/" : path}#faq`,
+  service: (slug: string, path = "/services") => `${SITE_URL}${path}#${slug}`,
   product: (handle: string) => `${SITE_URL}/shop/${handle}#product`,
   person: (slug: string) => `${SITE_URL}/about#person-${slug}`,
 } as const;
 
 export type DayOfWeek =
-  | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+  "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 
 export interface OpeningHoursRow {
   /** One or more days sharing the same hours */
@@ -46,8 +49,8 @@ export interface SiteSettings {
   legalName: string;
   url: string;
   description: string;
-  telephoneE164: string;      // schema.org
-  telephoneDisplay: string;   // visible copy
+  telephoneE164: string; // schema.org
+  telephoneDisplay: string; // visible copy
   email: string;
   address: {
     streetAddress: string;
@@ -81,50 +84,56 @@ export interface SiteSettings {
  * "Hours coming soon".
  */
 export const VERIFIED_HOURS: OpeningHoursRow[] = [
-  { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '12:00', closes: '18:00' },
-  { days: ['Sunday'], closed: true },
+  {
+    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    opens: "12:00",
+    closes: "18:00",
+  },
+  { days: ["Sunday"], closed: true },
 ];
 
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
-  name: 'Speedy iRepair',
-  legalName: 'Speedy iRepair LLC',
+  name: "Speedy iRepair",
+  legalName: "Speedy iRepair LLC",
   url: SITE_URL,
   description:
     "Akron's trusted phone repair shop. Smartphone repair, certified pre-owned devices, trade-ins, prepaid phone plans, bill payment, home internet, and Acima financing at 1650 W Market St #27, Akron, OH 44313. Spectrum Authorized Retailer.",
-  telephoneE164: '+1-855-377-3339',
-  telephoneDisplay: '1.855.377.3339',
-  email: 'info@speedyirepair.com',
+  telephoneE164: "+1-855-377-3339",
+  telephoneDisplay: "1.855.377.3339",
+  email: "info@speedyirepair.com",
   address: {
-    streetAddress: '1650 W Market St #27',
-    addressLocality: 'Akron',
-    addressRegion: 'OH',
-    postalCode: '44313',
-    addressCountry: 'US',
+    streetAddress: "1650 W Market St #27",
+    addressLocality: "Akron",
+    addressRegion: "OH",
+    postalCode: "44313",
+    addressCountry: "US",
   },
-  hasMap: 'https://goo.gl/maps/hx2oTBFB18LNoMW36',
+  hasMap: "https://goo.gl/maps/hx2oTBFB18LNoMW36",
   // Exact URLs from PROJECT_SPEC §1.1 (do not "clean" them without PM sign-off).
   sameAs: [
-    'https://m.facebook.com/speedyirepair/',
-    'https://mobile.twitter.com/speedyirepair',
-    'http://Instagram.com/speedyirepair',
-    'https://youtu.be/O_o94Qwoe7U',
-    'https://www.ebay.com/usr/speedyirepair',
+    "https://m.facebook.com/speedyirepair/",
+    "https://mobile.twitter.com/speedyirepair",
+    "http://Instagram.com/speedyirepair",
+    "https://youtu.be/O_o94Qwoe7U",
+    "https://www.ebay.com/usr/speedyirepair",
   ],
-  paymentAccepted: ['Credit Card', 'Debit Card', 'PayPal', 'Venmo'],
-  brandsServiced: ['Apple', 'Samsung', 'LG', 'Google Pixel', 'Motorola', 'OnePlus'],
+  paymentAccepted: ["Credit Card", "Debit Card", "PayPal", "Venmo"],
+  brandsServiced: ["Apple", "Samsung", "LG", "Google Pixel", "Motorola", "OnePlus"],
   openingHours: VERIFIED_HOURS,
-  hoursPlaceholder: 'Hours coming soon',
+  hoursPlaceholder: "Hours coming soon",
   logoUrl: undefined,
   defaultOgImageUrl: `${SITE_URL}/og/default.jpg`,
   geo: undefined,
-  twitterHandle: '@speedyirepair',
+  twitterHandle: "@speedyirepair",
 };
 
 export const EXTERNAL = {
-  scheduleRepairSquare: 'https://squareup.com/appointments/book/H19XXYP72PBW5/speedy-irepair-akron-oh',
-  acima: 'https://ecom.acimacredit.com/views/phone-auth/ecom-merchant-813293c2-9f1e-4987-8b83-6691e6baf75e?redirect=application',
-  homeInternetJotform: 'https://form.jotform.com/253200750312037',
-  ebay: 'https://www.ebay.com/usr/speedyirepair',
-  leaveReview: 'https://g.co/kgs/Rhw8GL',
-  googleMaps: 'https://goo.gl/maps/hx2oTBFB18LNoMW36',
+  scheduleRepairSquare:
+    "https://squareup.com/appointments/book/H19XXYP72PBW5/speedy-irepair-akron-oh",
+  acima:
+    "https://ecom.acimacredit.com/views/phone-auth/ecom-merchant-813293c2-9f1e-4987-8b83-6691e6baf75e?redirect=application",
+  homeInternetJotform: "https://form.jotform.com/253200750312037",
+  ebay: "https://www.ebay.com/usr/speedyirepair",
+  leaveReview: "https://g.co/kgs/Rhw8GL",
+  googleMaps: "https://goo.gl/maps/hx2oTBFB18LNoMW36",
 } as const;

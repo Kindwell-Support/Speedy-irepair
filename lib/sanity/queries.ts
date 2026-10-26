@@ -13,7 +13,7 @@ const image = /* groq */ `{
   "isSanity": true
 }`;
 
-const seo = /* groq */ `seo{ metaTitle, metaDescription, noIndex, canonicalOverride, "ogImage": ogImage${image} }`;
+const seo = /* groq */ `seo{ metaTitle, metaDescription, "noIndex": noindex, canonicalOverride, "ogImage": ogImage${image} }`;
 const cta = /* groq */ `{ label, href, external, variant }`;
 const hero = /* groq */ `hero{ eyebrow, headline, subline, "primaryCta": primaryCta${cta}, "secondaryCta": secondaryCta${cta}, "poster": poster${image} }`;
 const section = /* groq */ `{ heading, intro, body, isPlaceholder, sourceNote }`;
@@ -90,7 +90,7 @@ export const policyPageQuery = defineQuery(`*[_type == "policyPage" && slug.curr
   "slug": slug.current, title, body, sourceUrl, isPlaceholder, sourceNote, ${seo}
 }`);
 
-export const llmsDocumentQuery = defineQuery(`*[_type == "llmsDocument"][0]{ llms, llmsFull }`);
+export const llmsDocumentQuery = defineQuery(`*[_id == "llmsContent"][0]{ "llms": shortVersion, "llmsFull": fullVersion }`);
 
 export const shopCategoriesQuery = defineQuery(`*[_type == "shopCollectionConfig"] | order(order asc){
   handle, title, description, "heroImage": heroImage${image}, featuredProductHandles, order, ${seo}

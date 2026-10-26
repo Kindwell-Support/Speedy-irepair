@@ -1,36 +1,38 @@
 /**
- * Root layout — MOTION WIRING ONLY (Motion & 3D Engineer, M1/M9). Created because app/ was empty;
- * the Frontend Engineer owns this file and should extend it (fonts, header/footer, JSON-LD, etc.).
- * Keep these three pieces when editing:
- *   1. <MotionBootScript/> in <head>      -> sets html[data-motion] before first paint (no FOUC, M9)
- *   2. <MotionProvider> around the page   -> MotionConfig(reducedMotion="user") + Lenis + cursor follower
- *   3. <PageTransition> around {children} -> route transitions + data-animate binding per page
- * See docs/motion/HOOKS.md.
+ * Root layout (Technical Architect scaffold; Frontend owns from here).
+ * Motion wiring kept from the Motion & 3D lane:
+ *   1. <MotionBootScript/> in <head>  -> sets html[data-motion] before first paint (no FOUC)
+ *   2. MotionProvider (via <MotionShell>, skipped on /studio)
+ *   3. PageTransition (app/(site)/layout.tsx around page content; /motion-lab via MotionShell)
+ * Staging noindex layer 2 of 3 lives in lib/seo/metadata.ts (per page) + here as the default.
  */
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import { MotionBootScript } from "@/lib/motion/boot-script";
-import { MotionProvider } from "@/components/motion/MotionProvider";
-import { PageTransition } from "@/components/motion/PageTransition";
-import { isProductionSite, publicEnv } from "@/lib/env";
+import { MotionShell } from "@/components/layout/MotionShell";
+import { isIndexable } from "@/lib/seo/metadata";
+import { SITE_URL } from "@/lib/seo/site";
+
+const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(publicEnv.siteUrl),
-  title: "Speedy iRepair | Phone Repair in Akron, OH",
-  robots: isProductionSite ? undefined : { index: false, follow: false },
+  metadataBase: new URL(SITE_URL),
+  title: { default: "Speedy iRepair | Phone Repair in Akron, OH", template: "%s | Speedy iRepair" },
+  robots: isIndexable() ? undefined : { index: false, follow: false },
 };
+
+export const viewport: Viewport = { themeColor: "#0a0a0a", colorScheme: "dark" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
         <MotionBootScript />
       </head>
-      <body className="bg-bg text-text-primary">
-        <MotionProvider>
-          <PageTransition>{children}</PageTransition>
-        </MotionProvider>
+      <body className="bg-bg text-text-primary antialiased">
+        <MotionShell>{children}</MotionShell>
       </body>
     </html>
   );

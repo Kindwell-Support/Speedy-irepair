@@ -63,3 +63,12 @@
     scroll-behavior: auto !important;
   }
 }
+
+@layer components {
+  .skip-link {
+    @apply sr-only;
+  }
+  .skip-link:focus {
+    @apply not-sr-only fixed left-4 top-4 z-toast rounded-md bg-primary px-4 py-2 text-text;
+  }
+}

@@ -27,13 +27,19 @@ export const SETTINGS_QUERY = /* groq */ `*[_id == "siteSettings"][0]{
   "logoUrl": logo.asset->url,
   "defaultOgImageUrl": defaultSeo.ogImage.asset->url,
   "twitterHandle": socials[platform == "twitter"][0].handle
-}`
+}`;
 
 /** $pageId: homePage | faqPage | servicesPage | financingPage | homeInternetPage. Order = editor's order on that page. */
 export const FAQ_QUERY = /* groq */ `(*[_id == $pageId][0].faqs[]->{
   question, answer, "draft": flaggedForReview == true
-})[$includeDrafts || draft != true]`
-export const FAQ_PAGE_IDS = {home: 'homePage', faq: 'faqPage', services: 'servicesPage', financing: 'financingPage', homeInternet: 'homeInternetPage'} as const
+})[$includeDrafts || draft != true]`;
+export const FAQ_PAGE_IDS = {
+  home: "homePage",
+  faq: "faqPage",
+  services: "servicesPage",
+  financing: "financingPage",
+  homeInternet: "homeInternetPage",
+} as const;
 
 /** The 14 /services sections in page order (excludes the homepage-only "Smartphone Repair" umbrella card). */
 export const SERVICES_QUERY = /* groq */ `*[_id == "servicesPage"][0].services[]->{
@@ -41,27 +47,27 @@ export const SERVICES_QUERY = /* groq */ `*[_id == "servicesPage"][0].services[]
   "snippet": snippetParagraph,
   "detail": pt::text(body),
   "cta": ctas[]{ label, "href": coalesce(internalPath, externalUrl) }
-}`
+}`;
 
 export const TEAM_QUERY = /* groq */ `*[_type == "teamMember" && isPlaceholder != true] | order(orderRank asc){
   "slug": slug.current, name, "jobTitle": role, "image": photo.asset->url, "description": bio
-}`
+}`;
 
 /** Placeholders never reach review schema: both flags checked + rating must exist. */
 export const REVIEWS_QUERY = /* groq */ `*[_type == "testimonial" && isPlaceholder != true && source != "placeholder" && defined(rating) && defined(body)]
-  | order(orderRank asc){ "author": authorName, "ratingValue": rating, "reviewBody": body, "datePublished": reviewDate, source }`
+  | order(orderRank asc){ "author": authorName, "ratingValue": rating, "reviewBody": body, "datePublished": reviewDate, source }`;
 
 /** Page SEO for buildMetadata(): same field names as the seo object. $id = page singleton _id. */
-export const PAGE_SEO_QUERY = /* groq */ `*[_id == $id][0].seo{ metaTitle, metaDescription, "ogImageUrl": ogImage.asset->url, canonicalOverride, noindex }`
+export const PAGE_SEO_QUERY = /* groq */ `*[_id == $id][0].seo{ metaTitle, metaDescription, "ogImageUrl": ogImage.asset->url, canonicalOverride, noindex }`;
 
 /** llms routes: replaces `*[_type == "llmsTxt" && _id == "llmsTxt"]`. */
-export const LLMS_TXT_QUERY = /* groq */ `*[_id == "llmsContent"][0]{ "llmsTxt": shortVersion }`
-export const LLMS_FULL_TXT_QUERY = /* groq */ `*[_id == "llmsContent"][0]{ "llmsFullTxt": fullVersion }`
+export const LLMS_TXT_QUERY = /* groq */ `*[_id == "llmsContent"][0]{ "llmsTxt": shortVersion }`;
+export const LLMS_FULL_TXT_QUERY = /* groq */ `*[_id == "llmsContent"][0]{ "llmsFullTxt": fullVersion }`;
 
 /** sitemap.ts: page singletons + policy pages (noindex field name is identical). v1.1 (G1): + slug so the 3 policyPage docs map to /policies/{slug}; + isPlaceholder (placeholder policies stay out of the sitemap). */
-export const SITEMAP_DOCS_QUERY = /* groq */ `*[_type in $types]{ _type, _id, "slug": slug.current, _updatedAt, "noindex": seo.noindex, "isPlaceholder": coalesce(isPlaceholder, false) }`
+export const SITEMAP_DOCS_QUERY = /* groq */ `*[_type in $types]{ _type, _id, "slug": slug.current, _updatedAt, "noindex": seo.noindex, "isPlaceholder": coalesce(isPlaceholder, false) }`;
 
 /** v1.1 (G3): SiteNavigationElement source. Visible header order: headerLinks then headerCta. Internal links only (external hrefs are skipped). */
 export const NAV_QUERY = /* groq */ `*[_id == "navigation"][0]{
   "items": array::compact([...headerLinks[linkType != "external"]{ "name": label, "path": internalPath }, select(defined(headerCta.internalPath) => headerCta{ "name": label, "path": internalPath })])
-}.items`
+}.items`;

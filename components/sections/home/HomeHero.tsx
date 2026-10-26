@@ -12,11 +12,11 @@ const POSTER = { png: "/hero/phone-poster.svg", width: 960, height: 1200 };
  */
 export function HomeHero({ hero }: { hero: PageHero }) {
   return (
-    <section className="relative overflow-hidden" aria-labelledby="hero-heading">
+    <section className="relative overflow-hidden" aria-labelledby="hero-title">
       <div className="container-site grid min-h-[calc(100svh-120px)] items-center gap-10 py-16 lg:grid-cols-2 lg:py-24">
         <div>
           <h1
-            id="hero-heading"
+            id="hero-title"
             className="text-display"
             data-speakable
             data-animate="split-heading"
@@ -26,7 +26,7 @@ export function HomeHero({ hero }: { hero: PageHero }) {
             {hero.headline}
           </h1>
           {hero.subline ? (
-            <p className="mt-6 max-w-prose text-body-lg text-text-secondary" data-speakable>
+            <p id="hero-subline" className="mt-6 max-w-prose text-body-lg text-text-secondary" data-speakable>
               {hero.subline}
             </p>
           ) : null}

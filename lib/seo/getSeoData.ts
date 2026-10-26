@@ -3,22 +3,29 @@
  * Uses ONLY the CMS adapter queries (cms/SCHEMA_CONTRACT.md v1.0 §6a; file cms/adapters/seoQueries.ts,
  * placed in the repo as sanity/lib/seoQueries.ts). Falls back to seeded defaults if Sanity is empty/unreachable.
  */
-import { client } from '@/sanity/lib/client';
+import { client } from "@/sanity/lib/client";
 import {
-  FAQ_PAGE_IDS, FAQ_QUERY, REVIEWS_QUERY, SERVICES_QUERY, SETTINGS_QUERY, TEAM_QUERY,
-} from '@/sanity/lib/seoQueries';
-import { DEFAULT_SITE_SETTINGS, SITE_URL, type SiteSettings } from './site';
-import { defaultSeoData, type SeoData } from './routes';
-import { isIndexable } from './metadata';
-import type { FaqItem, ServiceSeo } from './content';
-import type { PersonInput, ReviewInput } from './jsonld';
+  FAQ_PAGE_IDS,
+  FAQ_QUERY,
+  REVIEWS_QUERY,
+  SERVICES_QUERY,
+  SETTINGS_QUERY,
+  TEAM_QUERY,
+} from "@/sanity/lib/seoQueries";
+import { DEFAULT_SITE_SETTINGS, SITE_URL, type SiteSettings } from "./site";
+import { defaultSeoData, type SeoData } from "./routes";
+import { isIndexable } from "./metadata";
+import type { FaqItem, ServiceSeo } from "./content";
+import type { PersonInput, ReviewInput } from "./jsonld";
 
 /** Recursively drop null/undefined (GROQ returns null for unset fields) so defaults are not overridden. */
 export function stripNulls<T>(v: T): T {
-  if (Array.isArray(v)) return v.filter((x) => x !== null && x !== undefined).map(stripNulls) as unknown as T;
-  if (v && typeof v === 'object') {
+  if (Array.isArray(v))
+    return v.filter((x) => x !== null && x !== undefined).map(stripNulls) as unknown as T;
+  if (v && typeof v === "object") {
     const out: Record<string, unknown> = {};
-    for (const [k, x] of Object.entries(v as Record<string, unknown>)) if (x !== null && x !== undefined) out[k] = stripNulls(x);
+    for (const [k, x] of Object.entries(v as Record<string, unknown>))
+      if (x !== null && x !== undefined) out[k] = stripNulls(x);
     return out as T;
   }
   return v;
@@ -28,17 +35,29 @@ type Placement = keyof typeof FAQ_PAGE_IDS;
 
 export async function getSeoData(): Promise<SeoData> {
   const includeDrafts = !isIndexable(); // flaggedForReview FAQs: staging only, never production FAQPage
-  const fetchOpts = { next: { tags: ['seo'] } };
+  const fetchOpts = { next: { tags: ["seo"] } };
   const faqs = (p: Placement) =>
-    client.fetch<FaqItem[] | null>(FAQ_QUERY, { pageId: FAQ_PAGE_IDS[p], includeDrafts }, fetchOpts).then((r) => stripNulls(r ?? []));
+    client
+      .fetch<FaqItem[] | null>(FAQ_QUERY, { pageId: FAQ_PAGE_IDS[p], includeDrafts }, fetchOpts)
+      .then((r) => stripNulls(r ?? []));
   try {
     const [rawSettings, services, home, faq, svc, fin, hi, team, reviews] = await Promise.all([
       client.fetch<Partial<SiteSettings> | null>(SETTINGS_QUERY, {}, fetchOpts),
-      client.fetch<ServiceSeo[] | null>(SERVICES_QUERY, {}, fetchOpts).then((r) => stripNulls(r ?? [])),
-      faqs('home'), faqs('faq'), faqs('services'), faqs('financing'), faqs('homeInternet'),
-      client.fetch<PersonInput[] | null>(TEAM_QUERY, {}, fetchOpts).then((r) => stripNulls(r ?? [])),
+      client
+        .fetch<ServiceSeo[] | null>(SERVICES_QUERY, {}, fetchOpts)
+        .then((r) => stripNulls(r ?? [])),
+      faqs("home"),
+      faqs("faq"),
+      faqs("services"),
+      faqs("financing"),
+      faqs("homeInternet"),
+      client
+        .fetch<PersonInput[] | null>(TEAM_QUERY, {}, fetchOpts)
+        .then((r) => stripNulls(r ?? [])),
       // REVIEWS_QUERY already excludes isPlaceholder / source=="placeholder" / missing rating.
-      client.fetch<ReviewInput[] | null>(REVIEWS_QUERY, {}, fetchOpts).then((r) => stripNulls(r ?? [])),
+      client
+        .fetch<ReviewInput[] | null>(REVIEWS_QUERY, {}, fetchOpts)
+        .then((r) => stripNulls(r ?? [])),
     ]);
     const s = rawSettings ? stripNulls(rawSettings) : null;
     const site: SiteSettings = { ...DEFAULT_SITE_SETTINGS, ...(s ?? {}), url: SITE_URL };
