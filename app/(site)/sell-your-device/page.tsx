@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { getBrands, getHowItWorksSteps, getSellPage } from "@/lib/sanity/content";
+import {
+  getBrands,
+  getHowItWorksSteps,
+  getLeadFlow,
+  getSellPage,
+  getSiteSettings,
+} from "@/lib/sanity/content";
 import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForSellYourDevice } from "@/lib/seo/routes";
@@ -7,50 +13,56 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
-import { ButtonLink } from "@/components/ui/ButtonLink";
-import { HowItWorks } from "@/components/sections/home/HowItWorks";
-import { TradeInForm } from "@/components/sections/forms/TradeInForm";
+import { BrandStrip } from "@/components/sections/shared/BrandStrip";
+import { CtaBand } from "@/components/sections/shared/CtaBand";
+import { NumberedSteps } from "@/components/sections/shared/NumberedSteps";
+import { LeadFlow } from "@/components/sections/forms/lead/LeadFlow";
+import { LeadFlowAside } from "@/components/sections/forms/lead/LeadFlowAside";
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("/sell-your-device", (await getSellPage()).seo);
 }
 
-/** R05 — hero, 3 steps, trade-in multi-step form (lead capture; quote values TBD), brands, CTA. */
+/** R05: hero, 3 numbered steps, trade-in LeadFlow (lead capture; no quote values), brands, CTA band. */
 export default async function SellYourDevicePage() {
-  const [page, steps, brands, seo] = await Promise.all([
+  const [page, steps, brands, lead, settings, seo] = await Promise.all([
     getSellPage(),
     getHowItWorksSteps("sell"),
     getBrands(),
+    getLeadFlow("tradein"),
+    getSiteSettings(),
     getSeoData(),
   ]);
+  const { business } = settings;
+  const a = business.address;
+  const address = `${a.street}${a.suite ? ` ${a.suite}` : ""}, ${a.city}, ${a.state} ${a.zip}`;
   const accepted = brands.filter((b) => b.acceptsTradeIn);
   return (
     <>
       <JsonLd data={jsonLdForSellYourDevice(seo)} />
       <Breadcrumbs data={jsonLdForSellYourDevice(seo)} />
       <PageHero hero={page.hero} />
-      <HowItWorks id="sell-steps" copy={page.howItWorksSection} steps={steps} />
-      <Section id="trade-in" copy={page.formSection}>
-        <div className="max-w-2xl rounded-xl border border-border bg-surface p-6 md:p-8">
-          <TradeInForm brands={accepted.map((b) => b.shortName)} />
+      <NumberedSteps id="sell-steps" copy={page.howItWorksSection} steps={steps} />
+      <Section id="trade-in" copy={page.formSection} tone="raised">
+        <div className="grid gap-12 lg:grid-cols-[8fr_4fr] [&>*]:min-w-0">
+          <LeadFlow
+            kind="tradein"
+            copy={lead.flow}
+            brandOptions={accepted.map((b) => ({ key: b.shortName, label: b.shortName }))}
+            phoneDisplay={business.phone}
+            testId="trade-in-form"
+          />
+          <LeadFlowAside
+            label={lead.asideLabel}
+            cards={lead.aside}
+            contactLabel={lead.contactCardLabel}
+            phone={business.phone}
+            address={address}
+          />
         </div>
       </Section>
-      <Section id="brands-accepted" copy={page.brandsSection} tone="raised">
-        <ul className="flex flex-wrap gap-3">
-          {accepted.map((b) => (
-            <li key={b.id} className="rounded-full border border-border px-4 py-2 text-body">
-              {b.name}
-            </li>
-          ))}
-        </ul>
-      </Section>
-      <Section id="sell-cta" copy={page.ctaSection}>
-        <div className="flex flex-wrap gap-3">
-          {page.ctaSection.ctas.map((c) => (
-            <ButtonLink key={c.label} cta={c} size="lg" />
-          ))}
-        </div>
-      </Section>
+      <BrandStrip id="brands-accepted" copy={page.brandsSection} brands={accepted} />
+      <CtaBand id="sell-cta" copy={page.ctaSection} />
     </>
   );
 }
