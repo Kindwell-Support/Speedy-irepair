@@ -18,6 +18,7 @@ import type {
   ShopChromeCopy,
   PdpChromeCopy,
   A11yCopy,
+  NotFoundCopy,
   FaqCategory,
   FaqPage,
   FinancingPage,
@@ -45,6 +46,7 @@ import type {
 } from "./types";
 import { isProductionSite } from "@/lib/env";
 import { a11yCopy } from "./fixtures/a11y";
+import { notFoundCopy } from "./fixtures/notFound";
 
 /**
  * CONTENT DATA-ACCESS LAYER. The only module pages/sections may use to read editorial content.
@@ -267,6 +269,10 @@ export const getShopChrome = cache(
 /** /shop/[product] buy box + cart drawer (fixture-backed; additive, Frontend). */
 export const getPdpChrome = cache(
   (): Promise<PdpChromeCopy> => fromSanity(q.pdpChromeQuery, {}, [q.TAGS.uiCopy], fx.pdpChrome).then(dropNulls),
+);
+/** 404 page copy. CMS v1.6: uiCopy.notFound; fallback = fixtures/notFound. */
+export const getNotFoundCopy = cache(
+  (): Promise<NotFoundCopy> => fromSanity(q.notFoundCopyQuery, {}, [q.TAGS.uiCopy], notFoundCopy).then(dropNulls),
 );
 /** Screen-reader-only strings. CMS v1.5: uiCopy.a11y; fallback = fixtures/a11y (mirrors components/ui/a11yStrings A11Y). opensInNewTab always starts with one space. */
 export const getA11yCopy = cache(async (): Promise<A11yCopy> => {

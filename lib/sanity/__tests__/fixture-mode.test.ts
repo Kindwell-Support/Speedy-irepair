@@ -12,6 +12,7 @@ import * as seo from "@/sanity/lib/seoQueries";
 import * as fx from "../fixtures";
 import { tradeInSchema } from "@/lib/forms/schemas";
 import { LLMS_TXT_DEFAULT } from "@/lib/seo/llms-defaults";
+import { notFoundCopy } from "../fixtures/notFound";
 
 const PH = /\[Placeholder/;
 
@@ -242,4 +243,48 @@ test("v1.5: about/financing blocks, PDP + cart drawer, a11y strings, model lists
 
   assert.equal((await c.getQuotePage()).hero.eyebrow, "Instant quote");
   assert.equal(JSON.stringify(await c.getSellPage()).includes("Lead capture"), false);
+});
+
+const SPEC_SERVICE_SLUGS = [
+  "screen-repair", "battery-replacement", "charger-port-repair", "camera-repair", "water-damage-inspection",
+  "device-unlocking", "certified-pre-owned-devices", "sell-trade-your-device", "prepaid-phone-plans",
+  "bill-payment-services", "home-internet", "financing", "accessories", "replacement-parts",
+];
+const words = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+const blockText = (b: unknown) => JSON.stringify(b);
+
+test("v1.6 (QA BUG-003): /services copy: 14 in spec order, 40–60-word snippets, full bodies, no placeholders", async () => {
+  // Both paths /services can render: the seed via GROQ (fixture mode) and the static fallback used when Sanity returns nothing.
+  for (const [label, list] of [["getServices()", await c.getServices()], ["fixtures.services", fx.services]] as const) {
+    assert.deepEqual(list.map((s) => s.slug), SPEC_SERVICE_SLUGS, `${label}: order`);
+    for (const s of list) {
+      // ServiceSections renders `summary` as the section's first <p> (REQ-049).
+      const n = words(s.summary);
+      assert.ok(n >= 40 && n <= 60, `${label} ${s.slug}: snippet is ${n} words`);
+      assert.ok(s.body.length >= 2, `${label} ${s.slug}: body has ${s.body.length} blocks`);
+      assert.doesNotMatch(JSON.stringify(s), PH, `${label} ${s.slug}: placeholder text`);
+      assert.equal(s.isPlaceholder, false, `${label} ${s.slug}: isPlaceholder`);
+    }
+  }
+  // Seed and fallback agree on title, snippet and body text.
+  const fromSeed = await c.getServices();
+  fx.services.forEach((f, i) => {
+    assert.equal(fromSeed[i].title, f.title);
+    assert.equal(fromSeed[i].summary, f.summary);
+    assert.deepEqual(fromSeed[i].body.map((b) => blockText((b as { children?: { text: string }[] }).children?.map((x) => x.text))), f.body.map((b) => blockText((b as { children?: { text: string }[] }).children?.map((x) => x.text))));
+  });
+});
+
+test("v1.6: PDP additions, 404 copy and shop 'Other' label come from the seed", async () => {
+  const pdp = await c.getPdpChrome();
+  assert.equal(pdp.inStockLabel, "In stock");
+  assert.equal(pdp.acimaNote, "Lease-to-own through Acima. No credit needed.");
+  assert.deepEqual(pdp.assurances?.map((a) => a.key), ["shipping", "returns", "store", "payments"]);
+  assert.deepEqual(pdp.related, { eyebrow: "Related", heading: "You might also like." });
+  const raw = (await fixtureFetch(q.pdpChromeQuery, {})) as Record<string, unknown>;
+  assert.equal(Array.isArray(raw.assurances) && raw.assurances.length, 4); // seed, not the fixture fallback
+  assert.deepEqual(await fixtureFetch(q.notFoundCopyQuery, {}), notFoundCopy);
+  assert.deepEqual(await c.getNotFoundCopy(), notFoundCopy);
+  assert.equal((await fixtureFetch<{ otherCategoryLabel: string }>(q.shopChromeQuery, {}))?.otherCategoryLabel, "Other");
+  assert.equal((await c.getShopChrome()).otherCategoryLabel, "Other");
 });

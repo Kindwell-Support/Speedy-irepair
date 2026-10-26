@@ -181,6 +181,7 @@ export const uiCopy = defineType({
     {name: 'policies', title: 'Policy pages'},
     {name: 'shop', title: 'Product page & cart'},
     {name: 'a11y', title: 'Screen-reader text'},
+    {name: 'notFound', title: '404 page'},
   ],
   fields: [
     defineField({name: 'embeds', type: 'object', group: 'embeds', fields: [
@@ -197,6 +198,24 @@ export const uiCopy = defineType({
     ]}),
     defineField({name: 'productPage', title: 'Product page buy box', type: 'object', group: 'shop', fields: [
       lbl('optionLabel'), lbl('addLabel', 'Add to cart'), lbl('addingLabel', 'Adding (busy)'), lbl('addedLabel', 'Added'), lbl('soldOutLabel'), lbl('viewCartLabel'),
+      // v1.6: design shop-product.html buy box + related row
+      lbl('inStockLabel', 'In stock'), lbl('viewLabel', 'Product card "View" link'),
+      lbl('acimaLabel', 'Acima button label'), lbl('acimaNote', 'Note under the Acima button'),
+      defineField({name: 'assurances', title: 'Assurance rows', type: 'array', description: 'Shown under the buy box, in this order. Keep the policy facts in line with the Shipping & Return Policy page.', of: [{
+        type: 'object', name: 'pdpAssurance',
+        fields: [
+          defineField({name: 'key', title: 'Icon', type: 'string', options: {list: ['shipping', 'returns', 'store', 'payments']}, validation: (r) => r.required()}),
+          defineField({name: 'title', type: 'string', validation: (r) => r.required()}),
+          defineField({name: 'body', type: 'string'}),
+          defineField({name: 'linkLabel', type: 'string'}),
+          defineField({name: 'linkHref', title: 'Link URL or path', type: 'string', description: 'e.g. /policies/shipping-return'}),
+        ],
+        preview: {select: {title: 'title', subtitle: 'key'}},
+      }]}),
+      defineField({name: 'related', title: 'Related products heading', type: 'object', fields: [lbl('eyebrow'), lbl('heading')]}),
+    ]}),
+    defineField({name: 'notFound', title: '404 page', type: 'object', group: 'notFound', description: 'Shown for any URL that does not exist.', fields: [
+      lbl('heading'), defineField({name: 'body', type: 'text', rows: 2}), lbl('homeLabel', 'Button label'), lbl('homeHref', 'Button link (path)'),
     ]}),
     defineField({name: 'cartDrawer', title: 'Cart drawer', type: 'object', group: 'shop', fields: [
       lbl('title'), lbl('closeLabel'), lbl('emptyTitle'), lbl('emptyBody'), lbl('subtotalLabel'), lbl('checkoutNote'), lbl('checkoutLabel'), lbl('continueLabel'),

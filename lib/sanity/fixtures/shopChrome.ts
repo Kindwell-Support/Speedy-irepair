@@ -6,6 +6,7 @@ export const shopChrome: ShopChromeCopy = {
   productsHeading: "Products",
   filterAriaLabel: "Filter by category",
   allLabel: "All",
+  otherCategoryLabel: "Other",
   sortLabel: "Sort",
   sortOptions: {
     featured: "Sort: Featured",

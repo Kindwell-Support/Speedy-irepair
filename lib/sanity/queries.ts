@@ -260,7 +260,7 @@ export const servicesChromeQuery = defineQuery(`*[_id == "servicesPage"][0]{
 }`);
 
 export const shopChromeQuery = defineQuery(`*[_id == "shopPage"][0]{
-  categoriesHeading, productsHeading, filterAriaLabel, allLabel, sortLabel,
+  categoriesHeading, productsHeading, filterAriaLabel, allLabel, otherCategoryLabel, sortLabel,
   sortOptions{ featured, newest, priceAsc, priceDesc },
   loadingLabel,
   emptyCategory{ title, body, callLabel, showAllLabel },
@@ -269,9 +269,17 @@ export const shopChromeQuery = defineQuery(`*[_id == "shopPage"][0]{
 
 /** v1.5: /shop/[product] buy box (uiCopy.productPage) + cart drawer (uiCopy.cartDrawer). Shape = PdpChromeCopy. */
 export const pdpChromeQuery = defineQuery(`*[_id == "uiCopy"][0]{
-  ...productPage{ optionLabel, addLabel, addingLabel, addedLabel, soldOutLabel, viewCartLabel },
+  ...productPage{
+    optionLabel, addLabel, addingLabel, addedLabel, soldOutLabel, viewCartLabel,
+    inStockLabel, viewLabel, acimaLabel, acimaNote,
+    assurances[]{ key, title, body, linkLabel, linkHref },
+    related{ eyebrow, heading }
+  },
   "drawer": cartDrawer{ title, closeLabel, emptyTitle, emptyBody, subtotalLabel, checkoutNote, checkoutLabel, continueLabel, quantityLabel, decreaseLabel, increaseLabel }
 }`);
+
+/** v1.6: 404 page copy (uiCopy.notFound). Shape = NotFoundCopy. */
+export const notFoundCopyQuery = defineQuery(`*[_id == "uiCopy"][0].notFound{ heading, body, homeLabel, homeHref }`);
 
 /** v1.5: screen-reader-only strings (uiCopy.a11y). Shape = A11yCopy. */
 export const a11yCopyQuery = defineQuery(`*[_id == "uiCopy"][0].a11y{ loading, opensInNewTab }`);

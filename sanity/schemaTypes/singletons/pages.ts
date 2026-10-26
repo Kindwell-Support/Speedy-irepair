@@ -106,6 +106,7 @@ export const shopPage = page('shopPage', 'Shop', [
   defineField({name: 'productsHeading', type: 'string', group: g}),
   defineField({name: 'filterAriaLabel', type: 'string', group: g}),
   defineField({name: 'allLabel', title: '"All" filter label', type: 'string', group: g}),
+  defineField({name: 'otherCategoryLabel', title: '"Other" category label', type: 'string', group: g, description: 'Label for products whose Shopify type matches none of the categories.'}),
   defineField({name: 'sortLabel', type: 'string', group: g}),
   defineField({
     name: 'sortOptions',

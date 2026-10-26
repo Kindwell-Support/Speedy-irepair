@@ -15,6 +15,8 @@ import type {
 } from "../types";
 import { EXTERNAL_LINKS } from "./business";
 import { blocks, PLACEHOLDER } from "./helpers";
+import { SERVICE_BODY } from "./serviceCopy";
+import { SERVICES as SEO_SERVICES } from "../../seo/content";
 
 const scheduleCta = { label: "Schedule Repair", href: "/schedule-repair", variant: "primary" } as const;
 const quoteCta = { label: "Get Instant Quote", href: "/instant-quote", variant: "secondary" } as const;
@@ -23,9 +25,13 @@ const visitCta = { label: "Visit store", href: "/#location", variant: "secondary
 const directionsCta = { label: "Get Directions", href: EXTERNAL_LINKS.maps, external: true, variant: "secondary" } as const;
 const shopCta = { label: "Shop", href: "/shop", variant: "primary" } as const;
 
-const bodyPending = blocks(PLACEHOLDER("full service description, CMS & Content Engineer (REQ-047/049)"));
-const summaryNote =
-  "Summary uses facts from the brief only. CMS & Content Engineer expands it into a 40–60-word featured-snippet paragraph (REQ-049) and writes the body.";
+/**
+ * CMS v1.6 (QA BUG-003): the fallback services used to carry 3–28-word one-liners and a "[Placeholder" body, and
+ * that is what /services rendered whenever Sanity returned nothing. Title + 40–60-word snippet now come from the
+ * SEO copy (lib/seo/content.ts, the same source the seed uses) and the body from ./serviceCopy.
+ */
+const SNIPPET = new Map(SEO_SERVICES.map((s) => [s.slug, s]));
+const summaryNote = "Snippet: lib/seo/content.ts SERVICES (REQ-049, 40–60 words). Body: fixtures/serviceCopy.ts. Brief facts only.";
 
 /** Spec 2.2: 14 services, in this order (REQ-045). */
 const serviceSeeds: Omit<Service, "body" | "isPlaceholder" | "sourceNote">[] = [
@@ -44,12 +50,18 @@ const serviceSeeds: Omit<Service, "body" | "isPlaceholder" | "sourceNote">[] = [
   { id: "s13", slug: "accessories", title: "Accessories", summary: "Shop phone accessories.", ctas: [shopCta], riveIcon: "accessories", order: 13 },
   { id: "s14", slug: "replacement-parts", title: "Replacement Parts", summary: "Premium quality replacement parts, covered by our 90-day warranty.", ctas: [scheduleCta], riveIcon: "replacement-parts", order: 14 },
 ];
-export const services: Service[] = serviceSeeds.map((s) => ({
-  ...s,
-  body: bodyPending,
-  isPlaceholder: true,
-  sourceNote: summaryNote,
-}));
+export const services: Service[] = serviceSeeds.map((s) => {
+  const seo = SNIPPET.get(s.slug);
+  if (!seo) throw new Error(`fixtures: no SEO snippet for service ${s.slug}`);
+  return {
+    ...s,
+    title: seo.name,
+    summary: seo.snippet,
+    body: blocks(...(SERVICE_BODY[s.slug] ?? [])),
+    isPlaceholder: false,
+    sourceNote: summaryNote,
+  };
+});
 
 /** Spec 2.1.2: homepage cards C1–C8 (REQ-019/020/023/024). */
 export const serviceCards: ServiceCard[] = [

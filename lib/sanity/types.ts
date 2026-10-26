@@ -529,6 +529,8 @@ export interface ShopChromeCopy {
   productsHeading: string;
   filterAriaLabel: string;
   allLabel: string;
+  /** v1.6: shopPage.otherCategoryLabel, label for products in no known category. */
+  otherCategoryLabel?: string | null;
   sortLabel: string;
   /** v1.4: `newest` (optional) sorts by Shopify publishedAt/createdAt from the Storefront API; empty = hide the option. */
   sortOptions: { featured: string; priceAsc: string; priceDesc: string; newest?: string | null };
@@ -584,4 +586,12 @@ export interface A11yCopy {
   loading: string;
   /** Includes the leading space, e.g. " (opens in a new tab)". */
   opensInNewTab: string;
+}
+
+/** CMS v1.6: 404 page copy (uiCopy.notFound). Fallback = fixtures/notFound. */
+export interface NotFoundCopy {
+  heading: string;
+  body: string;
+  homeLabel: string;
+  homeHref: string;
 }
