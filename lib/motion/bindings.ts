@@ -5,7 +5,7 @@
  *
  * All behaviours are created inside gsap.matchMedia() so that:
  *  - prefers-reduced-motion users get NOTHING bound (content is already visible via CSS),
- *  - breakpoint-specific behaviour (How-It-Works pin on >=768px, stacked reveal on mobile)
+ *  - breakpoint-specific behaviour (How-It-Works tile pin on >=768px, card-stack pin on mobile)
  *    is torn down / rebuilt automatically on resize,
  *  - everything is reverted on route change/unmount (mm.revert()).
  */
@@ -213,7 +213,8 @@ function bindSteps(root: ParentNode, desktop: boolean) {
       defaults: { ease: EASE.inOut, duration: 1 },
       scrollTrigger: {
         trigger: pin,
-        start: "top top",
+        // Pin the tile row at 30 % of the viewport so it sits centred-high and the bar clears the sticky header.
+        start: "top 30%",
         end: () => `+=${(n - 1) * window.innerHeight * 0.6}`,
         pin: true,
         scrub: 0.4,
@@ -319,7 +320,7 @@ export function bindAnimations(root: HTMLElement): Cleanup {
     };
   });
 
-  // How It Works: pinned on >=768px, stacked reveal below. Rebuilt across the breakpoint.
+  // How It Works: pinned tile row on >=768px, pinned card stack below. Rebuilt across the breakpoint.
   mm.add(`${MQ.motionOk} and (min-width: 768px)`, () => {
     if (allowed()) bindSteps(root, true);
   });

@@ -56,12 +56,29 @@ export const RIVE_ALIASES = {
   "icon-internet": "home-internet",
   "icon-financing": "financing",
   "icon-unlock": "device-unlocking",
+  // CMS service slugs (lib/sanity/queries.ts projects riveIcon from slug.current)
+  "battery-replacement": "battery",
+  "charger-port-repair": "charger-port",
+  "camera-repair": "camera",
+  "water-damage-inspection": "water-damage",
+  "certified-pre-owned-devices": "pre-owned",
+  "sell-trade-your-device": "sell-trade",
+  "prepaid-phone-plans": "prepaid-plans",
+  "bill-payment-services": "bill-payment",
 } as const satisfies Record<string, RiveIconId>;
 
 export type RiveIconKey = RiveIconId | keyof typeof RIVE_ALIASES;
 
 export const toRiveId = (key: RiveIconKey): RiveIconId =>
   key in RIVE_ALIASES ? RIVE_ALIASES[key as keyof typeof RIVE_ALIASES] : (key as RiveIconId);
+
+/** Narrow an untrusted string (CMS) to an icon id: manifest ids and aliases resolve, anything else is null. */
+export function riveIconIdFrom(value: string | null | undefined): RiveIconId | null {
+  if (!value) return null;
+  if (value in RIVE_ICONS) return value as RiveIconId;
+  if (value in RIVE_ALIASES) return RIVE_ALIASES[value as keyof typeof RIVE_ALIASES];
+  return null;
+}
 
 /** /services order S01–S14 -> icon id (for the Frontend's section map). */
 export const SERVICES_ICON_ORDER: RiveIconId[] = [

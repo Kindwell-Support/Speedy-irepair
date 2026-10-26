@@ -19,8 +19,10 @@ const page = await browser.newPage({ viewport: { width: 1100, height: 1300 }, de
 await page.goto(`${base}/motion-lab/poster?force3d=1`, { waitUntil: "networkidle" });
 await page.waitForSelector("[data-poster-ready]", { timeout: 60_000 });
 await page.addStyleTag({ content: "html,body,main,body *{background:transparent!important} nav,header{display:none!important}" });
-await page.waitForTimeout(300);
-const el = page.locator("[data-poster-ready]");
-await el.screenshot({ path: out, omitBackground: true });
+await page.waitForTimeout(1500);
+// Clip screenshot instead of element.screenshot: the live canvas never reports "stable" on SwiftShader.
+const box = await page.locator("[data-poster-ready]").boundingBox();
+if (!box) throw new Error("poster stage not found");
+await page.screenshot({ path: out, omitBackground: true, clip: box, timeout: 120_000 });
 await browser.close();
 console.log("wrote", out);

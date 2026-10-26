@@ -16,8 +16,18 @@ import path from "node:path";
 import zlib from "node:zlib";
 
 const base = process.argv[2] ?? "http://localhost:3100";
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
-const ROUTES = ["/motion-lab", "/motion-lab/services", "/motion-lab/faq", "/motion-lab/quote", "/motion-lab/shop"];
+const ROOT = process.env.WEB_ROOT ?? path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+// [route, app-build-manifest keys (layouts + page)]
+const SITE = ["/layout", "/(site)/layout"];
+const ROUTE_KEYS = {
+  "/": [...SITE, "/(site)/page"],
+  "/services": [...SITE, "/(site)/services/page"],
+  "/faq": [...SITE, "/(site)/faq/page"],
+  "/shop": [...SITE, "/(site)/shop/page"],
+  "/instant-quote": [...SITE, "/(site)/instant-quote/page"],
+  "/motion-lab": ["/layout", "/motion-lab/layout", "/motion-lab/page"],
+};
+const ROUTES = Object.keys(ROUTE_KEYS);
 const VIEWPORTS = [
   [375, 812], [768, 1024], [1280, 800], [1440, 900], [1920, 1080],
 ];
@@ -28,11 +38,11 @@ const allChunks = fs.readdirSync(chunkDir, { recursive: true }).map(String).filt
 const has = (f, needle) => fs.readFileSync(path.join(chunkDir, f), "utf8").includes(needle);
 const THREE_CHUNKS = new Set(allChunks.filter((f) => has(f, "WebGLRenderer")).map((f) => path.basename(f)));
 const RIVE_CHUNKS = new Set(allChunks.filter((f) => has(f, "RuntimeLoader")).map((f) => path.basename(f)));
-const gz = (rel) => zlib.gzipSync(fs.readFileSync(path.join(ROOT, ".next", rel))).length;
+const gz = (rel) => zlib.gzipSync(fs.readFileSync(path.join(ROOT, ".next", rel)), { level: 9 }).length;
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, ".next/app-build-manifest.json"), "utf8")).pages;
 const staticBudget = {};
 for (const r of ROUTES) {
-  const files = new Set([...(manifest["/layout"] ?? []), ...(manifest["/motion-lab/layout"] ?? []), ...(manifest[`${r}/page`] ?? [])]);
+  const files = new Set(ROUTE_KEYS[r].flatMap((k) => manifest[k] ?? []));
   const js = [...files].filter((f) => f.endsWith(".js"));
   staticBudget[r] = {
     firstLoadJsGzKB: +(js.reduce((a, f) => a + gz(f), 0) / 1024).toFixed(1),
@@ -109,6 +119,6 @@ async function run(browser, route, [w, h], query = "") {
 const browser = await chromium.launch({ args: ["--enable-unsafe-swiftshader"] });
 const rows = [];
 for (const r of ROUTES) for (const vp of VIEWPORTS) { rows.push(await run(browser, r, vp)); process.stderr.write("."); }
-for (const vp of [[375, 812], [1440, 900]]) rows.push(await run(browser, "/motion-lab", vp, "?force3d=1"));
+for (const vp of [[375, 812], [1440, 900]]) rows.push(await run(browser, "/", vp, "?force3d=1"));
 await browser.close();
 console.log(JSON.stringify({ base, date: new Date().toISOString(), threeChunks: [...THREE_CHUNKS], threeLazyGzKB: lazyGzKB(THREE_CHUNKS), riveChunks: [...RIVE_CHUNKS], riveLazyGzKB: lazyGzKB(RIVE_CHUNKS), staticBudget, rows }, null, 2));

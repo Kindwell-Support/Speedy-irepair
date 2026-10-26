@@ -20,6 +20,14 @@ export function decide3D(): ThreeDecision {
       c.getContext("webgl2", { failIfMajorPerformanceCaveat: !force }) ??
       c.getContext("webgl", { failIfMajorPerformanceCaveat: !force });
     if (!gl) return { ok: false, reason: "no-webgl", mobile, force };
+    // Some software rasterisers slip past the caveat flag (headless Chrome, blocklisted GPUs):
+    // their shader compile for the transmission pass is a 1-3 s main-thread task, so poster only.
+    const info = gl.getExtension("WEBGL_debug_renderer_info");
+    const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : "";
+    if (!force && /swiftshader|llvmpipe|softpipe|software|basic render/i.test(renderer)) {
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      return { ok: false, reason: "software-gl", mobile, force };
+    }
     (gl as WebGLRenderingContext).getExtension("WEBGL_lose_context")?.loseContext();
   } catch {
     return { ok: false, reason: "no-webgl", mobile, force };
