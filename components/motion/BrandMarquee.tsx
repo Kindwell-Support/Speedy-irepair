@@ -6,10 +6,20 @@
  * render a static, wrapped row (no loop clones) so nothing moves.
  */
 import type { ReactNode } from "react";
-import LogoLoop from "./reactbits/LogoLoop";
+import dynamic from "next/dynamic";
 import { BrandLogo } from "./BrandLogo";
 import { useReducedMotion } from "@/lib/motion/reduced-motion";
 import { cn } from "@/lib/utils/cn";
+
+/**
+ * Below the fold: LogoLoop (~9 KB gz) is code-split out of first-load JS. Still server-rendered
+ * (next/dynamic default ssr), so the brand names stay in the HTML for SEO and the SSR markup is
+ * kept until the chunk hydrates.
+ */
+const LogoLoop = dynamic(() => import("./reactbits/LogoLoop"), {
+  // Client-side navigations only (SSR/hydration keep the server markup): reserve the 32px row.
+  loading: () => <div className="h-8" aria-hidden />,
+});
 
 export type Brand = { name: string; logo: ReactNode; href?: string };
 
