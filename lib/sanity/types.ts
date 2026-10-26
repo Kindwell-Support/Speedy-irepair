@@ -137,6 +137,8 @@ export interface Promotion extends Placeholderable {
   id: string;
   title: string;
   body?: string | null;
+  /** Optional small label on the feature card (design `.badge--brand`, e.g. "Home Internet"). CMS: promotion.badge (requested). */
+  badge?: string | null;
   cta: CtaLink;
   order: number;
 }

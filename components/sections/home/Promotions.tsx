@@ -1,24 +1,23 @@
 import type { Promotion, SectionCopy } from "@/lib/sanity/types";
 import { Section } from "@/components/ui/Section";
-import { ButtonLink } from "@/components/ui/ButtonLink";
-import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
+import { PromoCard } from "./PromoCard";
 
-/** Spec 2.1.7 */
+/** Spec 2.1.7 / design home.html `.promos`: 6fr/3fr/3fr at lg, first card is the feature card. */
 export function Promotions({ copy, items }: { copy: SectionCopy; items: Promotion[] }) {
   return (
-    <Section id="promotions" copy={copy} tone="raised" section="promotions" testId="promotions">
-      <ul className="grid gap-4 md:grid-cols-3" data-animate="stagger">
-        {items.map((p) => (
-          <li
-            key={p.id}
-            className="flex flex-col gap-4 rounded-xl border border-border bg-surface p-6"
-          >
-            <h3 className="text-h5">
-              <PlaceholderMark show={p.isPlaceholder}>{p.title}</PlaceholderMark>
-            </h3>
-            {p.body ? <p className="text-body-sm text-text-secondary">{p.body}</p> : null}
-            <ButtonLink cta={p.cta} className="mt-auto self-start" />
-          </li>
+    <Section
+      id="promotions"
+      copy={copy}
+      section="promotions"
+      testId="promotions"
+      className="border-t border-border-subtle"
+    >
+      <ul
+        className="grid list-none gap-4 lg:grid-cols-[6fr_3fr_3fr] lg:gap-6"
+        data-animate="stagger"
+      >
+        {items.map((p, i) => (
+          <PromoCard key={p.id} promo={p} feature={i === 0} />
         ))}
       </ul>
     </Section>

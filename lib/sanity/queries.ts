@@ -77,7 +77,7 @@ export const announcementQuery = defineQuery(`*[_type == "promotion" && "banner"
 }`);
 
 export const promotionsQuery = defineQuery(`*[_type == "promotion" && "homepage" in placements && ${promoWindow}] | order(orderRank asc){
-  "id": _id, title, "body": text, "cta": link${cta}, "order": 0
+  "id": _id, title, "body": text, badge, "cta": link${cta}, "order": 0
 }`);
 
 // ---------- Collections ----------
