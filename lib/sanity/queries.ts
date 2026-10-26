@@ -62,7 +62,7 @@ export const siteSettingsQuery = defineQuery(`{
     "logo": logo${image}, "logoInverse": logoDark${image}
   },
   "navigation": *[_id == "navigation"][0]{
-    "primary": headerLinks[]${cta}, "headerCta": headerCta${cta},
+    "primary": headerLinks[]{ ${cta.slice(1, -1)}, "children": children[]${cta} }, "headerCta": headerCta${cta},
     "footerQuickLinks": footerQuickLinks[]${cta}, "footerLegalLinks": footerLegalLinks[]${cta}
   },
   "copyright": *[_id == "navigation"][0].copyright,
@@ -83,7 +83,7 @@ export const promotionsQuery = defineQuery(`*[_type == "promotion" && "homepage"
 // ---------- Collections ----------
 /** /services sections in servicesPage reference order (14). */
 export const servicesQuery = defineQuery(`*[_id == "servicesPage"][0].services[]->{
-  "id": _id, "slug": slug.current, title, "summary": snippetParagraph, body, "ctas": ctas[]${cta},
+  "id": _id, "slug": slug.current, title, "summary": snippetParagraph, "body": coalesce(body, []), "ctas": coalesce(ctas[]${cta}, []),
   "riveIcon": slug.current, "order": 0, "isPlaceholder": flaggedForReview, ${seo}
 }`);
 
@@ -109,7 +109,8 @@ export const brandsQuery = defineQuery(`*[_type == "brand"] | order(orderRank as
 
 /** Value props are embedded in homePage (contract §2.5). */
 export const valuePropsQuery = defineQuery(`*[_id == "homePage"][0].valueProps[]{
-  "id": _key, title, "detail": description, "speakable": true, "order": 0
+  "id": _key, title, "detail": description, "speakable": true, "order": 0,
+  "stat": select(defined(statValue) => { "value": statValue, "label": statLabel }, null)
 }`);
 
 /** Steps are embedded per page: home → homePage, sell → sellYourDevicePage, financing → financingPage. */
@@ -131,8 +132,10 @@ export const homePageQuery = defineQuery(`*[_id == "homePage"][0]{
   "testimonialsSection": testimonialsHeading${heading},
   "promotionsSection": promotionsHeading${heading},
   "faqSection": faqHeading${heading},
-  "locationSection": locationHeading{ "heading": heading, "intro": subheading, "directionsLabel": ^.directionsLabel },
-  "newsletter": newsletter{ heading, "emailLabel": placeholder, buttonLabel, successMessage }
+  "locationSection": locationHeading{ eyebrow, "heading": heading, "intro": subheading, "directionsLabel": ^.directionsLabel },
+  "contactSection": contactHeading${heading},
+  "intro": intro,
+  "newsletter": newsletter{ eyebrow, heading, "emailLabel": placeholder, buttonLabel, successMessage }
 }`);
 
 /**
@@ -142,14 +145,32 @@ export const homePageQuery = defineQuery(`*[_id == "homePage"][0]{
 export const pageSingletonQuery = defineQuery(`*[_id == $type][0]{
   "title": hero.heading, ${hero}, ${seo},
   "faqSection": faqHeading${heading},
+  "intro": intro,
+  // v1.3 section headings (eyebrow/heading/intro). Keys absent on a page project to null and are ignored.
+  "howItWorksSection": howItWorksHeading${heading},
+  "formSection": formHeading{ eyebrow, heading, "intro": coalesce(subheading, ^.formIntro) },
+  "brandsSection": brandsHeading${heading},
+  "whatToExpect": whatToExpectHeading{ eyebrow, heading, "intro": subheading, "body": ^.whatToExpect },
+  "bookingSection": bookingHeading${heading},
+  "locationSection": locationHeading${heading},
+  "aboutSection": whoWeAreHeading{ eyebrow, heading, "intro": subheading, "body": ^.aboutBusiness, "isPlaceholder": coalesce(^.aboutIsPlaceholder, false) },
+  "storySection": storyHeading{ eyebrow, heading, "intro": subheading, "body": ^.story, "isPlaceholder": coalesce(^.storyIsPlaceholder, false) },
+  "valuesSection": valuesHeading${heading},
+  "teamSection": teamHeading${heading},
+  "contactSection": contactHeading${heading},
+  "whatIsSection": whatIsAcimaHeading{ eyebrow, heading, "intro": subheading, "body": ^.whatIsAcima },
+  "whatYouCanFinanceSection": whatYouCanFinanceHeading{ eyebrow, heading, "intro": subheading, "items": ^.whatYouCanFinance },
+  "whatYouGetSection": whatYouGetHeading{ eyebrow, heading, "intro": subheading, "items": ^.whatYouGet },
+  "whoItsForSection": whoItsForHeading{ eyebrow, heading, "intro": coalesce(subheading, ^.whoItsFor) },
+  "howToSignUpSection": howToSignUpHeading{ eyebrow, heading, "intro": coalesce(subheading, ^.howToSignUp) },
+  "signUpSection": signUpHeading${heading},
   "squareBookingUrl": coalesce(squareEmbedUrl, *[_id == "siteSettings"][0].scheduleUrl),
   "jotformUrl": coalesce(jotformUrl, *[_id == "siteSettings"][0].homeInternetFormUrl),
   "applyCta": applyCta${cta},
-  "intro": intro
 }`);
 
 export const policyPageQuery = defineQuery(`*[_type == "policyPage" && slug.current == $slug][0]{
-  "slug": slug.current, title, body, sourceUrl, isPlaceholder,
+  "slug": slug.current, eyebrow, title, body, sourceUrl, isPlaceholder,
   "needsReview": coalesce(needsReview, false), reviewNote, ${seo}
 }`);
 
