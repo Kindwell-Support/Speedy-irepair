@@ -311,7 +311,11 @@ export interface AboutPage extends BasePage {
   aboutSection: SectionCopy;
   teamSection: SectionCopy;
   storySection: SectionCopy;
-  valuesSection: SectionCopy & { values: string[] };
+  valuesSection: SectionCopy & {
+    values: string[];
+    /** v1.3 values[] with descriptions (design .info-card). Additive, Frontend. */
+    items?: { title: string; body?: string | null }[] | null;
+  };
   spectrumSection: SectionCopy;
   ctaSection: SectionCopy & { ctas: CtaLink[] };
   locationSection?: SectionCopy;
@@ -319,11 +323,15 @@ export interface AboutPage extends BasePage {
 }
 
 export interface FinancingPage extends BasePage {
-  whatIsSection: SectionCopy;
+  /** highlights = design .check-list; visualLabel = the partner wordmark stand-in (fixture until CMS fields exist). */
+  whatIsSection: SectionCopy & { highlights?: string[] | null; visualLabel?: string | null };
   howItWorksSection: SectionCopy;
-  whatYouCanFinanceSection: SectionCopy & { items: string[] };
+  /** itemBodies: optional card body per item title (design .info-card); fixture until a CMS field exists. */
+  whatYouCanFinanceSection: SectionCopy & { items: string[]; itemBodies?: Record<string, string> | null };
   applyCta: CtaLink;
   faqSection: SectionCopy;
+  /** Pre-footer CTA band (design .cta-band). Fixture until a CMS field exists. */
+  ctaSection?: (SectionCopy & { ctas: CtaLink[] }) | null;
 }
 
 export interface HomeInternetPage extends BasePage {

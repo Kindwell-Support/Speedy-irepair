@@ -155,7 +155,7 @@ export const pageSingletonQuery = defineQuery(`*[_id == $type][0]{
   "locationSection": locationHeading${heading},
   "aboutSection": whoWeAreHeading{ eyebrow, heading, "intro": subheading, "body": ^.aboutBusiness, "isPlaceholder": coalesce(^.aboutIsPlaceholder, false) },
   "storySection": storyHeading{ eyebrow, heading, "intro": subheading, "body": ^.story, "isPlaceholder": coalesce(^.storyIsPlaceholder, false) },
-  "valuesSection": valuesHeading${heading},
+  "valuesSection": valuesHeading{ eyebrow, heading, "intro": subheading, "items": ^.values[]{ title, "body": description } },
   "teamSection": teamHeading${heading},
   "contactSection": contactHeading${heading},
   "whatIsSection": whatIsAcimaHeading{ eyebrow, heading, "intro": subheading, "body": ^.whatIsAcima },

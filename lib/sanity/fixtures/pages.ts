@@ -146,13 +146,23 @@ export const faqPage: FaqPage = {
 export const aboutPage: AboutPage = {
   title: "About",
   hero: { headline: "About Speedy iRepair", subline: "Akron's trusted phone repair shop." },
+  intro: "Speedy iRepair repairs smartphones in Akron, sells certified pre-owned devices and accessories, and helps with prepaid plans, bill payments and Home Internet.",
   aboutSection: { heading: "Who we are", intro: PLACEHOLDER("who we are, how long in Akron, mission (OQ-15)"), isPlaceholder: true },
   teamSection: { heading: "The team" },
   storySection: { heading: "Why we started", intro: PLACEHOLDER("entrepreneur story (OQ-15)"), isPlaceholder: true },
-  valuesSection: { heading: "Our values", values: ["Fast repairs", "Fair prices", "Honest service"] },
+  valuesSection: {
+    heading: "Our values",
+    values: ["Fast repairs", "Fair prices", "Honest service"],
+    items: [
+      { title: "Fast repairs", body: "iPhone repairs typically take 45–60 minutes." },
+      { title: "Fair prices", body: "No upfront payment for iPhone repairs. $20 deposit on Android repairs." },
+      { title: "Honest service", body: "All repairs are covered under our 90-day warranty." },
+    ],
+  },
   spectrumSection: { heading: "Spectrum Authorized Retailer" },
   ctaSection: {
-    heading: "Ready when you are",
+    heading: "Need a repair?",
+    intro: "Book a time, or come by the shop.",
     ctas: [
       { label: "Schedule a repair", href: "/schedule-repair", variant: "primary" },
       { label: "Visit the shop", href: EXTERNAL_LINKS.maps, external: true, variant: "secondary" },
@@ -168,11 +178,32 @@ export const aboutPage: AboutPage = {
 export const financingPage: FinancingPage = {
   title: "Financing",
   hero: { headline: "Financing with Acima", subline: "Lease-to-own. No credit needed." },
-  whatIsSection: { heading: "What is Acima?", intro: "Acima offers lease-to-own financing. No credit needed." },
+  whatIsSection: {
+    heading: "What is Acima?",
+    intro: "Acima offers lease-to-own financing. No credit needed.",
+    highlights: ["No credit needed.", "Lease-to-own on eligible items.", "Apply online through Acima."],
+    visualLabel: "Acima",
+  },
   howItWorksSection: { heading: "How it works" },
-  whatYouCanFinanceSection: { heading: "What you can finance", items: ["Smartphones", "Accessories"] },
+  whatYouCanFinanceSection: {
+    heading: "What you can finance",
+    items: ["Smartphones", "Accessories"],
+    itemBodies: {
+      Smartphones: "Certified pre-owned phones from our store.",
+      Accessories: "Cases, chargers, headphones and more.",
+      "And more": "Ask in store what is eligible for financing.",
+    },
+  },
   applyCta: { label: "Apply Now", href: EXTERNAL_LINKS.financing, external: true, variant: "primary" },
   faqSection: { heading: "Financing FAQs" },
+  ctaSection: {
+    heading: "Ready to apply?",
+    intro: "Lease-to-own with Acima. No credit needed.",
+    ctas: [
+      { label: "Apply Now", href: EXTERNAL_LINKS.financing, external: true, variant: "primary" },
+      { label: "Visit the store", href: EXTERNAL_LINKS.maps, external: true, variant: "secondary" },
+    ],
+  },
   seo: {
     metaTitle: "Phone Financing, No Credit Needed | Speedy iRepair Akron, OH",
     metaDescription: `Acima lease-to-own financing on smartphones and accessories at Speedy iRepair in ${akron}. No credit needed.`,
