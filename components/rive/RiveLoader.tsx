@@ -6,7 +6,7 @@
  * Reduced motion: static bar. role=status + visually-hidden label always present.
  */
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { RIVE_LOADER_SRC } from "./manifest";
 import { useReducedMotion } from "@/lib/motion/reduced-motion";
 import { cn } from "@/lib/utils/cn";
@@ -33,7 +33,7 @@ export function ShimmerBar({ reduced, className }: { reduced: boolean; className
   return (
     <span aria-hidden className={cn("relative block h-2 w-16 overflow-hidden rounded-full bg-surface-3", className)}>
       {!reduced && (
-        <motion.span
+        <m.span
           className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-transparent via-white/25 to-transparent"
           initial={{ x: "-100%" }}
           animate={{ x: "200%" }}

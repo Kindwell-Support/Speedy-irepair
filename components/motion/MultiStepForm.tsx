@@ -9,7 +9,7 @@
  * Focus moves to the new step's heading for screen readers / keyboard users.
  * Reduced motion: instant swap, progress bar jumps.
  */
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useReducedMotion } from "@/lib/motion/reduced-motion";
 import { DUR, FM_EASE } from "@/lib/motion/tokens";
@@ -65,7 +65,7 @@ export function MultiStepForm({ steps, index, direction, label, className, progr
         aria-valuetext={`Step ${index + 1} of ${steps.length}: ${step.title}`}
         className={cn("relative h-[3px] overflow-hidden rounded-full bg-surface-3", progressClassName)}
       >
-        <motion.span
+        <m.span
           aria-hidden
           initial={false}
           animate={{ scaleX: progress }}
@@ -75,7 +75,7 @@ export function MultiStepForm({ steps, index, direction, label, className, progr
       </div>
       <div className="relative overflow-hidden">
         <AnimatePresence mode="wait" initial={false} custom={direction}>
-          <motion.div
+          <m.div
             key={step.id}
             custom={direction}
             variants={{
@@ -93,7 +93,7 @@ export function MultiStepForm({ steps, index, direction, label, className, progr
               {step.title}
             </h2>
             {step.content}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
       {footer}

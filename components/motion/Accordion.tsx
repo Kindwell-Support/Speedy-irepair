@@ -8,9 +8,9 @@
  * motion layer; it is isolated with `contain: layout paint` on the panel and lasts 0.3s.
  * Content inside fades/slides with opacity+transform only. Reduced motion: instant.
  */
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useCallback, useId, useLayoutEffect, useRef, useState, type ReactNode } from "react";
-import { gsap, registerGsap } from "@/lib/motion/gsap";
+import { loadMotionEngine } from "@/lib/motion/engine";
 import { useReducedMotion } from "@/lib/motion/reduced-motion";
 import { DUR, EASE, FM_EASE } from "@/lib/motion/tokens";
 
@@ -62,7 +62,12 @@ export function Accordion({
         const btnId = `${baseId}-b${i}`;
         const panelId = `${baseId}-p${i}`;
         return (
-          <div key={item.id ?? i} className={itemClassName} data-accordion-item data-open={isOpen || undefined}>
+          <div
+            key={item.id ?? i}
+            className={itemClassName}
+            data-accordion-item
+            data-open={isOpen || undefined}
+          >
             <H className="m-0">
               <button
                 type="button"
@@ -95,7 +100,7 @@ export function Accordion({
 
 function AccordionChevron({ open }: { open: boolean }) {
   return (
-    <motion.svg
+    <m.svg
       aria-hidden
       width="16"
       height="16"
@@ -104,18 +109,30 @@ function AccordionChevron({ open }: { open: boolean }) {
       transition={{ duration: DUR.micro, ease: FM_EASE.outSoft }}
       className="flex-none"
     >
-      <path d="M8 2v12M2 8h12" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" fill="none" />
-    </motion.svg>
+      <path
+        d="M8 2v12M2 8h12"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        fill="none"
+      />
+    </m.svg>
   );
 }
 
-type PanelProps = { id: string; labelledBy: string; open: boolean; className?: string; children: ReactNode };
+type PanelProps = {
+  id: string;
+  labelledBy: string;
+  open: boolean;
+  className?: string;
+  children: ReactNode;
+};
 
 function FramerPanel({ id, labelledBy, open, className, children }: PanelProps) {
   const reduced = useReducedMotion();
   const t = reduced ? { duration: 0 } : { duration: DUR.microLong, ease: FM_EASE.inOut };
   return (
-    <motion.div
+    <m.div
       id={id}
       role="region"
       aria-labelledby={labelledBy}
@@ -125,15 +142,19 @@ function FramerPanel({ id, labelledBy, open, className, children }: PanelProps) 
       animate={{ height: open ? "auto" : 0 }}
       transition={t}
     >
-      <motion.div
+      <m.div
         className={className}
         initial={false}
         animate={{ opacity: open ? 1 : 0, y: open ? 0 : -6 }}
-        transition={reduced ? { duration: 0 } : { duration: DUR.micro, ease: FM_EASE.outSoft, delay: open ? 0.06 : 0 }}
+        transition={
+          reduced
+            ? { duration: 0 }
+            : { duration: DUR.micro, ease: FM_EASE.outSoft, delay: open ? 0.06 : 0 }
+        }
       >
         {children}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
 
@@ -145,24 +166,49 @@ function GsapPanel({ id, labelledBy, open, className, children }: PanelProps) {
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-    registerGsap();
     const inner = el.firstElementChild as HTMLElement | null;
-    if (first.current || reduced) {
-      first.current = false;
-      gsap.set(el, { height: open ? "auto" : 0 });
-      if (inner) gsap.set(inner, { autoAlpha: open ? 1 : 0, y: 0 });
+    if (first.current) {
+      first.current = false; // SSR classes already set the first state
       return;
     }
-    const tl = gsap.timeline({ defaults: { overwrite: "auto" } });
-    if (open) {
-      tl.to(el, { height: "auto", duration: DUR.microLong, ease: EASE.inOut });
-      if (inner) tl.fromTo(inner, { autoAlpha: 0, y: -6 }, { autoAlpha: 1, y: 0, duration: DUR.micro, ease: EASE.outSoft }, 0.06);
-    } else {
-      if (inner) tl.to(inner, { autoAlpha: 0, duration: 0.12, ease: EASE.outSoft }, 0);
-      tl.to(el, { height: 0, duration: 0.25, ease: EASE.inOut }, 0);
+    if (reduced) {
+      el.style.height = open ? "auto" : "0px";
+      if (inner) inner.style.opacity = open ? "1" : "0";
+      return;
     }
+    let tl: { kill: () => void } | undefined;
+    let cancelled = false;
+    // GSAP is in the async motion-engine chunk (already loaded by the time anyone clicks).
+    void loadMotionEngine().then(({ gsap }) => {
+      if (cancelled) return;
+      const t = gsap.timeline({ defaults: { overwrite: "auto" } });
+      if (open) {
+        t.fromTo(
+          el,
+          { height: el.offsetHeight },
+          { height: "auto", duration: DUR.microLong, ease: EASE.inOut },
+        );
+        if (inner)
+          t.fromTo(
+            inner,
+            { autoAlpha: 0, y: -6 },
+            { autoAlpha: 1, y: 0, duration: DUR.micro, ease: EASE.outSoft },
+            0.06,
+          );
+      } else {
+        if (inner) t.to(inner, { autoAlpha: 0, duration: 0.12, ease: EASE.outSoft }, 0);
+        t.fromTo(
+          el,
+          { height: el.offsetHeight },
+          { height: 0, duration: 0.25, ease: EASE.inOut },
+          0,
+        );
+      }
+      tl = t;
+    });
     return () => {
-      tl.kill();
+      cancelled = true;
+      tl?.kill();
     };
   }, [open, reduced]);
   return (

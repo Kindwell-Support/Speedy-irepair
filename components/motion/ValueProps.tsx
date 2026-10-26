@@ -6,7 +6,7 @@
  * Spec lists 6 props (REQ-029) — the component renders whatever it is given.
  * Reduced motion: highlight jumps, no layout tween (MotionConfig + duration 0).
  */
-import { LayoutGroup, motion } from "framer-motion";
+import { LayoutGroup, m } from "framer-motion";
 import { useState, type ReactNode } from "react";
 import { useReducedMotion } from "@/lib/motion/reduced-motion";
 import { FM_EASE } from "@/lib/motion/tokens";
@@ -26,7 +26,7 @@ export function ValueProps({ items, className, itemClassName }: Props) {
         {items.map((item, i) => {
           const isActive = active === i;
           return (
-            <motion.li
+            <m.li
               key={item.id}
               layout
               transition={t}
@@ -37,19 +37,19 @@ export function ValueProps({ items, className, itemClassName }: Props) {
               tabIndex={0}
             >
               {isActive && (
-                <motion.span
+                <m.span
                   layoutId="vp-highlight"
                   transition={t}
                   aria-hidden
                   className="absolute inset-0 -z-10 rounded-[inherit] bg-primary-tint shadow-[inset_0_0_0_1px_var(--color-primary-glow)]"
                 />
               )}
-              <motion.div layout="position" transition={t} className="flex items-center gap-3">
+              <m.div layout="position" transition={t} className="flex items-center gap-3">
                 {item.icon}
                 <strong>{item.title}</strong>
-              </motion.div>
+              </m.div>
               {item.detail && (
-                <motion.p
+                <m.p
                   layout="position"
                   transition={t}
                   initial={false}
@@ -57,9 +57,9 @@ export function ValueProps({ items, className, itemClassName }: Props) {
                   className="mb-0 mt-[6px]"
                 >
                   {item.detail}
-                </motion.p>
+                </m.p>
               )}
-            </motion.li>
+            </m.li>
           );
         })}
       </ul>

@@ -9,7 +9,7 @@
  * Reduced motion: no scale, no shimmer sweep, instant swaps.
  * Styling comes from the caller's className (e.g. Design's `btn btn--primary`).
  */
-import { AnimatePresence, motion, type HTMLMotionProps } from "framer-motion";
+import { AnimatePresence, m, type HTMLMotionProps } from "framer-motion";
 import type { ReactNode } from "react";
 import { useReducedMotion } from "@/lib/motion/reduced-motion";
 import { DUR, FM_EASE } from "@/lib/motion/tokens";
@@ -39,7 +39,7 @@ export function RiveButton({ state = "idle", children, successLabel = "Sent", er
       children
     );
   return (
-    <motion.button
+    <m.button
       {...rest}
       className={cn("relative overflow-hidden", state === "loading" && "is-loading", className)}
       disabled={disabled || state === "loading"}
@@ -50,7 +50,7 @@ export function RiveButton({ state = "idle", children, successLabel = "Sent", er
       transition={t}
     >
       <AnimatePresence mode="wait" initial={false}>
-        <motion.span
+        <m.span
           key={state === "loading" ? "idle" : state}
           initial={{ opacity: 0, y: reduced ? 0 : 6 }}
           animate={{ opacity: 1, y: 0 }}
@@ -59,7 +59,7 @@ export function RiveButton({ state = "idle", children, successLabel = "Sent", er
           className="inline-flex items-center gap-2"
         >
           {content}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
       {state === "loading" && (
         <>
@@ -67,7 +67,7 @@ export function RiveButton({ state = "idle", children, successLabel = "Sent", er
             Submitting
           </span>
           {!reduced && (
-            <motion.span
+            <m.span
               aria-hidden
               className="pointer-events-none absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent"
               initial={{ x: "-100%" }}
@@ -77,7 +77,7 @@ export function RiveButton({ state = "idle", children, successLabel = "Sent", er
           )}
         </>
       )}
-    </motion.button>
+    </m.button>
   );
 }
 

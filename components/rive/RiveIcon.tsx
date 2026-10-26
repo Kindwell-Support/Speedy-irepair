@@ -9,7 +9,7 @@
  * Reduced motion: static SVG, no Rive mount, no transitions.
  */
 import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { resolveRiveIcon, type RiveIconKey } from "./manifest";
 import { useReducedMotion } from "@/lib/motion/reduced-motion";
@@ -132,7 +132,7 @@ function FallbackSvg({
     >
       <g stroke="currentColor">{art.base}</g>
       {/* click trigger: keyed remount replays the pulse */}
-      <motion.g
+      <m.g
         key={clicks}
         stroke="var(--color-brand)"
         className="origin-center [transform-box:fill-box]"
@@ -145,7 +145,7 @@ function FallbackSvg({
         }
       >
         {art.accent}
-      </motion.g>
+      </m.g>
     </svg>
   );
 }

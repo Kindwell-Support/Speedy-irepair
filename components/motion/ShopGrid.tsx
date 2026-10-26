@@ -6,7 +6,7 @@
  * Generic: the Frontend supplies products + renderItem (prices come from Shopify/Sanity only).
  * Reduced motion: instant re-flow.
  */
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
+import { AnimatePresence, LayoutGroup, m } from "framer-motion";
 import { useMemo, useState, type ReactNode } from "react";
 import { useReducedMotion } from "@/lib/motion/reduced-motion";
 import { FM_EASE } from "@/lib/motion/tokens";
@@ -64,7 +64,7 @@ export function ShopGrid<T>({
               >
                 {c ?? allLabel}
                 {active && (
-                  <motion.span
+                  <m.span
                     layoutId="shop-tab-underline"
                     transition={t}
                     aria-hidden
@@ -79,10 +79,10 @@ export function ShopGrid<T>({
       <p aria-live="polite" className="sr-only">
         {visible.length} products shown
       </p>
-      <motion.ul layout className={gridClassName} transition={t}>
+      <m.ul layout className={gridClassName} transition={t}>
         <AnimatePresence mode="popLayout" initial={false}>
           {visible.map((item) => (
-            <motion.li
+            <m.li
               key={getKey(item)}
               layout
               initial={{ opacity: 0, scale: 0.96 }}
@@ -91,10 +91,10 @@ export function ShopGrid<T>({
               transition={t}
             >
               {renderItem(item)}
-            </motion.li>
+            </m.li>
           ))}
         </AnimatePresence>
-      </motion.ul>
+      </m.ul>
     </div>
   );
 }

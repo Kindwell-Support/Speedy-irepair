@@ -6,7 +6,7 @@
  * Also binds data-animate hooks for each page (useDataAnimate) once it mounts.
  * Reduced motion: no transform; MotionConfig + explicit 0-duration.
  */
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useContext, useRef, useState, type ReactNode } from "react";
@@ -37,7 +37,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
   const reduced = useReducedMotion();
   return (
     <AnimatePresence mode="wait" initial={false}>
-      <motion.div
+      <m.div
         key={pathname}
         initial={reduced ? { opacity: 1 } : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0, transition: { duration: reduced ? 0 : DUR.page, ease: FM_EASE.out } }}
@@ -46,7 +46,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
         <FrozenRouter>
           <PageFrame pathname={pathname}>{children}</PageFrame>
         </FrozenRouter>
-      </motion.div>
+      </m.div>
     </AnimatePresence>
   );
 }

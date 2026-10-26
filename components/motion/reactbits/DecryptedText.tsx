@@ -9,7 +9,7 @@ import {
   type CSSProperties,
   type MouseEvent as ReactMouseEvent
 } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import type { HTMLMotionProps } from 'framer-motion';
 
 const FADE_FLOOR = 0.16;
@@ -593,7 +593,7 @@ export default function DecryptedText({
       : {};
 
   return (
-    <motion.span
+    <m.span
       ref={containerRef}
       className={`inline-block whitespace-pre-wrap ${parentClassName}`}
       {...animateProps}
@@ -636,6 +636,6 @@ export default function DecryptedText({
           )
         )}
       </span>
-    </motion.span>
+    </m.span>
   );
 }

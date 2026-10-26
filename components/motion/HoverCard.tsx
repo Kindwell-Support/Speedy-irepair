@@ -4,7 +4,7 @@
  * Marks itself as data-rive-host so a RiveIcon inside receives hover/click inputs.
  * Reduced motion: no lift (MotionConfig), glow still indicates focus/hover (opacity, instant).
  */
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { ReactNode } from "react";
 import { useReducedMotion } from "@/lib/motion/reduced-motion";
 import { DUR, FM_EASE } from "@/lib/motion/tokens";
@@ -21,7 +21,7 @@ type Props = {
 
 export function HoverCard({ children, className, href, lift = 4, ariaLabel }: Props) {
   const reduced = useReducedMotion();
-  const Comp = href ? motion.a : motion.div;
+  const Comp = href ? m.a : m.div;
   return (
     <Comp
       href={href}
@@ -37,7 +37,7 @@ export function HoverCard({ children, className, href, lift = 4, ariaLabel }: Pr
       variants={{ rest: { y: 0 }, hover: { y: reduced ? 0 : -lift } }}
       transition={{ duration: DUR.micro, ease: FM_EASE.outSoft }}
     >
-      <motion.span
+      <m.span
         aria-hidden
         data-hover-glow
         variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }}
