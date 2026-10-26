@@ -1,4 +1,5 @@
 "use client";
+import { A11Y } from "@/components/ui/a11yStrings";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -30,7 +31,7 @@ export function MobileNav({ items, cta }: { items: NavLink[]; cta: CtaLink }) {
         onClick={() => setOpen((v) => !v)}
         className="inline-flex h-control-md w-12 items-center justify-center rounded-full border border-border text-text"
       >
-        <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+        <span className="sr-only">{open ? A11Y.closeMenu : A11Y.openMenu}</span>
         <svg
           aria-hidden
           width="20"

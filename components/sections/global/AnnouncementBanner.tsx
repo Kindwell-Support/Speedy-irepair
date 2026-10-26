@@ -1,4 +1,5 @@
 import type { Announcement } from "@/lib/sanity/types";
+import { A11Y } from "@/components/ui/a11yStrings";
 
 /** Spec 2.1.0 / REQ-002/003: Sanity-editable banner above the header on every page. */
 export function AnnouncementBanner({ announcement }: { announcement: Announcement | null }) {
@@ -16,7 +17,7 @@ export function AnnouncementBanner({ announcement }: { announcement: Announcemen
           {...(announcement.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         >
           {announcement.text}
-          {announcement.external ? <span className="sr-only"> (opens in a new tab)</span> : null}
+          {announcement.external ? <span className="sr-only">{A11Y.opensInNewTab}</span> : null}
         </a>
       </div>
     </div>

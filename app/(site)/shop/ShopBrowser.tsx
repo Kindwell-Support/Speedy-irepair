@@ -6,7 +6,7 @@ import { ShopGrid } from "@/components/motion/ShopGrid";
 import { ProductCard } from "@/components/sections/shared/ProductCard";
 import { CategoryTiles } from "@/components/sections/shop/CategoryTiles";
 import { ShopEmpty } from "@/components/sections/shop/ShopEmpty";
-import { A11Y } from "@/components/ui/a11yStrings";
+import { A11Y, type A11yProps } from "@/components/ui/a11yStrings";
 import { buttonClasses } from "@/components/ui/ButtonLink";
 import { telHref } from "@/lib/utils/format";
 
@@ -27,12 +27,15 @@ export function ShopBrowser({
   ebayHref,
   phone,
   copy,
+  a11y = A11Y,
 }: {
   products: Product[];
   categories: { key: CategoryKey; label: string }[];
   ebayHref?: string;
   phone: string;
   copy: ShopChromeCopy;
+  /** getA11yCopy() from the route; constants are the fallback. */
+  a11y?: A11yProps;
 }) {
   const [filter, setFilter] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>("featured");
@@ -76,7 +79,7 @@ export function ShopBrowser({
               className={buttonClasses("primary")}
             >
               {copy.emptyCatalog.ebayLabel}
-              <span className="sr-only">{A11Y.opensInNewTab}</span>
+              <span className="sr-only">{a11y.opensInNewTab}</span>
             </a>
           ) : null}
         </ShopEmpty>

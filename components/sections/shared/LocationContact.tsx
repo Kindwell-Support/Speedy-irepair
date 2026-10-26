@@ -1,3 +1,4 @@
+import { A11Y } from "@/components/ui/a11yStrings";
 import type { BusinessInfo, EmbedCopy, SectionCopy } from "@/lib/sanity/types";
 import { publicEnv } from "@/lib/env";
 import { Section } from "@/components/ui/Section";
@@ -68,7 +69,7 @@ export function LocationContact({
             className={buttonClasses("primary", "lg")}
           >
             {directionsLabel}
-            <span className="sr-only"> (opens Google Maps in a new tab)</span>
+            <span className="sr-only">{A11Y.opensMapsInNewTab}</span>
           </a>
           {embed ? (
             <div data-testid="map-embed" data-qa-mask>

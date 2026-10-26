@@ -76,6 +76,11 @@ export default async function HomePage() {
         copy={page.testimonialsSection}
         items={testimonials}
         reviewUrl={settings.business.externalLinks.review}
+        reviewLabel={
+          settings.navigation.footerLegalLinks.find(
+            (l) => l.href === settings.business.externalLinks.review,
+          )?.label
+        }
       />
       <Promotions copy={page.promotionsSection} items={promotions} />
       <Section id="faq" copy={page.faqSection} section="faq">

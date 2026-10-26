@@ -1,3 +1,4 @@
+import { A11Y } from "@/components/ui/a11yStrings";
 /** Design .policy-meta under the policy H1: "Last updated: …" · "Source: …". Renders only fields that exist. */
 export function PolicyMeta({
   lastUpdated,
@@ -43,7 +44,7 @@ export function PolicyMeta({
             target="_blank"
           >
             {source}
-            <span className="sr-only"> (opens in a new tab)</span>
+            <span className="sr-only">{A11Y.opensInNewTab}</span>
           </a>
         </span>
       ) : null}

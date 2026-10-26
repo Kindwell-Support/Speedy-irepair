@@ -1,3 +1,4 @@
+import { A11Y } from "@/components/ui/a11yStrings";
 import Link from "next/link";
 import type { SectionCopy, ServiceCard } from "@/lib/sanity/types";
 import { Section } from "@/components/ui/Section";
@@ -33,7 +34,7 @@ export function ServicesGrid({ copy, cards }: { copy: SectionCopy; cards: Servic
                   className="relative z-raised mt-auto text-body-sm font-semibold text-primary-text underline-offset-4 hover:underline"
                 >
                   {card.externalLink.label}
-                  <span className="sr-only"> (opens in a new tab)</span>
+                  <span className="sr-only">{A11Y.opensInNewTab}</span>
                 </a>
               ) : null}
             </li>

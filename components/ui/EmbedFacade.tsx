@@ -1,4 +1,5 @@
 "use client";
+import { A11Y } from "@/components/ui/a11yStrings";
 
 import { useEffect, useState } from "react";
 import type { EmbedCopy } from "@/lib/sanity/types";
@@ -46,7 +47,7 @@ export function EmbedFacade({
   }, [phase]);
 
   const [before, after] = copy.fallbackBody.split("{phone}");
-  const newTab = <span className="sr-only"> (opens in a new tab)</span>;
+  const newTab = <span className="sr-only">{A11Y.opensInNewTab}</span>;
 
   return (
     <div
