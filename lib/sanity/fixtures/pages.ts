@@ -76,15 +76,20 @@ export const shopPage: ShopPage = {
 
 export const sellPage: SellPage = {
   title: "Sell Your Device",
+  // Copy verbatim from design/pages/sell-your-device.html (headline/subline = spec 2.5).
   hero: {
+    eyebrow: "Sell or trade in",
     headline: "Get top dollar for your old device.",
     subline: "We compare the best trade-in prices so you don't have to.",
+    primaryCta: { label: "Start your quote", href: "#trade-in", variant: "primary" },
+    secondaryCta: { label: "Call us for a quote", href: "tel:+18553773339", variant: "secondary" },
   },
-  howItWorksSection: { heading: "How it works" },
-  formSection: { heading: "Tell us about your device" },
-  brandsSection: { heading: "Brands we accept" },
+  howItWorksSection: { eyebrow: "How it works", heading: "Sell it in three steps." },
+  formSection: { eyebrow: "Trade-in form · Lead capture", heading: "Tell us about your device." },
+  brandsSection: { eyebrow: "Brands accepted", heading: "We buy these brands." },
   ctaSection: {
-    heading: "Prefer to talk to us?",
+    heading: "Prefer to talk it through?",
+    intro: "Visit the store on W Market St, or call and we will give you a quote.",
     ctas: [
       { label: "Visit our store", href: EXTERNAL_LINKS.maps, external: true, variant: "primary" },
       { label: "Call us for a quote", href: "tel:+18553773339", variant: "secondary" },
@@ -98,8 +103,13 @@ export const sellPage: SellPage = {
 
 export const quotePage: QuotePage = {
   title: "Instant Quote",
-  hero: { headline: "Get a repair quote", subline: null },
-  formSection: { heading: "Tell us what happened" },
+  // Copy verbatim from design/pages/instant-quote.html.
+  hero: {
+    eyebrow: "Instant quote · Lead capture",
+    headline: "Get a repair quote in four steps.",
+    subline: "Tell us your device, model and issue. We will contact you with your quote.",
+  },
+  formSection: { heading: "Quote form" },
   deviceTypes: ["iPhone", "iPad", "Samsung", "LG", "Google", "Other"],
   issues: ["Cracked Screen", "Battery", "Charger Port", "Camera", "Water Damage", "Other"],
   // Decision #5: lead capture only, NO prices shown.

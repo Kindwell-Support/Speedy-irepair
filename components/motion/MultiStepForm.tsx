@@ -39,9 +39,26 @@ type Props = {
   progressClassName?: string;
   /** rendered below the step (Back / Next / Submit buttons owned by the Frontend) */
   footer?: ReactNode;
+  /** rendered between the progress bar and the step (stepper, selection summary; owned by the Frontend) */
+  header?: ReactNode;
+  /** data-testid on the progressbar (QA: "form-progress") */
+  progressTestId?: string;
+  /** classes for the step <h2> (visual size is the Frontend's call) */
+  titleClassName?: string;
 };
 
-export function MultiStepForm({ steps, index, direction, label, className, progressClassName, footer }: Props) {
+export function MultiStepForm({
+  steps,
+  index,
+  direction,
+  label,
+  className,
+  progressClassName,
+  footer,
+  header,
+  progressTestId,
+  titleClassName,
+}: Props) {
   const reduced = useReducedMotion();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const mounted = useRef(false);
@@ -58,6 +75,7 @@ export function MultiStepForm({ steps, index, direction, label, className, progr
     <section aria-label={label} className={className} data-multistep>
       <div
         role="progressbar"
+        data-testid={progressTestId}
         aria-label={`${label} progress`}
         aria-valuemin={1}
         aria-valuemax={steps.length}
@@ -73,6 +91,7 @@ export function MultiStepForm({ steps, index, direction, label, className, progr
           className="absolute inset-0 origin-left bg-brand"
         />
       </div>
+      {header}
       <div className="relative overflow-hidden">
         <AnimatePresence mode="wait" initial={false} custom={direction}>
           <m.div
@@ -89,7 +108,7 @@ export function MultiStepForm({ steps, index, direction, label, className, progr
             transition={{ duration: reduced ? 0 : DUR.page, ease: FM_EASE.inOut }}
             data-step-id={step.id}
           >
-            <h2 ref={headingRef} tabIndex={-1} data-multistep-title className="outline-none">
+            <h2 ref={headingRef} tabIndex={-1} data-multistep-title className={cn("outline-none", titleClassName)}>
               {step.title}
             </h2>
             {step.content}

@@ -373,3 +373,80 @@ export interface FormSubmissionDoc {
   status: "new" | "contacted" | "closed" | "spam";
   pagePath?: string;
 }
+
+/* ---------- Lead-capture flows (/instant-quote, /sell-your-device). NO prices anywhere (DECISIONS #5). ---------- */
+
+/** Icon keys the LeadFlow knows how to draw (design line icons, not editable copy). */
+export type LeadIconKey =
+  | "phone"
+  | "tablet"
+  | "watch"
+  | "laptop"
+  | "other"
+  | "battery"
+  | "port"
+  | "camera"
+  | "water"
+  | "badge"
+  | "check"
+  | "power";
+
+/** One selectable option. `key` is the value submitted (must match the shared zod enum). */
+export interface LeadOption {
+  key: string;
+  label: string;
+  description?: string | null;
+  icon?: LeadIconKey | null;
+}
+
+export interface LeadStepCopy {
+  /** Step id used by the flow: quote = device|model|issue|contact; trade-in = device|brand|model|condition|contact */
+  id: string;
+  /** Short label for the stepper and progress meta ("Device") */
+  label: string;
+  /** Step heading ("What device needs fixing?") */
+  title: string;
+  lede?: string | null;
+}
+
+/** All copy for a lead flow. Fixture today; CMS fields to follow (quoteConfig + page singletons). */
+export interface LeadFlowCopy {
+  ariaLabel: string;
+  steps: LeadStepCopy[];
+  /** Options per choice step id (device, issue, condition…). Brand options come from `brand` docs. */
+  options: Record<string, LeadOption[]>;
+  /** Model lists keyed by device/brand key. Empty = free-text model input (CMS contract 2.4). */
+  models: Record<string, string[]>;
+  stepCounter: string;
+  model: { searchLabel: string; inputLabel: string; placeholder: string; notSureLabel: string; help: string };
+  contact: {
+    nameLabel: string;
+    phoneLabel: string;
+    emailLabel: string;
+    detailsLabel: string;
+    consentLabel: string;
+    consentError: string;
+  };
+  chooseError: string;
+  buttons: { back: string; next: string; submit: string; submitting: string; retry: string };
+  submittingLede: string;
+  success: { title: string; body: string; ctas: CtaLink[] };
+  submitError: { title: string; body: string };
+  stagingNote: string;
+}
+
+/** Sidebar card next to the flow ("How it works", "Good to know"). */
+export interface LeadAsideCard {
+  label: string;
+  items?: { strong?: string | null; text: string }[] | null;
+  body?: string | null;
+}
+
+export interface LeadFlowPageCopy {
+  flow: LeadFlowCopy;
+  aside: LeadAsideCard[];
+  /** aria-label of the aside landmark */
+  asideLabel: string;
+  /** Label above the phone number card ("Rather talk?") */
+  contactCardLabel: string;
+}

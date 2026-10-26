@@ -8,6 +8,7 @@ import type {
   Announcement,
   Brand,
   Faq,
+  LeadFlowPageCopy,
   FaqCategory,
   FaqPage,
   FinancingPage,
@@ -184,6 +185,10 @@ export const getServicesPage = singleton<ServicesPage>("servicesPage", fx.servic
 export const getShopPage = singleton<ShopPage>("shopPage", fx.shopPage);
 export const getSellPage = singleton<SellPage>("sellYourDevicePage", fx.sellPage);
 export const getQuotePage = singleton<QuotePage>("instantQuotePage", fx.quotePage);
+/** Lead-flow copy (steps, options, states). Fixture until the CMS contract adds the fields (quoteConfig + page singletons). */
+export const getLeadFlow = cache(async (kind: "quote" | "tradein"): Promise<LeadFlowPageCopy> =>
+  kind === "quote" ? fx.quoteFlow : fx.tradeInFlow,
+);
 export const getSchedulePage = singleton<SchedulePage>("scheduleRepairPage", fx.schedulePage);
 export const getFaqPage = singleton<FaqPage>("faqPage", fx.faqPage);
 export const getAboutPage = singleton<AboutPage>("aboutPage", fx.aboutPage);
