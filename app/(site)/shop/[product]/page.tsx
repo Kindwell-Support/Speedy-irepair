@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCatalog } from "@/lib/shop";
+import { getPdpChrome } from "@/lib/sanity/content";
 import { pageMetadata } from "@/lib/page/meta";
 import { productMetaDescription, productMetaTitle } from "@/lib/seo/content";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -39,7 +40,7 @@ const demoteHeadings = (html: string) => html.replace(/<(\/?)h1\b/gi, "<$1h2");
 export default async function ProductPage({ params }: Params) {
   const { product: handle } = await params;
   const catalog = getCatalog();
-  const [p, seo] = await Promise.all([catalog.getProduct(handle), getSeoData()]);
+  const [p, seo, pdpCopy] = await Promise.all([catalog.getProduct(handle), getSeoData(), getPdpChrome()]);
   if (!p) notFound();
   const img = p.featuredImage;
   const fallback = p.source === "fixture" ? PRICE_PLACEHOLDER : "Contact us";
@@ -64,6 +65,7 @@ export default async function ProductPage({ params }: Params) {
             <AddToCart
               variants={p.variants.map((v) => ({ id: v.id, title: v.title, available: v.availableForSale, price: formatPrice(v.price.amount, v.price.currencyCode, fallback) }))}
               checkoutEnabled={catalog.supportsCheckout}
+              copy={pdpCopy}
             />
             {/* Shopify-authored HTML (trusted merchant content). */}
             <div className="prose-site mt-10 text-body text-text-secondary" dangerouslySetInnerHTML={{ __html: demoteHeadings(p.descriptionHtml) }} />

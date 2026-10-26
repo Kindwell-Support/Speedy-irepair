@@ -9,3 +9,4 @@ export * from "./footer";
 export * from "./heroChips";
 export * from "./servicesChrome";
 export * from "./shopChrome";
+export * from "./pdpChrome";

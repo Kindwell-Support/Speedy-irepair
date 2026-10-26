@@ -533,3 +533,26 @@ export interface ShopChromeCopy {
   emptyCategory: { title: string; body: string; callLabel: string; showAllLabel: string };
   emptyCatalog: { title: string; body: string; ebayLabel: string };
 }
+
+/** Frontend: /shop/[product] buy box + cart drawer chrome. Fixture-backed until CMS fields exist. */
+export interface PdpChromeCopy {
+  optionLabel: string;
+  addLabel: string;
+  addingLabel: string;
+  addedLabel: string;
+  soldOutLabel: string;
+  viewCartLabel: string;
+  drawer: {
+    title: string;
+    closeLabel: string;
+    emptyTitle: string;
+    emptyBody: string;
+    subtotalLabel: string;
+    checkoutNote: string;
+    checkoutLabel: string;
+    continueLabel: string;
+    quantityLabel: string;
+    decreaseLabel: string;
+    increaseLabel: string;
+  };
+}

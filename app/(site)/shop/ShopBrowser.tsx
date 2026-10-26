@@ -6,10 +6,13 @@ import { ShopGrid } from "@/components/motion/ShopGrid";
 import { ProductCard } from "@/components/sections/shared/ProductCard";
 import { CategoryTiles } from "@/components/sections/shop/CategoryTiles";
 import { ShopEmpty } from "@/components/sections/shop/ShopEmpty";
+import { A11Y } from "@/components/ui/a11yStrings";
 import { buttonClasses } from "@/components/ui/ButtonLink";
 import { telHref } from "@/lib/utils/format";
 
-type SortKey = keyof ShopChromeCopy["sortOptions"];
+/** Sorts this component implements (a CMS label for any other key is ignored until it is built). */
+const SORT_KEYS = ["featured", "priceAsc", "priceDesc"] as const;
+type SortKey = (typeof SORT_KEYS)[number];
 const price = (p: Product) =>
   p.priceRange.min.amount === null ? null : Number(p.priceRange.min.amount);
 
@@ -73,7 +76,7 @@ export function ShopBrowser({
               className={buttonClasses("primary")}
             >
               {copy.emptyCatalog.ebayLabel}
-              <span className="sr-only"> (opens in a new tab)</span>
+              <span className="sr-only">{A11Y.opensInNewTab}</span>
             </a>
           ) : null}
         </ShopEmpty>
@@ -111,7 +114,7 @@ export function ShopBrowser({
                 onChange={(e) => setSort(e.target.value as SortKey)}
                 className="h-10 min-w-[200px] rounded-md border border-border bg-surface px-4 text-body-sm text-text focus-visible:shadow-focus"
               >
-                {(Object.keys(copy.sortOptions) as SortKey[]).map((k) => (
+                {SORT_KEYS.map((k) => (
                   <option key={k} value={k}>
                     {copy.sortOptions[k]}
                   </option>

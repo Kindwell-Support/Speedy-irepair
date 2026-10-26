@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { A11Y } from "./a11yStrings";
 import { cn } from "@/lib/utils/cn";
 import type { CtaLink } from "@/lib/sanity/types";
 
@@ -18,7 +19,11 @@ const sizes: Record<Size, string> = {
   lg: "h-control-lg px-7 text-body",
 };
 
-export function buttonClasses(variant: Variant = "primary", size: Size = "md", className?: string): string {
+export function buttonClasses(
+  variant: Variant = "primary",
+  size: Size = "md",
+  className?: string,
+): string {
   return cn(base, variants[variant], variant === "link" ? "h-auto px-0" : sizes[size], className);
 }
 
@@ -45,7 +50,7 @@ export function ButtonLink({
         {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         {label}
-        {isExternal ? <span className="sr-only"> (opens in a new tab)</span> : null}
+        {isExternal ? <span className="sr-only">{A11Y.opensInNewTab}</span> : null}
       </a>
     );
   }

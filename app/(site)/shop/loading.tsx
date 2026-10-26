@@ -1,10 +1,11 @@
+import { A11Y } from "@/components/ui/a11yStrings";
 import { ProductSkeleton } from "@/components/sections/shop/ProductSkeleton";
 
 /** Shop loading frame (design shop Frame 1): same bar + grid as ShopBrowser, so swapping in has zero CLS. Static skeleton. */
 export default function ShopLoading() {
   return (
     <div className="container-site py-12" aria-busy="true" role="status" data-testid="shop-loading">
-      <span className="sr-only">Loading</span>
+      <span className="sr-only">{A11Y.loading}</span>
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4 py-4">
         <div className="flex gap-2">
           {Array.from({ length: 6 }, (_, i) => (

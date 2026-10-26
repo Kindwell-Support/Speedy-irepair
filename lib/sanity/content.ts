@@ -16,6 +16,7 @@ import type {
   HeroChip,
   ServicesChromeCopy,
   ShopChromeCopy,
+  PdpChromeCopy,
   FaqCategory,
   FaqPage,
   FinancingPage,
@@ -210,6 +211,8 @@ export const getHeroChips = cache(async (): Promise<HeroChip[]> => fx.heroChips)
 export const getServicesChrome = cache(async (): Promise<ServicesChromeCopy> => fx.servicesChrome);
 /** /shop chrome (fixture-backed; additive, Frontend). */
 export const getShopChrome = cache(async (): Promise<ShopChromeCopy> => fx.shopChrome);
+/** /shop/[product] buy box + cart drawer (fixture-backed; additive, Frontend). */
+export const getPdpChrome = cache(async (): Promise<PdpChromeCopy> => fx.pdpChrome);
 /** Footer chrome labels (fixture-backed; additive, Frontend). */
 export const getFooterCopy = cache(async (): Promise<FooterCopy> => fx.footerCopy);
 /** PolicyLayout chrome (fixture-backed; additive, Frontend). */
