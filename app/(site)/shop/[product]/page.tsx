@@ -44,7 +44,17 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 /** Merchant HTML may contain <h1>; the page must keep exactly one h1 (the product title). */
-const demoteHeadings = (html: string) => html.replace(/<(\/?)h1\b/gi, "<$1h2");
+/** Shopify HTML sits under the page H1: start at h2 and never skip a level (axe heading-order, BUG-033). */
+function demoteHeadings(html: string): string {
+  let prev = 1;
+  const open: number[] = [];
+  return html.replace(/<(\/?)h([1-6])\b/gi, (_m, close: string, lvl: string) => {
+    if (close) return `</h${open.pop() ?? Math.max(2, Number(lvl))}`;
+    prev = Math.max(2, Math.min(Number(lvl), prev + 1));
+    open.push(prev);
+    return `<h${prev}`;
+  });
+}
 
 const formatAddress = (a: Address) =>
   `${a.street}${a.suite ? ` ${a.suite}` : ""}, ${a.city}, ${a.state} ${a.zip}`;

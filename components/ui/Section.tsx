@@ -11,6 +11,7 @@ export function Section({
   className,
   tone = "default",
   labelledBy,
+  landmark = true,
   section,
   testId,
 }: {
@@ -20,6 +21,8 @@ export function Section({
   className?: string;
   tone?: "default" | "raised";
   labelledBy?: string;
+  /** false = plain <section> (no accessible name, so not a region landmark) when a child already is one. */
+  landmark?: boolean;
   /** QA hook: data-section (homepage order check). */
   section?: string;
   /** QA hook: data-testid. */
@@ -31,7 +34,7 @@ export function Section({
       id={id}
       data-section={section}
       data-testid={testId}
-      aria-labelledby={copy ? headingId : undefined}
+      aria-labelledby={copy && landmark ? headingId : undefined}
       className={cn("py-section", tone === "raised" && "bg-bg-raised", className)}
     >
       <div className="container-site">

@@ -22,7 +22,7 @@ export default async function FaqPage() {
       <PageHero hero={page.hero} />
       <div className="container-site max-w-3xl py-16">
         {page.intro ? <p className="mb-8 text-body-lg text-text-secondary">{page.intro}</p> : null}
-        <FaqList faqs={faqs} engine="gsap" />
+        <FaqList faqs={faqs} engine="gsap" headingLevel={2} />
       </div>
     </>
   );
