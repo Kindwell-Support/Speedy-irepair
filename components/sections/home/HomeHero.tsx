@@ -51,13 +51,17 @@ export function HomeHero({ hero, chips }: { hero: PageHero; chips: HeroChip[] })
           ) : null}
           <div className="mt-10 flex flex-wrap gap-4">
             {hero.primaryCta ? (
-              <MagneticButton>
-                <ButtonLink cta={hero.primaryCta} size="lg" />
+              <MagneticButton className="w-full min-[480px]:w-auto">
+                <ButtonLink cta={hero.primaryCta} size="lg" className="w-full min-[480px]:w-auto" />
               </MagneticButton>
             ) : null}
             {hero.secondaryCta ? (
-              <MagneticButton>
-                <ButtonLink cta={hero.secondaryCta} size="lg" />
+              <MagneticButton className="w-full min-[480px]:w-auto">
+                <ButtonLink
+                  cta={hero.secondaryCta}
+                  size="lg"
+                  className="w-full min-[480px]:w-auto"
+                />
               </MagneticButton>
             ) : null}
           </div>
