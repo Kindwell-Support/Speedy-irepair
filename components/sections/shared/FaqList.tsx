@@ -7,16 +7,20 @@ export function FaqList({
   faqs,
   engine = "framer",
   headingLevel = 3,
+  defaultOpen,
 }: {
   faqs: Faq[];
   engine?: "framer" | "gsap";
   /** 2 on /faq (questions sit directly under the H1); 3 inside a titled section. */
   headingLevel?: 2 | 3;
+  /** Indexes open on first render (home: [0], design .faq-layout first <details open>). */
+  defaultOpen?: number[];
 }) {
   return (
     <Accordion
       engine={engine}
       headingLevel={headingLevel}
+      defaultOpen={defaultOpen}
       className="divide-y divide-border rounded-xl border border-border bg-surface"
       buttonClassName="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-body-lg font-semibold text-text"
       panelClassName="px-6 pb-5 text-body text-text-secondary"
