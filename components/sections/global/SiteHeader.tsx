@@ -4,6 +4,7 @@ import type { SiteSettings } from "@/lib/sanity/types";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { ScrambleText } from "@/components/motion/ScrambleText";
 import { MobileNav } from "./MobileNav";
+import { telHref } from "@/lib/utils/format";
 
 const linkClass =
   "inline-flex h-10 items-center whitespace-nowrap rounded-full px-4 text-body-sm font-medium text-text-secondary transition-colors duration-fast hover:bg-text/5 hover:text-text";
@@ -62,6 +63,14 @@ export function SiteHeader({ settings }: { settings: SiteSettings }) {
           </ul>
         </nav>
         <div className="flex items-center gap-3">
+          {/* Design .nav__phone: shown from 1440 up, where the full nav + phone + CTA fit (QA BUG-011). */}
+          <a
+            href={telHref(business.phone)}
+            data-testid="header-phone"
+            className="hidden h-10 items-center whitespace-nowrap px-2 text-body-sm font-semibold tabular-nums text-text hover:text-primary-text 2xl:inline-flex"
+          >
+            {business.phone}
+          </a>
           <ButtonLink cta={navigation.headerCta} className="hidden md:inline-flex" />
           <MobileNav items={links} cta={navigation.headerCta} />
         </div>
