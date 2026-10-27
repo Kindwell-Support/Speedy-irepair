@@ -25,6 +25,10 @@ const ROUTE_KEYS = {
   "/faq": [...SITE, "/(site)/faq/page"],
   "/shop": [...SITE, "/(site)/shop/page"],
   "/instant-quote": [...SITE, "/(site)/instant-quote/page"],
+  "/sell-your-device": [...SITE, "/(site)/sell-your-device/page"],
+  "/policies/privacy": [...SITE, "/(site)/policies/[slug]/page"],
+  "/schedule-repair": [...SITE, "/(site)/schedule-repair/page"],
+  "/home-internet": [...SITE, "/(site)/home-internet/page"],
   "/motion-lab": ["/layout", "/motion-lab/layout", "/motion-lab/page"],
 };
 const ROUTES = Object.keys(ROUTE_KEYS);

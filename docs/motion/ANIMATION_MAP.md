@@ -13,7 +13,7 @@ Token note: the Design tokens define `--duration-slow 480ms` and `--ease-out cub
 
 | # | Element (route) | Trigger | Library | Purpose | Duration / ease | Reduced motion |
 |---|---|---|---|---|---|---|
-| 1 | Page scroll (all) | wheel / keys | Lenis (gsap.ticker) | Precise, synced smooth scroll | lerp 0.14, anchors 0.8 s | Off (native) |
+| 1 | Page scroll (all) | wheel / keys | Lenis (gsap.ticker) | Precise, synced smooth scroll | lerp 0.14, anchors 0.6 s, offset −96 px | Off (native) |
 | 2 | Route change (all) | navigation | Framer `PageTransition` | Continuity between pages | in 0.25 s power3.out, y 8→0; out 0.12 s | Opacity only, 0 s |
 | 3 | Hero H1 (/, page heroes) | load | GSAP SplitText | First impression, readable fast | words yPercent 110→0, 0.55 s, stagger 0.05, done < 1.2 s | Plain text |
 | 4 | Hero subline + CTAs | load | GSAP reveal | Sequenced after the H1 | 0.55 s power3.out, delay 0.15–0.3 | Visible |
@@ -24,7 +24,7 @@ Token note: the Design tokens define `--duration-slow 480ms` and `--ease-out cub
 | 9 | Service card hover (/, /services) | hover / focus | Framer `HoverCard` (or CSS on FE cards) | Affordance | lift −4 px + glow, 0.2 s power2.out | Colour only |
 | 10 | Service icons (/, /services) | host hover / focus / click | `RiveIcon` (code-driven SVG; .riv later) | Delight, state feedback | Accent scale 1.12, y −1, 0.2 s. Click: spring pulse 700/18 | Static icon |
 | 11 | /services 14 sections | 85% in view | GSAP reveal (`data-reveal="children"`) | Calm long-page rhythm | 0.55 s, stagger 0.08 | Visible |
-| 12 | How It Works (/, /about) | scroll (pinned ≥1280) / enter (<1280) | GSAP ScrollTrigger pin + scrub (gsap.matchMedia on `STEPS_MQ`) | Showpiece: 4 steps | ≥1280 (`STEPS_PIN_MIN_PX`): pinned 250vh, scrub 0.3, snap per step. Domino tip (rotate −6° at bottom-left) then "done" α .6; active tile lifts (y −8); bar scaleX; click a tile to jump. <1280: no pin, per-card fade + 16px rise, 0.48s, stagger 60ms; static rail | Plain list, all visible |
+| 12 | How It Works (/, /about) | scroll (pinned ≥1280) / enter (<1280) | GSAP ScrollTrigger pin + scrub (gsap.matchMedia on `STEPS_MQ`) | Showpiece: 4 steps | ≥1280 (`STEPS_PIN_MIN_PX`): pinned 250vh, scrub 0.3, snap per step. Domino tip (rotate −6° at bottom-left) then "done" (colour token, no opacity dim); active tile lifts (y −8); bar scaleX; click a tile to jump. <1280: no pin, per-card fade + 16px rise, 0.48s, stagger 60ms, failsafe reveal on scrollEnd/refresh/resize; static rail | Plain list, all visible |
 | 13 | Brand marquee (/) | always (in view) | React Bits LogoLoop | Social proof | 60 px/s, pauses on hover | Static wrapped list |
 | 14 | Brand logos | hover | Framer `BrandLogo` | Monochrome → brand colour | 0.2 s | Instant |
 | 15 | Why choose us (/) | hover / focus | Framer `ValueProps` (layoutId highlight) | Focus one value prop | 0.3 s power2.inOut | Highlight jumps |
@@ -50,6 +50,10 @@ Token note: the Design tokens define `--duration-slow 480ms` and `--ease-out cub
 
 | # | Element | Trigger | Lib | What | Motion | Reduced |
 |---|---|---|---|---|---|---|
-| D1 | Cart drawer (shop PDP, when the Frontend adds one) | Add to cart / open | Framer `m` (LazyMotion) | Drawer sheet | x 100%→0 0.25s power-out, scrim fade; out 0.2s | 120ms fade |
+| D1 | Cart drawer (shop PDP, when the Frontend adds one) | Add to cart / open | Framer `m` (LazyMotion) | Drawer sheet | x 100%→0 320ms (`DUR.drawer`, design) power-out, scrim fade; out 320ms in-out | 150ms fade |
 | D2 | `$40` (/home-internet), `45` / `90` (home) | enter, once | rAF (`CountUp`) | Count-up | 0→value, 0.6s / 0.48s, ease-out, tabular-nums | Final value |
 | D3 | LeadFlow steps (/instant-quote, /sell-your-device) | Next / Back | Framer `m` (`MultiStepForm`) | Step change | out 24px + fade 160ms, in from the opposite side 240ms; bar scaleX 0.3s | Instant |
+| D4 | /services index, /policies/* contents | scroll past each section | `lib/motion/scroll-spy.ts` (rAF scroll listener, in the async engine chunk) | Orientation on long pages | `aria-current` on `a[data-toc-link]`; colour 150ms; services/policies sticky nav: red bar slides 200ms (transform + height) | Same state, no transition |
+| D5 | Skeletons (/shop loading, ProductSkeleton, embed facade) | while loading | CSS (`data-animate="shimmer"`) | Perceived speed, never a spinner | `::after` translateX sweep 1.2s linear | Static block |
+| D6 | Server-rendered stats (`WhyStat`, offer prices) | enter, once | GSAP (`data-animate="countup"`) | Count-up without a client component | from 0, 0.6s power3.out; SSR text restored at the end | Final number |
+| D7 | Hook aliases | n/a | `data-scroll-trigger` = reveal, `data-stagger-group` = stagger | Frontend naming | same as rows 4/8 | same |

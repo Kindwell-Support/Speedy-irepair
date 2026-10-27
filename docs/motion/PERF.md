@@ -118,3 +118,37 @@ These are isolated production builds (`NEXT_PUBLIC_SITE_ENV=production`, `next b
 - TBT on `/`: 0–15 ms at every viewport.
 
 **How It Works pin.** ≥1280 pins (pin distance measured at 2.50 × vh). Below that it's a stack: 375 / 768 / 1024 / 1279 → `data-steps-mode="stack"`, no `.pin-spacer`. Each card reveal is a single `ScrollTrigger.batch`, with no pin-spacer reflow on mobile or tablet (cheaper than the old mobile card-stack pin). Screenshots: `docs/motion/screens/how-it-works-{375,768,1024,1279,1280,1440}-staging.png`, `-1440-step2-`, `-768-reduced-`, `-1440-reduced-`.
+
+## Frontend-route wiring pass (2026-10-27, on top of `2647e1d`)
+
+Production builds (`NEXT_PUBLIC_SITE_ENV=production`, isolated `/tmp` copies, same box, back-to-back). Raw: `perf-results-routes-before.json` / `perf-results-routes.json`; hook/reduced-motion/CLS matrix: `routes-check-staging.json` (`node scripts/motion-routes-check.mjs <base> <out>`).
+
+| Route | Next "First Load JS" before → after | gz-9 first-load before → after | CLS 375/768/1280/1440 |
+|---|---|---|---|
+| / | 144 → 144 kB | 155.4 → 155.5 KB | 0 / 0 / 0 / 0 |
+| /instant-quote, /sell-your-device | 142 → 142 kB | 150.4 → 150.6 KB | 0 |
+| /services | 137 → 137 kB | 148.0 → 148.1 KB | 0 |
+| /policies/[slug] | 107 → 107 kB | 142.2 → 142.4 KB | 0 |
+| /shop | 144 → 144 kB | 147.8 → 148.0 KB | 0 |
+| /faq | 124 → 124 kB | 144.3 → 144.4 KB | 0 |
+| /schedule-repair | 120 → 120 kB | 146.9 → 147.0 KB | 0 |
+| /home-internet | 135 → 135 kB | 146.2 → 146.4 KB | 0 |
+
+The +0.1–0.2 KB gz is the same on every route (including /motion-lab), i.e. the shared tokens object (`DUR.drawer`, `fadeReduced`, `tocColor`, `tocBar`, `countUp`). Scroll-spy and the countup binder live in the existing async engine chunk (no new chunk, no new request); shimmer and TOC transitions are CSS. TBT stayed 0–11 ms on every route at 375–1440 (before-run 0–119 ms, noise).
+
+## QA run 1 follow-up (2026-10-27, on `feature/foundation` `e7d4e64`)
+
+Profiler: `scripts/motion-anim-profile.mjs` = the same drivers as `qa/scripts/anim-profile.ts` (desktop 1440×900 wheel 120 / 50ms; Pixel 7 + 4× CPU throttle, scrollBy 18 / rAF; 6s), repeatable, path-selectable, optional CPU profile; writes nothing into `qa/`. Local production builds, headless Chromium (software GL).
+
+| Build | Desktop avg fps (3 runs) | Desktop blocking | Mobile avg fps (3 runs) | Mobile blocking |
+|---|---|---|---|---|
+| `e53843d` (QA run 1 source) | 34.1 / 15.3 / 15.3 | 4.1–4.2 s, 9–11 long tasks, max ~2 s | 22.6 / 56.4 / 34.5 | 0.3–4.6 s |
+| `e53843d` `?no3d=1` | 60 / 60 | 0 | 60 / 60 | 0 |
+| `e7d4e64` (before this commit) | 60 / 60 / 60 | 0 | 59.8–60 | 0 |
+| this commit | 60 / 60 / 60 | 0 | 60 / 60 / 60 | 0 |
+
+Cause (CPU profile on `e53843d`): ~3.9 s of `(program)` time in the three.js hero chunk (`r.render`, `makeRotationFromEuler`, `loseContext`). The R3F hero was rendering on SwiftShader (software GL) in headless Chrome, every frame, while scrolling. `?no3d=1` (poster only) gives 60 fps on the same build. Already fixed in `cd44625` (software-GL gate in `components/3d/capabilities.ts`: SwiftShader/llvmpipe → poster) which landed after `e53843d`. No scroll-handler, SplitText re-split, ScrollTrigger-refresh or Lenis/Framer cost showed up. Real-GPU frame rate for the 3D hero still needs a device check (QA's own caveat).
+
+D1 (How It Works stuck hidden at 375): QA's `motion.spec.ts` "scroll-triggered animations reveal content" passes 20/20 for `/` and `/financing` at 375 and 768 on chromium, firefox, webkit, mobile-chrome and mobile-safari, both on `e7d4e64` (fixed by `06c2434`) and with this commit. An extra jump-past + resize-across-1280 check shows 0 of 4 cards hidden. `/financing` markup no longer carries the steps hook (static list). The failsafe is defence in depth.
+
+Axe (QA `axe.spec.ts`, chromium, 375 + 1440, all 14 routes): `color-contrast` on `/` (ValueProps) fixed. The remaining serious finding is `target-size` on the TOC links of `/services` and `/policies/*` at 1440 (inline `<a>` 19.6px tall). That is Frontend markup and was also present before; fix: make `[data-toc-link]` `block` (py-1.5 then gives ~32px).

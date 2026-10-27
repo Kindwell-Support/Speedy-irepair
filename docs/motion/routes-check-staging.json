@@ -1,0 +1,2326 @@
+[
+  {
+    "route": "/",
+    "w": 375,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "stagger": 3,
+      "steps": 1,
+      "valueProps": 1
+    },
+    "bound": {
+      "total": 4,
+      "animated": 4
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/instant-quote",
+    "w": 375,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/sell-your-device",
+    "w": 375,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/services",
+    "w": 375,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "reveal": 14,
+      "tocSpy": 1,
+      "tocLink": 28
+    },
+    "bound": {
+      "total": 15,
+      "animated": 15
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "charger-port-repair",
+      "current": [
+        "charger-port-repair"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/privacy",
+    "w": 375,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 22
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "how-do-we-use-your-personal-information",
+      "current": [
+        "how-do-we-use-your-personal-information"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/terms",
+    "w": 375,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 46
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "terms-of-service",
+      "current": [
+        "overview"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/shipping-return",
+    "w": 375,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 20
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "returns",
+      "current": [
+        "returns"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/shop",
+    "w": 375,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/faq",
+    "w": 375,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/schedule-repair",
+    "w": 375,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/home-internet",
+    "w": 375,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/",
+    "w": 768,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "stagger": 3,
+      "steps": 1,
+      "valueProps": 1
+    },
+    "bound": {
+      "total": 4,
+      "animated": 4
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/instant-quote",
+    "w": 768,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/sell-your-device",
+    "w": 768,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/services",
+    "w": 768,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "reveal": 14,
+      "tocSpy": 1,
+      "tocLink": 28
+    },
+    "bound": {
+      "total": 15,
+      "animated": 15
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "charger-port-repair",
+      "current": [
+        "charger-port-repair"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/privacy",
+    "w": 768,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 22
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "how-do-we-use-your-personal-information",
+      "current": [
+        "how-do-we-use-your-personal-information"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/terms",
+    "w": 768,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 46
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "terms-of-service",
+      "current": [
+        "overview"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/shipping-return",
+    "w": 768,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 20
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "returns",
+      "current": [
+        "returns"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/shop",
+    "w": 768,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/faq",
+    "w": 768,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/schedule-repair",
+    "w": 768,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/home-internet",
+    "w": 768,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/",
+    "w": 1280,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "stagger": 3,
+      "steps": 1,
+      "valueProps": 1
+    },
+    "bound": {
+      "total": 4,
+      "animated": 4
+    },
+    "hiddenAfterScroll": 3,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/instant-quote",
+    "w": 1280,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/sell-your-device",
+    "w": 1280,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/services",
+    "w": 1280,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "reveal": 14,
+      "tocSpy": 1,
+      "tocLink": 28
+    },
+    "bound": {
+      "total": 15,
+      "animated": 15
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "charger-port-repair",
+      "current": [
+        "charger-port-repair"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "0.2s, 0.2s, 0.15s"
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/privacy",
+    "w": 1280,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 22
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "how-do-we-use-your-personal-information",
+      "current": [
+        "how-do-we-use-your-personal-information"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "0.2s, 0.2s, 0.15s"
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/terms",
+    "w": 1280,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 46
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "terms-of-service",
+      "current": [
+        "overview"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": false,
+      "barTransition": "0.2s, 0.2s, 0.15s"
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/shipping-return",
+    "w": 1280,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 20
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "returns",
+      "current": [
+        "returns"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "0.2s, 0.2s, 0.15s"
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/shop",
+    "w": 1280,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/faq",
+    "w": 1280,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/schedule-repair",
+    "w": 1280,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/home-internet",
+    "w": 1280,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/",
+    "w": 1440,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "stagger": 3,
+      "steps": 1,
+      "valueProps": 1
+    },
+    "bound": {
+      "total": 4,
+      "animated": 4
+    },
+    "hiddenAfterScroll": 3,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/instant-quote",
+    "w": 1440,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/sell-your-device",
+    "w": 1440,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/services",
+    "w": 1440,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "reveal": 14,
+      "tocSpy": 1,
+      "tocLink": 28
+    },
+    "bound": {
+      "total": 15,
+      "animated": 15
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "charger-port-repair",
+      "current": [
+        "charger-port-repair"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "0.2s, 0.2s, 0.15s"
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/privacy",
+    "w": 1440,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 22
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "how-do-we-use-your-personal-information",
+      "current": [
+        "how-do-we-use-your-personal-information"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "0.2s, 0.2s, 0.15s"
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/terms",
+    "w": 1440,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 46
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "terms-of-service",
+      "current": [
+        "overview"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": false,
+      "barTransition": "0.2s, 0.2s, 0.15s"
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/policies/shipping-return",
+    "w": 1440,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 20
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "returns",
+      "current": [
+        "returns"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "0.2s, 0.2s, 0.15s"
+    },
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/shop",
+    "w": 1440,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/faq",
+    "w": 1440,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/schedule-repair",
+    "w": 1440,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/home-internet",
+    "w": 1440,
+    "reduced": false,
+    "status": 200,
+    "motion": "ok",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 1
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "motion-shimmer",
+      "injected": true
+    },
+    "cls": 0
+  },
+  {
+    "route": "/",
+    "w": 375,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "stagger": 3,
+      "steps": 1,
+      "valueProps": 1
+    },
+    "bound": {
+      "total": 4,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 8
+  },
+  {
+    "route": "/instant-quote",
+    "w": 375,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/sell-your-device",
+    "w": 375,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/services",
+    "w": 375,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "reveal": 14,
+      "tocSpy": 1,
+      "tocLink": 28
+    },
+    "bound": {
+      "total": 15,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "charger-port-repair",
+      "current": [
+        "charger-port-repair"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 14
+  },
+  {
+    "route": "/policies/privacy",
+    "w": 375,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 22
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "how-do-we-use-your-personal-information",
+      "current": [
+        "how-do-we-use-your-personal-information"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/policies/terms",
+    "w": 375,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 46
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "terms-of-service",
+      "current": [
+        "overview"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/policies/shipping-return",
+    "w": 375,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 20
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "returns",
+      "current": [
+        "returns"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/shop",
+    "w": 375,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/faq",
+    "w": 375,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 8
+  },
+  {
+    "route": "/schedule-repair",
+    "w": 375,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/home-internet",
+    "w": 375,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 4
+  },
+  {
+    "route": "/",
+    "w": 768,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "stagger": 3,
+      "steps": 1,
+      "valueProps": 1
+    },
+    "bound": {
+      "total": 4,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 8
+  },
+  {
+    "route": "/instant-quote",
+    "w": 768,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/sell-your-device",
+    "w": 768,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/services",
+    "w": 768,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "reveal": 14,
+      "tocSpy": 1,
+      "tocLink": 28
+    },
+    "bound": {
+      "total": 15,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "charger-port-repair",
+      "current": [
+        "charger-port-repair"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 14
+  },
+  {
+    "route": "/policies/privacy",
+    "w": 768,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 22
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "how-do-we-use-your-personal-information",
+      "current": [
+        "how-do-we-use-your-personal-information"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/policies/terms",
+    "w": 768,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 46
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "terms-of-service",
+      "current": [
+        "overview"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/policies/shipping-return",
+    "w": 768,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 20
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "returns",
+      "current": [
+        "returns"
+      ],
+      "currentCount": 2,
+      "barVisible": false,
+      "barAligned": null,
+      "barTransition": null
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/shop",
+    "w": 768,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/faq",
+    "w": 768,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 8
+  },
+  {
+    "route": "/schedule-repair",
+    "w": 768,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/home-internet",
+    "w": 768,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 4
+  },
+  {
+    "route": "/",
+    "w": 1280,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "stagger": 3,
+      "steps": 1,
+      "valueProps": 1
+    },
+    "bound": {
+      "total": 4,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 8
+  },
+  {
+    "route": "/instant-quote",
+    "w": 1280,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/sell-your-device",
+    "w": 1280,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/services",
+    "w": 1280,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "reveal": 14,
+      "tocSpy": 1,
+      "tocLink": 28
+    },
+    "bound": {
+      "total": 15,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "charger-port-repair",
+      "current": [
+        "charger-port-repair"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "1e-06s"
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 14
+  },
+  {
+    "route": "/policies/privacy",
+    "w": 1280,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 22
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "how-do-we-use-your-personal-information",
+      "current": [
+        "how-do-we-use-your-personal-information"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "1e-06s"
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/policies/terms",
+    "w": 1280,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 46
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "terms-of-service",
+      "current": [
+        "overview"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": false,
+      "barTransition": "1e-06s"
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/policies/shipping-return",
+    "w": 1280,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 20
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "returns",
+      "current": [
+        "returns"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "1e-06s"
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/shop",
+    "w": 1280,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/faq",
+    "w": 1280,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 8
+  },
+  {
+    "route": "/schedule-repair",
+    "w": 1280,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/home-internet",
+    "w": 1280,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 4
+  },
+  {
+    "route": "/",
+    "w": 1440,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "stagger": 3,
+      "steps": 1,
+      "valueProps": 1
+    },
+    "bound": {
+      "total": 4,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 8
+  },
+  {
+    "route": "/instant-quote",
+    "w": 1440,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/sell-your-device",
+    "w": 1440,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "multiStep": 2
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/services",
+    "w": 1440,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "reveal": 14,
+      "tocSpy": 1,
+      "tocLink": 28
+    },
+    "bound": {
+      "total": 15,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "charger-port-repair",
+      "current": [
+        "charger-port-repair"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "1e-06s"
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 14
+  },
+  {
+    "route": "/policies/privacy",
+    "w": 1440,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 22
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "how-do-we-use-your-personal-information",
+      "current": [
+        "how-do-we-use-your-personal-information"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "1e-06s"
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/policies/terms",
+    "w": 1440,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 46
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "terms-of-service",
+      "current": [
+        "overview"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": false,
+      "barTransition": "1e-06s"
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/policies/shipping-return",
+    "w": 1440,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1,
+      "tocSpy": 1,
+      "tocLink": 20
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "toc": {
+      "expected": "returns",
+      "current": [
+        "returns"
+      ],
+      "currentCount": 2,
+      "barVisible": true,
+      "barAligned": true,
+      "barTransition": "1e-06s"
+    },
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/shop",
+    "w": 1440,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/faq",
+    "w": 1440,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 8
+  },
+  {
+    "route": "/schedule-repair",
+    "w": 1440,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 0
+  },
+  {
+    "route": "/home-internet",
+    "w": 1440,
+    "reduced": true,
+    "status": 200,
+    "motion": "reduce",
+    "ready": true,
+    "counts": {
+      "split": 1
+    },
+    "bound": {
+      "total": 1,
+      "animated": 0
+    },
+    "hiddenAfterScroll": 0,
+    "shimmer": {
+      "animation": "none",
+      "injected": true
+    },
+    "cls": 0,
+    "inlineOpacityZero": 4
+  }
+]
