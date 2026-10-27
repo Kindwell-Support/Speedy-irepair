@@ -3,7 +3,8 @@ import { A11Y } from "@/components/ui/a11yStrings";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { cssVars } from "@/lib/utils/css-vars";
 import type { CtaLink, NavLink } from "@/lib/sanity/types";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 
@@ -12,13 +13,27 @@ export function MobileNav({ items, cta }: { items: NavLink[]; cta: CtaLink }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const id = useId();
+  const panelRef = useRef<HTMLDivElement>(null);
+  /** Viewport y of the panel top: the announcement banner wraps to 2 lines at 375, so token math under-counts. */
+  const [top, setTop] = useState<number | null>(null);
 
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const measure = () => {
+      const el = panelRef.current;
+      if (el) setTop(Math.max(0, Math.round(el.getBoundingClientRect().top)));
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    window.addEventListener("scroll", measure, { passive: true });
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("scroll", measure);
+    };
   }, [open]);
 
   return (
@@ -49,7 +64,9 @@ export function MobileNav({ items, cta }: { items: NavLink[]; cta: CtaLink }) {
         data-testid="mobile-nav"
         hidden={!open}
         data-lenis-prevent
-        className="absolute inset-x-0 top-full max-h-[calc(100dvh-var(--nav-h)-var(--banner-h))] overflow-y-auto overscroll-contain border-b border-border bg-bg-raised lg:max-h-[calc(100dvh-var(--nav-h-desktop)-var(--banner-h))]"
+        ref={panelRef}
+        style={cssVars(top === null ? {} : { "--menu-top": `${top}px` })}
+        className="absolute inset-x-0 top-full max-h-[calc(100dvh-var(--menu-top,calc(var(--nav-h)+var(--banner-h))))] overflow-y-auto overscroll-contain border-b border-border bg-bg-raised"
       >
         <nav aria-label="Mobile" className="container-site py-6">
           <ul className="flex flex-col gap-1">
