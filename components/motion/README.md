@@ -21,7 +21,7 @@ Rules:
 | `ValueProps` | Framer layoutId highlight list | `items`, class props | Highlight jumps |
 | `ShopGrid` | Layout + presence filter grid | `items`, `getKey`, `render`, filters | Instant |
 | `MultiStepForm` + `useMultiStep` | Step slider for lead-capture forms (no prices). Out 24px/160ms, in from the opposite side 240ms, bar scaleX | `steps`, `index`, `direction`, `label`, `footer`, `header`, `progressTestId`, `titleClassName` | Instant |
-| `Drawer` | Right-side modal sheet (cart). Slide + scrim 0.25s power-out, focus trap, Escape, inert background, Lenis stop. Demo `/motion-lab/drawer` | `open`, `onClose`, `title`/`ariaLabel`, `footer`, `initialFocusRef`, `closeLabel`, `widthClassName`, `className`, `testId` (see HOOKS.md) | 120ms fade |
+| `Drawer` | Right-side modal sheet (cart). Slide + scrim 320ms (`DUR.drawer`, design) power-out in / in-out out, focus trap, Escape, inert background, Lenis stop. Demo `/motion-lab/drawer` | `open`, `onClose`, `title`/`ariaLabel`, `footer`, `initialFocusRef`, `closeLabel`, `widthClassName`, `className`, `testId` (see HOOKS.md) | 150ms fade |
 | `CountUp` | Number counts 0→value once on enter (rAF, tabular-nums); SSR renders the final value | `value`, `from`, `duration`, `decimals`, `prefix`, `suffix`, `ariaLabel`, `threshold` | Final value |
 | `CursorFollower` | Desktop fine-pointer follower (red on targets) | n/a | Not rendered |
 | `framer-features.ts` | The domMax bundle for LazyMotion (async) | n/a | n/a |
@@ -51,7 +51,7 @@ const checkoutRef = useRef<HTMLButtonElement>(null);
 ```
 
 - The Drawer portals to `body` and sets `role="dialog"` + `aria-modal`. Escape and a scrim click both call `onClose`. Tab is trapped. Every other body child is `inert`. Focus returns to the opener. Lenis is stopped and the page scroll is locked.
-- Motion: slide from the right + scrim fade, 0.25s power-out; out is 0.2s. Reduced motion uses a 120ms fade.
+- Motion: slide from the right + scrim fade, 320ms (`DUR.drawer`, per design shop-product: "slides in from the right, 320ms") power-out in, power-in-out out. Reduced motion uses a 150ms fade (`DUR.fadeReduced`), no slide.
 - The Frontend owns `open` state, the content and the styles inside the panel.
 
 ## CountUp: usage

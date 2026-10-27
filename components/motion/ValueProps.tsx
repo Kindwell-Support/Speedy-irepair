@@ -60,8 +60,8 @@ export function ValueProps({ items, className, itemClassName }: Props) {
                 <m.p
                   layout="position"
                   transition={t}
-                  initial={false}
-                  animate={{ opacity: isActive ? 1 : 0.6 }}
+                  // No opacity dim (axe color-contrast): inactive copy keeps the Frontend's
+                  // text-secondary colour (7.85:1); the active item brightens via motion.css.
                   className="mb-0 mt-[6px]"
                 >
                   {item.detail}

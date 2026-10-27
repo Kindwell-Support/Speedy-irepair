@@ -23,8 +23,9 @@ export const LENIS_DEFAULTS: LenisOptions = {
   wheelMultiplier: 1,
   touchMultiplier: 1,
   autoRaf: false,
-  // Lenis handles in-page #anchor clicks (offset for the fixed header).
-  anchors: { offset: -80, duration: 0.8 },
+  // Lenis handles in-page #anchor clicks: design "Lenis smooth scroll, 600ms, offset for the nav"
+  // (policies/services TOC; h2 scroll-margin 96px).
+  anchors: { offset: -96, duration: 0.6 },
   // Elements with data-lenis-prevent (modals, iframes, Square/Jotform embeds) scroll natively.
 };
 

@@ -11,6 +11,11 @@ export const DUR = {
   stepOut: 0.16, // MultiStepForm outgoing step (design instant-quote.responsive-and-motion.md)
   stepIn: 0.24, // MultiStepForm incoming step
   card: 0.48, // How It Works stacked-card reveal (home budget 120–480ms)
+  drawer: 0.32, // cart drawer slide (design shop-product.responsive-and-motion.md: 320ms)
+  fadeReduced: 0.15, // reduced-motion replacement fade (design: "150ms opacity fade")
+  tocColor: 0.15, // policies TOC active colour change (150ms)
+  tocBar: 0.2, // services index active bar slide (200ms)
+  countUp: 0.6, // count-up default
   heroTotal: 1.5, // hero sequence must finish by this (<= 1.5–2s)
 } as const;
 

@@ -9,7 +9,6 @@ import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { BrandLogo } from "./BrandLogo";
 import { useReducedMotion } from "@/lib/motion/reduced-motion";
-import { cn } from "@/lib/utils/cn";
 
 /**
  * Below the fold: LogoLoop (~9 KB gz) is code-split out of first-load JS. Still server-rendered
@@ -29,17 +28,17 @@ export function BrandMarquee({ brands, speed = 60, logoHeight = 32, gap = 64, cl
   const reduced = useReducedMotion();
   if (reduced) {
     return (
-      <ul
-        className={cn("m-0 flex list-none flex-wrap justify-center gap-x-12 gap-y-6 p-0", className)}
-        aria-label="Brands we repair"
-        data-marquee="static"
-      >
-        {brands.map((b) => (
-          <li key={b.name}>
-            <BrandLogo name={b.name} height={logoHeight}>{b.logo}</BrandLogo>
-          </li>
-        ))}
-      </ul>
+      // Same landmark as the loop (LogoLoop renders role="region" aria-label): the Frontend's
+      // Brands section relies on it (landmark={false}, axe landmark-unique BUG-031).
+      <div role="region" aria-label="Brands we repair" className={className} data-marquee="static">
+        <ul className="m-0 flex list-none flex-wrap justify-center gap-x-12 gap-y-6 p-0">
+          {brands.map((b) => (
+            <li key={b.name}>
+              <BrandLogo name={b.name} height={logoHeight}>{b.logo}</BrandLogo>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
   }
   return (

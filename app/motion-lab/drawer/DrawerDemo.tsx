@@ -43,6 +43,9 @@ export function DrawerDemo() {
         <p className="text-h2">
           <CountUp value={45} duration={0.48} /> min · <CountUp value={90} duration={0.48} /> days
         </p>
+        <p className="text-h2" data-testid="countup-hook">
+          <span data-animate="countup">$1,200</span>+ repairs · <span data-animate="countup">4.9</span> (engine hook, no component)
+        </p>
       </div>
     </div>
   );

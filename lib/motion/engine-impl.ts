@@ -7,3 +7,4 @@
 export { gsap, ScrollTrigger, SplitText, registerGsap } from "./gsap";
 export { createLenisGsap, LENIS_DEFAULTS } from "./lenis-gsap";
 export { bindAnimations } from "./bindings";
+export { bindScrollSpy } from "./scroll-spy";

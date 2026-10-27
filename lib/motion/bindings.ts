@@ -29,19 +29,62 @@ const settle = (el: Element) => el.setAttribute("data-animated", "");
 /* Selectors: data-animate="x" (motion contract) OR the Design/Frontend shorthand attributes
    already used in design/pages/home.html (data-stagger, data-split, data-pin, data-faq). */
 export const SEL = {
-  reveal: '[data-animate="reveal"]',
-  stagger: '[data-animate="stagger"], [data-stagger]',
+  // data-scroll-trigger: generic "reveal when scrolled into view" alias (Frontend hook name).
+  reveal: '[data-animate="reveal"], [data-scroll-trigger]',
+  // data-stagger-group: alias of data-stagger (items = [data-animate-item] / [data-stagger-item] or children).
+  stagger: '[data-animate="stagger"], [data-stagger], [data-stagger-group]',
+  countup: '[data-animate="countup"]',
   parallax: '[data-animate="parallax"], [data-parallax]',
   split: '[data-animate="split-heading"], [data-split]',
   steps: '[data-animate="steps"], [data-pin="how"]',
   faq: "[data-faq]",
 } as const;
 
+
+/* ------------------------------------------------------ reveal failsafe (BUG-008/009)
+   Once revealed, stay revealed. ScrollTrigger callbacks can be skipped (a jump past start+end in
+   one frame, a refresh/resize between batches, Firefox/WebKit scroll timing), so after every
+   scrollEnd / refresh / resize we force-show any still-hidden item whose top is already above the
+   viewport bottom. No per-frame work: these are coarse events. */
+/** Show only targets that are still hidden and not mid-tween (never restarts a running reveal). */
+function forceShow(targets: Element[], duration: number) {
+  const stuck = targets.filter((t) => !gsap.isTweening(t) && Number(gsap.getProperty(t, "opacity")) < 1);
+  if (stuck.length)
+    gsap.to(stuck, { autoAlpha: 1, y: 0, duration, ease: EASE.out, overwrite: true, clearProps: "transform" });
+}
+type Failsafe = { off: Cleanup; shown: (els: Element[]) => void };
+function revealFailsafe(items: HTMLElement[], show: (els: HTMLElement[]) => void): Failsafe {
+  const pending = new Set(items);
+  const sweep = () => {
+    if (!pending.size) return;
+    const vh = window.innerHeight;
+    const due: HTMLElement[] = [];
+    pending.forEach((el) => {
+      if (!el.isConnected) return void pending.delete(el);
+      if (el.getBoundingClientRect().top < vh) due.push(el);
+    });
+    if (!due.length) return;
+    due.forEach((el) => pending.delete(el));
+    show(due);
+  };
+  ScrollTrigger.addEventListener("scrollEnd", sweep);
+  ScrollTrigger.addEventListener("refresh", sweep);
+  window.addEventListener("resize", sweep, { passive: true });
+  const t = window.setTimeout(sweep, 1500); // initial safety net after load
+  const off = () => {
+    ScrollTrigger.removeEventListener("scrollEnd", sweep);
+    ScrollTrigger.removeEventListener("refresh", sweep);
+    window.removeEventListener("resize", sweep);
+    window.clearTimeout(t);
+  };
+  return { off, shown: (els) => els.forEach((el) => pending.delete(el as HTMLElement)) };
+}
+
 /* ---------------------------------------------------------------- reveal */
-function bindReveal(root: ParentNode) {
+function bindReveal(root: ParentNode, failsafes: Cleanup[]) {
   q(root, SEL.reveal).forEach((el) => {
     const delay = num(el.dataset.revealDelay, 0);
-    const onLoad = el.dataset.revealTrigger === "load";
+    const onLoad = el.dataset.revealTrigger === "load" || el.dataset.scrollTrigger === "load";
     const childrenMode = el.dataset.reveal === "children";
     const targets = childrenMode ? Array.from(el.children) : [el];
     settle(el);
@@ -59,30 +102,37 @@ function bindReveal(root: ParentNode) {
         scrollTrigger: onLoad ? undefined : { trigger: el, start: "top 85%", once: true },
       },
     );
+    if (!onLoad) failsafes.push(revealFailsafe([el], () => forceShow(targets, DUR.reveal)).off);
   });
 }
 
 /* --------------------------------------------------------------- stagger */
-function bindStagger(root: ParentNode) {
+function bindStagger(root: ParentNode, failsafes: Cleanup[]) {
   q(root, SEL.stagger).forEach((group) => {
-    const explicit = q(group, "[data-animate-item]");
+    const explicit = q(group, "[data-animate-item], [data-stagger-item]");
     const items = explicit.length ? explicit : (Array.from(group.children) as HTMLElement[]);
-    const each = num(group.dataset.stagger || undefined, STAGGER.items);
+    const each = num(group.dataset.stagger || group.dataset.staggerGroup || undefined, STAGGER.items);
     settle(group);
     gsap.set(items, { autoAlpha: 0, y: REVEAL_Y });
+    const show = (batch: Element[]) =>
+      gsap.to(batch, {
+        autoAlpha: 1,
+        y: 0,
+        duration: DUR.reveal,
+        ease: EASE.out,
+        stagger: each,
+        overwrite: true,
+        clearProps: "transform",
+      });
+    const fs = revealFailsafe(items, (els) => forceShow(els, DUR.reveal));
+    failsafes.push(fs.off);
     ScrollTrigger.batch(items, {
       start: "top 88%",
       once: true,
-      onEnter: (batch) =>
-        gsap.to(batch, {
-          autoAlpha: 1,
-          y: 0,
-          duration: DUR.reveal,
-          ease: EASE.out,
-          stagger: each,
-          overwrite: true,
-          clearProps: "transform",
-        }),
+      onEnter: (batch) => {
+        fs.shown(batch);
+        show(batch);
+      },
     });
   });
 }
@@ -177,13 +227,25 @@ function bindSteps(root: ParentNode, mode: "pin" | "stack"): Cleanup[] {
     if (mode === "stack") {
       mark(false);
       gsap.set(steps, { autoAlpha: 0, y: 16 });
+      const show = (b: Element[]) => {
+        b.forEach((el) => el.setAttribute("data-revealed", ""));
+        gsap.to(b, { autoAlpha: 1, y: 0, duration: DUR.card, ease: EASE.out, stagger: 0.06, overwrite: true });
+      };
+      const fs = revealFailsafe(steps, (els) => {
+        els.forEach((el) => el.setAttribute("data-revealed", ""));
+        forceShow(els, DUR.card);
+      });
       const batch = ScrollTrigger.batch(steps, {
         start: "top 88%",
         once: true,
-        onEnter: (b) =>
-          gsap.to(b, { autoAlpha: 1, y: 0, duration: DUR.card, ease: EASE.out, stagger: 0.06, overwrite: true }),
+        onEnter: (b) => {
+          fs.shown(b);
+          show(b);
+        },
       });
       cleanups.push(() => {
+        fs.off();
+        steps.forEach((el) => el.removeAttribute("data-revealed"));
         batch.forEach((t) => t.kill());
         hosts.forEach((h) => h.removeAttribute("data-steps-mode"));
       });
@@ -228,7 +290,9 @@ function bindSteps(root: ParentNode, mode: "pin" | "stack"): Cleanup[] {
       const at = i - 1;
       // previous tile: domino tip (<= 8deg at bottom-left), then settles flat and dimmed ("done")
       tl.to(steps[i - 1]!, { rotation: -6, y: 0, duration: 0.3, ease: EASE.out }, at + 0.15)
-        .to(steps[i - 1]!, { rotation: 0, autoAlpha: 0.6, duration: 0.35 }, at + 0.45)
+        // "done": settles flat; no opacity dim (text must keep >= 4.5:1). The dimmed look is a
+        // colour token swap in motion.css keyed on data-done.
+        .to(steps[i - 1]!, { rotation: 0, duration: 0.35 }, at + 0.45)
         .fromTo(steps[i]!, { y: 0 }, { y: -8, duration: 0.5, ease: EASE.out }, at + 0.35);
       if (bar) tl.to(bar, { scaleX: i / (n - 1), ease: "none", duration: 0.8 }, at + 0.1);
     }
@@ -324,6 +388,65 @@ function bindFaq(root: ParentNode): Cleanup[] {
   return cleanups;
 }
 
+/* --------------------------------------------------------------- countup */
+/* data-animate="countup" on an element whose text is a number ("40", "$40", "4.9", "1,200+").
+   SSR text is the final value (reduced motion / no JS = final number). We only rewrite the
+   existing text node's nodeValue (React keeps its node), and always restore the original text. */
+const NUM_RE = /^(\D*?)(\d[\d,]*(?:\.\d+)?)(.*)$/s;
+function bindCountUps(root: ParentNode): Cleanup[] {
+  return q(root, SEL.countup).map((el) => {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let node: Text | null = null;
+    while (walker.nextNode()) {
+      const t = walker.currentNode as Text;
+      if (/\d/.test(t.nodeValue ?? "")) {
+        node = t;
+        break;
+      }
+    }
+    const original = node?.nodeValue ?? "";
+    const m = original.match(NUM_RE);
+    if (!node || !m) return () => {};
+    const [, pre, digits, post] = m;
+    const target = Number(digits.replace(/,/g, ""));
+    const decimals = (digits.split(".")[1] ?? "").length;
+    const grouped = digits.includes(",");
+    const from = num(el.dataset.countupFrom, 0);
+    const duration = Math.min(1.2, Math.max(0.3, num(el.dataset.countupDuration, DUR.countUp)));
+    const fmt = (v: number) =>
+      grouped
+        ? v.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
+        : v.toFixed(decimals);
+    const state = { v: from };
+    const textNode = node;
+    el.dataset.countupState = "idle";
+    textNode.nodeValue = pre + fmt(from) + post;
+    const tween = gsap.to(state, {
+      v: target,
+      duration,
+      ease: "power3.out",
+      paused: true,
+      onStart: () => {
+        el.dataset.countupState = "running";
+      },
+      onUpdate: () => {
+        textNode.nodeValue = pre + fmt(state.v) + post;
+      },
+      onComplete: () => {
+        textNode.nodeValue = original;
+        el.dataset.countupState = "done";
+      },
+    });
+    const st = ScrollTrigger.create({ trigger: el, start: "top 85%", once: true, onEnter: () => tween.play() });
+    return () => {
+      st.kill();
+      tween.kill();
+      textNode.nodeValue = original;
+      delete el.dataset.countupState;
+    };
+  });
+}
+
 /**
  * Bind every data-animate hook under `root`. Returns a cleanup that reverts all
  * tweens, ScrollTriggers, pins and SplitText instances.
@@ -338,11 +461,13 @@ export function bindAnimations(root: HTMLElement): Cleanup {
   // General reveals: bound once per page (not rebuilt on breakpoint changes).
   mm.add(MQ.motionOk, () => {
     if (!allowed()) return;
-    bindReveal(root);
-    bindStagger(root);
+    const failsafes: Cleanup[] = [];
+    bindReveal(root, failsafes);
+    bindStagger(root, failsafes);
     bindParallax(root);
-    splitCleanups = [...bindSplitHeadings(root), ...bindFaq(root)];
+    splitCleanups = [...bindSplitHeadings(root), ...bindFaq(root), ...bindCountUps(root)];
     return () => {
+      failsafes.forEach((c) => c());
       splitCleanups.forEach((c) => c());
       splitCleanups = [];
     };

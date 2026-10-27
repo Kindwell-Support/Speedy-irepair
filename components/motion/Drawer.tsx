@@ -3,9 +3,9 @@
  * Drawer: right-side modal sheet (e.g. the cart drawer in design/pages/shop-product.responsive-and-motion.md).
  * Motion only. The Frontend owns the content and the open state.
  *
- *  - Panel slides in from the right (x 100% -> 0) and the scrim fades. 0.25s power-out on enter,
- *    0.2s on exit. Transform + opacity only, via m.* under the global LazyMotion (no new runtime).
- *  - Reduced motion: no slide. The panel and scrim fade in 120ms.
+ *  - Panel slides in from the right (x 100% -> 0) and the scrim fades. 320ms (DUR.drawer, design)
+ *    power-out on enter, power-in-out on exit. Transform + opacity only, via m.* under the global LazyMotion (no new runtime).
+ *  - Reduced motion: no slide. The panel and scrim fade in 150ms (DUR.fadeReduced).
  *  - A11y: role="dialog" + aria-modal="true", labelled by `title` (visible <h2>) or `ariaLabel`.
  *    Focus moves to `initialFocusRef` or the first focusable element in the panel. Tab / Shift+Tab are
  *    trapped. Escape and a scrim click call onClose. Focus returns to the previously focused element
@@ -138,9 +138,11 @@ export function Drawer({
 
   if (!mounted) return null;
 
-  const fade = { duration: reduced ? 0.12 : DUR.page, ease: FM_EASE.out };
-  const slideIn = reduced ? fade : { duration: DUR.page, ease: FM_EASE.out };
-  const slideOut = reduced ? { duration: 0.12, ease: FM_EASE.out } : { duration: 0.2, ease: FM_EASE.inOut };
+  // Design (shop-product.responsive-and-motion.md): "the cart drawer slides in from the right, 320ms".
+  // Reduced motion: no transform, a 150ms opacity fade.
+  const fade = { duration: reduced ? DUR.fadeReduced : DUR.drawer, ease: FM_EASE.out };
+  const slideIn = reduced ? fade : { duration: DUR.drawer, ease: FM_EASE.out };
+  const slideOut = reduced ? fade : { duration: DUR.drawer, ease: FM_EASE.inOut };
 
   return createPortal(
     <div ref={portalRef} data-drawer data-state={open ? "open" : "closed"} id={id}>

@@ -10,7 +10,8 @@
 
 html[data-motion="ok"] [data-animate="reveal"]:not([data-reveal="children"]):not([data-animated]),
 html[data-motion="ok"] [data-animate="reveal"][data-reveal="children"]:not([data-animated]) > *,
-html[data-motion="ok"] :is([data-animate="stagger"], [data-stagger]):not([data-animated]) > *,
+html[data-motion="ok"] [data-scroll-trigger]:not([data-animated]),
+html[data-motion="ok"] :is([data-animate="stagger"], [data-stagger], [data-stagger-group]):not([data-animated]) > *,
 html[data-motion="ok"] :is([data-animate="split-heading"], [data-split]):not([data-animated]) {
   opacity: 0;
 }
@@ -128,3 +129,93 @@ html[data-motion="reduce"] :is([data-animate], [data-motion-el]) * {
 
 /* Drawer (components/motion/Drawer.tsx): scroll lock while open. */
 html[data-drawer-open] { overflow: hidden; }
+
+/* ------------------------------------------------------------------ shimmer
+   data-animate="shimmer" (Frontend skeleton blocks: /shop loading + ProductSkeleton, EmbedShell).
+   CSS only (home.animation-intent: "Loading | Skeleton shimmer | CSS"); 1.2s linear sweep
+   (shop.responsive-and-motion.md). Transform-only pseudo element, so no paint of the block itself.
+   Reduced motion / no JS gate: static block. */
+html[data-motion="ok"] [data-animate="shimmer"] {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+html[data-motion="ok"] [data-animate="shimmer"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(255 255 255 / 0.45) 50%,
+    transparent 100%
+  );
+  animation: motion-shimmer 1.2s linear infinite;
+  pointer-events: none;
+}
+@keyframes motion-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* ---------------------------------------------------------------- toc-spy
+   lib/motion/scroll-spy.ts sets aria-current on a[data-toc-link]; Frontend styles that state.
+   Policies: 150ms colour change. Services index: red bar slides to the active item, 200ms. */
+[data-toc-link] {
+  transition-property: color, border-color, background-color;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* No position override on the nav: it is lg:sticky (a sticky box is already the containing block
+   for the absolute bar). Forcing position:relative here would break the Frontend's sticky. */
+[data-toc-indicator] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  background: var(--color-brand, currentColor);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    height 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 150ms linear;
+}
+[data-toc-indicator][data-visible] {
+  opacity: 1;
+}
+/* While the bar is present it carries the active rule; the link's own rule stays transparent. */
+[data-animate="toc-spy"][data-toc-ready] [data-toc-link][aria-current="true"] {
+  border-color: transparent;
+}
+html[data-motion="reduce"] [data-toc-link],
+html[data-motion="reduce"] [data-toc-indicator] {
+  transition-duration: 0ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-toc-link],
+  [data-toc-indicator] {
+    transition-duration: 0ms;
+  }
+}
+
+/* ------------------------------------------------------ inactive text states
+   Never dim text with opacity (axe color-contrast on #0a0a0a). Inactive = text-secondary
+   (#a3a3a3, 7.85:1); active = text-primary. Colour transitions only. */
+[data-value-props] > li p {
+  transition: color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-value-props] > li[data-active] p {
+  color: var(--color-text-primary);
+}
+:is([data-animate="steps"], [data-pin="how"]) [data-step] :is(h3, h4, strong, p) {
+  transition: color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+:is([data-animate="steps"], [data-pin="how"]) [data-step][data-done] :is(h3, h4, strong) {
+  color: var(--color-text-secondary);
+}
+html[data-motion="reduce"] :is([data-value-props] > li p, [data-step] :is(h3, h4, strong, p)) {
+  transition: none;
+}
