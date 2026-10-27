@@ -62,7 +62,7 @@ export function SelectField({
   options,
   className,
   ...rest
-}: Common & { options: readonly string[] } & SelectHTMLAttributes<HTMLSelectElement>) {
+}: Common & { options: readonly string[]; ref?: React.Ref<HTMLSelectElement> } & SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <Wrap id={id} label={label} error={error} hint={hint}>
       <select

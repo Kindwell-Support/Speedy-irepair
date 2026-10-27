@@ -23,6 +23,8 @@ export function ScrambleText({ text, className }: Props) {
       revealDirection="start"
       characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
       className={className}
+      // DecryptedText sets pre-wrap; a label never breaks across lines mid-scramble.
+      parentClassName="!whitespace-nowrap"
       encryptedClassName="scramble-enc"
     />
   );

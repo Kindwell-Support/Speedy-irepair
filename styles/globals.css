@@ -10,9 +10,25 @@
     background-color: var(--color-bg);
     color: var(--color-text-primary);
     font-family: var(--font-sans);
+    letter-spacing: var(--tracking-body);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    font-weight: 500;
+    scrollbar-color: #3a3a3a var(--color-bg);
+    accent-color: var(--color-brand);
+    caret-color: var(--color-brand);
   }
+  body {
+    background-color: var(--color-bg);
+  }
+  ::selection {
+    background: var(--color-brand);
+    color: #fff;
+  }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb { background: #2e2e2e; border-radius: 9999px; border: 2px solid var(--color-bg); }
+  ::-webkit-scrollbar-thumb:hover { background: #4a4a4a; }
   /* Lenis recommended base styles (scroll owner = Lenis; see components/motion/LenisProvider) */
   html.lenis,
   html.lenis body {
@@ -36,6 +52,7 @@
   h2,
   h3,
   h4 {
+    font-family: var(--font-heading);
     color: var(--color-text);
     text-wrap: balance;
   }
@@ -51,6 +68,44 @@
     max-width: var(--container-max);
     padding-inline: var(--page-margin);
   }
+  /* Small Rajdhani label: section indexes, figure captions, form legends. Never above a heading as an eyebrow. */
+  .text-tag {
+    font-family: var(--font-sans);
+    font-size: var(--text-label);
+    font-weight: 700;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+  }
+}
+
+@layer components {
+  /* Solid panel. Name kept for existing call sites; no blur, no translucency. */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+  }
+  /* Photograph frame: the site's one image treatment. Dark vignette from the bottom keeps captions legible. */
+  .photo {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    isolation: isolate;
+  }
+  .photo > img { object-fit: cover; }
+  .photo-shade::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 45%, rgb(0 0 0 / 0.82) 100%);
+    pointer-events: none;
+  }
+  .skip-link {
+    @apply sr-only;
+  }
+  .skip-link:focus {
+    @apply not-sr-only fixed left-4 top-4 z-toast rounded-md bg-primary px-4 py-2 text-text;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -61,14 +116,5 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-}
-
-@layer components {
-  .skip-link {
-    @apply sr-only;
-  }
-  .skip-link:focus {
-    @apply not-sr-only fixed left-4 top-4 z-toast rounded-md bg-primary px-4 py-2 text-text;
   }
 }

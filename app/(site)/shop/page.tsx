@@ -22,7 +22,7 @@ export default async function ShopPage() {
   return (
     <>
       <JsonLd data={jsonLdForShop(seo)} />
-      <PageHero hero={page.hero} />
+      <PageHero hero={page.hero} photo="devices" />
       <div className="container-site py-12">
         {!catalog.supportsCheckout ? (
           <Notice tone="staging" className="mb-8">

@@ -46,27 +46,31 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd data={jsonLdForHome(seo)} />
-      <HomeHero hero={page.hero} />
+      <HomeHero hero={page.hero} business={settings.business} />
       <ServicesGrid copy={page.serviceCardsSection} cards={page.serviceCards} />
       <HowItWorks copy={page.howItWorksSection} steps={steps} />
       <Brands copy={page.brandsSection} brands={brands.filter((b) => b.repairs)} />
       <WhyChooseUs copy={page.whySection} items={values} />
       <Testimonials copy={page.testimonialsSection} items={testimonials} reviewUrl={settings.business.externalLinks.review} />
       <Promotions copy={page.promotionsSection} items={promotions} />
-      <Section id="faq" copy={page.faqSection}>
+      <Section id="faq" copy={page.faqSection} layout="side">
         <FaqList faqs={faqs} />
       </Section>
       <LocationContact copy={page.locationSection} business={settings.business} directionsLabel={page.locationSection.directionsLabel} />
-      <Section id="newsletter" tone="raised" className="text-center">
-        <h2 className="text-h3">{page.newsletter.heading}</h2>
-        <div className="mx-auto mt-6 max-w-md">
-          <NewsletterForm
-            emailLabel={page.newsletter.emailLabel}
-            buttonLabel={page.newsletter.buttonLabel}
-            successMessage={page.newsletter.successMessage}
-          />
+      <section id="newsletter" aria-labelledby="newsletter-heading" className="border-t border-border-subtle bg-bg-raised py-20 md:py-24">
+        <div className="container-site grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-x-8">
+          <h2 id="newsletter-heading" className="max-w-[18ch] text-h3 lg:col-span-6">
+            {page.newsletter.heading}
+          </h2>
+          <div className="lg:col-span-5 lg:col-start-8">
+            <NewsletterForm
+              emailLabel={page.newsletter.emailLabel}
+              buttonLabel={page.newsletter.buttonLabel}
+              successMessage={page.newsletter.successMessage}
+            />
+          </div>
         </div>
-      </Section>
+      </section>
     </>
   );
 }

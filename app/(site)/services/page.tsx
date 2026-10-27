@@ -19,9 +19,9 @@ export default async function ServicesPage() {
   return (
     <>
       <JsonLd data={jsonLdForServices(seo)} />
-      <PageHero hero={page.hero} />
+      <PageHero hero={page.hero} photo="bench" />
       <ServiceSections services={services} />
-      <Section id="services-faq" copy={page.faqSection} tone="raised">
+      <Section id="services-faq" copy={page.faqSection} tone="raised" layout="side">
         <FaqList faqs={faqs} />
       </Section>
     </>

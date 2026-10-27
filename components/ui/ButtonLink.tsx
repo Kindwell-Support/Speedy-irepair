@@ -4,18 +4,20 @@ import { cn } from "@/lib/utils/cn";
 import type { CtaLink } from "@/lib/sanity/types";
 
 type Variant = NonNullable<CtaLink["variant"]>;
-type Size = "md" | "lg";
+type Size = "sm" | "md" | "lg";
 
+/* Rajdhani 700, uppercase, modest tracking: buttons are read and pressed, so they use the reading face. */
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors duration-fast ease-out focus-visible:shadow-focus disabled:cursor-not-allowed";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm font-sans font-bold uppercase tracking-[0.06em] transition-[background-color,border-color,color,box-shadow] duration-fast ease-out focus-visible:shadow-focus disabled:cursor-not-allowed";
 const variants: Record<Variant, string> = {
-  primary: "bg-primary text-text hover:bg-primary-hover active:bg-primary-active",
-  secondary: "border border-border-strong bg-transparent text-text hover:bg-surface-2",
-  link: "text-primary-text underline-offset-4 hover:underline",
+  primary: "bg-primary text-text shadow-glow-sm hover:bg-primary-hover active:bg-primary-active",
+  secondary: "border border-border-strong bg-bg text-text hover:border-text hover:bg-surface active:bg-surface-2",
+  link: "text-primary-text underline underline-offset-4 decoration-1 hover:decoration-2",
 };
 const sizes: Record<Size, string> = {
-  md: "h-control-md px-5 text-body-sm",
-  lg: "h-control-lg px-7 text-body",
+  sm: "h-control-sm px-5 text-body-sm",
+  md: "h-control-md px-6 text-body",
+  lg: "h-control-lg px-8 text-body-lg",
 };
 
 export function buttonClasses(variant: Variant = "primary", size: Size = "md", className?: string): string {

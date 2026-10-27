@@ -15,9 +15,9 @@ import { MathUtils, type Group } from "three";
 import { createScreenTexture } from "./screenTexture";
 
 const ACCENT = "#ED1C24";
-const W = 1.5;
-const H = 3.08;
-const D = 0.16;
+const W = 1.42;
+const H = 2.96;
+const D = 0.1;
 
 type SceneProps = {
   active: boolean;
@@ -64,72 +64,49 @@ function Phone({ interactive, posterMode }: { interactive: boolean; posterMode?:
 
   return (
     <group ref={group} rotation={[0.06, -0.38, 0]}>
-      {/* body / frame */}
-      <RoundedBox args={[W, H, D]} radius={0.15} smoothness={4} bevelSegments={3} creaseAngle={0.4}>
-        <meshStandardMaterial color="#2b2b30" metalness={0.9} roughness={0.32} envMapIntensity={1.2} />
+      {/* body / frame — flat-edge titanium band */}
+      <RoundedBox args={[W, H, D]} radius={0.08} smoothness={4} bevelSegments={3} creaseAngle={0.4}>
+        <meshPhysicalMaterial color="#1a1a1e" metalness={0.95} roughness={0.2} clearcoat={0.6} clearcoatRoughness={0.1} envMapIntensity={1.6} />
       </RoundedBox>
-      {/* bezel */}
+      {/* bezel — near-edge-to-edge */}
       <mesh position={[0, 0, D / 2 + 0.0005]}>
-        <planeGeometry args={[W - 0.06, H - 0.06]} />
-        <meshStandardMaterial color="#050505" roughness={0.4} />
+        <planeGeometry args={[W - 0.04, H - 0.04]} />
+        <meshStandardMaterial color="#030303" roughness={0.35} />
       </mesh>
       {/* emissive screen */}
       <mesh position={[0, 0, D / 2 + 0.002]}>
-        <planeGeometry args={[W - 0.14, H - 0.14]} />
+        <planeGeometry args={[W - 0.1, H - 0.1]} />
         <meshBasicMaterial map={screen} transparent toneMapped={false} />
       </mesh>
-      {/* cover glass: clearcoat + env reflections + faint iridescence (cheap refraction sheen) */}
+      {/* cover glass */}
       <mesh position={[0, 0, D / 2 + 0.004]}>
-        <planeGeometry args={[W - 0.04, H - 0.04]} />
+        <planeGeometry args={[W - 0.03, H - 0.03]} />
         <meshPhysicalMaterial
           color="#ffffff"
           transparent
-          opacity={0.1}
-          roughness={0.04}
+          opacity={0.08}
+          roughness={0.03}
           metalness={0}
           clearcoat={1}
-          clearcoatRoughness={0.02}
-          iridescence={0.35}
-          iridescenceIOR={1.4}
-          envMapIntensity={2.2}
+          clearcoatRoughness={0.015}
+          iridescence={0.4}
+          iridescenceIOR={1.45}
+          envMapIntensity={2.4}
           depthWrite={false}
         />
       </mesh>
-      {/* glass back */}
-      <mesh position={[0, 0, -D / 2 - 0.001]} rotation={[0, Math.PI, 0]}>
-        <planeGeometry args={[W - 0.08, H - 0.08]} />
-        <meshPhysicalMaterial color="#141418" roughness={0.18} metalness={0.15} clearcoat={1} clearcoatRoughness={0.05} envMapIntensity={1.4} />
+      {/* side buttons — power + volume */}
+      <mesh position={[W / 2 + 0.006, 0.5, 0]}>
+        <boxGeometry args={[0.015, 0.3, 0.04]} />
+        <meshPhysicalMaterial color="#1a1a1e" metalness={0.95} roughness={0.2} />
       </mesh>
-      {/* camera bump with 3 lens rings */}
-      <group position={[-0.34, 1.07, -D / 2 - 0.02]}>
-        <RoundedBox args={[0.66, 0.66, 0.05]} radius={0.12} smoothness={3}>
-          <meshPhysicalMaterial color="#1b1b20" roughness={0.25} metalness={0.4} clearcoat={1} />
-        </RoundedBox>
-        {[
-          [-0.14, 0.14],
-          [-0.14, -0.14],
-          [0.15, 0],
-        ].map(([x, y], i) => (
-          <group key={i} position={[x, y, -0.035]} rotation={[Math.PI / 2, 0, 0]}>
-            <mesh>
-              <cylinderGeometry args={[0.105, 0.105, 0.04, 32]} />
-              <meshStandardMaterial color="#3a3a40" metalness={1} roughness={0.25} />
-            </mesh>
-            <mesh position={[0, -0.021, 0]}>
-              <cylinderGeometry args={[0.075, 0.075, 0.005, 32]} />
-              <meshPhysicalMaterial color="#05060a" roughness={0.05} clearcoat={1} envMapIntensity={2} />
-            </mesh>
-          </group>
-        ))}
-      </group>
-      {/* side buttons */}
-      <mesh position={[W / 2 + 0.008, 0.6, 0]}>
-        <boxGeometry args={[0.02, 0.36, 0.06]} />
-        <meshStandardMaterial color="#2b2b30" metalness={0.9} roughness={0.3} />
+      <mesh position={[-W / 2 - 0.006, 0.7, 0]}>
+        <boxGeometry args={[0.015, 0.18, 0.04]} />
+        <meshPhysicalMaterial color="#1a1a1e" metalness={0.95} roughness={0.2} />
       </mesh>
-      <mesh position={[-W / 2 - 0.008, 0.75, 0]}>
-        <boxGeometry args={[0.02, 0.22, 0.06]} />
-        <meshStandardMaterial color="#2b2b30" metalness={0.9} roughness={0.3} />
+      <mesh position={[-W / 2 - 0.006, 0.4, 0]}>
+        <boxGeometry args={[0.015, 0.18, 0.04]} />
+        <meshPhysicalMaterial color="#1a1a1e" metalness={0.95} roughness={0.2} />
       </mesh>
     </group>
   );

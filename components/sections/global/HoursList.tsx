@@ -9,6 +9,26 @@ function to12h(t: string): string {
   return m === "00" ? `${h12} ${suffix}` : `${h12}:${m} ${suffix}`;
 }
 
+/**
+ * One line for tight spots: runs of consecutive days with the same hours, closed days left out
+ * ("Mon–Sat 12 PM – 6 PM"). Null while hours are a placeholder.
+ */
+export function hoursSummary(business: BusinessInfo): string | null {
+  if (business.hoursIsPlaceholder) return null;
+  const runs: { from: string; to: string; span: string }[] = [];
+  let prev: string | null = null;
+  for (const h of business.hours) {
+    const span = h.closed || !h.opens || !h.closes ? null : `${to12h(h.opens)} – ${to12h(h.closes)}`;
+    const last = runs[runs.length - 1];
+    if (span && last && span === prev) last.to = h.day;
+    else if (span) runs.push({ from: h.day, to: h.day, span });
+    prev = span;
+  }
+  if (!runs.length) return null;
+  const day = (d: string) => d.slice(0, 3);
+  return runs.map((r) => `${day(r.from)}${r.to !== r.from ? `–${day(r.to)}` : ""} ${r.span}`).join(", ");
+}
+
 /** Opening hours from siteSettings (Decision #2). Falls back to the placeholder text when flagged. */
 export function HoursList({ business, compact = false }: { business: BusinessInfo; compact?: boolean }) {
   if (business.hoursIsPlaceholder)

@@ -9,6 +9,7 @@ import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { TypeRows } from "@/components/ui/TypeRows";
 import { LocationContact } from "@/components/sections/shared/LocationContact";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -21,10 +22,10 @@ export default async function AboutPage() {
   return (
     <>
       <JsonLd data={jsonLdForAbout(seo)} />
-      <PageHero hero={page.hero} />
+      <PageHero hero={page.hero} photo="microsolder" />
       <Section id="about-us" copy={page.aboutSection} />
       <Section id="team" copy={page.teamSection} tone="raised">
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {team.map((m) => (
             <li key={m.id} className="rounded-xl border border-border bg-surface p-6">
               {m.photo ? <SmartImage image={m.photo} sizes="(min-width: 1024px) 33vw, 100vw" className="mb-4 aspect-square rounded-lg object-cover" /> : null}
@@ -39,15 +40,15 @@ export default async function AboutPage() {
       </Section>
       <Section id="story" copy={page.storySection} />
       <Section id="values" copy={page.valuesSection} tone="raised">
-        <ul className="grid gap-3 md:grid-cols-3">
-          {page.valuesSection.values.map((v) => (
-            <li key={v} className="rounded-xl border border-border bg-surface p-6 text-h5">
-              {v}
-            </li>
-          ))}
-        </ul>
+        <TypeRows items={page.valuesSection.values} />
       </Section>
-      {settings.business.spectrumAuthorizedRetailer ? <Section id="spectrum" copy={page.spectrumSection} /> : null}
+      {settings.business.spectrumAuthorizedRetailer ? (
+        <Section
+          id="spectrum"
+          copy={page.spectrumSection}
+          aside={<ButtonLink cta={{ label: "See home internet plans", href: "/home-internet", variant: "secondary" }} className="self-start" />}
+        />
+      ) : null}
       <Section id="about-cta" copy={page.ctaSection} tone="raised">
         <div className="flex flex-wrap gap-3">
           {page.ctaSection.ctas.map((c) => (

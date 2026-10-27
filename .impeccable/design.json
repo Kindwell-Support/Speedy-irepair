@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-27T00:00:00Z",
+  "title": "Design System: Speedy iRepair",
+  "extensions": {
+    "colorMeta": {
+      "brand-red": { "role": "primary", "displayName": "Logo Red", "canonical": "#ED1C24", "tonalRamp": ["#3a0709", "#5c0b0e", "#8a1015", "#B01117", "#D9161E", "#ED1C24", "#FF4D53", "#ffc9cb"] },
+      "primary-red": { "role": "primary", "displayName": "Counter Red", "canonical": "#D9161E", "tonalRamp": ["#4a1416", "#6e0d11", "#8f1015", "#B01117", "#D9161E", "#FF2D35", "#FF4D53", "#ffd6d7"] },
+      "red-text": { "role": "primary", "displayName": "Signal Red Text", "canonical": "#FF4D53" },
+      "true-black": { "role": "neutral", "displayName": "True Black", "canonical": "#000000", "tonalRamp": ["#000000", "#0a0a0a", "#0c0c0c", "#111111", "#161616", "#1c1c1c", "#222222", "#333333"] },
+      "black-raised": { "role": "neutral", "displayName": "Raised Black", "canonical": "#0a0a0a" },
+      "panel": { "role": "neutral", "displayName": "Panel", "canonical": "#0c0c0c" },
+      "surface": { "role": "neutral", "displayName": "Surface", "canonical": "#111111" },
+      "text": { "role": "neutral", "displayName": "Headline White", "canonical": "#ffffff", "tonalRamp": ["#555555", "#8f8f8f", "#b8b8b8", "#f0f0f0", "#ffffff"] },
+      "text-secondary": { "role": "neutral", "displayName": "Supporting Grey", "canonical": "#b8b8b8" },
+      "text-tertiary": { "role": "neutral", "displayName": "Note Grey", "canonical": "#8f8f8f" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display / H1", "purpose": "One per page; hero headline. Orbitron, solid white." },
+      "headline": { "displayName": "Headline / H2", "purpose": "Section headings." },
+      "title": { "displayName": "Title / H3", "purpose": "Card, service, promotion titles; TypeRows at weight 900." },
+      "title-sm": { "displayName": "Title / H4", "purpose": "Step and secondary card titles." },
+      "body-lg": { "displayName": "Lead", "purpose": "Intros and sublines, 46-52ch." },
+      "body": { "displayName": "Body", "purpose": "Running text, nav, md buttons." },
+      "label": { "displayName": "Tag", "purpose": "Uppercase captions, indexes, form legends. Never a kicker above a heading." }
+    },
+    "shadows": [
+      { "name": "shadow-1", "value": "0 1px 2px rgb(0 0 0 / 0.6)", "purpose": "Hairline contact." },
+      { "name": "shadow-2", "value": "0 12px 28px -8px rgb(0 0 0 / 0.7)", "purpose": "Floating panels." },
+      { "name": "shadow-3", "value": "0 32px 64px -16px rgb(0 0 0 / 0.8)", "purpose": "Overlays." },
+      { "name": "glow-sm", "value": "0 10px 24px -14px rgb(237 28 36 / 0.6)", "purpose": "Under primary buttons and hovered chips." },
+      { "name": "glow-md", "value": "0 14px 32px -14px rgb(237 28 36 / 0.7)", "purpose": "Stronger red affordance." },
+      { "name": "glow-lg", "value": "0 20px 48px -18px rgb(237 28 36 / 0.75)", "purpose": "Largest red affordance." },
+      { "name": "focus-ring", "value": "0 0 0 2px #000000, 0 0 0 4px #ED1C24", "purpose": "All focus-visible states (white outline on the red field)." }
+    ],
+    "motion": [
+      { "name": "duration-instant", "value": "120ms", "purpose": "Hover colour, press." },
+      { "name": "duration-fast", "value": "200ms", "purpose": "Buttons, icons, accordions." },
+      { "name": "duration-base", "value": "320ms", "purpose": "Reveals, step transitions." },
+      { "name": "duration-slow", "value": "480ms", "purpose": "Section/hero entrances, photo hover zoom (max)." },
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default snappy deceleration." },
+      { "name": "ease-in-out", "value": "cubic-bezier(0.65, 0, 0.35, 1)", "purpose": "Pinned/scrub, route transitions." },
+      { "name": "ease-spring", "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "purpose": "Magnetic release, small overshoot." },
+      { "name": "reveal-distance", "value": "16px", "purpose": "Max translate on reveal. All durations go to 0 under reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "375px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "2xl", "value": "1440px" },
+      { "name": "3xl", "value": "1920px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main call to action: Counter Red fill, Rajdhani uppercase, red glow beneath.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Schedule Repair</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 24px; border-radius: var(--radius-sm, 8px); background: var(--color-primary, #D9161E); color: #fff; font-family: var(--font-sans, Rajdhani, sans-serif); font-size: 1.0625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; box-shadow: 0 10px 24px -14px rgb(237 28 36 / 0.6); transition: background-color 200ms cubic-bezier(0.16,1,0.3,1), box-shadow 200ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-primary:hover { background: var(--color-primary-hover, #FF2D35); } .ds-btn-primary:active { background: var(--color-primary-active, #B01117); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px #000, 0 0 0 4px #ED1C24; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Black fill with a grey stroke; turns surface with a white stroke on hover.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Get a Quote</a>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 24px; border-radius: 8px; border: 1px solid #333333; background: #000; color: #fff; font-family: var(--font-sans, Rajdhani, sans-serif); font-size: 1.0625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; transition: background-color 200ms, border-color 200ms; } .ds-btn-secondary:hover { border-color: #fff; background: #111111; } .ds-btn-secondary:active { background: #161616; } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 2px #000, 0 0 0 4px #ED1C24; }"
+    },
+    {
+      "name": "Link Button",
+      "kind": "button",
+      "refersTo": "button-link",
+      "description": "Inline red underlined action, e.g. the direct-link fallback on embeds.",
+      "html": "<a class=\"ds-btn-link\" href=\"#\">Open in Google Maps</a>",
+      "css": ".ds-btn-link { color: #FF4D53; font-family: var(--font-sans, Rajdhani, sans-serif); font-size: 1.0625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; } .ds-btn-link:hover { text-decoration-thickness: 2px; } .ds-btn-link:focus-visible { outline: none; box-shadow: 0 0 0 2px #000, 0 0 0 4px #ED1C24; border-radius: 4px; }"
+    },
+    {
+      "name": "Step Card",
+      "kind": "card",
+      "refersTo": "step-card",
+      "description": "How-it-works step: large tertiary numeral above an H4 title, black card on a raised section.",
+      "html": "<div class=\"ds-step\"><span class=\"ds-step-n\">1</span><div><h3 class=\"ds-step-t\">Tell us what broke</h3><p class=\"ds-step-b\">Get a quote online or call.</p></div></div>",
+      "css": ".ds-step { display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 220px; padding: 24px; border: 1px solid #222222; border-radius: 12px; background: #000; } .ds-step-n { font-family: var(--font-heading, Orbitron, sans-serif); font-size: 3rem; font-weight: 900; color: #8f8f8f; font-variant-numeric: tabular-nums; } .ds-step-t { margin: 0; font-family: var(--font-heading, Orbitron, sans-serif); font-size: 1.375rem; font-weight: 600; color: #fff; } .ds-step-b { margin: 8px 0 0; font-family: var(--font-sans, Rajdhani, sans-serif); font-size: 1.0625rem; line-height: 1.6; color: #b8b8b8; }"
+    },
+    {
+      "name": "Type Rows",
+      "kind": "custom",
+      "refersTo": "type-rows",
+      "description": "Name-only lists set as Orbitron 900 headline type on a top rule, not cards.",
+      "html": "<ul class=\"ds-typerows\"><li>Honest quotes</li><li>Fast turnaround</li><li>Real warranty</li></ul>",
+      "css": ".ds-typerows { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; list-style: none; margin: 0; padding: 0; } .ds-typerows li { border-top: 1px solid #222222; padding-top: 20px; font-family: var(--font-heading, Orbitron, sans-serif); font-size: 1.75rem; font-weight: 900; color: #fff; }"
+    },
+    {
+      "name": "Captioned Photograph",
+      "kind": "custom",
+      "refersTo": "photo",
+      "description": "The site's one image treatment: 12px frame, tag-style caption saying what the picture shows.",
+      "html": "<figure class=\"ds-photo-fig\"><div class=\"ds-photo\"></div><figcaption class=\"ds-caption\">Screen replacement on the bench</figcaption></figure>",
+      "css": ".ds-photo-fig { margin: 0; max-width: 360px; } .ds-photo { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 12px; background: linear-gradient(135deg, #1c1c1c, #111111); } .ds-caption { margin-top: 12px; font-family: var(--font-sans, Rajdhani, sans-serif); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #8f8f8f; }"
+    },
+    {
+      "name": "Sticky Header",
+      "kind": "nav",
+      "refersTo": "site-header",
+      "description": "Black at 78% with 14px blur (the only blur in the system), Rajdhani nav links, red CTA.",
+      "html": "<header class=\"ds-nav\"><span class=\"ds-nav-logo\">SPEEDY iREPAIR</span><nav class=\"ds-nav-links\"><a href=\"#\">Services</a><a href=\"#\">Shop</a><a href=\"#\">About</a></nav></header>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; height: 72px; padding: 0 32px; background: rgb(0 0 0 / 0.78); backdrop-filter: blur(14px) saturate(140%); border-bottom: 1px solid #1a1a1a; } .ds-nav-logo { font-family: var(--font-heading, Orbitron, sans-serif); font-weight: 900; color: #fff; } .ds-nav-links { display: flex; gap: 4px; } .ds-nav-links a { display: inline-flex; align-items: center; height: 48px; padding: 0 12px; font-family: var(--font-sans, Rajdhani, sans-serif); font-size: 1.0625rem; font-weight: 600; color: #b8b8b8; text-decoration: none; transition: color 200ms; } .ds-nav-links a:hover { color: #fff; } .ds-nav-links a:focus-visible { outline: none; box-shadow: 0 0 0 2px #000, 0 0 0 4px #ED1C24; border-radius: 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Lit Bench",
+    "overview": "A repair counter at night: true black ground, one hard brand red, white headline type, and photographs of the work itself under a lamp. The site sells speed and competence, so it shows the trade (screens lifted, batteries fitted, boards under the microscope) and sets its claims in wide, solid Orbitron. Everything a person reads or presses is in Rajdhani.\n\nDensity is generous: sections breathe on a fluid 64 to 128px vertical rhythm, headers split heading-left / intro-right on desktop, and short lists are set as type rather than boxed. Depth is tonal (a ladder of near-blacks) plus offset shadows; there is no glass translucency outside the sticky header.\n\nConfirmed rejections (owner): no hollow or outlined headline text, no scan-line or texture over headlines. Headlines are solid, bold, white.",
+    "keyCharacteristics": [
+      "True black (#000) page, near-black ladder for sections and panels.",
+      "One accent: brand red. One full-red field per page at most.",
+      "Orbitron headlines (solid white), Rajdhani for body, buttons, labels and questions.",
+      "Generated photographs of repair work, always captioned as what they show.",
+      "Ruled rows and type-set lists over card grids.",
+      "Third-party embeds behind click-to-load facades."
+    ],
+    "rules": [
+      { "name": "The One Red Field Rule", "body": "A page carries at most one full-bleed red section (home: Promotions). Elsewhere red is an accent, never a ground.", "section": "colors" },
+      { "name": "The Opaque Token Rule", "body": "Colour tokens are CSS variables, so Tailwind opacity modifiers on them (`bg-primary/20`, `border-border/50`) silently fail. For translucency use `black/xx` or `white/xx` (e.g. the `white/30` rules on the red field), or the pre-mixed tint tokens.", "section": "colors" },
+      { "name": "The Solid Headline Rule", "body": "Headlines are solid bold white. No outline/hollow text, no scan-line, gradient-fill or texture on headline type.", "section": "typography" },
+      { "name": "The Reading Face Rule", "body": "Orbitron is for headlines and figures only. Buttons, labels, captions, nav, form text and FAQ questions are Rajdhani.", "section": "typography" },
+      { "name": "The No Kicker Rule", "body": "The tag style is for captions and indexes, never as a label above a heading. The single exception is the home hero's red \"Speedy iRepair\" brand line, which stays red and is not reused elsewhere.", "section": "typography" },
+      { "name": "The Falling Light Rule", "body": "Shadows have a y-offset and negative spread; no centred halo glows on boxes.", "section": "elevation" },
+      { "name": "The Solid Chrome Rule", "body": "`glass` panels are solid (#0c0c0c, 1px #222 border), and so is the sticky header (solid black, hairline rule). No backdrop blur on panels or chrome.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do set headlines in solid bold white Orbitron, and everything read or pressed in Rajdhani.",
+      "Do keep the home hero brand line \"Speedy iRepair\" red.",
+      "Do start side-by-side layouts at `md:` (768) or later.",
+      "Do use `black/xx` or `white/xx` for translucency; token colours do not take opacity modifiers.",
+      "Do build sections with `Section`, alternating `default` and `raised` tones.",
+      "Do pair inner-page hero headlines with one photograph from the site image set, captioned with what it shows.",
+      "Do set name-only lists as TypeRows.",
+      "Do put every third-party embed behind a click-to-load facade with a backdrop and a compact idle height."
+    ],
+    "donts": [
+      "Don't use hollow/outlined text, scan-lines or textures on headlines.",
+      "Don't use `sm:` for multi-column layouts; `sm` is a 375px phone.",
+      "Don't run more than one full-red field on a page.",
+      "Don't present the generated photographs as this shop, its bench, team or storefront.",
+      "Don't box short name lists in cards.",
+      "Don't show prices on repair or trade-in services (Shopify product prices are allowed).",
+      "Don't place tag-style labels above headings as kickers.",
+      "Don't use zero-offset halo shadows or backdrop blur on panels or chrome."
+    ]
+  }
+}

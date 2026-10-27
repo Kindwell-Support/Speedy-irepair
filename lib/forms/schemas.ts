@@ -27,23 +27,23 @@ export const spamFields = z.object({
   pagePath: z.string().max(200).optional(),
 });
 
-/** F1 Instant Quote (spec 2.6, REQ-061..065): lead capture, no prices. */
+/** F1 Instant Quote (spec 2.6, REQ-061..065): lead capture, no prices. The shop calls back, so email is optional. */
 export const quoteSchema = z.object({
-  deviceType: z.enum(["iPhone", "iPad", "Samsung", "LG", "Google", "Other"]),
-  model: z.string().trim().min(1, "Please enter your model").max(120),
-  issue: z.enum(["Cracked Screen", "Battery", "Charger Port", "Camera", "Water Damage", "Other"]),
+  deviceType: z.enum(["iPhone", "iPad", "Samsung", "LG", "Google", "Other"], { error: "Choose your device type" }),
+  model: z.string().trim().min(1, "Tell us the model, e.g. iPhone 13").max(120),
+  issue: z.enum(["Cracked Screen", "Battery", "Charger Port", "Camera", "Water Damage", "Other"], { error: "Choose what's wrong" }),
   details: z.string().trim().max(2000).optional(),
   name,
   phone,
-  email,
+  email: email.optional().or(z.literal("")),
 });
 
 /** F5 Trade-in (spec 2.5, REQ-058): Device Type → Brand → Model → Condition → contact. */
 export const tradeInSchema = z.object({
-  deviceType: z.enum(["Phone", "Tablet", "Smartwatch", "Laptop", "Other"]),
-  brand: z.enum(["Apple", "Samsung", "LG", "Google", "Motorola", "OnePlus", "Other"]),
-  model: z.string().trim().min(1, "Please enter your model").max(120),
-  condition: z.enum(["Like new", "Good", "Fair", "Cracked / damaged", "Not working"]),
+  deviceType: z.enum(["Phone", "Tablet", "Smartwatch", "Laptop", "Other"], { error: "Choose your device type" }),
+  brand: z.enum(["Apple", "Samsung", "LG", "Google", "Motorola", "OnePlus", "Other"], { error: "Choose the brand" }),
+  model: z.string().trim().min(1, "Tell us the model, e.g. Galaxy S22").max(120),
+  condition: z.enum(["Like new", "Good", "Fair", "Cracked / damaged", "Not working"], { error: "Choose its condition" }),
   details: z.string().trim().max(2000).optional(),
   name,
   phone,

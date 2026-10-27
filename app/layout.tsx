@@ -8,14 +8,15 @@
  */
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Inter } from "next/font/google";
+import { Orbitron, Rajdhani } from "next/font/google";
 import "@/styles/globals.css";
 import { MotionBootScript } from "@/lib/motion/boot-script";
 import { MotionShell } from "@/components/layout/MotionShell";
 import { isIndexable } from "@/lib/seo/metadata";
 import { SITE_URL } from "@/lib/seo/site";
 
-const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
+const orbitron = Orbitron({ subsets: ["latin"], weight: ["700", "800", "900"], display: "swap", variable: "--font-orbitron" });
+const rajdhani = Rajdhani({ subsets: ["latin"], weight: ["500", "600", "700"], display: "swap", variable: "--font-rajdhani" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -23,11 +24,11 @@ export const metadata: Metadata = {
   robots: isIndexable() ? undefined : { index: false, follow: false },
 };
 
-export const viewport: Viewport = { themeColor: "#0a0a0a", colorScheme: "dark" };
+export const viewport: Viewport = { themeColor: "#000000", colorScheme: "dark" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={`${orbitron.variable} ${rajdhani.variable}`} suppressHydrationWarning>
       <head>
         <MotionBootScript />
       </head>

@@ -52,6 +52,215 @@ html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]) [data-step]
   contain: layout paint;
 }
 
+/* How It Works: active / done step visual states (toggled by bindings.ts) */
+:is([data-animate="steps"], [data-pin="how"]) [data-step] {
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out),
+              opacity var(--duration-fast) var(--ease-out);
+}
+:is([data-animate="steps"], [data-pin="how"]) [data-step].is-active {
+  border-color: var(--color-brand);
+  box-shadow: var(--glow-primary);
+}
+:is([data-animate="steps"], [data-pin="how"]) [data-step].is-active [data-step-number] {
+  color: var(--color-brand);
+}
+:is([data-animate="steps"], [data-pin="how"]) [data-step].is-done {
+  opacity: 0.5;
+  border-color: var(--color-border);
+}
+:is([data-animate="steps"], [data-pin="how"]) [data-step].is-done [data-step-number] {
+  color: var(--color-success);
+}
+
+/* ---------------------------------------------------------------- home hero
+   Questions set huge, the answer one size down; all solid white (no outline, no texture). */
+.hero-headline {
+  position: relative;
+  color: #ffffff;
+  text-shadow: 0 0 48px rgb(237 28 36 / 0.22);
+}
+/* The headline is the largest text in the hero. Sized to its column (cqi: "Cracked screen?" runs ~9.4em in
+   Orbitron 900, so one question per line at any width) AND to the viewport height so the whole hero fits
+   one screen (and can pin) on short laptops. */
+.hero-copy { container-type: inline-size; }
+.hero-headline-ask {
+  font-size: clamp(2rem, min(10cqi, 7.2svh), 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+/* The answer is the second size: clearly under the questions, clearly over the subline. */
+.hero-headline-answer {
+  font-size: clamp(1.25rem, min(6cqi, 4.2svh), 2.25rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+/* The giant ghost wordmark behind the phone (solid brand red, knocked well down): stage texture, never
+   a second headline. Phones: it spans the column and sits
+   above the phone, which overlaps its foot. Desktop: centred on the phone box, the phone in front. */
+.hero-device {
+  --word-size: calc((100vw - 2 * var(--page-margin)) / 4.95);
+  padding-top: calc(var(--word-size) * 0.5);
+}
+/* The italic ink leans ~0.08em right of its advance box; --word-shift pulls it back to optical centre. */
+.hero-word {
+  --word-shift: -0.08em;
+  top: 0;
+  transform: translateX(calc(-50% + var(--word-shift)));
+  font-size: var(--word-size);
+  line-height: 0.8;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgb(237 28 36 / 0.22);
+  user-select: none;
+}
+@media (min-width: 1024px) {
+  .hero-device { --word-size: min(16vw, 14.5rem); padding-top: 0; }
+  .hero-word { top: 50%; transform: translate(calc(-50% + var(--word-shift)), -50%); }
+}
+
+/* Top-right figure: "45 min", kept under the headline's size so it supports rather than competes. */
+.hero-stat-figure {
+  font-size: clamp(2rem, min(2.4vw, 5svh), 2.75rem);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+}
+.hero-stat-unit {
+  margin-left: 0.12em;
+  font-size: 0.32em;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--color-primary-text);
+}
+
+/* Hero entrance: pre-hide elements that the GSAP timeline will reveal. */
+html[data-motion="ok"] [data-hero-entrance]:not([data-animated]) [data-hero-subline],
+html[data-motion="ok"] [data-hero-entrance]:not([data-animated]) [data-hero-ctas],
+html[data-motion="ok"] [data-hero-entrance]:not([data-animated]) [data-trust-bar],
+html[data-motion="ok"] [data-hero-entrance]:not([data-animated]) [data-hero-device],
+html[data-motion="ok"] [data-hero-entrance]:not([data-animated]) [data-hero-fade],
+html[data-motion="ok"] [data-hero-entrance]:not([data-animated]) [data-shard-layer] {
+  opacity: 0;
+}
+
+/* Stage light: the room is dark, the only light source is the red bench lamp behind the phone. */
+.hero-stage {
+  background:
+    radial-gradient(50% 70% at 50% 52%, rgb(237 28 36 / 0.16), transparent 70%),
+    radial-gradient(120% 90% at 50% 120%, rgb(237 28 36 / 0.06), transparent 60%),
+    var(--color-bg);
+}
+.hero-phone-light {
+  background: radial-gradient(closest-side, rgb(237 28 36 / 0.55), transparent);
+}
+
+/* The phone: real renders sharing one frame. Fixed screen heals outward from the impact (--heal, 0–160%). */
+.hero-phone {
+  --heal: 0%;
+  height: clamp(320px, 50svh, 460px);
+  aspect-ratio: 760 / 1560;
+  filter: drop-shadow(0 48px 64px rgb(0 0 0 / 0.7));
+}
+@media (min-width: 1024px) {
+  .hero-phone { height: min(74svh, 700px); }
+}
+/* Repaired wallpaper knocked down a stop so the screen doesn't add another bright red field to the stage. */
+.hero-phone-fixed {
+  filter: brightness(0.6) saturate(0.85);
+  -webkit-mask-image: radial-gradient(circle at var(--ix) var(--iy), #000 calc(var(--heal) - 14%), transparent var(--heal));
+  mask-image: radial-gradient(circle at var(--ix) var(--iy), #000 calc(var(--heal) - 14%), transparent var(--heal));
+}
+.hero-phone-flash {
+  background: radial-gradient(circle at var(--ix) var(--iy), rgb(255 255 255 / 0.95), rgb(255 120 120 / 0.35) 14%, transparent 34%);
+}
+
+/* Status tag on the phone's left edge: "Cracked glass" swaps to "Fixed in 45 min". */
+.hero-status {
+  display: grid;
+  white-space: nowrap;
+}
+.hero-status > span {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-3);
+}
+.hero-status > span::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+.hero-status-broken::before { background: var(--color-brand); }
+.hero-status-fixed { opacity: 0; }
+.hero-status-fixed::before { background: var(--color-success); }
+
+/* Hero buttons sit flat on the stage: no resting glow, the focus ring still shows. */
+.hero-ctas a { box-shadow: none; }
+.hero-ctas a:focus-visible { box-shadow: var(--focus-ring); }
+
+/* Glass shards: real cutouts (alpha WebP). Box position/size from cssVars (--sx --sy --sw); bindHeroRepair
+   moves the box, the img inside carries the resting rotation and an idle drift. */
+.hero-shard {
+  --shard-k: 0.5;
+  position: absolute;
+  left: var(--sx);
+  top: var(--sy);
+  width: calc(var(--sw) * 1px * var(--shard-k));
+}
+.hero-shard > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: rotate(var(--sr));
+  user-select: none;
+}
+.hero-shard-near { filter: blur(2.5px) brightness(1.1); }
+.hero-shard-far { filter: blur(0.6px); opacity: 0.55; }
+@media (min-width: 768px) {
+  .hero-shard { --shard-k: 0.8; }
+}
+@media (min-width: 1280px) {
+  .hero-shard { --shard-k: 1; }
+}
+html[data-motion="ok"] .hero-shard > img {
+  animation: hero-shard-drift 7s var(--ease-in-out) var(--sd, 0s) infinite alternate;
+}
+@keyframes hero-shard-drift {
+  from { transform: translate3d(0, -6px, 0) rotate(calc(var(--sr) - 2deg)); }
+  to { transform: translate3d(0, 6px, 0) rotate(calc(var(--sr) + 2deg)); }
+}
+
+/* Section dividers — gradient lines between homepage sections for vertical rhythm. */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 5%, var(--color-border-strong) 50%, transparent 95%);
+}
+.section-divider-brand {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 10%, var(--color-brand) 50%, transparent 90%);
+  opacity: 0.25;
+}
+
+/* Cursor glow — soft red radial gradient following the pointer. */
+.cursor-glow-spot {
+  width: 350px;
+  height: 350px;
+  margin-left: -175px;
+  margin-top: -175px;
+  background: radial-gradient(circle, rgb(237 28 36 / 0.15) 0%, rgb(237 28 36 / 0.04) 40%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  will-change: transform;
+}
+
 /* Reduced motion: hard stop for any CSS transition/animation in motion-layer elements. */
 html[data-motion="reduce"] :is([data-animate], [data-motion-el]),
 html[data-motion="reduce"] :is([data-animate], [data-motion-el]) * {

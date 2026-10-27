@@ -31,7 +31,7 @@ export function useFormSubmit<T extends FormTypeKey>(type: T) {
       if (!parsed.success) {
         setState({
           status: "error",
-          message: "Please fix the highlighted fields.",
+          message: "A few details are missing. Check the fields marked below.",
           fieldErrors: parsed.error.flatten().fieldErrors as Record<string, string[] | undefined>,
         });
         return;
@@ -52,7 +52,7 @@ export function useFormSubmit<T extends FormTypeKey>(type: T) {
         const data = (await res.json()) as FormResponse;
         if (data.ok) setState({ status: "success", staging: data.staging });
         else if (data.error === "validation")
-          setState({ status: "error", message: "Please fix the highlighted fields.", fieldErrors: data.fieldErrors });
+          setState({ status: "error", message: "A few details are missing. Check the fields marked below.", fieldErrors: data.fieldErrors });
         else setState({ status: "error", message: data.message });
       } catch {
         setState({ status: "error", message: "Something went wrong. Please try again or call the store." });

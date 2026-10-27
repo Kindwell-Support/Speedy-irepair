@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { buttonClasses } from "./ButtonLink";
 import { cn } from "@/lib/utils/cn";
 
@@ -16,7 +16,9 @@ export function EmbedFacade({
   directHref,
   directLabel,
   heightClass = "h-[640px]",
+  idleHeightClass,
   description,
+  backdrop,
 }: {
   src: string;
   title: string;
@@ -24,11 +26,20 @@ export function EmbedFacade({
   directHref: string;
   directLabel: string;
   heightClass?: string;
+  /** Height before the iframe loads, when the full embed height would just be an empty box. */
+  idleHeightClass?: string;
   description?: string;
+  /** Decorative art behind the unloaded state (aria-hidden); dropped once the iframe loads. */
+  backdrop?: ReactNode;
 }) {
   const [loaded, setLoaded] = useState(false);
   return (
-    <div className={cn("relative w-full overflow-hidden rounded-xl border border-border bg-surface", heightClass)}>
+    <div className={cn("relative w-full overflow-hidden rounded-xl border border-border bg-surface", loaded ? heightClass : (idleHeightClass ?? heightClass))}>
+      {!loaded && backdrop ? (
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          {backdrop}
+        </div>
+      ) : null}
       {loaded ? (
         <iframe
           src={src}
@@ -40,7 +51,7 @@ export function EmbedFacade({
           data-lenis-prevent
         />
       ) : (
-        <div className="flex h-full flex-col items-center justify-center gap-4 p-8 text-center">
+        <div className="relative flex h-full flex-col items-center justify-center gap-4 p-8 text-center">
           {description ? <p className="max-w-prose text-body text-text-secondary">{description}</p> : null}
           <button type="button" className={buttonClasses("primary", "lg")} onClick={() => setLoaded(true)}>
             {loadLabel}

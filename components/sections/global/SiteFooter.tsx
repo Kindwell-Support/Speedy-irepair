@@ -2,21 +2,25 @@ import Image from "next/image";
 import Link from "next/link";
 import type { CtaLink, SiteSettings } from "@/lib/sanity/types";
 import { telHref } from "@/lib/utils/format";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { HoursList } from "./HoursList";
 
 const PAYMENT_LABELS = { paypal: "PayPal", venmo: "Venmo", visa: "Visa", mastercard: "Mastercard", amex: "Amex", discover: "Discover" } as const;
 
+/* Every footer link is a 44px row: the footer is mostly used on phones, to call or find the hours. */
+const LINK = "inline-flex min-h-11 items-center text-body text-text-secondary transition-colors duration-fast hover:text-text";
+const COL_HEADING = "mb-2 font-sans text-body font-bold text-text";
+
 function FooterLink({ link }: { link: CtaLink }) {
-  const cls = "text-body-sm text-text-secondary transition-colors duration-fast hover:text-text";
   if (link.external)
     return (
-      <a href={link.href} className={cls} target="_blank" rel="noopener noreferrer">
+      <a href={link.href} className={LINK} target="_blank" rel="noopener noreferrer">
         {link.label}
         <span className="sr-only"> (opens in a new tab)</span>
       </a>
     );
   return (
-    <Link href={link.href} className={cls}>
+    <Link href={link.href} className={LINK}>
       {link.label}
     </Link>
   );
@@ -27,74 +31,72 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
   const { business: b, navigation } = settings;
   const logo = b.logoInverse ?? b.logo;
   return (
-    <footer className="border-t border-border-subtle bg-bg-raised pb-10 pt-16" aria-labelledby="footer-heading">
+    <footer className="border-t border-border-subtle bg-bg-raised pb-10 pt-16 md:pt-20" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="container-site grid gap-12 md:grid-cols-2 xl:grid-cols-4">
-        <div className="space-y-4">
-          <Image src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} className="h-6 w-auto" sizes="200px" />
-          <address className="space-y-1 text-body-sm not-italic text-text-secondary">
-            <p>{b.footerAddressLine}</p>
-            <p>
-              <a href={telHref(b.phone)} className="hover:text-text">
-                {b.phone}
-              </a>
-            </p>
-            <p>
-              <a href={`mailto:${b.email}`} className="hover:text-text">
+      <div className="container-site">
+        <div className="flex flex-col gap-8 border-b border-border-subtle pb-12 md:flex-row md:items-end md:justify-between">
+          <div className="space-y-5">
+            <Image src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} className="h-8 w-auto" sizes="240px" />
+            <a href={telHref(b.phone)} className="flex min-h-11 items-center font-heading text-h3 font-black tabular-nums hover:text-primary-text">
+              {b.phone}
+            </a>
+          </div>
+          <ButtonLink cta={navigation.headerCta} size="lg" className="self-start md:self-auto" />
+        </div>
+
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 pt-12 xl:grid-cols-4">
+          <div className="col-span-2 md:col-span-1">
+            <h3 className={COL_HEADING}>Visit</h3>
+            <address className="not-italic">
+              <p className="py-2 text-body text-text-secondary">{b.footerAddressLine}</p>
+              <a href={`mailto:${b.email}`} className={LINK}>
                 {b.email}
               </a>
-            </p>
-          </address>
-          <ul className="flex flex-wrap gap-4" aria-label="Social media">
-            {b.socials.map((s) => (
-              <li key={s.platform}>
-                <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-body-sm text-text-secondary hover:text-text">
-                  {s.label}
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <nav aria-label="Quick links">
-          <h3 className="mb-4 text-label uppercase text-text-tertiary">Quick links</h3>
-          <ul className="space-y-3">
-            {navigation.footerQuickLinks.map((l) => (
-              <li key={l.href}>
-                <FooterLink link={l} />
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <nav aria-label="Legal and more">
-          <h3 className="mb-4 text-label uppercase text-text-tertiary">More</h3>
-          <ul className="space-y-3">
-            {navigation.footerLegalLinks.map((l) => (
-              <li key={l.href}>
-                <FooterLink link={l} />
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <div>
-          <h3 className="mb-4 text-label uppercase text-text-tertiary">Hours</h3>
-          <HoursList business={b} compact />
+            </address>
+            <ul className="mt-2 flex flex-wrap gap-x-6" aria-label="Social media">
+              {b.socials.map((s) => (
+                <li key={s.platform}>
+                  <a href={s.url} target="_blank" rel="noopener noreferrer" className={LINK}>
+                    {s.label}
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <nav aria-label="Quick links">
+            <h3 className={COL_HEADING}>Quick links</h3>
+            <ul>
+              {navigation.footerQuickLinks.map((l) => (
+                <li key={l.href}>
+                  <FooterLink link={l} />
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <nav aria-label="Legal and more">
+            <h3 className={COL_HEADING}>More</h3>
+            <ul>
+              {navigation.footerLegalLinks.map((l) => (
+                <li key={l.href}>
+                  <FooterLink link={l} />
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="col-span-2 md:col-span-1">
+            <h3 className={COL_HEADING}>Hours</h3>
+            <div className="max-w-sm pt-2">
+              <HoursList business={b} compact />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="container-site mt-12 flex flex-col gap-4 border-t border-border-subtle pt-8 md:flex-row md:items-center md:justify-between">
-        <p className="text-caption text-text-tertiary">{settings.copyright}</p>
-        <div>
-          <p className="sr-only">Accepted payments:</p>
-          <ul className="flex flex-wrap gap-2" aria-label="Accepted payments">
-            {b.paymentsAccepted.map((p) => (
-              <li key={p} className="rounded-xs border border-border px-2 py-1 text-caption text-text-secondary">
-                {PAYMENT_LABELS[p]}
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div className="container-site mt-12 flex flex-col gap-3 border-t border-border-subtle pt-8 text-body-sm text-text-tertiary md:flex-row md:items-center md:justify-between">
+        <p>{settings.copyright}</p>
+        <p>We accept {b.paymentsAccepted.map((p) => PAYMENT_LABELS[p]).join(", ")}.</p>
       </div>
     </footer>
   );

@@ -48,7 +48,7 @@ export function AddToCart({ variants, checkoutEnabled }: { variants: V[]; checko
             })
           }
         >
-          {pending ? "Adding…" : "Add to Cart"}
+          {pending ? "Adding…" : selected?.available ? "Add to Cart" : "Sold out"}
         </button>
         {checkoutEnabled && added ? (
           <button type="button" className={buttonClasses("secondary", "lg")} onClick={() => start(() => goToCheckout())}>

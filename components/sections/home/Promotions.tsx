@@ -1,23 +1,46 @@
 import type { Promotion, SectionCopy } from "@/lib/sanity/types";
-import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
 
-/** Spec 2.1.7 */
+/**
+ * Spec 2.1.7. The page's one full field of brand red: the heading on the left, each offer a row on the right
+ * with a black button. White on --color-primary is 5.1:1, so body text can sit on it; the focus ring
+ * switches to white because the usual red ring would vanish here.
+ */
 export function Promotions({ copy, items }: { copy: SectionCopy; items: Promotion[] }) {
   return (
-    <Section id="promotions" copy={copy} tone="raised">
-      <ul className="grid gap-4 md:grid-cols-3" data-animate="stagger">
-        {items.map((p) => (
-          <li key={p.id} className="flex flex-col gap-4 rounded-xl border border-border bg-surface p-6">
-            <h3 className="text-h5">
-              <PlaceholderMark show={p.isPlaceholder}>{p.title}</PlaceholderMark>
-            </h3>
-            {p.body ? <p className="text-body-sm text-text-secondary">{p.body}</p> : null}
-            <ButtonLink cta={p.cta} className="mt-auto self-start" />
-          </li>
-        ))}
-      </ul>
-    </Section>
+    <section id="promotions" aria-labelledby="promotions-heading" className="bg-primary py-section text-text">
+      <div className="container-site grid gap-10 lg:grid-cols-12 lg:gap-x-8">
+        <div className="lg:col-span-4">
+          <h2 id="promotions-heading" className="text-h2">
+            {copy.heading}
+          </h2>
+          {copy.intro ? (
+            <p className="mt-5 max-w-[40ch] text-body-lg">
+              <PlaceholderMark show={copy.isPlaceholder}>{copy.intro}</PlaceholderMark>
+            </p>
+          ) : null}
+        </div>
+        <ul className="border-y border-white/30 lg:col-span-8 lg:col-start-5">
+          {items.map((p) => (
+            <li
+              key={p.id}
+              className="grid gap-5 border-b border-white/30 py-7 last:border-b-0 md:grid-cols-[1fr_auto] md:items-center md:gap-8 md:py-9"
+            >
+              <div>
+                <h3 className="max-w-[24ch] text-h3">
+                  <PlaceholderMark show={p.isPlaceholder}>{p.title}</PlaceholderMark>
+                </h3>
+                {p.body ? <p className="mt-2 max-w-[56ch] text-body-lg">{p.body}</p> : null}
+              </div>
+              <ButtonLink
+                cta={{ ...p.cta, variant: "secondary" }}
+                className="self-start border-bg shadow-none hover:border-surface md:self-auto focus-visible:shadow-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text"
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }

@@ -15,7 +15,7 @@ Speedy iRepair is a locally owned smartphone repair shop at 1650 W Market St, Ak
 - Sell / Trade Your Device: Compare top trade-in prices for your old or broken device.
 - Prepaid Phone Plans: Simple Mobile, AT&T, and Verizon prepaid plans.
 - Bill Payment Services: Pay water, electric, and gas bills at our location.
-- Home Internet: $40/month, first month free, free smartphone with signup.
+- Home Internet: first month free, free smartphone with signup.
 - Financing: Acima lease-to-own. No credit needed.
 - Device Unlocking: Unlock your phone from any carrier.
 

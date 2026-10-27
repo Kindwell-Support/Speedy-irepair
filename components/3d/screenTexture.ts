@@ -5,8 +5,8 @@ import { CanvasTexture, SRGBColorSpace } from "three";
  * Rounded corners are baked into the alpha so the plane reads as a real display.
  */
 export function createScreenTexture(accent = "#ED1C24"): CanvasTexture {
-  const W = 480;
-  const H = 1030;
+  const W = 460;
+  const H = 960;
   const c = document.createElement("canvas");
   c.width = W;
   c.height = H;
@@ -29,20 +29,21 @@ export function createScreenTexture(accent = "#ED1C24"): CanvasTexture {
   g.fillStyle = glow;
   g.fillRect(0, 0, W, H);
 
-  const font = "Inter, Geist, 'Helvetica Neue', Arial, sans-serif";
+  const font = "Rajdhani, Inter, Geist, 'Helvetica Neue', Arial, sans-serif";
+  const headingFont = "Orbitron, " + font;
   // status bar + dynamic island
   g.fillStyle = "#000";
   g.beginPath();
-  g.roundRect(W / 2 - 62, 26, 124, 36, 18);
+  g.roundRect(W / 2 - 56, 22, 112, 32, 16);
   g.fill();
   g.fillStyle = "rgba(255,255,255,0.85)";
-  g.font = `600 22px ${font}`;
-  g.fillText("9:41", 44, 52);
+  g.font = `600 20px ${font}`;
+  g.fillText("9:41", 40, 46);
 
   // progress ring
   const cx = W / 2;
-  const cy = 430;
-  const R = 150;
+  const cy = 390;
+  const R = 140;
   g.lineCap = "round";
   g.lineWidth = 18;
   g.strokeStyle = "rgba(255,255,255,0.08)";
@@ -56,41 +57,41 @@ export function createScreenTexture(accent = "#ED1C24"): CanvasTexture {
 
   g.fillStyle = "#fff";
   g.textAlign = "center";
-  g.font = `700 120px ${font}`;
-  g.fillText("45", cx, cy + 30);
-  g.font = `600 26px ${font}`;
+  g.font = `700 110px ${headingFont}`;
+  g.fillText("45", cx, cy + 28);
+  g.font = `600 24px ${headingFont}`;
   g.fillStyle = "rgba(255,255,255,0.6)";
-  g.fillText("MIN", cx, cy + 74);
+  g.fillText("MIN", cx, cy + 66);
 
   // status card
   g.textAlign = "left";
   g.fillStyle = "rgba(255,255,255,0.06)";
   g.beginPath();
-  g.roundRect(40, 690, W - 80, 150, 28);
+  g.roundRect(36, 630, W - 72, 140, 24);
   g.fill();
   g.fillStyle = "#fff";
-  g.font = `600 30px ${font}`;
-  g.fillText("Screen repair", 72, 750);
+  g.font = `600 28px ${font}`;
+  g.fillText("Screen repair", 64, 686);
   g.fillStyle = "rgba(255,255,255,0.55)";
-  g.font = `500 22px ${font}`;
-  g.fillText("90-day warranty", 72, 790);
+  g.font = `500 20px ${font}`;
+  g.fillText("90-day warranty", 64, 720);
   // check pill
   g.fillStyle = accent;
   g.beginPath();
-  g.arc(W - 96, 765, 30, 0, Math.PI * 2);
+  g.arc(W - 86, 700, 28, 0, Math.PI * 2);
   g.fill();
   g.strokeStyle = "#fff";
-  g.lineWidth = 6;
+  g.lineWidth = 5;
   g.beginPath();
-  g.moveTo(W - 110, 766);
-  g.lineTo(W - 99, 777);
-  g.lineTo(W - 80, 754);
+  g.moveTo(W - 100, 701);
+  g.lineTo(W - 89, 712);
+  g.lineTo(W - 72, 690);
   g.stroke();
 
   // home indicator
   g.fillStyle = "rgba(255,255,255,0.7)";
   g.beginPath();
-  g.roundRect(W / 2 - 70, H - 34, 140, 8, 4);
+  g.roundRect(W / 2 - 60, H - 30, 120, 7, 4);
   g.fill();
 
   const tex = new CanvasTexture(c);

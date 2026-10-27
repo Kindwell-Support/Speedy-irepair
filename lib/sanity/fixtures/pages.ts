@@ -22,9 +22,10 @@ const akron = "Akron, OH";
 export const homePage: HomePage = {
   title: "Home",
   hero: {
-    headline: "Cracked screen? Dead battery? We fix it in 45 minutes.",
+    // The answer names the place; the 45-minute figure beside the headline carries the speed.
+    headline: "Cracked screen? Dead battery? Fixed same day in Akron.",
     // Decision #1: founding year omitted. If businessInfo.foundingYear is later set, CMS may edit this line.
-    subline: "Akron's trusted phone repair shop. Walk in or book online.",
+    subline: "Screens, batteries, charger ports and cameras with a 90‑day warranty.",
     primaryCta: { label: "Schedule Repair", href: "/schedule-repair", variant: "primary" },
     secondaryCta: { label: "Get Instant Quote", href: "/instant-quote", variant: "secondary" },
     poster: null,
@@ -171,15 +172,15 @@ export const financingPage: FinancingPage = {
 
 export const homeInternetPage: HomeInternetPage = {
   title: "Home Internet",
-  hero: { headline: "Home Internet for $40/month. First month free. Free smartphone included.", subline: null },
+  hero: { headline: "Home internet with your first month free.", subline: "Sign up at the store or online and get a free smartphone." },
   whoItsForSection: { heading: "Who it's for", items: ["New home", "Townhome", "Condo", "Apartment"] },
   whatYouGetSection: { heading: "What you get", items: ["Home internet", "First month free", "Free smartphone"] },
   howToSignUpSection: { heading: "How to sign up", intro: "Fill out the form or visit the store." },
   jotformUrl: EXTERNAL_LINKS.homeInternetSignup,
   faqSection: { heading: "Home Internet FAQs" },
   seo: {
-    metaTitle: "Home Internet in Akron, OH, $40/month | Speedy iRepair",
-    metaDescription: `Home internet for $40/month in ${akron}. First month free and a free smartphone when you sign up.`,
+    metaTitle: "Home Internet in Akron, OH | Speedy iRepair",
+    metaDescription: `Home internet in ${akron}. First month free and a free smartphone when you sign up.`,
   },
 };
 

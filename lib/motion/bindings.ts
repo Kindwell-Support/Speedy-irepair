@@ -34,6 +34,8 @@ export const SEL = {
   split: '[data-animate="split-heading"], [data-split]',
   steps: '[data-animate="steps"], [data-pin="how"]',
   faq: "[data-faq]",
+  heroEntrance: "[data-hero-entrance]",
+  heroRepair: "[data-hero-repair]",
 } as const;
 
 /* ---------------------------------------------------------------- reveal */
@@ -235,6 +237,211 @@ function bindSteps(root: ParentNode, desktop: boolean) {
   });
 }
 
+/* -------------------------------------------------- hero entrance sequence */
+/**
+ * Orchestrated hero entrance: headline SplitText is bound separately (bindSplitHeadings).
+ * This timeline staggers in the remaining hero elements on page load:
+ * background glow → subline → 3D device → CTAs → trust bar (with number counters).
+ * Total ≤ DUR.heroTotal (1.5s).
+ */
+function bindHeroEntrance(root: ParentNode) {
+  q(root, SEL.heroEntrance).forEach((section) => {
+    const subline = section.querySelector<HTMLElement>("[data-hero-subline]");
+    const ctas = section.querySelector<HTMLElement>("[data-hero-ctas]");
+    const trust = section.querySelector<HTMLElement>("[data-trust-bar]");
+    const device = section.querySelector<HTMLElement>("[data-hero-device]");
+    const shardLayer = section.querySelector<HTMLElement>("[data-shard-layer]");
+
+    settle(section);
+
+    const tl = gsap.timeline({ defaults: { ease: EASE.out } });
+
+    if (shardLayer) {
+      tl.fromTo(shardLayer, { autoAlpha: 0 }, { autoAlpha: 1, duration: DUR.revealLong }, 0.2);
+    }
+
+    if (subline) {
+      tl.fromTo(
+        subline,
+        { autoAlpha: 0, y: 16 },
+        { autoAlpha: 1, y: 0, duration: DUR.reveal * 0.7, clearProps: "transform" },
+        0.25,
+      );
+    }
+
+    if (device) {
+      tl.fromTo(
+        device,
+        { autoAlpha: 0, scale: 0.96 },
+        { autoAlpha: 1, scale: 1, duration: DUR.reveal, clearProps: "transform" },
+        0.35,
+      );
+    }
+
+    if (ctas) {
+      const buttons = Array.from(ctas.children) as HTMLElement[];
+      tl.fromTo(
+        buttons,
+        { autoAlpha: 0, y: 12 },
+        { autoAlpha: 1, y: 0, duration: DUR.micro, stagger: STAGGER.tight, clearProps: "transform" },
+        0.45,
+      );
+    }
+
+    const fades = q(section, "[data-hero-fade]");
+    if (fades.length) {
+      tl.fromTo(
+        fades,
+        { autoAlpha: 0, y: 16 },
+        { autoAlpha: 1, y: 0, duration: DUR.reveal * 0.7, stagger: STAGGER.tight, clearProps: "transform" },
+        0.5,
+      );
+    }
+
+    if (trust) {
+      const items = Array.from(trust.children) as HTMLElement[];
+      tl.fromTo(
+        items,
+        { autoAlpha: 0, y: 12 },
+        { autoAlpha: 1, y: 0, duration: DUR.reveal * 0.6, stagger: STAGGER.tight, clearProps: "transform" },
+        0.6,
+      );
+    }
+
+    // Count-ups: the hero's big figure and the trust row both start once their boxes have faded in.
+    q(section, "[data-counter]").forEach((el) => {
+      const target = parseFloat(el.dataset.counter!);
+      const isDecimal = target % 1 !== 0;
+      const counter = { val: 0 };
+      el.textContent = "0"; // still hidden (pre-hidden in motion.css), so the count never flicks back from the final value
+      tl.to(
+        counter,
+        {
+          val: target,
+          duration: 0.8,
+          ease: EASE.outSoft,
+          onUpdate() {
+            el.textContent = isDecimal
+              ? counter.val.toFixed(1)
+              : Math.round(counter.val).toLocaleString("en-US");
+          },
+        },
+        0.65,
+      );
+    });
+  });
+}
+
+/* ------------------------------------------------------------ hero repair */
+type RepairParts = {
+  section: HTMLElement;
+  phone: HTMLElement;
+  shards: HTMLElement[];
+  fixed: HTMLElement | null;
+  flash: HTMLElement | null;
+  light: HTMLElement | null;
+  broken: HTMLElement | null;
+  done: HTMLElement | null;
+};
+
+function repairParts(section: HTMLElement): RepairParts | null {
+  const phone = section.querySelector<HTMLElement>("[data-hero-phone]");
+  if (!phone) return null;
+  return {
+    section,
+    phone,
+    // Hidden (mobile-only-off) shards have no box; leave them out of the flight.
+    shards: q(section, "[data-shard]").filter((el) => el.offsetWidth > 0),
+    fixed: phone.querySelector<HTMLElement>("[data-phone-fixed]"),
+    flash: phone.querySelector<HTMLElement>("[data-phone-flash]"),
+    light: section.querySelector<HTMLElement>("[data-phone-glow]"),
+    broken: section.querySelector<HTMLElement>("[data-status-broken]"),
+    done: section.querySelector<HTMLElement>("[data-status-fixed]"),
+  };
+}
+
+/**
+ * Pinned scrub: every shard flies back into the impact point (data-tx/ty = fraction of the phone box)
+ * and vanishes into the glass; with the last landings the repaired screen heals outward from the
+ * impact (--heal radial mask), the bench light swells and the status tag flips to fixed.
+ */
+function bindHeroRepair(root: ParentNode) {
+  q(root, SEL.heroRepair).forEach((section) => {
+    const p = repairParts(section);
+    if (!p) return;
+    const header = document.querySelector<HTMLElement>("header");
+    const top = () => header?.offsetHeight ?? 0;
+
+    // Shards are absolutely placed in a layer covering the section, so offsets share its origin.
+    // Measured from layout boxes (offset*), so the shard's own transform never skews the target.
+    const delta = (el: HTMLElement) => {
+      const s = section.getBoundingClientRect();
+      const r = p.phone.getBoundingClientRect();
+      return {
+        x: r.left - s.left + num(el.dataset.tx, 0.5) * r.width - (el.offsetLeft + el.offsetWidth / 2),
+        y: r.top - s.top + num(el.dataset.ty, 0.5) * r.height - (el.offsetTop + el.offsetHeight / 2),
+      };
+    };
+
+    // Pin only when the whole hero fits on screen; on tall stacked (phone) layouts pinning would hold
+    // the CTAs below the fold, so the repair plays over the first half-screen of normal scroll instead.
+    const pin = section.offsetHeight + top() <= window.innerHeight;
+    const tl = gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: {
+        trigger: section,
+        start: () => `top top+=${top()}`,
+        end: () => `+=${Math.round(window.innerHeight * (pin ? 1.3 : 0.55))}`,
+        pin,
+        scrub: 0.6,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    const FLY = 0.5;
+    const GAP = 0.04;
+    p.shards.forEach((el, i) => {
+      const at = i * GAP;
+      const spin = (i % 2 ? 1 : -1) * (90 + ((i * 37) % 120));
+      tl.to(
+        el,
+        { x: () => delta(el).x, y: () => delta(el).y, rotation: spin, scale: 0.18, duration: FLY, ease: "power3.in" },
+        at,
+      );
+      tl.to(el, { autoAlpha: 0, duration: 0.04 }, at + FLY - 0.03);
+    });
+
+    const landed = (p.shards.length - 1) * GAP + FLY;
+    const heal = landed - 0.2;
+    if (p.flash) {
+      tl.fromTo(p.flash, { opacity: 0 }, { opacity: 1, duration: 0.05 }, heal)
+        .to(p.flash, { opacity: 0, duration: 0.3, ease: "power1.out" }, heal + 0.05);
+    }
+    if (p.fixed) tl.fromTo(p.fixed, { "--heal": "0%" }, { "--heal": "170%", duration: 0.45, ease: "power2.out" }, heal);
+    if (p.light) tl.to(p.light, { opacity: 1, scale: 1.12, duration: 0.35 }, heal);
+    if (p.broken) tl.to(p.broken, { autoAlpha: 0, duration: 0.06 }, heal + 0.14);
+    if (p.done) tl.fromTo(p.done, { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.1 }, heal + 0.16);
+    tl.to({}, { duration: 0.25 });
+  });
+}
+
+/** Reduced motion: no travel or pin. Shards fade and the screen heals in place as the hero scrolls away. */
+function bindHeroRepairReduced(root: ParentNode) {
+  q(root, SEL.heroRepair).forEach((section) => {
+    const p = repairParts(section);
+    if (!p) return;
+    const tl = gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: { trigger: section, start: "top top", end: "60% top", scrub: true },
+    });
+    tl.to(p.shards, { opacity: 0 }, 0);
+    if (p.fixed) tl.fromTo(p.fixed, { "--heal": "0%" }, { "--heal": "170%" }, 0);
+    if (p.broken) tl.to(p.broken, { opacity: 0 }, 0.5);
+    if (p.done) tl.to(p.done, { opacity: 1 }, 0.5);
+  });
+}
+
 /* ------------------------------------------------------ FAQ (GSAP accordion) */
 /**
  * Progressive enhancement of native <details>/<summary> (data-faq on the wrapper).
@@ -309,6 +516,7 @@ export function bindAnimations(root: HTMLElement): Cleanup {
   // General reveals: bound once per page (not rebuilt on breakpoint changes).
   mm.add(MQ.motionOk, () => {
     if (!allowed()) return;
+    bindHeroEntrance(root);
     bindReveal(root);
     bindStagger(root);
     bindParallax(root);
@@ -317,6 +525,14 @@ export function bindAnimations(root: HTMLElement): Cleanup {
       splitCleanups.forEach((c) => c());
       splitCleanups = [];
     };
+  });
+
+  // Hero repair: rebuilt on any media change so shard deltas match the new layout.
+  mm.add(MQ.motionOk, () => {
+    if (allowed()) bindHeroRepair(root);
+  });
+  mm.add(MQ.reduce, () => {
+    bindHeroRepairReduced(root);
   });
 
   // How It Works: pinned on >=768px, stacked reveal below. Rebuilt across the breakpoint.

@@ -70,6 +70,11 @@ const config: Config = {
         "primary-tint": "var(--color-primary-tint)",
         "primary-glow": "var(--color-primary-glow)",
         "focus-ring": "var(--color-focus-ring)",
+        "brand-border": "var(--color-brand-border)",
+        "brand-border-hover": "var(--color-brand-border-hover)",
+        glass: "var(--glass-bg)",
+        "glass-border": "var(--glass-border)",
+        "glass-border-hover": "var(--glass-border-hover)",
         success: "var(--color-success)",
         "success-tint": "var(--color-success-tint)",
         error: "var(--color-error)",
@@ -78,6 +83,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
+        heading: ["var(--font-heading)"],
         mono: ["var(--font-mono)"],
       },
       fontSize: {
@@ -107,7 +113,11 @@ const config: Config = {
         1: "var(--shadow-1)",
         2: "var(--shadow-2)",
         3: "var(--shadow-3)",
+        glass: "var(--shadow-glass)",
         glow: "var(--glow-primary)",
+        "glow-sm": "var(--shadow-glow-sm)",
+        "glow-md": "var(--shadow-glow-md)",
+        "glow-lg": "var(--shadow-glow-lg)",
         focus: "var(--focus-ring)",
       },
       transitionDuration: {
@@ -147,6 +157,7 @@ const config: Config = {
       },
       minHeight: {
         "control-md": "var(--control-h-md)",
+        banner: "var(--banner-h)",
       },
     },
   },

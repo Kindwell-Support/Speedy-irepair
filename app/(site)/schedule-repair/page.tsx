@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import { SITE_IMAGES } from "@/lib/site-images";
 import { getSchedulePage, getSiteSettings } from "@/lib/sanity/content";
 import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
@@ -17,10 +19,11 @@ export async function generateMetadata(): Promise<Metadata> {
 /** R07 — branded wrapper; Square booking stays on-site (click-to-load iframe, direct link fallback). */
 export default async function ScheduleRepairPage() {
   const [page, settings, seo] = await Promise.all([getSchedulePage(), getSiteSettings(), getSeoData()]);
+  const bench = SITE_IMAGES.bench;
   return (
     <>
       <JsonLd data={jsonLdForScheduleRepair(seo)} />
-      <PageHero hero={page.hero} />
+      <PageHero hero={page.hero} photo="battery" />
       <Section id="booking">
         <EmbedFacade
           src={page.squareBookingUrl}
@@ -29,7 +32,14 @@ export default async function ScheduleRepairPage() {
           directHref={page.squareBookingUrl}
           directLabel="Open booking in a new tab"
           heightClass="h-[900px]"
+          idleHeightClass="h-[480px] md:h-[560px]"
           description="Booking is provided by Square. Loading it sets Square cookies."
+          backdrop={
+            <>
+              <Image src={bench.src} alt="" fill sizes="100vw" className="object-cover opacity-40" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30" />
+            </>
+          }
         />
       </Section>
       <div className="container-site grid gap-10 pb-8 md:grid-cols-2">

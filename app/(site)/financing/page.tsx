@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { TypeRows } from "@/components/ui/TypeRows";
 import { HowItWorks } from "@/components/sections/home/HowItWorks";
 import { FaqList } from "@/components/sections/shared/FaqList";
 
@@ -20,20 +21,14 @@ export default async function FinancingPage() {
   return (
     <>
       <JsonLd data={jsonLdForFinancing(seo)} />
-      <PageHero hero={page.hero} />
+      <PageHero hero={page.hero} photo="boardMacro" />
       <Section id="what-is-acima" copy={page.whatIsSection} />
       <HowItWorks id="financing-steps" copy={page.howItWorksSection} steps={steps} />
       <Section id="what-you-can-finance" copy={page.whatYouCanFinanceSection}>
-        <ul className="flex flex-wrap gap-3">
-          {page.whatYouCanFinanceSection.items.map((i) => (
-            <li key={i} className="rounded-full border border-border px-4 py-2">
-              {i}
-            </li>
-          ))}
-        </ul>
-        <ButtonLink cta={page.applyCta} size="lg" className="mt-8" />
+        <TypeRows items={page.whatYouCanFinanceSection.items} />
+        <ButtonLink cta={page.applyCta} size="lg" className="mt-10" />
       </Section>
-      <Section id="financing-faq" copy={page.faqSection} tone="raised">
+      <Section id="financing-faq" copy={page.faqSection} tone="raised" layout="side">
         <FaqList faqs={faqs} />
       </Section>
     </>
