@@ -88,7 +88,7 @@ export function SiteFooter({ settings, copy }: { settings: SiteSettings; copy: F
               {b.paymentsAccepted.map((p) => (
                 <li
                   key={p}
-                  className="px-2.5 inline-flex h-7 items-center rounded-xs border border-border text-[11px] font-semibold tracking-[0.02em] text-text-secondary"
+                  className="inline-flex h-7 items-center rounded-xs border border-border px-[10px] text-[11px] font-semibold tracking-[0.02em] text-text-secondary"
                 >
                   {copy.paymentLabels[p]}
                 </li>

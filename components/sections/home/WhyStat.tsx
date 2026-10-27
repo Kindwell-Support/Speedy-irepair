@@ -10,7 +10,7 @@ export function WhyStat({ value, label }: { value: string; label?: string | null
     <span className="block text-h1 font-extrabold tabular-nums leading-none tracking-[-0.05em] text-text">
       {m ? <CountUp value={Number(value)} decimals={m[1]?.length ?? 0} duration={0.48} /> : value}
       {label ? (
-        <small className="ml-1.5 text-[0.32em] font-semibold tracking-normal text-text-secondary">
+        <small className="ml-[6px] text-[0.32em] font-semibold tracking-normal text-text-secondary">
           {label}
         </small>
       ) : null}

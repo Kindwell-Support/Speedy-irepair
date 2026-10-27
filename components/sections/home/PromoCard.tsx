@@ -34,7 +34,7 @@ export function PromoCard({ promo, feature }: { promo: Promotion; feature: boole
         <LineIcon name={promoIcon(promo, feature)} size={32} />
       </span>
       {promo.badge ? (
-        <span className="before:size-1.5 inline-flex items-center gap-2 self-start rounded-full border border-[rgb(237_28_36/0.35)] bg-primary-tint px-3 py-1 text-caption font-semibold text-text before:rounded-full before:bg-brand before:content-['']">
+        <span className="inline-flex items-center gap-2 self-start rounded-full border border-[rgb(237_28_36/0.35)] bg-primary-tint px-3 py-1 text-caption font-semibold text-text before:size-[6px] before:rounded-full before:bg-brand before:content-['']">
           {promo.badge}
         </span>
       ) : null}

@@ -19,7 +19,7 @@ export function PdpAssurances({ items, address }: { items: PdpAssurance[]; addre
     >
       {items.map((a) => (
         <li key={a.key} className="flex gap-3">
-          <LineIcon name={ICONS[a.key]} size={22} className="mt-0.5 shrink-0 text-brand" />
+          <LineIcon name={ICONS[a.key]} size={22} className="mt-[2px] shrink-0 text-brand" />
           <span className="grid gap-1 text-body-sm text-text-secondary">
             <strong className="font-semibold text-text">{a.title}</strong>
             <span>

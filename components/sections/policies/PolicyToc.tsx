@@ -2,13 +2,13 @@ type Item = { id: string; text: string };
 
 function TocList({ items }: { items: Item[] }) {
   return (
-    <ol className="gap-0.5 grid border-l border-border-subtle">
+    <ol className="grid gap-[2px] border-l border-border-subtle">
       {items.map((item) => (
         <li key={item.id}>
           <a
             href={`#${item.id}`}
             data-toc-link={item.id}
-            className="py-1.5 -ml-px block border-l border-transparent pl-4 text-body-sm text-text-tertiary hover:text-text aria-[current=true]:border-brand aria-[current=true]:text-text"
+            className="-ml-px flex min-h-8 items-center border-l border-transparent py-1 pl-4 text-body-sm text-text-tertiary hover:text-text aria-[current=true]:border-brand aria-[current=true]:text-text"
           >
             {item.text}
           </a>
