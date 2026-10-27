@@ -35,6 +35,8 @@ type SceneProps = {
   /** static pose for the poster render (no motion) */
   posterMode?: boolean;
   onFirstFrame?: () => void;
+  /** WebGL context + canvas created (before the first frame). */
+  onCreated?: () => void;
   onDegrade?: (reason: string) => void;
   skipFpsGuard?: boolean;
 };
@@ -257,6 +259,7 @@ export default function PhoneScene({
   mobile,
   posterMode,
   onFirstFrame,
+  onCreated,
   onDegrade,
   skipFpsGuard,
 }: SceneProps) {
@@ -274,6 +277,13 @@ export default function PhoneScene({
       frameloop={active ? "always" : "never"}
       className="!h-full !w-full"
       aria-hidden
+      // QA detection contract (docs/motion/HOOKS.md "3D hero detection"): the real <canvas>
+      // (R3F puts Canvas props on its wrapper div, so the test id is set on gl.domElement).
+      onCreated={({ gl }) => {
+        gl.domElement.setAttribute("data-testid", "hero-canvas");
+        gl.domElement.addEventListener("webglcontextlost", () => onDegrade?.("context-lost"), { once: true });
+        onCreated?.();
+      }}
     >
       <ambientLight intensity={0.25} />
       <directionalLight position={[3, 4, 5]} intensity={1.4} />

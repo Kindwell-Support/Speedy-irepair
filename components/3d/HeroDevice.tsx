@@ -7,6 +7,14 @@
  * hardware WebGL available, window `load` fired, browser idle, hero in viewport.
  * Runtime degrade: FPS < 30 after warm-up or context loss -> unmount, keep poster.
  * Pauses (frameloop "never") when offscreen or tab hidden.
+ *
+ * QA detection contract (docs/motion/HOOKS.md "3D hero detection"), on [data-hero-device]:
+ *   data-phase = poster | mounting | live | degraded
+ *   data-3d    = off:<reason> | pending | live | off:<degrade reason, e.g. low-fps:22.0 / context-lost>
+ *   data-3d-canvas="created" once a WebGL canvas existed (persists after a degrade)
+ *   canvas[data-testid="hero-canvas"] while the scene is mounted (mounting / live).
+ * `?force3d=1` bypasses the software-GL / low-power gates and the FPS guard (not reduced motion
+ * or save-data). `?no3d=1` forces the poster.
  */
 import dynamic from "next/dynamic";
 import { Suspense, useEffect, useRef, useState } from "react";
@@ -136,7 +144,11 @@ export function HeroDevice({
               interactive={!env.mobile}
               mobile={env.mobile}
               skipFpsGuard={env.force}
-              onFirstFrame={() => setPhase((p) => (p === "mounting" ? "live" : p))}
+              onCreated={() => box.current?.setAttribute("data-3d-canvas", "created")}
+              onFirstFrame={() => {
+                box.current?.setAttribute("data-3d", "live");
+                setPhase((p) => (p === "mounting" ? "live" : p));
+              }}
               onDegrade={(reason) => {
                 box.current?.setAttribute("data-3d", `off:${reason}`);
                 setPhase("degraded");

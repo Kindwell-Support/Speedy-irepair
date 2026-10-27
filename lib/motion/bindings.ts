@@ -159,6 +159,62 @@ function bindParallax(root: ParentNode) {
   });
 }
 
+/* ---------------------------------------------- split heading: text + name */
+/**
+ * QA BUG-003: headings built from block line spans (`<span class="block">Cracked screen?</span>
+ * <span class="block">Dead battery?</span>...`) have no whitespace between lines, so textContent and
+ * SplitText's `aria: "auto"` label read "screen?Dead". For every split heading, in BOTH motion
+ * modes, we (1) insert a single space text node between adjacent block-level children that have no
+ * whitespace between them (textContent / innerText / SEO-on-render now see the sentence) and
+ * (2) set aria-label to the spaced, whitespace-collapsed text unless the author set one.
+ * SplitText's own label is overwritten with ours after every (re-)split and after revert.
+ */
+const BLOCKY = /^(block|flex|grid|list-item|table|flow-root)/;
+const isBlocky = (n: Node | null): n is HTMLElement =>
+  !!n && n.nodeType === 1 && BLOCKY.test(getComputedStyle(n as HTMLElement).display);
+export function spacedText(el: Element): string {
+  const walk = (n: Node): string => {
+    if (n.nodeType === 3) return n.nodeValue ?? "";
+    if (n.nodeType !== 1) return "";
+    const inner = Array.from(n.childNodes).map(walk).join("");
+    return n !== el && isBlocky(n) ? ` ${inner} ` : inner;
+  };
+  return walk(el).replace(/\s+/g, " ").trim();
+}
+const splitLabels = new WeakMap<HTMLElement, string>();
+function normaliseSplitHeadings(root: ParentNode): Cleanup {
+  const added: Text[] = [];
+  const labelled: HTMLElement[] = [];
+  q(root, SEL.split).forEach((el) => {
+    Array.from(el.children).forEach((child) => {
+      const prev = child.previousSibling;
+      if (!prev || !(isBlocky(child) || isBlocky(prev))) return;
+      const before = prev.nodeType === 3 ? prev.nodeValue ?? "" : (prev.textContent ?? "");
+      const after = child.textContent ?? "";
+      if (/\s$/.test(before) || /^\s/.test(after)) return;
+      const space = document.createTextNode(" ");
+      el.insertBefore(space, child);
+      added.push(space);
+    });
+    if (el.hasAttribute("aria-label") && !splitLabels.has(el)) return; // author label wins
+    const label = spacedText(el);
+    splitLabels.set(el, label);
+    el.setAttribute("aria-label", label);
+    labelled.push(el);
+  });
+  return () => {
+    added.forEach((t) => t.remove());
+    labelled.forEach((el) => {
+      splitLabels.delete(el);
+      el.removeAttribute("aria-label");
+    });
+  };
+}
+const applySplitLabel = (el: HTMLElement) => {
+  const label = splitLabels.get(el);
+  if (label) el.setAttribute("aria-label", label);
+};
+
 /* --------------------------------------------------------- split heading */
 function bindSplitHeadings(root: ParentNode): Cleanup[] {
   const cleanups: Cleanup[] = [];
@@ -173,6 +229,7 @@ function bindSplitHeadings(root: ParentNode): Cleanup[] {
       autoSplit: true, // re-split on resize / font load; the returned tween is reverted + rebuilt
       aria: "auto", // aria-label on the element, split pieces aria-hidden
       onSplit(self) {
+        applySplitLabel(el); // spaced sentence, not SplitText's run-together textContent
         gsap.set(el, { autoAlpha: 1 });
         settle(el);
         const targets = mode === "chars" ? self.chars : mode === "lines" ? self.lines : self.words;
@@ -186,7 +243,10 @@ function bindSplitHeadings(root: ParentNode): Cleanup[] {
         });
       },
     });
-    cleanups.push(() => split.revert());
+    cleanups.push(() => {
+      split.revert();
+      applySplitLabel(el); // revert drops SplitText's label; keep ours (e.g. switch to reduced motion)
+    });
   });
   return cleanups;
 }
@@ -453,6 +513,8 @@ function bindCountUps(root: ParentNode): Cleanup[] {
  */
 export function bindAnimations(root: HTMLElement): Cleanup {
   registerGsap();
+  // Both modes (reduced motion included): spaced textContent + accessible name for split headings.
+  const unNormalise = normaliseSplitHeadings(root);
   const mm = gsap.matchMedia(root);
   let splitCleanups: Cleanup[] = [];
 
@@ -489,5 +551,8 @@ export function bindAnimations(root: HTMLElement): Cleanup {
   // Fonts can shift layout -> refresh trigger positions once they're in.
   document.fonts?.ready.then(() => ScrollTrigger.refresh()).catch(() => {});
 
-  return () => mm.revert();
+  return () => {
+    mm.revert();
+    unNormalise();
+  };
 }

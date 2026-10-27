@@ -98,3 +98,33 @@ Motion components never dim **text** with opacity. Inactive text keeps the Front
 ## BrandMarquee landmark
 
 `BrandMarquee` is its own labelled region in **both** branches: loop = `LogoLoop` root `role="region" aria-label="Brands we repair"`; reduced motion / static = a `<div role="region" aria-label="Brands we repair">` wrapping the `<ul>`. The Frontend's `Brands` section relies on this (`landmark={false}`); do not add a second label.
+
+## Split headings: text and accessible name (QA BUG-003, 2026-10-27)
+
+Every `data-animate="split-heading"` / `[data-split]` heading, **in both motion modes** (reduced motion included, once the engine has loaded):
+- A single space text node is inserted between adjacent block-level children that have no whitespace between them (e.g. the home H1's four `span.block` lines). `textContent` / `innerText` then read the sentence: "Cracked screen? Dead battery? We fix it in 45 minutes."
+- `aria-label` is set to the heading's text, with block children joined by single spaces and whitespace collapsed (`spacedText()` in `lib/motion/bindings.ts`). An author-set `aria-label` wins. It is re-applied after every SplitText re-split and after revert, so SplitText's own run-together label never sticks.
+- Server HTML / no-JS: the motion layer can't change it. The durable fix is Frontend markup that renders a space between line spans (`{i > 0 && " "}`); the engine's normaliser then has nothing to insert.
+
+## 3D hero detection (QA BUG-009 contract, 2026-10-27)
+
+Headless Chromium uses SwiftShader (software GL), so the gate shows the poster and no three.js chunk loads. That is correct behaviour, not a missing scene. Detect the live scene deterministically on the hero wrapper `[data-hero-device]` (inside `[data-testid="hero"]`):
+
+| Attribute / element | Values |
+|---|---|
+| `data-phase` | `poster` (initial / gated) → `mounting` (R3F chunk loading, canvas being created) → `live` (first frames rendered, poster cross-faded out) or `degraded` (scene unmounted, poster back) |
+| `data-3d` | `off:<gate reason>` (`software-gl`, `reduced-motion`, `save-data`, `low-power`, `no-webgl`, `disabled` = `?no3d=1`) · `pending` (gate passed) · `live` · `off:<degrade reason>` (`low-fps:NN.N`, `context-lost`) |
+| `data-3d-canvas="created"` | a WebGL canvas existed at least once (persists after a degrade) |
+| `canvas[data-testid="hero-canvas"]` | the real WebGL `<canvas>` while the scene is mounted (`mounting` / `live`) |
+
+QA overrides: `?force3d=1` bypasses the software-GL and low-power gates and the runtime FPS guard (not reduced motion, not save-data). Under SwiftShader it is slow (expect low fps and long tasks; don't profile with it). `?no3d=1` forces the poster.
+
+Recipe (Playwright):
+```ts
+await page.goto(`${base}/?force3d=1`, { waitUntil: "load" });
+const hero = page.locator("[data-hero-device]");
+await expect(hero).toHaveAttribute("data-phase", /^(live|degraded)$/, { timeout: 20_000 });
+await expect(hero).toHaveAttribute("data-3d-canvas", "created");
+if ((await hero.getAttribute("data-phase")) === "live") await expect(page.locator('canvas[data-testid="hero-canvas"]')).toHaveCount(1);
+// default URL in headless: expect data-phase="poster" and data-3d="off:software-gl" (correct, not a bug)
+```
