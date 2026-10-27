@@ -31,12 +31,13 @@ export const homePage: HomePage = {
   },
   serviceCardsSection: { heading: "Our services" },
   serviceCards: [], // filled by content layer from collections.serviceCards
+  serviceCardLinkLabel: "Learn more",
   howItWorksSection: { heading: "How it works" },
   brandsSection: { heading: "Brands we repair" },
   whySection: { heading: "Why choose us" },
   testimonialsSection: { heading: "What customers say" },
   promotionsSection: { heading: "Current promotions" },
-  faqSection: { heading: "Frequently asked questions" },
+  faqSection: { heading: "Frequently asked questions", allLabel: "All FAQs", callPrompt: "Can't find it? Call" },
   locationSection: { heading: "Visit us in Akron", directionsLabel: "Get Directions" },
   newsletter: {
     heading: "Join our mailing list for the best deals.",

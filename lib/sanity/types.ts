@@ -260,12 +260,15 @@ export interface BasePage {
 export interface HomePage extends BasePage {
   serviceCardsSection: SectionCopy;
   serviceCards: ServiceCard[];
+  /** Frontend (design .card-service__foot, QA BUG-004): label in each home service card foot. Fixture default until CMS adds it. */
+  serviceCardLinkLabel?: string | null;
   howItWorksSection: SectionCopy;
   brandsSection: SectionCopy;
   whySection: SectionCopy;
   testimonialsSection: SectionCopy;
   promotionsSection: SectionCopy;
-  faqSection: SectionCopy;
+  /** allLabel/callPrompt: Frontend (design .faq-layout, QA BUG-005). Fixture default until CMS adds them. */
+  faqSection: SectionCopy & { allLabel?: string | null; callPrompt?: string | null };
   locationSection: SectionCopy & { directionsLabel: string };
   newsletter: { eyebrow?: string | null; heading: string; emailLabel: string; buttonLabel: string; successMessage: string };
   contactSection: SectionCopy;
