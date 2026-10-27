@@ -48,6 +48,11 @@ const config = [
       ".lighthouseci/**",
       // Vendored third-party source, see components/motion/reactbits/README.md
       "components/motion/reactbits/**",
+      // Local design-tool skills and their output, not site code
+      ".agents/**",
+      ".claude/**",
+      ".impeccable/**",
+      ".taste-skill/**",
     ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),

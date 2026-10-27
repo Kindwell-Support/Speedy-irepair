@@ -122,8 +122,8 @@ function StreetSketch({ street }: { street: string }) {
     <svg viewBox="0 0 700 560" preserveAspectRatio="xMidYMid slice" className="h-full w-full">
       <defs>
         <radialGradient id="street-fade" cx="50%" cy="52%" r="60%">
-          <stop offset="0%" style={{ stopColor: "var(--color-surface)", stopOpacity: 0.9 }} />
-          <stop offset="100%" style={{ stopColor: "var(--color-surface)", stopOpacity: 0 }} />
+          <stop offset="0%" className="[stop-color:var(--color-surface)] [stop-opacity:0.9]" />
+          <stop offset="100%" className="[stop-color:var(--color-surface)] [stop-opacity:0]" />
         </radialGradient>
       </defs>
       <g stroke="rgba(255,255,255,0.07)" strokeWidth="2">
@@ -140,8 +140,8 @@ function StreetSketch({ street }: { street: string }) {
       </text>
       <rect x="0" y="0" width="700" height="560" fill="url(#street-fade)" />
       <g transform="translate(350 134)">
-        <circle r="22" style={{ fill: "var(--color-primary)" }} opacity="0.25" />
-        <path d="M0 0 C-14 -16 -16 -28 -16 -34 a16 16 0 0 1 32 0 c0 6 -2 18 -16 34 Z" style={{ fill: "var(--color-primary)" }} />
+        <circle r="22" className="[fill:var(--color-primary)]" opacity="0.25" />
+        <path d="M0 0 C-14 -16 -16 -28 -16 -34 a16 16 0 0 1 32 0 c0 6 -2 18 -16 34 Z" className="[fill:var(--color-primary)]" />
         <circle cy="-34" r="6" fill="#fff" />
       </g>
     </svg>

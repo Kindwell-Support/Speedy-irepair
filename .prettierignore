@@ -8,3 +8,7 @@ test-results
 components/motion/reactbits
 lib/shop/fixtures/*.json
 .arch-backup
+.agents
+.claude
+.impeccable
+.taste-skill
