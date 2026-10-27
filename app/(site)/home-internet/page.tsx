@@ -42,7 +42,12 @@ export default async function HomeInternetPage() {
           <ul className="grid gap-3 md:grid-cols-3" data-animate="stagger">
             {s.items.map((i, n) =>
               id === "what-you-get" ? (
-                <OfferCard key={i} item={i} icon={OFFER_ICONS[n % OFFER_ICONS.length]} />
+                <OfferCard
+                  key={i}
+                  item={i}
+                  icon={OFFER_ICONS[n % OFFER_ICONS.length]}
+                  priceSource={n === 0 ? page.hero.headline : undefined}
+                />
               ) : (
                 <li key={i} className="rounded-xl border border-border bg-surface p-6">
                   {i}

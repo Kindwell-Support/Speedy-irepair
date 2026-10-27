@@ -1,4 +1,5 @@
 import type { Service } from "@/lib/sanity/types";
+import { navTitle } from "./navTitle";
 
 /** Design .svc-chips: horizontally scrolling jump links above the services list below lg. */
 export function ServiceChips({
@@ -19,9 +20,10 @@ export function ServiceChips({
             <a
               href={`#${s.slug}`}
               data-toc-link={s.slug}
-              className="inline-flex h-8 items-center rounded-full border border-border px-4 text-body-sm text-text-secondary hover:border-border-strong hover:text-text aria-[current=true]:border-text aria-[current=true]:bg-text aria-[current=true]:text-text-inverse"
+              title={s.title}
+              className="inline-flex h-8 max-w-[calc(100vw-48px)] items-center rounded-full border border-border px-4 text-body-sm text-text-secondary hover:border-border-strong hover:text-text aria-[current=true]:border-text aria-[current=true]:bg-text aria-[current=true]:text-text-inverse"
             >
-              {s.title}
+              <span className="truncate">{navTitle(s.title)}</span>
             </a>
           </li>
         ))}
