@@ -49,7 +49,7 @@ export function MobileNav({ items, cta }: { items: NavLink[]; cta: CtaLink }) {
         data-testid="mobile-nav"
         hidden={!open}
         data-lenis-prevent
-        className="absolute inset-x-0 top-full border-b border-border bg-bg-raised"
+        className="absolute inset-x-0 top-full max-h-[calc(100dvh-var(--nav-h)-var(--banner-h))] overflow-y-auto overscroll-contain border-b border-border bg-bg-raised lg:max-h-[calc(100dvh-var(--nav-h-desktop)-var(--banner-h))]"
       >
         <nav aria-label="Mobile" className="container-site py-6">
           <ul className="flex flex-col gap-1">
