@@ -41,7 +41,8 @@ export function ShopBrowser({
 }) {
   const [filter, setFilter] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>("featured");
-  const labelFor = (k: CategoryKey | null) => categories.find((c) => c.key === k)?.label ?? "Other";
+  const labelFor = (k: CategoryKey | null) =>
+    categories.find((c) => c.key === k)?.label ?? copy.otherCategoryLabel ?? "Other";
 
   useEffect(() => {
     const key = new URLSearchParams(window.location.search).get("category");
