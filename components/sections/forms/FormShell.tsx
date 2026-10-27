@@ -17,6 +17,7 @@ export function FormShell({
   successMessage,
   children,
   className,
+  inline = false,
   testId,
 }: {
   label: string;
@@ -28,6 +29,8 @@ export function FormShell({
   successMessage: string;
   children: ReactNode;
   className?: string;
+  /** Single-field forms (newsletter): field and submit share one row from sm up (design .input-group). */
+  inline?: boolean;
   /** QA hook: data-testid on the <form> (e.g. contact-form). */
   testId?: string;
 }) {
@@ -47,6 +50,15 @@ export function FormShell({
         ) : null}
       </div>
     );
+  const submit = (
+    <button
+      type="submit"
+      className={buttonClasses("primary", "lg", inline ? "w-full sm:w-auto" : undefined)}
+      disabled={state.status === "submitting"}
+    >
+      {state.status === "submitting" ? "Sending…" : submitLabel}
+    </button>
+  );
   return (
     <form
       data-testid={testId}
@@ -58,17 +70,16 @@ export function FormShell({
     >
       <div className="relative grid gap-5">
         <Honeypot {...honeypotProps} />
-        {children}
+        {inline ? (
+          <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+            {children}
+            {submit}
+          </div>
+        ) : (
+          children
+        )}
         {state.status === "error" ? <Notice tone="error">{state.message}</Notice> : null}
-        <div>
-          <button
-            type="submit"
-            className={buttonClasses("primary", "lg")}
-            disabled={state.status === "submitting"}
-          >
-            {state.status === "submitting" ? "Sending…" : submitLabel}
-          </button>
-        </div>
+        {inline ? null : <div>{submit}</div>}
       </div>
     </form>
   );

@@ -76,6 +76,12 @@ const PATHS = {
       <path d="M11 18.5h2" />
     </>
   ),
+  mail: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m3.5 6.5 8.5 6 8.5-6" />
+    </>
+  ),
   headphones: (
     <>
       <path d="M4 15v-3a8 8 0 0 1 16 0v3" />

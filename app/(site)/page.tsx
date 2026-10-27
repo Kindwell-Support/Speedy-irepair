@@ -23,7 +23,7 @@ import { Brands } from "@/components/sections/home/Brands";
 import { WhyChooseUs } from "@/components/sections/home/WhyChooseUs";
 import { Testimonials } from "@/components/sections/home/Testimonials";
 import { Promotions } from "@/components/sections/home/Promotions";
-import { FaqList } from "@/components/sections/shared/FaqList";
+import { HomeFaq } from "@/components/sections/home/HomeFaq";
 import { LocationContact } from "@/components/sections/shared/LocationContact";
 import dynamic from "next/dynamic";
 
@@ -87,9 +87,7 @@ export default async function HomePage() {
         }
       />
       <Promotions copy={page.promotionsSection} items={promotions} />
-      <Section id="faq" copy={page.faqSection} section="faq">
-        <FaqList faqs={faqs} />
-      </Section>
+      <HomeFaq copy={page.faqSection} faqs={faqs} phone={settings.business.phone} />
       <LocationContact
         copy={page.locationSection}
         section="location"
@@ -98,13 +96,21 @@ export default async function HomePage() {
         directionsLabel={page.locationSection.directionsLabel}
         contactCopy={page.contactSection}
       />
-      <Section id="newsletter" section="newsletter" tone="raised" className="text-center">
-        <h2 className="text-h3">{page.newsletter.heading}</h2>
-        <div className="mx-auto mt-6 max-w-md">
+      <Section id="newsletter" section="newsletter" tone="raised">
+        <div className="grid gap-8 lg:grid-cols-[7fr_5fr] lg:items-end lg:gap-16">
+          <div className="grid gap-4">
+            {page.newsletter.eyebrow ? (
+              <p className="inline-flex items-center gap-2 text-label font-semibold uppercase text-text-secondary before:size-2 before:rounded-[2px] before:bg-brand before:content-['']">
+                {page.newsletter.eyebrow}
+              </p>
+            ) : null}
+            <h2 className="text-h2">{page.newsletter.heading}</h2>
+          </div>
           <NewsletterForm
             emailLabel={page.newsletter.emailLabel}
             buttonLabel={page.newsletter.buttonLabel}
             successMessage={page.newsletter.successMessage}
+            inline
           />
         </div>
       </Section>

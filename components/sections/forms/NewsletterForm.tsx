@@ -9,10 +9,13 @@ export function NewsletterForm({
   emailLabel,
   buttonLabel,
   successMessage,
+  inline = false,
 }: {
   emailLabel: string;
   buttonLabel: string;
   successMessage: string;
+  /** Field + Subscribe on one row (homepage design .newsletter__inner). */
+  inline?: boolean;
 }) {
   const { state, submit, markStarted, honeypotProps } = useFormSubmit("newsletter");
   const errors = state.status === "error" ? state.fieldErrors : undefined;
@@ -24,6 +27,7 @@ export function NewsletterForm({
       honeypotProps={honeypotProps}
       onFocusCapture={markStarted}
       submitLabel={buttonLabel}
+      inline={inline}
       successMessage={successMessage}
       onSubmit={(d) => submit({ email: String(d.get("newsletter-email") ?? "") })}
     >
@@ -33,6 +37,7 @@ export function NewsletterForm({
         type="email"
         autoComplete="email"
         required
+        className={inline ? "h-control-lg" : undefined}
         error={fieldError(errors, "email")}
       />
     </FormShell>
