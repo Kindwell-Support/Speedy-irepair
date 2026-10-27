@@ -29,7 +29,10 @@ export const homePage: HomePage = {
     secondaryCta: { label: "Get Instant Quote", href: "/instant-quote", variant: "secondary" },
     poster: null,
   },
-  serviceCardsSection: { heading: "Our services" },
+  serviceCardsSection: {
+    heading: "Our services",
+    intro: "Repairs, devices, plans, bills and internet. Eight services, one counter on W Market St.",
+  },
   serviceCards: [], // filled by content layer from collections.serviceCards
   serviceCardLinkLabel: "Learn more",
   howItWorksSection: { heading: "How it works" },
