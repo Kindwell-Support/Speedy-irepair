@@ -68,7 +68,11 @@ export default async function HomePage() {
     <>
       <JsonLd data={jsonLdForHome(seo)} />
       <HomeHero hero={page.hero} chips={heroChips} />
-      <ServicesGrid copy={page.serviceCardsSection} cards={page.serviceCards} />
+      <ServicesGrid
+        copy={page.serviceCardsSection}
+        cards={page.serviceCards}
+        linkLabel={page.serviceCardLinkLabel}
+      />
       <HowItWorks copy={page.howItWorksSection} steps={steps} />
       <Brands copy={page.brandsSection} brands={brands.filter((b) => b.repairs)} />
       <WhyChooseUs copy={page.whySection} items={values} />
