@@ -1,6 +1,76 @@
 # FRONTEND_STATUS — Speedy iRepair (web/)
 
-Last updated: 2026-10-27 (batch 3), PKT (UTC+5). Owner: Frontend Engineer. Branch: `feature/foundation`. The `origin` remote now exists (github.com/Kindwell-Support/Speedy-irepair) but this box has no credentials, so **nothing was pushed** and `git pull --rebase` was skipped; DevOps pushes. Nothing has been deployed.
+Last updated: 2026-10-27 (batch 4), PKT (UTC+5). Owner: Frontend Engineer. Branch: `feature/foundation`. The `origin` remote now exists (github.com/Kindwell-Support/Speedy-irepair) but this box has no credentials, so **nothing was pushed** and `git pull --rebase` was skipped; DevOps pushes. Nothing has been deployed.
+
+
+## 0. Batch 4 (QA run 3 at `ef1fab0`): summary
+
+Batch 4 builds on top of `e7d4e64`. It includes CMS v1.6 `02b286d` and Motion `aaa3d38`/`ef1fab0`/`2711713`, which were already local. Nothing was pushed, `pull --rebase` was skipped (no credentials) and nothing was deployed.
+
+**Checks.** All checks ran on committed HEAD in an isolated `git archive` copy:
+- lint 0, typecheck 0, unit 23/23, build OK.
+- Home first-load JS is **147 kB**.
+- 84-check (overflow, one H1, HTTP 200) at 375/768/1024/1280/1440/1920: 0 failures.
+- axe at 375/1280/1440 on 14 URLs: 42/42 clean (target-size included).
+- Quote and trade-in flows OK. Shop OK.
+- The server HTML H1 (curl, no JS) reads "Cracked screen? Dead battery? We fix it in 45 minutes."
+
+**Commits** (in order):
+- `9c40520`, `58e3701`: BUG-002, mobile menu scrolls within the viewport.
+  - max-height = 100dvh minus the **measured** panel top, exposed as the CSS var `--menu-top`. The announcement banner wraps to 55px at 375, so the token math alone overshot the viewport by 15px.
+  - overflow-y auto, overscroll-contain, data-lenis-prevent.
+- `907e1d1`: PolicyToc targets are `min-h-8` block links.
+  - Also replaced half-step classes, which the 4px scale (D1) does not generate, with arbitrary values.
+- `54fb476`: CMS v1.6 switches.
+  - 404 is async and uses `getNotFoundCopy()`.
+  - ShopBrowser uses `copy.otherCategoryLabel`.
+- `4119bd5`: BUG-001 on the /services index (`min-h-8` rows), plus:
+  - `navTitle()` drops the spec parenthetical in the index and jump chips. Section headings keep the full CMS title.
+  - Chips are capped at the viewport width with truncation.
+  - /home-internet first offer card shows the $40 (from the CMS hero headline) via CountUp (`data-countup`, testid `offer-price`).
+- `1066400`: additive lib fields, see below.
+- `4596870`: BUG-004, "Learn more" + arrow foot on home service cards.
+- `c6b7aff` + `f1b829f`: BUG-005 and BUG-007.
+  - Home FAQ in `.faq-layout`: left side has the heading, "Can't find it? Call {phone}." and an All FAQs link to /faq; right side has the accordion with the first item open (`aria-expanded="true"` in the SSR HTML).
+  - Location: NAP/hours card (beside the map when an embed URL exists; full width with 2 internal columns otherwise).
+  - Full-width 4/8 "contact us" card.
+  - Newsletter: heading on the left, inline email + Subscribe on the right (`FormShell inline`).
+- `43b4e5e`: BUG-008, hero CTAs full width below 480px.
+- `6e1f31f`: BUG-011, header phone tel link (`settings.business.phone`) before Schedule Repair from 1440 up, matching design `.nav__phone`.
+- `1343fa7`: real spaces between the hero H1 line spans (BUG-003 follow-up).
+- `fc928d5`: BUG-006 services intro, see the lib changes below.
+
+**Architect / CMS files touched (smallest additive changes):**
+- `lib/sanity/types.ts`: optional `HomePage.serviceCardLinkLabel` and `faqSection.allLabel` / `faqSection.callPrompt`.
+- `lib/sanity/fixtures/pages.ts`: fixture defaults "Learn more", "All FAQs", "Can't find it? Call", and `serviceCardsSection.intro` (approved design copy).
+- **CMS ask:** add these four fields to the homePage schema and seed. Seed `servicesHeading` has no intro today, so the fixture fills it via mergeFallback.
+
+**QA status:**
+
+| Bug | Status |
+| --- | --- |
+| BUG-001 | Fixed |
+| BUG-002 | Fixed. Verified at 375x667 in chromium and webkit: 22/22 links reachable, clickable, and focus-visible on Tab. |
+| BUG-004 | Fixed |
+| BUG-005 | Fixed |
+| BUG-006 | Intro fixed. The Google rating stays hidden per D2 (no verified rating data). |
+| BUG-007 | Fixed |
+| BUG-008 | Fixed |
+| BUG-011 | Fixed |
+| BUG-003 | Motion (`2711713`); Frontend added the H1 spaces |
+| BUG-009 | Motion |
+| BUG-010 | Architect |
+
+**Motion asks:**
+- WhyStat already renders via CountUp (`data-countup`). Adding `data-animate="countup"` as well would count twice (the engine rewrites the first numeric text node), so I did not add it.
+- /home-internet `$40` also uses CountUp only, for the same reason.
+- The prepaid chip is truncated and fits within 375: there is no page overflow, and the chip sits inside the horizontal chip scroller.
+
+**Still deviating:**
+- No map tile when `googleMapsEmbedUrl` is unset (env and seed are both empty). The NAP card spans the row instead.
+- The "Call us" ghost button only renders if `map.callLabel` copy exists, which it currently does not.
+- The newsletter email label is visible, not sr-only as in the design (a11y).
+- The "Hours" label in LocationContact is still a literal from an earlier batch.
 
 ## 1. Check / build status (batch 3, verified on committed HEAD `2f3f943` via `git archive`, incl. CMS v1.5 `4561b28`)
 
