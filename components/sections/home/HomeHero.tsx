@@ -34,8 +34,10 @@ export function HomeHero({ hero, chips }: { hero: PageHero; chips: HeroChip[] })
             data-split="words"
             data-split-trigger="load"
           >
-            {headlineLines(hero.headline).map((line) => (
+            {headlineLines(hero.headline).map((line, i) => (
               <span key={line} className="block">
+                {/* Real space so the server HTML / textContent reads as one sentence (QA BUG-003). */}
+                {i > 0 && " "}
                 {line}
               </span>
             ))}
