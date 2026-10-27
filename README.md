@@ -1,5 +1,5 @@
 # Speedy iRepair — Website Rebuild (`web/`)
-
+ah
 Canonical app root for the Speedy iRepair rebuild (Kindwell Solutions).
 Spec: `../PROJECT_SPEC.md` · Decisions: `../DECISIONS_2026-10-27.md`.
 App architecture, code rules and env contract are owned by the Technical Architect
