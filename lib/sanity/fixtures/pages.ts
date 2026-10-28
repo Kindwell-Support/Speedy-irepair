@@ -37,7 +37,7 @@ export const homePage: HomePage = {
   whySection: { heading: "Why choose us" },
   testimonialsSection: { heading: "What customers say" },
   promotionsSection: { heading: "Current promotions" },
-  faqSection: { heading: "Frequently asked questions" },
+  faqSection: { heading: "Common questions" },
   locationSection: { heading: "Visit us in Akron", directionsLabel: "Get Directions" },
   newsletter: {
     heading: "Join our mailing list for the best deals.",
@@ -114,8 +114,17 @@ export const quotePage: QuotePage = {
 export const schedulePage: SchedulePage = {
   title: "Schedule Repair",
   hero: { headline: "Schedule your repair", subline: null },
-  whatToExpect: { heading: "What to expect", intro: PLACEHOLDER("what to expect copy, CMS (spec 2.7)"), isPlaceholder: true },
-  whatToBring: { heading: "What to bring", intro: PLACEHOLDER("what to bring copy, CMS (spec 2.7)"), isPlaceholder: true },
+  // Drafted from brief facts (FAQ answers, How it works steps). Client to approve.
+  whatToExpect: {
+    heading: "What to expect",
+    intro:
+      "Book a time or walk in. Most iPhone repairs take 45–60 minutes while you wait, and most Android repairs take 1–2 hours, unless the part needs to be ordered (3–4 days). If we find damage beyond the repair, we'll tell you before we start. Every repair is covered by our 90-day warranty.",
+  },
+  whatToBring: {
+    heading: "What to bring",
+    intro:
+      "Your device, backed up first via iCloud, Google or another cloud service, as there is a small chance of data loss. iPhone repairs need no upfront payment; Android repairs need a deposit. We take all major credit and debit cards, PayPal and Venmo.",
+  },
   locationSection: { heading: "Location & hours" },
   squareBookingUrl: EXTERNAL_LINKS.schedule,
   seo: {

@@ -4,7 +4,7 @@
  */
 
 /** Centre of the impact crater in the cracked render. The repaired screen heals outward from here. */
-export const IMPACT = { x: 0.86, y: 0.68 };
+export const IMPACT = { x: 0.735, y: 0.62 };
 
 export type Shard = {
   /** public/images/hero/shard-{img}.webp */
@@ -23,16 +23,13 @@ export type Shard = {
   ty: number;
 };
 
-/** Desktop: the phone sits in the middle third, so shards ring it and fill the empty middle band of the
- *  side columns (between headline/picker on the left and figure/card on the right), never the corners. */
+/** Desktop: the phone stands at the centre, so shards ring it in the band between the headline/CTAs on
+ *  the left and the repair list on the right, never over copy. */
 export const SHARDS: Shard[] = [
-  { img: 3, x: "58%", y: "-8%", w: 230, rot: 16, depth: "near", mobile: true, tx: 0.8, ty: 0.6 },
-  { img: 4, x: "31%", y: "76%", w: 210, rot: 38, depth: "near", tx: 0.74, ty: 0.72 },
-  { img: 2, x: "74%", y: "42%", w: 150, rot: -14, depth: "mid", mobile: true, tx: 0.9, ty: 0.64 },
-  { img: 1, x: "2%", y: "22%", w: 120, rot: -22, depth: "mid", tx: 0.84, ty: 0.56 },
-  { img: 5, x: "56%", y: "86%", w: 120, rot: 58, depth: "mid", tx: 0.78, ty: 0.78 },
-  { img: 1, x: "42%", y: "2%", w: 90, rot: 132, depth: "far", mobile: true, tx: 0.88, ty: 0.74 },
-  { img: 2, x: "89%", y: "58%", w: 96, rot: 28, depth: "far", tx: 0.92, ty: 0.7 },
-  { img: 5, x: "5%", y: "44%", w: 88, rot: -66, depth: "far", tx: 0.82, ty: 0.66 },
-  { img: 4, x: "47%", y: "93%", w: 100, rot: 96, depth: "far", tx: 0.9, ty: 0.58 },
+  { img: 3, x: "58%", y: "-6%", w: 210, rot: 16, depth: "near", mobile: true, tx: 0.675, ty: 0.54 },
+  { img: 4, x: "38%", y: "78%", w: 190, rot: 38, depth: "near", tx: 0.615, ty: 0.66 },
+  { img: 2, x: "66%", y: "34%", w: 130, rot: -14, depth: "mid", mobile: true, tx: 0.775, ty: 0.58 },
+  { img: 5, x: "52%", y: "88%", w: 110, rot: 58, depth: "mid", tx: 0.655, ty: 0.72 },
+  { img: 1, x: "40%", y: "6%", w: 84, rot: 132, depth: "far", mobile: true, tx: 0.755, ty: 0.68 },
+  { img: 2, x: "33%", y: "60%", w: 88, rot: 28, depth: "far", tx: 0.795, ty: 0.64 },
 ];

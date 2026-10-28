@@ -23,9 +23,46 @@ const visitCta = { label: "Visit store", href: "/#location", variant: "secondary
 const directionsCta = { label: "Get Directions", href: EXTERNAL_LINKS.maps, external: true, variant: "secondary" } as const;
 const shopCta = { label: "Shop", href: "/shop", variant: "primary" } as const;
 
-const bodyPending = blocks(PLACEHOLDER("full service description, CMS & Content Engineer (REQ-047/049)"));
 const summaryNote =
-  "Summary uses facts from the brief only. CMS & Content Engineer expands it into a 40–60-word featured-snippet paragraph (REQ-049) and writes the body.";
+  "Summary and body use facts from the brief only (FAQ answers, value props, promotions, llms.txt). Draft for client approval.";
+
+const timing =
+  "Most iPhone repairs take 45–60 minutes while you wait. Most Android repairs take 1–2 hours, unless the part needs to be ordered (3–4 days from our warehouse).";
+const terms =
+  "No upfront payment for iPhone repairs; a deposit is required on Android repairs. Every repair is covered by our 90-day warranty. Damage to your device after repair voids the warranty.";
+
+/** Service body paragraphs, by service id. Facts from the brief only; nothing here that the shop hasn't stated. */
+const serviceBodies: Record<string, string[]> = {
+  s01: ["We replace cracked and broken screens on Apple, Samsung, LG, Google and other phones.", timing, terms],
+  s02: ["Phone dying before the end of the day? We replace batteries on iPhone, Samsung, LG, Google and other devices.", timing, terms],
+  s03: ["Phone not charging, or the cable won't stay in? We repair charger ports on Apple, Samsung, LG, Google and other devices.", timing, terms],
+  s04: ["Cracked lens or blurry photos? We repair cameras on Apple, Samsung, LG, Google and other devices.", timing, terms],
+  s05: [
+    "Phone got wet? Bring it in for a water damage inspection.",
+    "We can try to preserve your data, but cannot guarantee full functionality after water damage inspection. If we find damage that affects how the phone works beyond the repair, we will let you know beforehand.",
+  ],
+  s06: ["Unlock your phone from any carrier.", "Call us on 1.855.377.3339 or visit the store at 1650 W Market St, Akron, to get started."],
+  s07: [
+    "Buy a tested, inspected pre-owned iPhone, iPad, Apple Watch or MacBook, plus accessories, in the store or from our online shop.",
+    "Finance smartphones and accessories with Acima, no credit needed. Phones not currently in stock need 50% down.",
+  ],
+  s08: [
+    "Have an old or broken device? We compare top trade-in prices so you don't have to, and get you the best deal.",
+    "Tell us about your device online, call us for a quote, or bring it to the store.",
+  ],
+  s09: ["Simple Mobile, AT&T and Verizon prepaid plans. Save money every month.", "Visit the store at 1650 W Market St or call 1.855.377.3339 to choose a plan."],
+  s10: ["Pay your water, electric and gas bills at our location, 1650 W Market St in Akron, during opening hours."],
+  s11: [
+    "Sign up for home internet at the store or online and get your first month free, plus a free smartphone.",
+    "For new homes, townhomes, condos and apartments.",
+  ],
+  s12: ["Acima lease-to-own financing on smartphones and accessories. No credit needed.", "Apply online, then pick your device in the store."],
+  s13: ["Shop phone accessories in the store or online.", "Accessories can be financed with Acima, no credit needed."],
+  s14: [
+    "We use premium quality replacement parts, covered by our 90-day warranty. Damage to your device after repair voids the warranty.",
+    "If a part isn't in stock, it takes 3–4 days to arrive from our warehouse.",
+  ],
+};
 
 /** Spec 2.2: 14 services, in this order (REQ-045). */
 const serviceSeeds: Omit<Service, "body" | "isPlaceholder" | "sourceNote">[] = [
@@ -46,8 +83,8 @@ const serviceSeeds: Omit<Service, "body" | "isPlaceholder" | "sourceNote">[] = [
 ];
 export const services: Service[] = serviceSeeds.map((s) => ({
   ...s,
-  body: bodyPending,
-  isPlaceholder: true,
+  body: blocks(...(serviceBodies[s.id] ?? [])),
+  isPlaceholder: false,
   sourceNote: summaryNote,
 }));
 
@@ -73,11 +110,11 @@ export const faqs: Faq[] = [
   { id: "faq-6", question: "Do I have to pay upfront?", answer: "No upfront payment for iPhone repairs. A deposit is required on all Android repairs. 50% down on phone purchases not currently in stock.", categories: ["general", "services"], order: 6 },
   { id: "faq-7", question: "Will my phone look and function the same after repair?", answer: "Yes. If there is any damage that affects functionality beyond the repair, we will let you know beforehand.", categories: ["general", "services"], order: 7 },
   { id: "faq-8", question: "Will I lose my data during repair?", answer: "There is a small possibility. We recommend backing up your data via iCloud, Google, or other cloud services before bringing your device in.", categories: ["general", "services"], order: 8 },
-  // OQ-16: financing + internet FAQ content TBD. Placeholders are excluded from FAQPage JSON-LD.
-  { id: "faq-fin-1", question: PLACEHOLDER("Financing FAQ question 1"), answer: PLACEHOLDER("answer, CMS to draft from brief facts for Abdullah review"), categories: ["financing"], order: 101, isPlaceholder: true },
-  { id: "faq-fin-2", question: PLACEHOLDER("Financing FAQ question 2"), answer: PLACEHOLDER("answer"), categories: ["financing"], order: 102, isPlaceholder: true },
-  { id: "faq-net-1", question: PLACEHOLDER("Home Internet FAQ question 1"), answer: PLACEHOLDER("answer, CMS to draft from brief facts for Abdullah review"), categories: ["internet"], order: 201, isPlaceholder: true },
-  { id: "faq-net-2", question: PLACEHOLDER("Home Internet FAQ question 2"), answer: PLACEHOLDER("answer"), categories: ["internet"], order: 202, isPlaceholder: true },
+  // OQ-16: financing + internet FAQs drafted from brief facts only, for client review.
+  { id: "faq-fin-1", question: "Do I need good credit to finance?", answer: "No. Acima offers lease-to-own financing with no credit needed.", categories: ["financing"], order: 101, sourceNote: "Drafted from brief facts. Client to approve." },
+  { id: "faq-fin-2", question: "What can I finance?", answer: "Smartphones and accessories.", categories: ["financing"], order: 102, sourceNote: "Drafted from brief facts. Client to approve." },
+  { id: "faq-net-1", question: "Who can sign up for home internet?", answer: "Home internet is available for new homes, townhomes, condos and apartments.", categories: ["internet"], order: 201, sourceNote: "Drafted from brief facts. Client to approve." },
+  { id: "faq-net-2", question: "How do I sign up, and what do I get?", answer: "Fill out the sign-up form online or visit the store at 1650 W Market St. You get your first month free and a free smartphone when you sign up.", categories: ["internet"], order: 202, sourceNote: "Drafted from brief facts. Client to approve." },
 ];
 
 /** Spec 2.1.5 (REQ-029). */
@@ -99,16 +136,16 @@ export const howItWorksSteps: HowItWorksStep[] = [
   { id: "sell-1", set: "sell", title: "Get a quote", body: null, order: 1 },
   { id: "sell-2", set: "sell", title: "Bring it in or mail it", body: null, order: 2 },
   { id: "sell-3", set: "sell", title: "Get paid", body: null, order: 3 },
-  { id: "fin-1", set: "financing", title: PLACEHOLDER("Financing step 1"), body: PLACEHOLDER("CMS drafts generic, factual step for Abdullah review (OQ-16)"), order: 1, isPlaceholder: true },
-  { id: "fin-2", set: "financing", title: PLACEHOLDER("Financing step 2"), body: PLACEHOLDER("step copy"), order: 2, isPlaceholder: true },
-  { id: "fin-3", set: "financing", title: PLACEHOLDER("Financing step 3"), body: PLACEHOLDER("step copy"), order: 3, isPlaceholder: true },
+  { id: "fin-1", set: "financing", title: "Apply online", body: "Fill out Acima's application. No credit needed.", order: 1 },
+  { id: "fin-2", set: "financing", title: "Pick your device", body: "Choose a smartphone or accessories in the store.", order: 2 },
+  { id: "fin-3", set: "financing", title: "Take it home", body: "Make your lease payments to Acima until it's yours.", order: 3 },
 ];
 
 /** Spec 2.1.7 (REQ-033). */
 export const promotions: Promotion[] = [
-  { id: "promo-1", title: "FREE Smartphone when you sign up for Home Internet", body: null, cta: { label: "Sign up", href: EXTERNAL_LINKS.homeInternetSignup, external: true }, order: 1 },
-  { id: "promo-2", title: "Home Internet with your first month free", body: null, cta: { label: "Learn more", href: "/home-internet" }, order: 2 },
-  { id: "promo-3", title: "Financing available through Acima. No credit needed.", body: null, cta: { label: "Apply Now", href: EXTERNAL_LINKS.financing, external: true }, order: 3 },
+  { id: "promo-1", title: "Free smartphone", body: "When you sign up for Home Internet.", cta: { label: "Sign up", href: EXTERNAL_LINKS.homeInternetSignup, external: true }, order: 1 },
+  { id: "promo-2", title: "First month free", body: "On Home Internet.", cta: { label: "Learn more", href: "/home-internet" }, order: 2 },
+  { id: "promo-3", title: "No credit needed", body: "Financing available through Acima.", cta: { label: "Apply Now", href: EXTERNAL_LINKS.financing, external: true }, order: 3 },
 ];
 
 /** Spec 2.1.4 + 2.5 (REQ-027/059). Logos: official assets per OQ-21 (Design Lead), none bundled yet. */

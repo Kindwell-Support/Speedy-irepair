@@ -36,6 +36,8 @@ export const SEL = {
   faq: "[data-faq]",
   heroEntrance: "[data-hero-entrance]",
   heroRepair: "[data-hero-repair]",
+  rating: "[data-rating]",
+  wipe: "[data-wipe]",
 } as const;
 
 /* ---------------------------------------------------------------- reveal */
@@ -106,6 +108,57 @@ function bindParallax(root: ParentNode) {
           scrub: true,
         },
       },
+    );
+  });
+}
+
+/* ---------------------------------------------------------------- rating */
+/**
+ * Google rating: [data-rating-value] counts up from 0 and each [data-rating-star] fills from grey to
+ * brand red in turn, once, when the block scrolls in. Static markup already reads "4.9" with filled stars.
+ */
+function bindRating(root: ParentNode) {
+  q(root, SEL.rating).forEach((el) => {
+    const value = el.querySelector<HTMLElement>("[data-rating-value]");
+    const stars = q(el, "[data-rating-star]");
+    settle(el);
+    const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: "top 80%", once: true } });
+    if (value) {
+      const target = parseFloat(value.textContent ?? "") || 0;
+      const counter = { val: 0 };
+      value.textContent = (0).toFixed(1);
+      tl.to(counter, {
+        val: target,
+        duration: 1.1,
+        ease: EASE.outSoft,
+        onUpdate: () => {
+          value.textContent = counter.val.toFixed(1);
+        },
+      }, 0);
+    }
+    if (stars.length) {
+      const filled = getComputedStyle(stars[0]!).color;
+      tl.fromTo(
+        stars,
+        { color: "#555555", scale: 0.7 },
+        { color: filled, scale: 1, duration: 0.35, ease: EASE.out, stagger: 0.12, clearProps: "color,transform" },
+        0.2,
+      );
+    }
+  });
+}
+
+/* ------------------------------------------------------------------ wipe */
+/** [data-wipe] > [data-wipe-fill]: the fill layer wipes in left to right as the element scrolls up into view. */
+function bindWipe(root: ParentNode) {
+  q(root, SEL.wipe).forEach((el) => {
+    const fill = el.querySelector<HTMLElement>("[data-wipe-fill]");
+    if (!fill) return;
+    settle(el);
+    gsap.fromTo(
+      fill,
+      { clipPath: "inset(0 100% 0 0)" },
+      { clipPath: "inset(0 0% 0 0)", ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom bottom", scrub: 0.4 } },
     );
   });
 }
@@ -207,33 +260,52 @@ function bindSteps(root: ParentNode, desktop: boolean) {
       return;
     }
 
-    // Desktop: pin + scrubbed state timeline, ~60vh of scroll per step. Snaps to steps.
+    // Desktop: pin + scrubbed state timeline, ~60vh of scroll per step. Snaps to steps. Card states
+    // (widen, photo, number fill, done tick) are CSS transitions on the classes; scroll drives the bar
+    // and the repair timer. Centred in the viewport, but never tucked under the floating nav.
     section.setAttribute("data-pinned", "true");
-    gsap.set(steps, { transformPerspective: 900, transformOrigin: "50% 100%" });
     setActive(0);
+    const timer = section.querySelector<HTMLElement>("[data-step-timer]");
+    const timerLabel = section.querySelector<HTMLElement>("[data-step-timer-label]");
+    const timerAt = timer ? steps.findIndex((s) => s.contains(timer)) : -1;
+    const navClear = () => (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-h-desktop")) || 76) + 16;
+    // 45:00 counts down over the half-step before the timer's card settles; 00:00 at rest reads "Ready".
+    const setTimer = (p: number) => {
+      if (!timer || timerAt < 1) return;
+      const t = Math.min(1, Math.max(0, (p * (n - 1) - (timerAt - 0.5)) / 0.5));
+      const secs = Math.round(45 * 60 * (1 - t));
+      timer.textContent = `${String(Math.floor(secs / 60)).padStart(2, "0")}:${String(secs % 60).padStart(2, "0")}`;
+      if (timerLabel) {
+        timerLabel.textContent = secs ? "Repair timer" : "Ready";
+        timerLabel.toggleAttribute("data-done", !secs);
+      }
+    };
     const tl = gsap.timeline({
-      defaults: { ease: EASE.inOut, duration: 1 },
+      defaults: { ease: "none" },
       scrollTrigger: {
         trigger: pin,
-        start: "top top",
+        start: () => `top ${Math.max(navClear(), (window.innerHeight - pin.offsetHeight) / 2)}px`,
         end: () => `+=${(n - 1) * window.innerHeight * 0.6}`,
         pin: true,
         scrub: 0.4,
         snap: { snapTo: 1 / (n - 1), duration: { min: 0.15, max: 0.35 }, ease: EASE.inOut, delay: 0.05 },
         invalidateOnRefresh: true,
-        onUpdate: (self) => setActive(Math.round(self.progress * (n - 1))),
-        onKill: () => section.removeAttribute("data-pinned"),
+        onUpdate: (self) => {
+          setActive(Math.round(self.progress * (n - 1)));
+          setTimer(self.progress);
+        },
+        onKill: () => {
+          section.removeAttribute("data-pinned");
+          if (timer) timer.textContent = "45:00";
+          if (timerLabel) {
+            timerLabel.textContent = "Repair timer";
+            timerLabel.removeAttribute("data-done");
+          }
+        },
       },
     });
-    // first tile starts active (lifted)
-    gsap.set(steps[0]!, { y: -8 });
-    for (let i = 1; i < n; i++) {
-      const at = i - 1;
-      // previous tile tips over (domino), next lifts in
-      tl.to(steps[i - 1]!, { y: 4, rotationX: 14, autoAlpha: 0.55, duration: 0.6 }, at + 0.2)
-        .fromTo(steps[i]!, { y: 0 }, { y: -8, duration: 0.6, ease: EASE.out }, at + 0.35);
-      if (bar) tl.to(bar, { scaleX: i / (n - 1), ease: "none", duration: 0.8 }, at + 0.1);
-    }
+    if (bar) tl.to(bar, { scaleX: 1, duration: n - 1 });
+    else tl.to({}, { duration: n - 1 });
   });
 }
 
@@ -340,8 +412,6 @@ type RepairParts = {
   fixed: HTMLElement | null;
   flash: HTMLElement | null;
   light: HTMLElement | null;
-  broken: HTMLElement | null;
-  done: HTMLElement | null;
 };
 
 function repairParts(section: HTMLElement): RepairParts | null {
@@ -355,15 +425,13 @@ function repairParts(section: HTMLElement): RepairParts | null {
     fixed: phone.querySelector<HTMLElement>("[data-phone-fixed]"),
     flash: phone.querySelector<HTMLElement>("[data-phone-flash]"),
     light: section.querySelector<HTMLElement>("[data-phone-glow]"),
-    broken: section.querySelector<HTMLElement>("[data-status-broken]"),
-    done: section.querySelector<HTMLElement>("[data-status-fixed]"),
   };
 }
 
 /**
  * Pinned scrub: every shard flies back into the impact point (data-tx/ty = fraction of the phone box)
  * and vanishes into the glass; with the last landings the repaired screen heals outward from the
- * impact (--heal radial mask), the bench light swells and the status tag flips to fixed.
+ * impact (--heal radial mask), and the bench light swells.
  */
 function bindHeroRepair(root: ParentNode) {
   q(root, SEL.heroRepair).forEach((section) => {
@@ -420,8 +488,6 @@ function bindHeroRepair(root: ParentNode) {
     }
     if (p.fixed) tl.fromTo(p.fixed, { "--heal": "0%" }, { "--heal": "170%", duration: 0.45, ease: "power2.out" }, heal);
     if (p.light) tl.to(p.light, { opacity: 1, scale: 1.12, duration: 0.35 }, heal);
-    if (p.broken) tl.to(p.broken, { autoAlpha: 0, duration: 0.06 }, heal + 0.14);
-    if (p.done) tl.fromTo(p.done, { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.1 }, heal + 0.16);
     tl.to({}, { duration: 0.25 });
   });
 }
@@ -437,8 +503,6 @@ function bindHeroRepairReduced(root: ParentNode) {
     });
     tl.to(p.shards, { opacity: 0 }, 0);
     if (p.fixed) tl.fromTo(p.fixed, { "--heal": "0%" }, { "--heal": "170%" }, 0);
-    if (p.broken) tl.to(p.broken, { opacity: 0 }, 0.5);
-    if (p.done) tl.to(p.done, { opacity: 1 }, 0.5);
   });
 }
 
@@ -520,6 +584,8 @@ export function bindAnimations(root: HTMLElement): Cleanup {
     bindReveal(root);
     bindStagger(root);
     bindParallax(root);
+    bindRating(root);
+    bindWipe(root);
     splitCleanups = [...bindSplitHeadings(root), ...bindFaq(root)];
     return () => {
       splitCleanups.forEach((c) => c());
@@ -546,6 +612,23 @@ export function bindAnimations(root: HTMLElement): Cleanup {
   document.documentElement.setAttribute("data-motion-ready", "");
   // Fonts can shift layout -> refresh trigger positions once they're in.
   document.fonts?.ready.then(() => ScrollTrigger.refresh()).catch(() => {});
+  // Client sections that change height after mount (the services gallery, maps) would leave every trigger
+  // below them stale (the rating count-up never fired), so re-measure whenever the page height settles.
+  let height = root.offsetHeight;
+  let timer = 0;
+  const ro = new ResizeObserver(() => {
+    if (Math.abs(root.offsetHeight - height) < 2) return;
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      height = root.offsetHeight;
+      ScrollTrigger.refresh();
+    }, 200);
+  });
+  ro.observe(root);
 
-  return () => mm.revert();
+  return () => {
+    ro.disconnect();
+    window.clearTimeout(timer);
+    mm.revert();
+  };
 }

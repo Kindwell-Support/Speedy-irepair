@@ -1,14 +1,15 @@
 /**
- * Hero trust row — one plain line of figures with data-counter attributes for GSAP animated counters. Sits under
- * the hero's visit text; the 45-minute figure is the hero's big number, so it is not repeated here.
+ * Hero proof row: three big figures set like the "Fixed in 45 min" line opposite, so the two bottom corners
+ * balance. data-counter attributes drive the GSAP count-ups; the 45-minute figure is the hero's own, so it is
+ * not repeated here.
  * Server component. Animation driven by bindHeroEntrance in lib/motion/bindings.ts.
  */
 import { StarIcon } from "@/components/ui/Stars";
 
 const STATS = [
-  { counter: 4.9, suffix: <StarIcon className="ml-1 -translate-y-px text-brand" />, label: "Google", aria: "4.9 star Google rating" },
-  { counter: 1000, suffix: "+", label: "reviews", aria: "Over 1,000 reviews" },
-  { counter: 10, suffix: "+", label: "years", aria: "Over 10 years of experience" },
+  { counter: 4.9, suffix: <StarIcon className="ml-1.5 h-[0.8em] w-[0.8em] text-brand" />, label: "Google rating", aria: "4.9 star Google rating" },
+  { counter: 1000, suffix: "+", label: "Reviews", aria: "Over 1,000 reviews" },
+  { counter: 90, suffix: "-day", label: "Warranty", aria: "90-day warranty on repairs" },
 ];
 
 function display(n: number): string {
@@ -17,14 +18,16 @@ function display(n: number): string {
 
 export function TrustBar() {
   return (
-    <ul data-trust-bar className="flex flex-wrap gap-x-6 gap-y-1 text-body text-text-secondary" aria-label="Trust indicators">
+    <ul data-trust-bar className="flex flex-wrap gap-x-10 gap-y-4" aria-label="Trust indicators">
       {STATS.map((stat) => (
-        <li key={stat.label} className="inline-flex items-baseline gap-2" aria-label={stat.aria}>
-          <span className="inline-flex items-center font-semibold tabular-nums text-text">
+        <li key={stat.label} aria-label={stat.aria}>
+          <span aria-hidden className="flex items-center font-heading text-h4 font-black uppercase tabular-nums text-text">
             <span data-counter={stat.counter}>{display(stat.counter)}</span>
             {stat.suffix}
           </span>
-          {stat.label}
+          <span aria-hidden className="mt-2 block text-body-sm font-semibold uppercase tracking-[0.06em] text-text-secondary">
+            {stat.label}
+          </span>
         </li>
       ))}
     </ul>

@@ -26,12 +26,12 @@ export function ServiceSections({ services }: { services: Service[] }) {
     <div className="container-site lg:grid lg:grid-cols-12 lg:gap-x-8">
       <nav aria-label="Services on this page" className="hidden self-start pt-16 lg:sticky lg:top-28 lg:col-span-3 lg:block">
         <h2 className="mb-3 font-sans text-h5 font-bold">All services</h2>
-        <ul className="border-l border-border">
+        <ul>
           {services.map((s) => (
             <li key={s.id}>
               <a
                 href={`#${s.slug}`}
-                className="-ml-px flex min-h-10 items-center border-l-2 border-transparent pl-4 text-body text-text-secondary transition-colors duration-fast hover:border-primary hover:text-text"
+                className="flex min-h-10 items-center text-body text-text-secondary transition-colors duration-fast hover:text-primary-text"
               >
                 {s.title}
               </a>
@@ -40,13 +40,13 @@ export function ServiceSections({ services }: { services: Service[] }) {
         </ul>
       </nav>
 
-      <div className="divide-y divide-border-subtle lg:col-span-9">
+      <div className="lg:col-span-9">
         {services.map((s) => {
           const icon = toRiveIconId(s.riveIcon);
           const photoKey = PHOTO_BY_SLUG[s.slug];
           const photo = photoKey ? SITE_IMAGES[photoKey] : null;
           return (
-            <section key={s.id} id={s.slug} aria-labelledby={`${s.slug}-heading`} className="scroll-mt-28 py-14 md:py-16" data-animate="reveal">
+            <section key={s.id} id={s.slug} aria-labelledby={`${s.slug}-heading`} className="scroll-mt-28 py-16 md:py-20" data-animate="reveal">
               <div className="grid gap-6 md:grid-cols-[56px_1fr] md:gap-8" data-rive-host>
                 <div>{icon ? <RiveIcon id={icon} size={48} /> : null}</div>
                 <div className={photo ? "grid gap-8 xl:grid-cols-[1fr_280px] xl:gap-10" : undefined}>
@@ -73,7 +73,6 @@ export function ServiceSections({ services }: { services: Service[] }) {
                       <div className="photo aspect-[4/3]">
                         <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1280px) 280px, 384px" />
                       </div>
-                      <figcaption className="text-tag mt-3 text-text-tertiary">{photo.caption}</figcaption>
                     </figure>
                   ) : null}
                 </div>

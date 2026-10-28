@@ -8,6 +8,7 @@ import { PlaceholderMark } from "./PlaceholderMark";
  * Header is split on desktop: the heading holds the left seven columns, the intro (and an optional
  * `aside`, e.g. a "see all" link) sits bottom-aligned on the right. `layout="stack"` keeps it in one column;
  * `layout="side"` puts the header in a sticky left column with the content beside it (lists, FAQs).
+ * `reveal` fades the header's heading and intro up in turn as the section scrolls in.
  */
 export function Section({
   id,
@@ -18,6 +19,8 @@ export function Section({
   labelledBy,
   layout = "split",
   aside,
+  reveal = false,
+  bleed,
 }: {
   id?: string;
   copy?: SectionCopy | null;
@@ -27,12 +30,17 @@ export function Section({
   labelledBy?: string;
   layout?: "split" | "stack" | "side";
   aside?: ReactNode;
+  reveal?: boolean;
+  /** Full-width content after the container (e.g. a carousel that runs edge to edge). */
+  bleed?: ReactNode;
 }) {
   const headingId = labelledBy ?? (id ? `${id}-heading` : undefined);
   const split = layout === "split";
   const side = layout === "side" && copy;
   const header = copy ? (
     <header
+      data-animate={reveal ? "reveal" : undefined}
+      data-reveal={reveal ? "children" : undefined}
       className={cn(
         "grid gap-5",
         side ? "mb-10 self-start lg:sticky lg:top-32 lg:col-span-4 lg:mb-0" : "mb-10 md:mb-14",
@@ -58,13 +66,14 @@ export function Section({
   return (
     <section
       id={id}
-      aria-labelledby={copy ? headingId : undefined}
+      aria-labelledby={copy || labelledBy ? headingId : undefined}
       className={cn("py-section", tone === "raised" && "bg-bg-raised", className)}
     >
       <div className={cn("container-site", side && "lg:grid lg:grid-cols-12 lg:gap-x-8")}>
         {header}
         {side ? <div className="lg:col-span-8">{children}</div> : children}
       </div>
+      {bleed}
     </section>
   );
 }

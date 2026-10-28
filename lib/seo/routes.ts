@@ -13,7 +13,6 @@ import {
   homeInternetOffer,
   localBusiness,
   organization,
-  person,
   product,
   service,
   siteNavigation,
@@ -183,16 +182,6 @@ export function jsonLdForFaq(d: SeoData): JsonLdGraph {
     page("/faq", "/faq", { type: "WebPage" }),
     faqPage("/faq", d.faqPageFaqs),
     crumbs("/faq", "FAQ"),
-  );
-}
-
-/* R09 /about — Organization + Person (only real team) + BreadcrumbList */
-export function jsonLdForAbout(d: SeoData): JsonLdGraph {
-  return graph(
-    page("/about", "/about", { type: "AboutPage" }),
-    organization(d.site),
-    d.team.map(person),
-    crumbs("/about", "About"),
   );
 }
 

@@ -16,7 +16,6 @@ const ROUTES: Array<[id: string, path: string]> = [
   ["R06", "/instant-quote"],
   ["R07", "/schedule-repair"],
   ["R08", "/faq"],
-  ["R09", "/about"],
   ["R10", "/financing"],
   ["R11", "/home-internet"],
   ["R12", "/policies/shipping-return"],
@@ -24,8 +23,8 @@ const ROUTES: Array<[id: string, path: string]> = [
   ["R14", "/policies/terms"],
 ];
 
-test("route map covers all 14 spec routes", () => {
-  expect(ROUTES).toHaveLength(14);
+test("route map covers all 13 spec routes", () => {
+  expect(ROUTES).toHaveLength(13);
 });
 
 for (const [id, path] of ROUTES) {

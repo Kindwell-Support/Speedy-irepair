@@ -1,0 +1,3196 @@
+{
+ "url": "http://localhost:3000/",
+ "at": "2026-10-28T15:13:24.890Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 11,
+   "filled": [
+    0.99,
+    0.46,
+    0.67,
+    0.66,
+    0.83,
+    0.73,
+    0.63,
+    0.45,
+    0.34,
+    0.96,
+    0.96
+   ],
+   "motion": {
+    "elements": 13,
+    "css": 11,
+    "transitions": 1,
+    "scripted": 1,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 9180,
+     "screens": 10.2,
+     "words": 829,
+     "img": 23,
+     "video": 0,
+     "canvas": 0,
+     "svg": 55,
+     "sections": 10,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 19,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "image?url=%2Fimages%2Fhero%2Fphone-cracked.webp&",
+      "image?url=%2Fimages%2Fhero%2Fphone-fixed.webp&w=",
+      "shard-3.webp",
+      "shard-4.webp",
+      "shard-2.webp",
+      "shard-1.webp",
+      "shard-5.webp",
+      "shard-1.webp"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "SPEEDY",
+     "words": 1,
+     "chars": 6,
+     "lines": 1,
+     "size": 230.4,
+     "vw": 16,
+     "font": "Tomorrow",
+     "weight": 900,
+     "tracking": -0.01,
+     "leading": 0.8,
+     "upper": true,
+     "italic": true,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.77,
+     "top": 415,
+     "tag": "p",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Cracked screen? Dead battery? Fixed same day in Akron.",
+     "words": 9,
+     "lines": 3,
+     "size": 16,
+     "font": "Orbitron"
+    },
+    "headings": [
+     {
+      "text": "45",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 34.6,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.03,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "right",
+      "position": "right",
+      "widthRatio": 0.04,
+      "top": 141,
+      "tag": "span",
+      "kind": "statement"
+     },
+     {
+      "text": "Cracked screen?",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 37.2,
+      "vw": 2.6,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.26,
+      "top": 148,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "Dead battery?",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 37.2,
+      "vw": 2.6,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.26,
+      "top": 185,
+      "tag": "span",
+      "kind": "heading"
+     },
+     {
+      "text": "SPEEDY",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 230.4,
+      "vw": 16,
+      "font": "Tomorrow",
+      "weight": 900,
+      "tracking": -0.01,
+      "leading": 0.8,
+      "upper": true,
+      "italic": true,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.77,
+      "top": 415,
+      "tag": "p",
+      "kind": "heading"
+     },
+     {
+      "text": "Our services",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.46,
+      "top": 1027,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Smartphone Repair",
+      "words": 2,
+      "chars": 17,
+      "lines": 1,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.41,
+      "top": 1562,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "How it works",
+      "words": 3,
+      "chars": 12,
+      "lines": 1,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.46,
+      "top": 2444,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1 1",
+      "words": 2,
+      "chars": 3,
+      "lines": 1,
+      "size": 70.2,
+      "vw": 4.9,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.15,
+      "top": 2565,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "2 2",
+      "words": 2,
+      "chars": 3,
+      "lines": 1,
+      "size": 70.2,
+      "vw": 4.9,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.15,
+      "top": 2565,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "3 3",
+      "words": 2,
+      "chars": 3,
+      "lines": 1,
+      "size": 70.2,
+      "vw": 4.9,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.15,
+      "top": 2565,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "4 4",
+      "words": 2,
+      "chars": 3,
+      "lines": 1,
+      "size": 70.2,
+      "vw": 4.9,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.15,
+      "top": 2565,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "90",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.04,
+      "top": 2844,
+      "tag": "span",
+      "kind": "statement"
+     },
+     {
+      "text": "45:00",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.12,
+      "top": 2848,
+      "tag": "span",
+      "kind": "statement"
+     },
+     {
+      "text": "Brands we repair",
+      "words": 3,
+      "chars": 16,
+      "lines": 2,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.19,
+      "top": 3237,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Why choose us",
+      "words": 3,
+      "chars": 13,
+      "lines": 1,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.46,
+      "top": 3633,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Same-Day Repairs",
+      "words": 2,
+      "chars": 16,
+      "lines": 2,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.22,
+      "top": 3753,
+      "tag": "dt",
+      "kind": "heading"
+     },
+     {
+      "text": "90-Day Warranty",
+      "words": 2,
+      "chars": 15,
+      "lines": 2,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.22,
+      "top": 3753,
+      "tag": "dt",
+      "kind": "heading"
+     },
+     {
+      "text": "Loved on Google",
+      "words": 3,
+      "chars": 15,
+      "lines": 2,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.32,
+      "top": 4429,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "4.9",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 128,
+      "vw": 8.9,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0.001,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.16,
+      "top": 4584,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Current promotions",
+      "words": 2,
+      "chars": 18,
+      "lines": 2,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.25,
+      "top": 5097,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Free smartphone",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.36,
+      "top": 5129,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "First month free",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.33,
+      "top": 5285,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "No credit needed",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.34,
+      "top": 5441,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Common questions",
+      "words": 2,
+      "chars": 16,
+      "lines": 2,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.25,
+      "top": 5813,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Visit us in Akron",
+      "words": 4,
+      "chars": 17,
+      "lines": 2,
+      "size": 52,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.32,
+      "top": 6695,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1650 W Market St #27",
+      "words": 5,
+      "chars": 20,
+      "lines": 1,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.32,
+      "top": 6849,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Send us a message",
+      "words": 4,
+      "chars": 17,
+      "lines": 2,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.25,
+      "top": 7572,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Join our mailing list for the best deals.",
+      "words": 8,
+      "chars": 41,
+      "lines": 2,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.35,
+      "top": 8288,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1.855.377.3339",
+      "words": 1,
+      "chars": 14,
+      "lines": 1,
+      "size": 34,
+      "vw": 2.4,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.23,
+      "top": 8598,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 29,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 9,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Rajdhani",
+       "share": 0.79,
+       "mono": false
+      },
+      {
+       "family": "Orbitron",
+       "share": 0.21,
+       "mono": false
+      },
+      {
+       "family": "Tomorrow",
+       "share": 0,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      11,
+      15,
+      17,
+      22,
+      24,
+      34,
+      35,
+      37,
+      52,
+      70,
+      128,
+      230
+     ],
+     "sizeCount": 12,
+     "notLoaded": [],
+     "body": {
+      "font": "Rajdhani",
+      "size": 22,
+      "leading": 1.6,
+      "weight": 500,
+      "tracking": 0.004,
+      "contrast": null
+     },
+     "measureChars": 62,
+     "max": {
+      "size": 230.4,
+      "vw": 16,
+      "font": "Tomorrow",
+      "text": "Speedy"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.08,
+     "centerShare": 0.02,
+     "smallText": 0
+    },
+    "eyebrows": [
+     {
+      "text": "90-day warranty on all repairs",
+      "above": "90",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 17,
+      "top": 2784
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#000000",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#000000",
+       "top": 116,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0
+       }
+      },
+      {
+       "color": "#111111",
+       "top": 1140,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.07
+       }
+      },
+      {
+       "color": "#d9161e",
+       "top": 4969,
+       "hsl": {
+        "h": 358,
+        "s": 0.82,
+        "l": 0.47
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#ffffff",
+       "share": 0.62
+      },
+      {
+       "color": "#b8b8b8",
+       "share": 0.18
+      },
+      {
+       "color": "#f0f0f0",
+       "share": 0.17
+      },
+      {
+       "color": "#8f8f8f",
+       "share": 0.02
+      },
+      {
+       "color": "#ff4d53",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#d9161e",
+      "hsl": {
+       "h": 358,
+       "s": 0.82,
+       "l": 0.47
+      },
+      "fg": "#f0f0f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 11,
+     "inHero": 3,
+     "radius": 8,
+     "height": 56,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 11,
+     "heroLabels": [
+      "SCHEDULE REPAIR",
+      "SCHEDULE REPAIR",
+      "GET INSTANT QUOTE"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 3,
+     "scrims": 0,
+     "gradientSamples": [
+      "section.hero-stage.relative → radial-gradient(50% 70% at 50% 52%, rgba(237, 28, 36, 0.16), rgba(0, 0, 0, 0) 70%), radial-gradient(120% 90% a",
+      "div.hero-phone-light.pointer-events-none → radial-gradient(closest-side, rgba(237, 28, 36, 0.55), rgba(0, 0, 0, 0))",
+      "div.hero-phone-flash.pointer-events-none → radial-gradient(circle at 86% 68%, rgba(255, 255, 255, 0.95), rgba(255, 120, 120, 0.35) 14%, rgba(0, 0, 0, 0) "
+     ],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "div.flex.flex-col 1165px",
+      "div.container-site.mt-12 1280px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 44,
+     "boxRadius": 12,
+     "squareMedia": 5,
+     "roundedMedia": 7,
+     "mediaRadius": 12,
+     "textShadow": 3,
+     "cardRows": [
+      {
+       "count": 6,
+       "iconTopped": true,
+       "rounded": true,
+       "top": 1844
+      },
+      {
+       "count": 4,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 2533
+      },
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 5097
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.17
+     },
+     {
+      "type": "img",
+      "ratio": 0.17
+     },
+     {
+      "type": "img",
+      "ratio": 0.08
+     }
+    ],
+    "nav": {
+     "links": 6,
+     "fixed": true,
+     "height": 76,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "orbitron",
+     "orbitron fallback",
+     "rajdhani",
+     "rajdhani fallback",
+     "tomorrow",
+     "tomorrow fallback"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 9180,
+    "margins": {
+     "left": 138,
+     "right": 138
+    },
+    "sections": [
+     {
+      "sel": "main#main.outline-none",
+      "tag": "main",
+      "top": 116,
+      "height": 8350,
+      "words": 468,
+      "media": 19,
+      "middle": 9191,
+      "heading": {
+       "text": "Speedy",
+       "size": 230,
+       "tag": "p"
+      },
+      "left": 0,
+      "right": 0,
+      "textLeft": 138,
+      "textRight": 138,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "footer.bg-bg-raised.pb-10",
+      "tag": "footer",
+      "top": 8466,
+      "height": 714,
+      "words": 97,
+      "media": 0,
+      "middle": 185,
+      "heading": {
+       "text": "1.855.377.3339",
+       "size": 34,
+       "tag": "a"
+      },
+      "left": 138,
+      "right": 138,
+      "textLeft": 138,
+      "textRight": 138,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Cracked screen? Dead battery? Fixed same day in Akron.",
+      "size": 16,
+      "top": 148,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 138,
+      "n": 15
+     },
+     {
+      "x": 561,
+      "n": 8
+     },
+     {
+      "x": 178,
+      "n": 2
+     },
+     {
+      "x": 855,
+      "n": 2
+     },
+     {
+      "x": 643,
+      "n": 1
+     },
+     {
+      "x": 930,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 29,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.04,
+    "voidBox": {
+     "x": 1260,
+     "y": 240,
+     "w": 180,
+     "h": 300
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.89,
+    0.7,
+    0.55,
+    0.88,
+    0.88,
+    0.88,
+    0.71,
+    1,
+    0.65,
+    0.82,
+    0.53,
+    0.5
+   ],
+   "motion": {
+    "elements": 74,
+    "css": 11,
+    "transitions": 18,
+    "scripted": 45,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 14172,
+     "screens": 13.8,
+     "words": 819,
+     "img": 23,
+     "video": 0,
+     "canvas": 0,
+     "svg": 55,
+     "sections": 10,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 17,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "image?url=%2Fimages%2Fhero%2Fphone-cracked.webp&",
+      "image?url=%2Fimages%2Fhero%2Fphone-fixed.webp&w=",
+      "shard-3.webp",
+      "shard-4.webp",
+      "shard-2.webp",
+      "shard-1.webp",
+      "shard-5.webp",
+      "image?url=%2Fimages%2Fsite%2Fscreen-lift.webp&w="
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "SPEEDY",
+     "words": 1,
+     "chars": 6,
+     "lines": 1,
+     "size": 142.7,
+     "vw": 18.6,
+     "font": "Tomorrow",
+     "weight": 900,
+     "tracking": -0.01,
+     "leading": 0.8,
+     "upper": true,
+     "italic": true,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.89,
+     "top": 445,
+     "tag": "p",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Cracked screen? Dead battery? Fixed same day in Akron.",
+     "words": 9,
+     "lines": 3,
+     "size": 16,
+     "font": "Orbitron"
+    },
+    "headings": [
+     {
+      "text": "Cracked screen?",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 70.7,
+      "vw": 9.2,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 148,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Dead battery?",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 70.7,
+      "vw": 9.2,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 219,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "SPEEDY",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 142.7,
+      "vw": 18.6,
+      "font": "Tomorrow",
+      "weight": 900,
+      "tracking": -0.01,
+      "leading": 0.8,
+      "upper": true,
+      "italic": true,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 445,
+      "tag": "p",
+      "kind": "heading"
+     },
+     {
+      "text": "45",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 32,
+      "vw": 4.2,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.03,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.06,
+      "top": 1089,
+      "tag": "span",
+      "kind": "statement"
+     },
+     {
+      "text": "Our services",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 39.4,
+      "vw": 5.1,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1430,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Smartphone Repair",
+      "words": 2,
+      "chars": 17,
+      "lines": 1,
+      "size": 39.4,
+      "vw": 5.1,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.82,
+      "top": 1967,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "How it works",
+      "words": 3,
+      "chars": 12,
+      "lines": 1,
+      "size": 39.4,
+      "vw": 5.1,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 3802,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1 1",
+      "words": 2,
+      "chars": 3,
+      "lines": 1,
+      "size": 51.3,
+      "vw": 6.7,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.39,
+      "top": 3930,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "2 2",
+      "words": 2,
+      "chars": 3,
+      "lines": 1,
+      "size": 51.3,
+      "vw": 6.7,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.39,
+      "top": 3930,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "3 3",
+      "words": 2,
+      "chars": 3,
+      "lines": 1,
+      "size": 51.3,
+      "vw": 6.7,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.39,
+      "top": 4166,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "4 4",
+      "words": 2,
+      "chars": 3,
+      "lines": 1,
+      "size": 51.3,
+      "vw": 6.7,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.39,
+      "top": 4166,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "90",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 27.7,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.06,
+      "top": 4352,
+      "tag": "span",
+      "kind": "statement"
+     },
+     {
+      "text": "45:00",
+      "words": 1,
+      "chars": 5,
+      "lines": 1,
+      "size": 39.4,
+      "vw": 5.1,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.01,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.18,
+      "top": 4382,
+      "tag": "span",
+      "kind": "statement"
+     },
+     {
+      "text": "Brands we repair",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 27.7,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 6458,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Why choose us",
+      "words": 3,
+      "chars": 13,
+      "lines": 1,
+      "size": 39.4,
+      "vw": 5.1,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 7848,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Same-Day Repairs",
+      "words": 2,
+      "chars": 16,
+      "lines": 1,
+      "size": 27.7,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 7953,
+      "tag": "dt",
+      "kind": "heading"
+     },
+     {
+      "text": "90-Day Warranty",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 27.7,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.43,
+      "top": 7953,
+      "tag": "dt",
+      "kind": "heading"
+     },
+     {
+      "text": "Loved on Google",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 39.4,
+      "vw": 5.1,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 8390,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "4.9",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 94.1,
+      "vw": 12.3,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0.001,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.22,
+      "top": 8473,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Current promotions",
+      "words": 2,
+      "chars": 18,
+      "lines": 1,
+      "size": 39.4,
+      "vw": 5.1,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 9309,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Free smartphone",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 27.7,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.62,
+      "top": 9425,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "First month free",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 27.7,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.56,
+      "top": 9570,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "No credit needed",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 27.7,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.57,
+      "top": 9715,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Common questions",
+      "words": 2,
+      "chars": 16,
+      "lines": 1,
+      "size": 39.4,
+      "vw": 5.1,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 9999,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Visit us in Akron",
+      "words": 4,
+      "chars": 17,
+      "lines": 1,
+      "size": 39.4,
+      "vw": 5.1,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 10862,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1650 W Market St #27",
+      "words": 5,
+      "chars": 20,
+      "lines": 1,
+      "size": 27.7,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 10945,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Send us a message",
+      "words": 4,
+      "chars": 17,
+      "lines": 1,
+      "size": 27.7,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 12063,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Join our mailing list for the best deals.",
+      "words": 8,
+      "chars": 41,
+      "lines": 2,
+      "size": 27.7,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.54,
+      "top": 12815,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1.855.377.3339",
+      "words": 1,
+      "chars": 14,
+      "lines": 1,
+      "size": 27.7,
+      "vw": 3.6,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.43,
+      "top": 13294,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 29,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 9,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Rajdhani",
+       "share": 0.79,
+       "mono": false
+      },
+      {
+       "family": "Orbitron",
+       "share": 0.21,
+       "mono": false
+      },
+      {
+       "family": "Tomorrow",
+       "share": 0,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      10,
+      15,
+      17,
+      20,
+      22,
+      28,
+      32,
+      36,
+      39,
+      51,
+      71,
+      94,
+      143
+     ],
+     "sizeCount": 13,
+     "notLoaded": [],
+     "body": {
+      "font": "Rajdhani",
+      "size": 20.1,
+      "leading": 1.6,
+      "weight": 500,
+      "tracking": 0.004,
+      "contrast": null
+     },
+     "measureChars": 62,
+     "max": {
+      "size": 142.7,
+      "vw": 18.6,
+      "font": "Tomorrow",
+      "text": "Speedy"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.08,
+     "centerShare": 0.02,
+     "smallText": 0
+    },
+    "eyebrows": [
+     {
+      "text": "Use our instant quote tool or call us",
+      "above": "3 3",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 17,
+      "top": 4074
+     },
+     {
+      "text": "Walk in or schedule an appointment",
+      "above": "4 4",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 17,
+      "top": 4074
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#000000",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#000000",
+       "top": 108,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0
+       }
+      },
+      {
+       "color": "#111111",
+       "top": 1597,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.07
+       }
+      },
+      {
+       "color": "#d9161e",
+       "top": 9220,
+       "hsl": {
+        "h": 358,
+        "s": 0.82,
+        "l": 0.47
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#ffffff",
+       "share": 0.63
+      },
+      {
+       "color": "#f0f0f0",
+       "share": 0.17
+      },
+      {
+       "color": "#b8b8b8",
+       "share": 0.17
+      },
+      {
+       "color": "#8f8f8f",
+       "share": 0.02
+      },
+      {
+       "color": "#ff4d53",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#d9161e",
+      "hsl": {
+       "h": 358,
+       "s": 0.82,
+       "l": 0.47
+      },
+      "fg": "#f0f0f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 11,
+     "inHero": 3,
+     "radius": 8,
+     "height": 56,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 11,
+     "heroLabels": [
+      "SCHEDULE REPAIR",
+      "SCHEDULE REPAIR",
+      "GET INSTANT QUOTE"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 4,
+     "scrims": 0,
+     "gradientSamples": [
+      "section.hero-stage.relative → radial-gradient(50% 70% at 50% 52%, rgba(237, 28, 36, 0.16), rgba(0, 0, 0, 0) 70%), radial-gradient(120% 90% a",
+      "div.hero-phone-light.pointer-events-none → radial-gradient(closest-side, rgba(237, 28, 36, 0.55), rgba(0, 0, 0, 0))",
+      "div.hero-phone-flash.pointer-events-none → radial-gradient(circle at 86% 68%, rgba(255, 255, 255, 0.95), rgba(255, 120, 120, 0.35) 14%, rgba(0, 0, 0, 0) ",
+      "div.pointer-events-none.fixed → radial-gradient(circle, rgba(237, 28, 36, 0.15) 0%, rgba(237, 28, 36, 0.04) 40%, rgba(0, 0, 0, 0) 70%)"
+     ],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "div.flex.flex-col 707px",
+      "div.container-site.mt-12 768px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 47,
+     "boxRadius": 12,
+     "squareMedia": 4,
+     "roundedMedia": 10,
+     "mediaRadius": 12,
+     "textShadow": 9,
+     "cardRows": [
+      {
+       "count": 6,
+       "iconTopped": true,
+       "rounded": true,
+       "top": 3118
+      },
+      {
+       "count": 4,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 3906
+      }
+     ]
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.13
+     },
+     {
+      "type": "img",
+      "ratio": 0.13
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 68,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "orbitron",
+     "orbitron fallback",
+     "rajdhani",
+     "rajdhani fallback",
+     "tomorrow",
+     "tomorrow fallback"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 14172,
+    "margins": {
+     "left": 31,
+     "right": 31
+    },
+    "sections": [
+     {
+      "sel": "main#main.outline-none",
+      "tag": "main",
+      "top": 108,
+      "height": 13054,
+      "words": 467,
+      "media": 14,
+      "middle": 862,
+      "heading": {
+       "text": "Speedy",
+       "size": 143,
+       "tag": "p"
+      },
+      "left": 0,
+      "right": 0,
+      "textLeft": 30,
+      "textRight": 35,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": true
+     },
+     {
+      "sel": "footer.bg-bg-raised.pb-10",
+      "tag": "footer",
+      "top": 13162,
+      "height": 1009,
+      "words": 97,
+      "media": 0,
+      "middle": 11,
+      "heading": {
+       "text": "1.855.377.3339",
+       "size": 28,
+       "tag": "a"
+      },
+      "left": 31,
+      "right": 31,
+      "textLeft": 31,
+      "textRight": 31,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Cracked screen? Dead battery? Fixed same day in Akron.",
+      "size": 16,
+      "top": 148,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 31,
+      "n": 17
+     },
+     {
+      "x": 55,
+      "n": 10
+     },
+     {
+      "x": 71,
+      "n": 2
+     },
+     {
+      "x": 146,
+      "n": 1
+     },
+     {
+      "x": 250,
+      "n": 1
+     },
+     {
+      "x": 263,
+      "n": 1
+     },
+     {
+      "x": 347,
+      "n": 1
+     },
+     {
+      "x": 374,
+      "n": 1
+     },
+     {
+      "x": 391,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 35,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.97,
+    0.68,
+    0.66,
+    0.86,
+    0.97,
+    0.84,
+    0.77,
+    0.99,
+    0.68,
+    0.91,
+    0.87,
+    0.37
+   ],
+   "motion": {
+    "elements": 53,
+    "css": 5,
+    "transitions": 14,
+    "scripted": 34,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 12839,
+     "screens": 15.2,
+     "words": 770,
+     "img": 23,
+     "video": 0,
+     "canvas": 0,
+     "svg": 55,
+     "sections": 10,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 10,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "image?url=%2Fimages%2Fhero%2Fphone-cracked.webp&",
+      "image?url=%2Fimages%2Fhero%2Fphone-fixed.webp&w=",
+      "shard-3.webp",
+      "image?url=%2Fimages%2Fsite%2Fscreen-lift.webp&w=",
+      "image?url=%2Fimages%2Fsite%2Fdevices.webp&w=640&",
+      "image?url=%2Fimages%2Fsite%2Fdevices.webp&w=640&",
+      "image?url=%2Fimages%2Fsite%2Fcounter.webp&w=640&",
+      "image?url=%2Fimages%2Fsite%2Fscreen-lift.webp&w="
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "SPEEDY",
+     "words": 1,
+     "chars": 6,
+     "lines": 1,
+     "size": 72.3,
+     "vw": 18.5,
+     "font": "Tomorrow",
+     "weight": 900,
+     "tracking": -0.01,
+     "leading": 0.8,
+     "upper": true,
+     "italic": true,
+     "mono": false,
+     "align": "left",
+     "position": "center",
+     "widthRatio": 0.89,
+     "top": 359,
+     "tag": "p",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Cracked screen? Dead battery? Fixed same day in Akron.",
+     "words": 9,
+     "lines": 3,
+     "size": 16,
+     "font": "Orbitron"
+    },
+    "headings": [
+     {
+      "text": "Cracked screen?",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 35.8,
+      "vw": 9.2,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 148,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "Dead battery?",
+      "words": 2,
+      "chars": 13,
+      "lines": 1,
+      "size": 35.8,
+      "vw": 9.2,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 184,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "SPEEDY",
+      "words": 1,
+      "chars": 6,
+      "lines": 1,
+      "size": 72.3,
+      "vw": 18.5,
+      "font": "Tomorrow",
+      "weight": 900,
+      "tracking": -0.01,
+      "leading": 0.8,
+      "upper": true,
+      "italic": true,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 359,
+      "tag": "p",
+      "kind": "heading"
+     },
+     {
+      "text": "45",
+      "words": 1,
+      "chars": 2,
+      "lines": 1,
+      "size": 32,
+      "vw": 8.2,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.03,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.12,
+      "top": 998,
+      "tag": "span",
+      "kind": "statement"
+     },
+     {
+      "text": "Our services",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 32.3,
+      "vw": 8.3,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 1314,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Smartphone Repair",
+      "words": 2,
+      "chars": 17,
+      "lines": 2,
+      "size": 32.3,
+      "vw": 8.3,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 1481,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "How it works",
+      "words": 3,
+      "chars": 12,
+      "lines": 1,
+      "size": 32.3,
+      "vw": 8.3,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 3380,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1 1",
+      "words": 2,
+      "chars": 3,
+      "lines": 1,
+      "size": 40.6,
+      "vw": 10.4,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": -0.02,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 3499,
+      "tag": "div",
+      "kind": "statement"
+     },
+     {
+      "text": "Brands we repair",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 24.1,
+      "vw": 6.2,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 5276,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Why choose us",
+      "words": 3,
+      "chars": 13,
+      "lines": 1,
+      "size": 32.3,
+      "vw": 8.3,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 6145,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Same-Day Repairs",
+      "words": 2,
+      "chars": 16,
+      "lines": 1,
+      "size": 24.1,
+      "vw": 6.2,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 6243,
+      "tag": "dt",
+      "kind": "heading"
+     },
+     {
+      "text": "90-Day Warranty",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 24.1,
+      "vw": 6.2,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 6368,
+      "tag": "dt",
+      "kind": "heading"
+     },
+     {
+      "text": "Loved on Google",
+      "words": 3,
+      "chars": 15,
+      "lines": 1,
+      "size": 32.3,
+      "vw": 8.3,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 6841,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "4.9",
+      "words": 1,
+      "chars": 3,
+      "lines": 1,
+      "size": 72,
+      "vw": 18.5,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0.001,
+      "leading": 0.85,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.33,
+      "top": 6929,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Current promotions",
+      "words": 2,
+      "chars": 18,
+      "lines": 1,
+      "size": 32.3,
+      "vw": 8.3,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 7480,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Free smartphone",
+      "words": 2,
+      "chars": 15,
+      "lines": 1,
+      "size": 24.1,
+      "vw": 6.2,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 7580,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "First month free",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 24.1,
+      "vw": 6.2,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 7779,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "No credit needed",
+      "words": 3,
+      "chars": 16,
+      "lines": 1,
+      "size": 24.1,
+      "vw": 6.2,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.79,
+      "top": 7979,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Common questions",
+      "words": 2,
+      "chars": 16,
+      "lines": 1,
+      "size": 32.3,
+      "vw": 8.3,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 8276,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "Visit us in Akron",
+      "words": 4,
+      "chars": 17,
+      "lines": 1,
+      "size": 32.3,
+      "vw": 8.3,
+      "font": "Orbitron",
+      "weight": 700,
+      "tracking": -0.01,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 9221,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1650 W Market St #27",
+      "words": 5,
+      "chars": 20,
+      "lines": 1,
+      "size": 24.1,
+      "vw": 6.2,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 9297,
+      "tag": "p",
+      "kind": "statement"
+     },
+     {
+      "text": "Send us a message",
+      "words": 4,
+      "chars": 17,
+      "lines": 1,
+      "size": 24.1,
+      "vw": 6.2,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 10406,
+      "tag": "h3",
+      "kind": "heading"
+     },
+     {
+      "text": "Join our mailing list for the best deals.",
+      "words": 8,
+      "chars": 41,
+      "lines": 2,
+      "size": 24.1,
+      "vw": 6.2,
+      "font": "Orbitron",
+      "weight": 600,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 11207,
+      "tag": "h2",
+      "kind": "heading"
+     },
+     {
+      "text": "1.855.377.3339",
+      "words": 1,
+      "chars": 14,
+      "lines": 1,
+      "size": 24.1,
+      "vw": 6.2,
+      "font": "Orbitron",
+      "weight": 900,
+      "tracking": 0,
+      "leading": 1.2,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 11646,
+      "tag": "a",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 24,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 4,
+     "centered": 0,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "Rajdhani",
+       "share": 0.79,
+       "mono": false
+      },
+      {
+       "family": "Orbitron",
+       "share": 0.21,
+       "mono": false
+      },
+      {
+       "family": "Tomorrow",
+       "share": 0,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      10,
+      15,
+      17,
+      19,
+      20,
+      22,
+      24,
+      32,
+      36,
+      41,
+      72
+     ],
+     "sizeCount": 11,
+     "notLoaded": [],
+     "body": {
+      "font": "Rajdhani",
+      "size": 19,
+      "leading": 1.6,
+      "weight": 500,
+      "tracking": 0.004,
+      "contrast": null
+     },
+     "measureChars": 28,
+     "max": {
+      "size": 72.3,
+      "vw": 18.5,
+      "font": "Tomorrow",
+      "text": "Speedy"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.07,
+     "centerShare": 0.02,
+     "smallText": 0
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#000000",
+     "bodyBgHsl": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#000000",
+       "top": 108,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0
+       }
+      },
+      {
+       "color": "#111111",
+       "top": 1458,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 0.07
+       }
+      },
+      {
+       "color": "#d9161e",
+       "top": 7415,
+       "hsl": {
+        "h": 358,
+        "s": 0.82,
+        "l": 0.47
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#ffffff",
+       "share": 0.63
+      },
+      {
+       "color": "#b8b8b8",
+       "share": 0.17
+      },
+      {
+       "color": "#f0f0f0",
+       "share": 0.17
+      },
+      {
+       "color": "#8f8f8f",
+       "share": 0.02
+      },
+      {
+       "color": "#ff4d53",
+       "share": 0.01
+      }
+     ],
+     "button": {
+      "bg": "#d9161e",
+      "hsl": {
+       "h": 358,
+       "s": 0.82,
+       "l": 0.47
+      },
+      "fg": "#f0f0f0"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 10,
+     "inHero": 0,
+     "radius": 8,
+     "height": 56,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 10,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 3,
+     "scrims": 0,
+     "gradientSamples": [
+      "section.hero-stage.relative → radial-gradient(50% 70% at 50% 52%, rgba(237, 28, 36, 0.16), rgba(0, 0, 0, 0) 70%), radial-gradient(120% 90% a",
+      "div.hero-phone-light.pointer-events-none → radial-gradient(closest-side, rgba(237, 28, 36, 0.55), rgba(0, 0, 0, 0))",
+      "div.hero-phone-flash.pointer-events-none → radial-gradient(circle at 86% 68%, rgba(255, 255, 255, 0.95), rgba(255, 120, 120, 0.35) 14%, rgba(0, 0, 0, 0) "
+     ],
+     "gradientText": 0,
+     "hairlines": 2,
+     "hairlineSamples": [
+      "div.flex.flex-col 358px",
+      "div.container-site.mt-12 390px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 46,
+     "boxRadius": 12,
+     "squareMedia": 2,
+     "roundedMedia": 5,
+     "mediaRadius": 12,
+     "textShadow": 9,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.26
+     },
+     {
+      "type": "img",
+      "ratio": 0.26
+     }
+    ],
+    "nav": {
+     "links": 2,
+     "fixed": true,
+     "height": 68,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "orbitron",
+     "orbitron fallback",
+     "rajdhani",
+     "rajdhani fallback",
+     "tomorrow",
+     "tomorrow fallback"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 12839,
+    "margins": {
+     "left": 16,
+     "right": 16
+    },
+    "sections": [
+     {
+      "sel": "main#main.outline-none",
+      "tag": "main",
+      "top": 108,
+      "height": 11422,
+      "words": 422,
+      "media": 8,
+      "middle": 1032,
+      "heading": {
+       "text": "Speedy",
+       "size": 72,
+       "tag": "p"
+      },
+      "left": 0,
+      "right": 0,
+      "textLeft": 16,
+      "textRight": 16,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": true
+     },
+     {
+      "sel": "footer.bg-bg-raised.pb-10",
+      "tag": "footer",
+      "top": 11530,
+      "height": 1309,
+      "words": 97,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "1.855.377.3339",
+       "size": 24,
+       "tag": "a"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 16,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Cracked screen? Dead battery? Fixed same day in Akron.",
+      "size": 16,
+      "top": 148,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 16,
+      "n": 17
+     },
+     {
+      "x": 40,
+      "n": 12
+     },
+     {
+      "x": 85,
+      "n": 1
+     },
+     {
+      "x": 127,
+      "n": 1
+     },
+     {
+      "x": 155,
+      "n": 1
+     },
+     {
+      "x": 190,
+      "n": 1
+     },
+     {
+      "x": 205,
+      "n": 1
+     },
+     {
+      "x": 231,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 35,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "eyebrow",
+   "width": 1440,
+   "message": "1 eyebrow/kicker label(s) above headings: \"90-day warranty on all repairs\" above \"90\"",
+   "fix": "Delete them. If the label carried real information, fold it into the headline or the supporting sentence.",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "3 gradient fill(s): section.hero-stage.relative → radial-gradient(50% 70% at 50% 52%, rgba(237, 28, 36, 0.16), rgba(0, 0, 0, 0) 70%), radial-gradient(120% 90% a | div.hero-phone-light.pointer-events-none → radial-gradient(closest-side, rgba(237, 28, 36, 0.55), rgba(0, 0, 0, 0)) | div.hero-phone-flash.pointer-events-none → radial-gradient(circle at 86% 68%, rgba(255, 255, 255, 0.95), rgba(255, 120, 120, 0.35) 14%, rgba(0, 0, 0, 0) ",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "text-shadow",
+   "width": 1440,
+   "message": "3 text-shadow(s).",
+   "fix": "Remove; fix legibility with a scrim or a different crop.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "hairline",
+   "width": 1440,
+   "message": "2 thin rule(s)/divider line(s): div.flex.flex-col 1165px | div.container-site.mt-12 1280px",
+   "fix": "Delete. Separate with space, a tone change, or scale. Lines are only for real tables and form fields.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "icon-cards",
+   "width": 1440,
+   "message": "1 row(s) of identical cards each topped with a small icon (6 cards).",
+   "fix": "Replace with one composed section from the direction: a narrative split, a list set in large type, or real imagery per item.",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "size-count",
+   "width": 1440,
+   "message": "12 different font sizes (11, 15, 17, 22, 24, 34, 35, 37, 52, 70, 128, 230).",
+   "fix": "A page needs about five: display, heading, lead, body, small.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "small-title",
+   "width": 1440,
+   "message": "The h1 is 16px (\"Cracked screen? Dead battery? Fixed same day in Ak\").",
+   "fix": "Set the title at display size, or make the large text of the first screen the h1.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "covered-text",
+   "width": 1440,
+   "message": "Large text lies under another element at some scroll position: \"SPEEDY\" (screen 1, 25% hidden)",
+   "fix": "Nothing may sit on top of a headline or statement. Move the picture, shorten the pinned run, or raise the text above it (z-index) and give it a ground.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "still-page",
+   "width": 1440,
+   "message": "Little motion: 13 element(s) moved while the page loaded and scrolled.",
+   "fix": "Give every section an entrance for its parts (not one fade of the whole block) and add one moving picture: a looping clip or a slow move on a photograph."
+  },
+  {
+   "level": "WARN",
+   "id": "pinned-over-picture",
+   "width": 768,
+   "message": "Pinned large text slides across pictures while the page scrolls: \"00:00\" (screen 6, 100% over a picture)",
+   "fix": "Jurors read a pinned title crossing drawings or photographs as a collision. Keep the pictures in the column the title does not occupy, or unpin it."
+  },
+  {
+   "level": "WARN",
+   "id": "first-action",
+   "width": 390,
+   "message": "No visible button in the first phone screen.",
+   "fix": "On a phone the first screen still holds the headline, the supporting sentence and the action; move navigation into one row or a menu so it does not push them down."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "E:\\Projects\\speedy-irepairs\\Speedy-irepair\\.taste-skill\\review-home\\desktop-fold.jpg",
+   "pages": [
+    "E:\\Projects\\speedy-irepairs\\Speedy-irepair\\.taste-skill\\review-home\\desktop-page-01.jpg",
+    "E:\\Projects\\speedy-irepairs\\Speedy-irepair\\.taste-skill\\review-home\\desktop-page-02.jpg",
+    "E:\\Projects\\speedy-irepairs\\Speedy-irepair\\.taste-skill\\review-home\\desktop-page-03.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "E:\\Projects\\speedy-irepairs\\Speedy-irepair\\.taste-skill\\review-home\\tablet-fold.jpg",
+   "pages": [
+    "E:\\Projects\\speedy-irepairs\\Speedy-irepair\\.taste-skill\\review-home\\tablet-page-01.jpg",
+    "E:\\Projects\\speedy-irepairs\\Speedy-irepair\\.taste-skill\\review-home\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "E:\\Projects\\speedy-irepairs\\Speedy-irepair\\.taste-skill\\review-home\\mobile-fold.jpg",
+   "pages": [
+    "E:\\Projects\\speedy-irepairs\\Speedy-irepair\\.taste-skill\\review-home\\mobile-page-01.jpg",
+    "E:\\Projects\\speedy-irepairs\\Speedy-irepair\\.taste-skill\\review-home\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "figtree",
+        "createdAt": "2026-10-28T15:59:16.739Z",
+        "reason": "Vendored React Bits CircularGallery default font constant; unused because ServicesCarousel passes the site's Orbitron font. Vendored files are kept unmodified."
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          "components/motion/reactbits/CircularGallery.tsx"
+        ],
+        "createdAt": "2026-10-28T15:59:17.161Z",
+        "reason": "Vendored React Bits file: font-parsing regex in its font loader, not a design choice. Kept unmodified per reactbits README."
+      }
+    ]
+  }
+}

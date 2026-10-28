@@ -28,6 +28,8 @@ type Props = {
   panelClassName?: string;
   /** heading level wrapping each button (a11y) */
   headingLevel?: 2 | 3 | 4;
+  /** rows rise in turn as the list scrolls in (data-stagger, lib/motion/bindings.ts) */
+  stagger?: boolean;
 };
 
 export function Accordion({
@@ -40,6 +42,7 @@ export function Accordion({
   buttonClassName,
   panelClassName,
   headingLevel = 3,
+  stagger = false,
 }: Props) {
   const baseId = useId();
   const [open, setOpen] = useState<Set<number>>(() => new Set(defaultOpen));
@@ -56,7 +59,7 @@ export function Accordion({
   const H = `h${headingLevel}` as "h3";
 
   return (
-    <div className={className} data-accordion={engine}>
+    <div className={className} data-accordion={engine} data-stagger={stagger ? "" : undefined}>
       {items.map((item, i) => {
         const isOpen = open.has(i);
         const btnId = `${baseId}-b${i}`;

@@ -42,7 +42,6 @@ const STATIC_ROUTES: {
   },
   { path: "/financing", priority: 0.7, changeFrequency: "monthly", sanityType: "financingPage" },
   { path: "/faq", priority: 0.7, changeFrequency: "monthly", sanityType: "faqPage" },
-  { path: "/about", priority: 0.6, changeFrequency: "monthly", sanityType: "aboutPage" },
   {
     path: "/policies/shipping-return",
     priority: 0.3,

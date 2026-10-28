@@ -14,7 +14,6 @@ export type RouteKey =
   | "/instant-quote"
   | "/schedule-repair"
   | "/faq"
-  | "/about"
   | "/financing"
   | "/home-internet"
   | "/policies/shipping-return"
@@ -153,20 +152,6 @@ export const ROUTES: RouteSeo[] = [
       "phone repair warranty",
       "iphone repair no upfront payment",
       "will i lose data phone repair",
-    ],
-  },
-  {
-    route: "/about",
-    label: "About",
-    h1: "About Speedy iRepair, Akron's Phone Repair Shop",
-    metaTitle: "About Speedy iRepair | Local Phone Repair Shop in Akron, OH",
-    metaDescription:
-      "Meet Speedy iRepair, a locally owned phone repair shop and Spectrum Authorized Retailer in Akron, OH. Fast repairs, fair prices, honest service.",
-    primaryKeyword: "locally owned phone repair akron",
-    secondaryKeywords: [
-      "speedy irepair",
-      "spectrum authorized retailer akron",
-      "phone repair wallhaven akron",
     ],
   },
   {
@@ -563,9 +548,8 @@ export const MAIN_NAV: { name: string; path: string }[] = [
   { name: "Sell Your Device", path: "/sell-your-device" },
   { name: "Instant Quote", path: "/instant-quote" },
   { name: "FAQ", path: "/faq" },
-  { name: "About", path: "/about" },
   { name: "Schedule Repair", path: "/schedule-repair" },
 ];
 
 /** CSS selectors the Frontend must put on the elements (see INTEGRATION_NOTES.md). */
-export const SPEAKABLE_SELECTORS = ["#hero-title", "#hero-subline", "#why-choose-us"];
+export const SPEAKABLE_SELECTORS = ["#hero-title", "#why-choose-us"];

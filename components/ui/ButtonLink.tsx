@@ -8,10 +8,10 @@ type Size = "sm" | "md" | "lg";
 
 /* Rajdhani 700, uppercase, modest tracking: buttons are read and pressed, so they use the reading face. */
 const base =
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm font-sans font-bold uppercase tracking-[0.06em] transition-[background-color,border-color,color,box-shadow] duration-fast ease-out focus-visible:shadow-focus disabled:cursor-not-allowed";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-sans font-bold uppercase tracking-[0.06em] transition-[background-color,border-color,color,box-shadow] duration-fast ease-out focus-visible:shadow-focus disabled:cursor-not-allowed";
 const variants: Record<Variant, string> = {
-  primary: "bg-primary text-text shadow-glow-sm hover:bg-primary-hover active:bg-primary-active",
-  secondary: "border border-border-strong bg-bg text-text hover:border-text hover:bg-surface active:bg-surface-2",
+  primary: "bg-primary text-text hover:bg-primary-hover hover:shadow-glow-sm active:bg-primary-active",
+  secondary: "bg-surface-3 text-text hover:bg-border-strong active:bg-border-strong",
   link: "text-primary-text underline underline-offset-4 decoration-1 hover:decoration-2",
 };
 const sizes: Record<Size, string> = {

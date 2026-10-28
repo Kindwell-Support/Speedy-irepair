@@ -53,12 +53,12 @@ export default async function HomePage() {
       <WhyChooseUs copy={page.whySection} items={values} />
       <Testimonials copy={page.testimonialsSection} items={testimonials} reviewUrl={settings.business.externalLinks.review} />
       <Promotions copy={page.promotionsSection} items={promotions} />
-      <Section id="faq" copy={page.faqSection} layout="side">
-        <FaqList faqs={faqs} />
+      <Section id="faq" copy={page.faqSection} layout="side" reveal>
+        <FaqList faqs={faqs} stagger />
       </Section>
       <LocationContact copy={page.locationSection} business={settings.business} directionsLabel={page.locationSection.directionsLabel} />
-      <section id="newsletter" aria-labelledby="newsletter-heading" className="border-t border-border-subtle bg-bg-raised py-20 md:py-24">
-        <div className="container-site grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-x-8">
+      <section id="newsletter" aria-labelledby="newsletter-heading" className="bg-bg-raised py-20 md:py-24">
+        <div className="container-site grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-x-8" data-animate="reveal" data-reveal="children">
           <h2 id="newsletter-heading" className="max-w-[18ch] text-h3 lg:col-span-6">
             {page.newsletter.heading}
           </h2>

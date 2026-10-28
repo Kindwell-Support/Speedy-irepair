@@ -84,7 +84,6 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-sans)"],
         heading: ["var(--font-heading)"],
-        mono: ["var(--font-mono)"],
       },
       fontSize: {
         display: ["var(--text-display)", { lineHeight: "var(--leading-display)", letterSpacing: "var(--tracking-display)", fontWeight: "800" }],

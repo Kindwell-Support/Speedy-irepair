@@ -52,25 +52,54 @@ html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]) [data-step]
   contain: layout paint;
 }
 
-/* How It Works: active / done step visual states (toggled by bindings.ts) */
+/* How It Works: active / done step states (classes toggled by bindings.ts).
+   Static / no-JS: every card open, photo dimmed behind it, no tick. Pinned: the active card shows its
+   photo and detail and its number fills red left to right; done cards keep full brightness and get a tick;
+   from 1024px the active card also widens while the rest fold to number + title. */
 :is([data-animate="steps"], [data-pin="how"]) [data-step] {
-  transition: border-color var(--duration-fast) var(--ease-out),
-              box-shadow var(--duration-fast) var(--ease-out),
-              opacity var(--duration-fast) var(--ease-out);
+  transition: background-color var(--duration-base) var(--ease-out),
+              flex-grow 700ms var(--ease-out);
 }
-:is([data-animate="steps"], [data-pin="how"]) [data-step].is-active {
-  border-color: var(--color-brand);
-  box-shadow: var(--glow-primary);
+[data-pin="how"] [data-step-photo] {
+  opacity: 0.45;
+  transition: opacity 600ms var(--ease-out);
 }
-:is([data-animate="steps"], [data-pin="how"]) [data-step].is-active [data-step-number] {
-  color: var(--color-brand);
+[data-pin="how"] [data-step-photo] img {
+  transform: scale(1.06);
+  transition: transform 1200ms var(--ease-out);
 }
-:is([data-animate="steps"], [data-pin="how"]) [data-step].is-done {
-  opacity: 0.5;
-  border-color: var(--color-border);
+[data-pin="how"] [data-step-number-fill] {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 600ms var(--ease-out);
 }
-:is([data-animate="steps"], [data-pin="how"]) [data-step].is-done [data-step-number] {
-  color: var(--color-success);
+[data-pin="how"] [data-step-tick] {
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out);
+}
+[data-pin="how"] [data-step-reveal] {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 600ms var(--ease-out), opacity 400ms var(--ease-out);
+}
+[data-pin="how"] [data-step-timer-label][data-done] { color: var(--color-brand); }
+
+[data-pin="how"][data-pinned] [data-step-photo] { opacity: 0; }
+[data-pin="how"][data-pinned] [data-step].is-active { background-color: var(--color-surface); }
+[data-pin="how"][data-pinned] [data-step].is-active [data-step-photo] { opacity: 0.6; }
+[data-pin="how"][data-pinned] [data-step].is-active [data-step-photo] img { transform: scale(1); }
+[data-pin="how"][data-pinned] [data-step].is-active [data-step-number-fill] { clip-path: inset(0 0 0 0); }
+[data-pin="how"][data-pinned] [data-step].is-done [data-step-number] { color: var(--color-text); }
+[data-pin="how"][data-pinned] [data-step].is-done [data-step-tick] { opacity: 1; transform: scale(1); }
+
+@media (min-width: 1024px) {
+  [data-pin="how"][data-pinned] [data-step].is-active { flex-grow: 2.4; }
+  [data-pin="how"][data-pinned] [data-step]:not(.is-active) [data-step-reveal] {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+  /* Fixed measure while pinned, so the copy doesn't reflow as the card widens. */
+  [data-pin="how"][data-pinned] [data-step-copy] { width: 32ch; max-width: none; }
 }
 
 /* ---------------------------------------------------------------- home hero
@@ -157,49 +186,94 @@ html[data-motion="ok"] [data-hero-entrance]:not([data-animated]) [data-shard-lay
   background: radial-gradient(closest-side, rgb(237 28 36 / 0.55), transparent);
 }
 
-/* The phone: real renders sharing one frame. Fixed screen heals outward from the impact (--heal, 0–160%). */
+/* The phone: two three-quarter renders sharing one frame (the angle and side frame are in the photos).
+   Fixed screen heals outward from the impact (--heal, 0–160%). */
 .hero-phone {
   --heal: 0%;
-  height: clamp(320px, 50svh, 460px);
-  aspect-ratio: 760 / 1560;
-  filter: drop-shadow(0 48px 64px rgb(0 0 0 / 0.7));
+  height: clamp(340px, 52svh, 480px);
+  aspect-ratio: 652 / 1400;
 }
 @media (min-width: 1024px) {
-  .hero-phone { height: min(74svh, 700px); }
+  .hero-phone { height: min(68svh, 640px); }
 }
-/* Repaired wallpaper knocked down a stop so the screen doesn't add another bright red field to the stage. */
+/* Contact shadow on the bench under the tilted phone. */
+.hero-phone-shadow {
+  left: 12%;
+  right: 4%;
+  bottom: -5%;
+  height: 9%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.85), transparent);
+  filter: blur(14px);
+}
+html[data-motion="ok"] .hero-phone-float {
+  animation: hero-phone-float 6s var(--ease-in-out) infinite alternate;
+}
+@keyframes hero-phone-float {
+  from { transform: translate3d(0, -8px, 0); }
+  to { transform: translate3d(0, 8px, 0); }
+}
+
+/* Corner brackets framing the headline, like a camera focus frame. */
+.hero-bracket {
+  position: absolute;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-color: var(--color-border-strong);
+  pointer-events: none;
+}
+.hero-bracket-start { top: -0.75rem; left: -1.25rem; border-top: 2px solid; border-left: 2px solid; border-color: var(--color-brand); }
+.hero-bracket-end { bottom: -0.75rem; right: 0; border-bottom: 2px solid; border-right: 2px solid; border-color: var(--color-brand); }
+@media (max-width: 1023px) {
+  .hero-bracket-start { left: -0.5rem; }
+}
+/* The quote link: a quiet second action with an arrow that steps forward on hover. */
+.hero-quote-link::after {
+  content: "→";
+  margin-left: 0.5rem;
+  color: var(--color-brand);
+  transition: transform 0.2s var(--ease-out);
+}
+.hero-quote-link::after { display: inline-block; text-decoration: none; }
+.hero-quote-link:hover::after { transform: translateX(4px); }
+
+/* Repair list down the right edge: quiet until pointed at; the first reads as selected while none is. */
+.hero-repair {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--color-text-secondary);
+  transition: color 0.2s var(--ease-out);
+}
+.hero-repair::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-block: 0.3rem solid transparent;
+  border-left: 0.45rem solid var(--color-brand);
+  opacity: 0;
+  transform: translateX(-0.4rem);
+  transition: opacity 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+.hero-repair:hover,
+.hero-repair:focus-visible,
+.hero-repairs ul:not(:hover):not(:focus-within) li:first-child .hero-repair {
+  color: var(--color-text);
+}
+.hero-repair:hover::before,
+.hero-repair:focus-visible::before,
+.hero-repairs ul:not(:hover):not(:focus-within) li:first-child .hero-repair::before {
+  opacity: 1;
+  transform: none;
+}
+/* No filter on the repaired render: the frame must match the cracked one exactly as the heal passes over it. */
 .hero-phone-fixed {
-  filter: brightness(0.6) saturate(0.85);
   -webkit-mask-image: radial-gradient(circle at var(--ix) var(--iy), #000 calc(var(--heal) - 14%), transparent var(--heal));
   mask-image: radial-gradient(circle at var(--ix) var(--iy), #000 calc(var(--heal) - 14%), transparent var(--heal));
 }
 .hero-phone-flash {
   background: radial-gradient(circle at var(--ix) var(--iy), rgb(255 255 255 / 0.95), rgb(255 120 120 / 0.35) 14%, transparent 34%);
 }
-
-/* Status tag on the phone's left edge: "Cracked glass" swaps to "Fixed in 45 min". */
-.hero-status {
-  display: grid;
-  white-space: nowrap;
-}
-.hero-status > span {
-  grid-area: 1 / 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.875rem;
-  border-radius: var(--radius-full);
-  background: var(--color-surface-3);
-}
-.hero-status > span::before {
-  content: "";
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-}
-.hero-status-broken::before { background: var(--color-brand); }
-.hero-status-fixed { opacity: 0; }
-.hero-status-fixed::before { background: var(--color-success); }
 
 /* Hero buttons sit flat on the stage: no resting glow, the focus ring still shows. */
 .hero-ctas a { box-shadow: none; }
@@ -266,4 +340,64 @@ html[data-motion="reduce"] :is([data-animate], [data-motion-el]),
 html[data-motion="reduce"] :is([data-animate], [data-motion-el]) * {
   transition-duration: 0.001ms !important;
   animation: none !important;
+}
+
+/* ---------------------------------------------------------- brand marquee */
+/* Two identical groups per track; sliding the track by -50% lands exactly on the start of the second group. */
+.brand-marquee {
+  overflow: hidden;
+  /* Functional edge fade so logos drift in and out instead of being cut. taste-skill-ignore */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+.brand-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: brand-marquee 38s linear infinite;
+  will-change: transform;
+}
+.brand-marquee-track[data-reverse] {
+  animation-direction: reverse;
+  animation-duration: 44s;
+}
+@keyframes brand-marquee {
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-marquee { -webkit-mask-image: none; mask-image: none; }
+  .brand-marquee-track { animation: none; width: auto; }
+  .brand-marquee-track > ul { flex-wrap: wrap; }
+  .brand-marquee-track > ul[aria-hidden],
+  .brand-marquee-track[data-reverse] { display: none; }
+}
+
+/* ------------------------------------------------------------ site header */
+/* A floating glass bar; once the page scrolls it draws in to a narrower island and darkens. */
+.site-header-bar {
+  max-width: 100%;
+  background-color: color-mix(in srgb, var(--color-surface) 70%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  backdrop-filter: blur(16px) saturate(1.4);
+  transition: max-width 700ms cubic-bezier(0.22, 1, 0.36, 1), background-color 300ms ease-out;
+}
+.site-header[data-scrolled] .site-header-bar {
+  max-width: 1120px;
+  background-color: color-mix(in srgb, var(--color-bg) 82%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header-bar { transition: none; }
+}
+
+/* Footer ghost logo: the real wordmark (SVG as a mask) filled with the current text colour, spanning the container. */
+.footer-logo {
+  aspect-ratio: 3380 / 328;
+  background-color: currentColor;
+  -webkit-mask: url("/brand/logo-wordmark-currentcolor.svg") center / contain no-repeat;
+  mask: url("/brand/logo-wordmark-currentcolor.svg") center / contain no-repeat;
+}
+
+/* Footer ghost word: the red fill layer starts wiped out and is scrubbed in by bindWipe. Without motion it
+   stays fully filled. */
+html[data-motion="ok"] [data-wipe]:not([data-animated]) [data-wipe-fill] {
+  clip-path: inset(0 100% 0 0);
 }

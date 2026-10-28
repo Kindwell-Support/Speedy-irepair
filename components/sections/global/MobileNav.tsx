@@ -28,7 +28,7 @@ export function MobileNav({ items, cta }: { items: CtaLink[]; cta: CtaLink }) {
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex size-11 items-center justify-center rounded-full border border-border text-text"
+        className="inline-flex size-10 items-center justify-center rounded-full bg-surface-3 text-text transition-colors duration-fast hover:bg-border-strong"
       >
         <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
         <svg aria-hidden width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">

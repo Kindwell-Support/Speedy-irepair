@@ -52,7 +52,6 @@ export default async function SellYourDevicePage() {
               <div className="photo aspect-[4/5]">
                 <Image src={photo.src} alt={photo.alt} fill sizes="30vw" />
               </div>
-              <figcaption className="text-tag mt-3 text-text-tertiary">{photo.caption}</figcaption>
             </figure>
           </aside>
         </div>

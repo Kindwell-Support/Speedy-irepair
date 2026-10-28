@@ -13,7 +13,7 @@ import { ButtonLink } from "./ButtonLink";
 export function PageHero({ hero, photo, children }: { hero: PageHeroData; photo?: SiteImageKey; children?: ReactNode }) {
   const img = photo ? SITE_IMAGES[photo] : null;
   return (
-    <section className="border-b border-border-subtle">
+    <section>
       <div className={cn("container-site grid gap-10 pb-14 pt-14 md:pt-20 lg:gap-x-8 lg:pb-20", img && "lg:grid-cols-12 lg:items-end")}>
         <div className={img ? "lg:col-span-7" : undefined}>
           {hero.eyebrow ? <p className="mb-4 text-body-lg font-bold text-primary-text">{hero.eyebrow}</p> : null}
@@ -34,7 +34,6 @@ export function PageHero({ hero, photo, children }: { hero: PageHeroData; photo?
             <div className="photo aspect-[16/10]">
               <Image src={img.src} alt={img.alt} fill priority sizes="(min-width: 1024px) 40vw, 100vw" />
             </div>
-            <figcaption className="text-tag mt-3 text-text-tertiary">{img.caption}</figcaption>
           </figure>
         ) : null}
       </div>

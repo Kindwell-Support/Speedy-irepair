@@ -1,7 +1,7 @@
 import type { BusinessInfo } from "@/lib/sanity/types";
 import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
 
-function to12h(t: string): string {
+export function to12h(t: string): string {
   const [hRaw, m] = t.split(":");
   const h = Number(hRaw);
   const suffix = h >= 12 ? "PM" : "AM";
@@ -30,7 +30,7 @@ export function hoursSummary(business: BusinessInfo): string | null {
 }
 
 /** Opening hours from siteSettings (Decision #2). Falls back to the placeholder text when flagged. */
-export function HoursList({ business, compact = false }: { business: BusinessInfo; compact?: boolean }) {
+export function HoursList({ business, compact = false, stagger = false }: { business: BusinessInfo; compact?: boolean; stagger?: boolean }) {
   if (business.hoursIsPlaceholder)
     return (
       <p className="text-body-sm text-text-secondary">
@@ -38,7 +38,7 @@ export function HoursList({ business, compact = false }: { business: BusinessInf
       </p>
     );
   return (
-    <dl className={compact ? "space-y-1 text-body-sm" : "space-y-2 text-body"}>
+    <dl className={compact ? "space-y-1 text-body-sm" : "space-y-2 text-body"} data-stagger={stagger ? "0.05" : undefined}>
       {business.hours.map((h) => (
         <div key={h.day} className="flex justify-between gap-6">
           <dt className="text-text-secondary">{h.day}</dt>
