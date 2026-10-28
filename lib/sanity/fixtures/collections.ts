@@ -16,7 +16,7 @@ import type {
 import { EXTERNAL_LINKS } from "./business";
 import { blocks, PLACEHOLDER } from "./helpers";
 
-const scheduleCta = { label: "Schedule Repair", href: "/schedule-repair", variant: "primary" } as const;
+const scheduleCta = { label: "Schedule Repair", href: "/repair", variant: "primary" } as const;
 const quoteCta = { label: "Get Instant Quote", href: "/instant-quote", variant: "secondary" } as const;
 const callCta = { label: "Call us", href: "tel:+18553773339", variant: "secondary" } as const;
 const visitCta = { label: "Visit store", href: "/#location", variant: "secondary" } as const;

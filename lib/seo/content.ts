@@ -264,7 +264,7 @@ export const SERVICES: ServiceSeo[] = [
     detail:
       "There is no upfront payment for iPhone repairs. Android repairs require a $20 deposit. If replacement parts need to be ordered, they arrive in 3-4 days from our warehouse.",
     cta: [
-      { label: "Schedule Repair", href: "/schedule-repair" },
+      { label: "Schedule Repair", href: "/repair" },
       { label: "Get Instant Quote", href: "/instant-quote" },
     ],
   },
@@ -275,7 +275,7 @@ export const SERVICES: ServiceSeo[] = [
     snippet:
       "Speedy iRepair replaces worn-out smartphone batteries in Akron, Ohio. If your phone dies quickly or won't hold a charge, walk in to our 1650 W Market St shop or book online. iPhone repairs typically take 45-60 minutes, most Android repairs take 1-2 hours, and all repairs carry our 90-day warranty.",
     cta: [
-      { label: "Schedule Repair", href: "/schedule-repair" },
+      { label: "Schedule Repair", href: "/repair" },
       { label: "Get Instant Quote", href: "/instant-quote" },
     ],
   },
@@ -286,7 +286,7 @@ export const SERVICES: ServiceSeo[] = [
     snippet:
       "Speedy iRepair repairs damaged and loose smartphone charger ports in Akron, Ohio. If your phone won't charge or the cable won't stay connected, we can fix the port on Apple, Samsung, LG, Google, and other devices. iPhone repairs typically take 45-60 minutes, and every repair is backed by our 90-day warranty.",
     cta: [
-      { label: "Schedule Repair", href: "/schedule-repair" },
+      { label: "Schedule Repair", href: "/repair" },
       { label: "Get Instant Quote", href: "/instant-quote" },
     ],
   },
@@ -297,7 +297,7 @@ export const SERVICES: ServiceSeo[] = [
     snippet:
       "Speedy iRepair fixes broken smartphone cameras in Akron, Ohio, including blurry, cracked, or non-working front and rear cameras. We repair Apple, Samsung, LG, Google, and other devices at 1650 W Market St. iPhone repairs typically take 45-60 minutes, most Android repairs take 1-2 hours, and all repairs include our 90-day warranty.",
     cta: [
-      { label: "Schedule Repair", href: "/schedule-repair" },
+      { label: "Schedule Repair", href: "/repair" },
       { label: "Get Instant Quote", href: "/instant-quote" },
     ],
   },
@@ -309,7 +309,7 @@ export const SERVICES: ServiceSeo[] = [
       "Speedy iRepair inspects water-damaged smartphones at our Akron, Ohio shop at 1650 W Market St. We can try to preserve your data, but we cannot guarantee full functionality after a water damage inspection. If we find damage that affects functionality beyond the repair, we will let you know before any work begins.",
     detail:
       "We recommend backing up your data via iCloud, Google, or other cloud services whenever you can.",
-    cta: [{ label: "Schedule Repair", href: "/schedule-repair" }],
+    cta: [{ label: "Schedule Repair", href: "/repair" }],
   },
   {
     slug: "device-unlocking",
@@ -393,7 +393,7 @@ export const SERVICES: ServiceSeo[] = [
     serviceType: "Premium replacement parts",
     snippet:
       "Speedy iRepair uses premium-quality replacement parts for every smartphone repair at our Akron, Ohio shop. All repairs are covered under our 90-day warranty; damage to your device after repair voids the warranty. Most repairs are done the same day in 45 minutes, and parts that need ordering arrive in 3-4 days.",
-    cta: [{ label: "Schedule Repair", href: "/schedule-repair" }],
+    cta: [{ label: "Schedule Repair", href: "/repair" }],
   },
 ];
 
@@ -548,7 +548,7 @@ export const MAIN_NAV: { name: string; path: string }[] = [
   { name: "Sell Your Device", path: "/sell-your-device" },
   { name: "Instant Quote", path: "/instant-quote" },
   { name: "FAQ", path: "/faq" },
-  { name: "Schedule Repair", path: "/schedule-repair" },
+  { name: "Schedule Repair", path: "/repair" },
 ];
 
 /** CSS selectors the Frontend must put on the elements (see INTEGRATION_NOTES.md). */

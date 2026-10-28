@@ -85,13 +85,13 @@ export const navigation: Navigation = {
     { label: "Home Internet", href: "/home-internet" },
     { label: "FAQ", href: "/faq" },
   ],
-  headerCta: { label: "Schedule Repair", href: "/schedule-repair", variant: "primary" },
+  headerCta: { label: "Schedule Repair", href: "/repair", variant: "primary" },
   // Spec 2.1.11 (REQ-041)
   footerQuickLinks: [
     { label: "Home", href: "/" },
     { label: "Shop", href: "/shop" },
     { label: "Sell Your Device", href: "/sell-your-device" },
-    { label: "Schedule Repair", href: "/schedule-repair" },
+    { label: "Schedule Repair", href: "/repair" },
     { label: "Instant Quote", href: "/instant-quote" },
     { label: "FAQ", href: "/faq" },
   ],

@@ -26,7 +26,7 @@ export const homePage: HomePage = {
     headline: "Cracked screen? Dead battery? Fixed same day in Akron.",
     // Decision #1: founding year omitted. If businessInfo.foundingYear is later set, CMS may edit this line.
     subline: "Screens, batteries, charger ports and cameras with a 90‑day warranty.",
-    primaryCta: { label: "Schedule Repair", href: "/schedule-repair", variant: "primary" },
+    primaryCta: { label: "Schedule Repair", href: "/repair", variant: "primary" },
     secondaryCta: { label: "Get Instant Quote", href: "/instant-quote", variant: "secondary" },
     poster: null,
   },
@@ -154,7 +154,7 @@ export const aboutPage: AboutPage = {
   ctaSection: {
     heading: "Ready when you are",
     ctas: [
-      { label: "Schedule a repair", href: "/schedule-repair", variant: "primary" },
+      { label: "Schedule a repair", href: "/repair", variant: "primary" },
       { label: "Visit the shop", href: EXTERNAL_LINKS.maps, external: true, variant: "secondary" },
     ],
   },
