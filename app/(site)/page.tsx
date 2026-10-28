@@ -15,6 +15,7 @@ import { jsonLdForHome } from "@/lib/seo/routes";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Section } from "@/components/ui/Section";
 import { HomeHero } from "@/components/sections/home/HomeHero";
+import { HeroProof } from "@/components/sections/home/HeroProof";
 import { ServicesGrid } from "@/components/sections/home/ServicesGrid";
 import { HowItWorks } from "@/components/sections/home/HowItWorks";
 import { Brands } from "@/components/sections/home/Brands";
@@ -46,7 +47,8 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd data={jsonLdForHome(seo)} />
-      <HomeHero hero={page.hero} business={settings.business} />
+      <HomeHero hero={page.hero} />
+      <HeroProof business={settings.business} />
       <ServicesGrid copy={page.serviceCardsSection} cards={page.serviceCards} />
       <HowItWorks copy={page.howItWorksSection} steps={steps} />
       <Brands copy={page.brandsSection} brands={brands.filter((b) => b.repairs)} />

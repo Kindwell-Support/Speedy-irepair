@@ -68,6 +68,17 @@
     max-width: var(--container-max);
     padding-inline: var(--page-margin);
   }
+  /* Wider frame shared by the header bar and the home hero, so the two keep one left and one right edge.
+     Same gutter as container-site on phones and tablets; a slimmer one from lg up. */
+  .container-wide {
+    margin-inline: auto;
+    width: 100%;
+    max-width: var(--container-wide);
+    padding-inline: var(--page-margin);
+  }
+  @media (min-width: 1024px) {
+    .container-wide { padding-inline: clamp(24px, 2.5vw, 48px); }
+  }
   /* Small Rajdhani label: section indexes, figure captions, form legends. Never above a heading as an eyebrow. */
   .text-tag {
     font-family: var(--font-sans);

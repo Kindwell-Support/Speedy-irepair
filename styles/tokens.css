@@ -172,7 +172,11 @@
    sm 375 | md 768 | lg 1024 | xl 1280 | 2xl 1440 | 3xl 1920 */
 @media (min-width: 768px)  { :root { --grid-gutter: 24px; } }
 @media (min-width: 1280px) { :root { --grid-gutter: 32px; } }
-@media (min-width: 1920px) { :root { --container-max: 1440px; } }
+@media (min-width: 1920px) { :root { --container-max: 1440px; --container-wide: 1680px; } }
+
+/* Dismissed announcement banner. data-banner is set before paint by the banner's inline gate script, so a
+   dismissed banner never flashes. */
+html[data-banner="off"] [data-announcement] { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   :root {

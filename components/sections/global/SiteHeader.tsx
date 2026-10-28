@@ -9,13 +9,14 @@ import { PrimaryNav } from "./PrimaryNav";
 
 /**
  * Global header: a floating bar (logo, centred primary nav from xl, Schedule Repair CTA) that tightens into a
- * narrower island once the page scrolls. Phones get tap-to-call instead of the CTA.
+ * narrower island once the page scrolls. Phones get tap-to-call instead of the CTA. Uses container-wide so its
+ * edges match the home hero's.
  */
 export function SiteHeader({ settings }: { settings: SiteSettings }) {
   const { business, navigation } = settings;
   return (
     <HeaderShell>
-      <div className="container-site flex h-nav items-center lg:h-nav-desktop">
+      <div className="container-wide flex h-nav items-center lg:h-nav-desktop">
         <div className="site-header-bar mx-auto flex h-14 w-full items-center justify-between gap-4 rounded-full pl-5 pr-2 md:pl-6 xl:grid xl:grid-cols-[1fr_auto_1fr]">
           <Link href="/" className="flex h-10 shrink-0 items-center justify-self-start" aria-label={`${business.name}, home`}>
             <Image src={business.logo.src} alt={business.logo.alt} width={business.logo.width} height={business.logo.height} className="h-5 w-auto md:h-6" sizes="200px" />

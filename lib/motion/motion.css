@@ -214,29 +214,6 @@ html[data-motion="ok"] .hero-phone-float {
   to { transform: translate3d(0, 8px, 0); }
 }
 
-/* Corner brackets framing the headline, like a camera focus frame. */
-.hero-bracket {
-  position: absolute;
-  width: 1.75rem;
-  height: 1.75rem;
-  border-color: var(--color-border-strong);
-  pointer-events: none;
-}
-.hero-bracket-start { top: -0.75rem; left: -1.25rem; border-top: 2px solid; border-left: 2px solid; border-color: var(--color-brand); }
-.hero-bracket-end { bottom: -0.75rem; right: 0; border-bottom: 2px solid; border-right: 2px solid; border-color: var(--color-brand); }
-@media (max-width: 1023px) {
-  .hero-bracket-start { left: -0.5rem; }
-}
-/* The quote link: a quiet second action with an arrow that steps forward on hover. */
-.hero-quote-link::after {
-  content: "→";
-  margin-left: 0.5rem;
-  color: var(--color-brand);
-  transition: transform 0.2s var(--ease-out);
-}
-.hero-quote-link::after { display: inline-block; text-decoration: none; }
-.hero-quote-link:hover::after { transform: translateX(4px); }
-
 /* Repair list down the right edge: quiet until pointed at; the first reads as selected while none is. */
 .hero-repair {
   display: inline-flex;

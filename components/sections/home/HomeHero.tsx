@@ -1,13 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Tomorrow } from "next/font/google";
-import type { BusinessInfo, PageHero } from "@/lib/sanity/types";
+import type { PageHero } from "@/lib/sanity/types";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { MagneticButton } from "@/components/motion/MagneticButton";
-import { OpenStatus } from "@/components/sections/shared/OpenStatus";
 import { cssVars } from "@/lib/utils/css-vars";
 import { IMPACT, SHARDS } from "./heroRepairGeometry";
-import { TrustBar } from "./TrustBar";
 
 // The wordmark's own face: chamfered, slanted, electric. One weight, loaded only where the hero renders.
 const wordmark = Tomorrow({ subsets: ["latin"], weight: "900", style: "italic", display: "swap" });
@@ -30,13 +28,16 @@ function headlineLines(headline: string): { asks: string[]; answer: string | nul
 
 /**
  * Spec 2.1.1. One object on a quiet stage: the cracked phone, shot at three-quarters, stands in front of a giant
- * red SPEEDY. The headline holds the top-left, the CTAs the middle-left, the repair list the right
- * edge, the 45-minute line the bottom-left and the warranty line plus ratings the bottom-right.
+ * red SPEEDY. The headline holds the top-left, the CTAs the middle-left, the 45-minute line the bottom-left and
+ * the repair list the right edge, centred on the stage. Ratings and open hours sit in HeroProof, just below.
+ * Laid out on container-wide, the header's frame, so the left column and the repair list meet the nav's edges.
+ * Height is one screen minus the header only (not the banner): the pin starts after the banner has scrolled
+ * away, so the pinned stage fills the viewport with no strip below it.
  * bindHeroRepair (lib/motion/bindings.ts) pins the section and flies every shard back into the impact
  * point while the repaired screen heals outward from it.
  * No-JS / reduced motion: static cracked scene, every link and line of copy visible.
  */
-export function HomeHero({ hero, business }: { hero: PageHero; business: BusinessInfo }) {
+export function HomeHero({ hero }: { hero: PageHero }) {
   const { asks, answer } = headlineLines(hero.headline);
   const impact = { "--ix": `${IMPACT.x * 100}%`, "--iy": `${IMPACT.y * 100}%` };
 
@@ -48,10 +49,9 @@ export function HomeHero({ hero, business }: { hero: PageHero; business: Busines
       data-hero-repair
     >
       <div
-        className="container-site relative grid min-h-[calc(100svh-var(--nav-h)-var(--banner-h)-1px)] content-center gap-y-8 py-10 lg:min-h-[calc(100svh-var(--nav-h-desktop)-var(--banner-h)-1px)] lg:grid-cols-12 lg:grid-rows-[auto_1fr_auto] lg:content-stretch lg:gap-x-8 lg:gap-y-6 lg:py-10"
+        className="container-wide relative grid min-h-[calc(100svh-var(--nav-h)-1px)] content-center gap-y-8 py-10 lg:min-h-[calc(100svh-var(--nav-h-desktop)-1px)] lg:grid-cols-12 lg:grid-rows-[auto_1fr_auto] lg:content-stretch lg:gap-x-8 lg:gap-y-6 lg:py-10"
       >
         <div className="hero-copy relative z-raised lg:col-[1/6] lg:row-[1] lg:self-start">
-          <span aria-hidden className="hero-bracket hero-bracket-start" />
           <h1
             id="hero-title"
             className="hero-headline font-heading font-black"
@@ -67,7 +67,6 @@ export function HomeHero({ hero, business }: { hero: PageHero; business: Busines
             ))}
             {answer ? <span className="hero-headline-answer mt-4 block">{answer}</span> : null}
           </h1>
-          <span aria-hidden className="hero-bracket hero-bracket-end" />
         </div>
 
         <div data-hero-device className="hero-device relative mx-auto lg:col-[4/10] lg:row-[1/4] lg:self-center">
@@ -100,20 +99,21 @@ export function HomeHero({ hero, business }: { hero: PageHero; business: Busines
           </div>
         </div>
 
-        {/* One row where the column allows, wrapping to a stack where it doesn't. */}
-        <div data-hero-ctas className="hero-ctas relative z-raised grid w-full gap-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-6 lg:col-[1/6] lg:row-[2] lg:self-center">
+        {/* Always a stack: one column as wide as the button, flush with the headline's left edge, with the link
+            centred under it so the two labels share a centre line. */}
+        <div data-hero-ctas className="hero-ctas relative z-raised flex flex-col items-stretch gap-5 sm:w-fit lg:col-[1/6] lg:row-[2] lg:self-center">
           {hero.primaryCta ? (
-            <MagneticButton>
+            <MagneticButton className="w-full">
               <ButtonLink cta={hero.primaryCta} size="lg" className="w-full px-7" />
             </MagneticButton>
           ) : null}
           {hero.secondaryCta ? (
-            <ButtonLink cta={{ ...hero.secondaryCta, variant: "link" }} size="lg" className="hero-quote-link justify-self-start font-heading uppercase tracking-[0.06em] text-text" />
+            <ButtonLink cta={{ ...hero.secondaryCta, variant: "link" }} size="lg" className="self-center font-heading uppercase tracking-[0.06em] text-text" />
           ) : null}
         </div>
 
-        <nav data-hero-fade aria-label="Repairs" className="hero-repairs relative z-raised hidden lg:col-[10/13] lg:row-[2] lg:block lg:self-center lg:justify-self-end">
-          <ul className="grid justify-items-end gap-4 text-right">
+        <nav data-hero-fade aria-label="Repairs" className="hero-repairs relative z-raised hidden lg:col-[10/13] lg:row-[1/4] lg:block lg:self-center lg:justify-self-end">
+          <ul className="grid justify-items-end gap-6 text-right">
             {REPAIRS.map((r) => (
               <li key={r.href}>
                 <Link href={r.href} className="hero-repair font-heading text-body-sm font-bold uppercase tracking-[0.08em] whitespace-nowrap">
@@ -132,12 +132,6 @@ export function HomeHero({ hero, business }: { hero: PageHero; business: Busines
             Most repairs, while you wait
           </span>
         </p>
-
-        {/* Proof only: the repair list above already names the services, so no subline repeats them here. */}
-        <div data-hero-fade className="relative z-raised lg:col-[8/13] lg:row-[3] lg:self-end lg:justify-self-end">
-          <TrustBar />
-          <OpenStatus business={business} className="mt-5 text-body-sm text-text-secondary" />
-        </div>
       </div>
 
       <div data-shard-layer aria-hidden className="pointer-events-none absolute inset-0 z-raised">
