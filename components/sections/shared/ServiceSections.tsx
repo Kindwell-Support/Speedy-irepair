@@ -44,7 +44,8 @@ export function ServiceSections({ services }: { services: Service[] }) {
         {services.map((s) => {
           const icon = toRiveIconId(s.riveIcon);
           const photoKey = PHOTO_BY_SLUG[s.slug];
-          const photo = photoKey ? SITE_IMAGES[photoKey] : null;
+          const photo = s.image ?? (photoKey ? SITE_IMAGES[photoKey] : null);
+          const prices = s.priceList?.filter((p) => p.label && p.price) ?? [];
           return (
             <section key={s.id} id={s.slug} aria-labelledby={`${s.slug}-heading`} className="scroll-mt-28 py-16 md:py-20" data-animate="reveal">
               <div className="grid gap-6 md:grid-cols-[56px_1fr] md:gap-8" data-rive-host>
@@ -55,7 +56,19 @@ export function ServiceSections({ services }: { services: Service[] }) {
                       {s.title}
                     </h2>
                     <p className="mt-4 max-w-prose text-body-lg text-text-primary">{s.summary}</p>
-                    {s.body.length ? (
+                    {/* Pricing is optional CMS text: nothing renders until the shop fills it in. */}
+                    {s.priceFrom ? <p className="mt-4 text-body-lg font-bold text-primary-text">{s.priceFrom}</p> : null}
+                    {prices.length ? (
+                      <dl className="mt-5 max-w-md divide-y divide-border border-y border-border">
+                        {prices.map((p) => (
+                          <div key={`${s.id}-${p.label}`} className="flex items-baseline justify-between gap-6 py-2.5">
+                            <dt className="text-body text-text-secondary">{p.label}</dt>
+                            <dd className="text-body font-bold tabular-nums text-text-primary">{p.price}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    ) : null}
+                    {s.body?.length ? (
                       <div className="mt-6 max-w-prose">
                         <PlaceholderMark show={s.isPlaceholder}>
                           <RichText value={s.body} />
@@ -63,7 +76,7 @@ export function ServiceSections({ services }: { services: Service[] }) {
                       </div>
                     ) : null}
                     <div className="mt-7 flex flex-wrap gap-3">
-                      {s.ctas.map((c) => (
+                      {(s.ctas ?? []).map((c) => (
                         <ButtonLink key={`${s.id}-${c.label}`} cta={c} />
                       ))}
                     </div>

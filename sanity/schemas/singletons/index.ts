@@ -16,6 +16,7 @@ export const SINGLETON_TYPES = [
   "aboutPage",
   "financingPage",
   "homeInternetPage",
+  "blogPage",
   "llmsDocument",
 ] as const;
 
@@ -48,6 +49,7 @@ function page(name: string, title: string, fields: FieldDefinition[]) {
     fields: [
       defineField({ name: "title", type: "string", initialValue: title, validation: (r) => r.required(), group: "content" }),
       defineField({ name: "hero", type: "hero", validation: (r) => r.required(), group: "content" }),
+      defineField({ name: "photo", title: "Page photo", type: "imageWithAlt", description: "The photo in the page body. Empty = the built-in photo.", group: "content" }),
       ...fields.map((f) => ({ ...f, group: "content" })),
       defineField({ name: "seo", type: "seo", group: "seo" }),
     ],
@@ -209,6 +211,8 @@ export const homeInternetPage = page("homeInternetPage", "Home Internet", [
   section("faqSection"),
 ]);
 
+export const blogPage = page("blogPage", "Blog", []);
+
 export const llmsDocument = defineType({
   name: "llmsDocument",
   title: "llms.txt",
@@ -233,5 +237,6 @@ export const singletonTypes = [
   aboutPage,
   financingPage,
   homeInternetPage,
+  blogPage,
   llmsDocument,
 ];

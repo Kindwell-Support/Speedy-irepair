@@ -7,6 +7,7 @@
  *   return <><JsonLd data={jsonLdForHome(data)} />...</>;
  */
 import {
+  blogPosting,
   breadcrumbList,
   faqPage,
   graph,
@@ -227,4 +228,25 @@ export function jsonLdForPolicy(
   path: "/policies/shipping-return" | "/policies/privacy" | "/policies/terms",
 ): JsonLdGraph {
   return graph(page(path, path), crumbs(path, seo(path).label));
+}
+
+/* Blog index — CollectionPage + BreadcrumbList */
+export function jsonLdForBlog(): JsonLdGraph {
+  return graph(page("/blog", "/blog", { type: "CollectionPage" }), crumbs("/blog", "Blog"));
+}
+
+/* Blog post — BlogPosting + BreadcrumbList (Home > Blog > Post) */
+export function jsonLdForPost(p: {
+  slug: string;
+  title: string;
+  description?: string | null;
+  publishedAt: string;
+  author?: string | null;
+  image?: string | null;
+}): JsonLdGraph {
+  const path = `/blog/${p.slug}`;
+  return graph(
+    blogPosting({ path, ...p }),
+    crumbs(path, p.title, [{ name: "Blog", path: "/blog" }]),
+  );
 }

@@ -64,7 +64,12 @@ function buildSlides(cards: ServiceCard[]): ServiceSlide[] {
         title: card.title,
         href: card.href,
         description: card.description,
-        ...("photo" in spec.look ? { photo: photoOf(spec.look.photo) } : { tile: spec.look.tile }),
+        // A CMS photo on the card replaces the built-in photo or text tile.
+        ...(card.image
+          ? { photo: { src: card.image.src, alt: card.image.alt } }
+          : "photo" in spec.look
+            ? { photo: photoOf(spec.look.photo) }
+            : { tile: spec.look.tile }),
       });
     }
     for (const { after, photo, ...repair } of REPAIRS) if (after === spec.id) slides.push({ ...repair, photo: photoOf(photo) });
@@ -72,7 +77,16 @@ function buildSlides(cards: ServiceCard[]): ServiceSlide[] {
   // Cards added in the CMS later still appear, as dark text tiles.
   for (const card of cards)
     if (!used.has(card.id))
-      slides.push({ id: card.id, label: card.title, title: card.title, href: card.href, description: card.description, tile: { tone: "dark", big: card.title, small: card.description } });
+      slides.push({
+        id: card.id,
+        label: card.title,
+        title: card.title,
+        href: card.href,
+        description: card.description,
+        ...(card.image
+          ? { photo: { src: card.image.src, alt: card.image.alt } }
+          : { tile: { tone: "dark" as const, big: card.title, small: card.description } }),
+      });
   return slides;
 }
 

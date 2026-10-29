@@ -58,14 +58,14 @@ export const REVIEWS_QUERY = /* groq */ `*[_type == "testimonial" && isPlacehold
   | order(orderRank asc){ "author": authorName, "ratingValue": rating, "reviewBody": body, "datePublished": reviewDate, source }`;
 
 /** Page SEO for buildMetadata(): same field names as the seo object. $id = page singleton _id. */
-export const PAGE_SEO_QUERY = /* groq */ `*[_id == $id][0].seo{ metaTitle, metaDescription, "ogImageUrl": ogImage.asset->url, canonicalOverride, noindex }`;
+export const PAGE_SEO_QUERY = /* groq */ `*[_id == $id][0].seo{ metaTitle, metaDescription, "ogImageUrl": ogImage.asset->url, canonicalOverride, "noindex": noIndex }`;
 
 /** llms routes: replaces `*[_type == "llmsTxt" && _id == "llmsTxt"]`. */
 export const LLMS_TXT_QUERY = /* groq */ `*[_id == "llmsContent"][0]{ "llmsTxt": shortVersion }`;
 export const LLMS_FULL_TXT_QUERY = /* groq */ `*[_id == "llmsContent"][0]{ "llmsFullTxt": fullVersion }`;
 
 /** sitemap.ts: page singletons + policy pages (noindex field name is identical). v1.1 (G1): + slug so the 3 policyPage docs map to /policies/{slug}; + isPlaceholder (placeholder policies stay out of the sitemap). */
-export const SITEMAP_DOCS_QUERY = /* groq */ `*[_type in $types]{ _type, _id, "slug": slug.current, _updatedAt, "noindex": seo.noindex, "isPlaceholder": coalesce(isPlaceholder, false) }`;
+export const SITEMAP_DOCS_QUERY = /* groq */ `*[_type in $types]{ _type, _id, "slug": slug.current, _updatedAt, "noindex": seo.noIndex, "isPlaceholder": coalesce(isPlaceholder, false) }`;
 
 /** v1.1 (G3): SiteNavigationElement source. Visible header order: headerLinks then headerCta. Internal links only (external hrefs are skipped). */
 export const NAV_QUERY = /* groq */ `*[_id == "navigation"][0]{

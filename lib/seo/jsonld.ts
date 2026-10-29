@@ -244,6 +244,32 @@ export function webPage(
   });
 }
 
+/** BlogPosting for /blog/[slug]. Publisher = the business; author falls back to it too. */
+export function blogPosting(p: {
+  path: string;
+  title: string;
+  description?: string | null;
+  publishedAt: string;
+  author?: string | null;
+  image?: string | null;
+}): JsonLdNode {
+  return compact({
+    "@type": "BlogPosting",
+    "@id": `${abs(p.path)}#article`,
+    mainEntityOfPage: abs(p.path),
+    headline: p.title,
+    description: p.description ?? undefined,
+    datePublished: p.publishedAt,
+    image: p.image ?? undefined,
+    // The Studio defaults author to the shop name; only a real person's name becomes a Person node.
+    author:
+      p.author && !/speedy\s*irepair/i.test(p.author) ? { "@type": "Person", name: p.author } : { "@id": IDS.organization },
+    publisher: { "@id": IDS.organization },
+    breadcrumb: { "@id": IDS.breadcrumb(p.path) },
+    inLanguage: "en-US",
+  });
+}
+
 export function speakable(cssSelector: string[]) {
   return { "@type": "SpeakableSpecification", cssSelector };
 }

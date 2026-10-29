@@ -21,6 +21,24 @@ export const service = defineType({
       validation: (r) => r.required(),
     }),
     defineField({ name: "body", type: "portableText" }),
+    defineField({ name: "priceFrom", title: "Price (headline)", type: "string", description: 'Short price line, e.g. "From $79". Empty = no price shown.' }),
+    defineField({
+      name: "priceList",
+      title: "Price list",
+      type: "array",
+      description: "Optional rows, e.g. iPhone 15 screen / $189. Empty = no table shown.",
+      of: [
+        defineArrayMember({
+          type: "object",
+          fields: [
+            defineField({ name: "label", type: "string", validation: (r) => r.required() }),
+            defineField({ name: "price", type: "string", validation: (r) => r.required() }),
+          ],
+          preview: { select: { title: "label", subtitle: "price" } },
+        }),
+      ],
+    }),
+    defineField({ name: "image", type: "imageWithAlt", description: "Photo beside this service on /services. Empty = the built-in photo, if any." }),
     defineField({ name: "ctas", type: "array", of: [defineArrayMember({ type: "cta" })], validation: (r) => r.max(3) }),
     defineField({ name: "riveIcon", type: "string" }),
     order,
@@ -126,6 +144,7 @@ export const howItWorksStep = defineType({
     }),
     defineField({ name: "title", type: "string", validation: (r) => r.required() }),
     defineField({ name: "body", type: "text", rows: 2 }),
+    defineField({ name: "image", type: "imageWithAlt", description: "Photo behind this step. Empty = the built-in photo, if any." }),
     order,
     ...placeholderFields,
   ],
@@ -227,7 +246,30 @@ export const formSubmission = defineType({
   },
 });
 
+export const post = defineType({
+  name: "post",
+  title: "Blog post",
+  type: "document",
+  groups: [
+    { name: "content", title: "Content", default: true },
+    { name: "seo", title: "SEO" },
+  ],
+  fields: [
+    defineField({ name: "title", type: "string", group: "content", validation: (r) => r.required().max(120) }),
+    defineField({ name: "slug", type: "slug", group: "content", options: { source: "title", maxLength: 96 }, description: "URL: /blog/<slug>", validation: (r) => r.required() }),
+    defineField({ name: "publishedAt", title: "Publish date", type: "datetime", group: "content", initialValue: () => new Date().toISOString(), validation: (r) => r.required() }),
+    defineField({ name: "author", type: "string", group: "content", initialValue: "Speedy iRepair" }),
+    defineField({ name: "excerpt", type: "text", rows: 3, group: "content", description: "One or two sentences for the blog list and Google.", validation: (r) => r.max(240) }),
+    defineField({ name: "coverImage", type: "imageWithAlt", group: "content" }),
+    defineField({ name: "body", type: "postBody", group: "content", validation: (r) => r.required() }),
+    defineField({ name: "seo", type: "seo", group: "seo" }),
+  ],
+  orderings: [{ title: "Newest", name: "publishedDesc", by: [{ field: "publishedAt", direction: "desc" }] }],
+  preview: { select: { title: "title", subtitle: "publishedAt", media: "coverImage" } },
+});
+
 export const documentTypes = [
+  post,
   service,
   faq,
   testimonial,

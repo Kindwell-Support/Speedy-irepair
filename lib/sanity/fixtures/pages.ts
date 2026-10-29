@@ -1,6 +1,7 @@
 /** Page singleton fixtures. Headlines/copy verbatim from PROJECT_SPEC.md section 2; TBD copy = visible placeholders. */
 import type {
   AboutPage,
+  BlogPage,
   FaqPage,
   FinancingPage,
   HomeInternetPage,
@@ -190,6 +191,19 @@ export const homeInternetPage: HomeInternetPage = {
   seo: {
     metaTitle: "Home Internet in Akron, OH | Speedy iRepair",
     metaDescription: `Home internet in ${akron}. First month free and a free smartphone when you sign up.`,
+  },
+};
+
+export const blogPage: BlogPage = {
+  title: "Blog",
+  hero: {
+    eyebrow: "Blog",
+    headline: "Repair tips & shop news",
+    subline: "Guides, device care advice and updates from the Speedy iRepair bench in Akron.",
+  },
+  seo: {
+    metaTitle: "Blog | Speedy iRepair Akron, OH",
+    metaDescription: `Phone, tablet and computer repair tips, device care guides and shop news from Speedy iRepair in ${akron}.`,
   },
 };
 

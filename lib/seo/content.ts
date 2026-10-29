@@ -16,6 +16,7 @@ export type RouteKey =
   | "/faq"
   | "/financing"
   | "/home-internet"
+  | "/blog"
   | "/policies/shipping-return"
   | "/policies/privacy"
   | "/policies/terms";
@@ -139,6 +140,16 @@ export const ROUTES: RouteSeo[] = [
       "same day phone repair akron",
       "phone repair open now akron",
     ],
+  },
+  {
+    route: "/blog",
+    label: "Blog",
+    h1: "Repair tips & shop news",
+    metaTitle: "Blog | Speedy iRepair Akron, OH",
+    metaDescription:
+      "Phone, tablet and computer repair tips, device care guides and shop news from Speedy iRepair in Akron, OH.",
+    primaryKeyword: "phone repair tips akron",
+    secondaryKeywords: ["phone care tips", "iphone battery tips", "speedy irepair news"],
   },
   {
     route: "/faq",

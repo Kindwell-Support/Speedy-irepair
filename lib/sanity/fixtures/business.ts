@@ -84,6 +84,7 @@ export const navigation: Navigation = {
     { label: "Financing", href: "/financing" },
     { label: "Home Internet", href: "/home-internet" },
     { label: "FAQ", href: "/faq" },
+    { label: "Blog", href: "/blog" },
   ],
   headerCta: { label: "Schedule Repair", href: "/repair", variant: "primary" },
   // Spec 2.1.11 (REQ-041)

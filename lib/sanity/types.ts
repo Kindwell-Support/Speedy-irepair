@@ -145,6 +145,13 @@ export interface ServiceCard {
   externalLink?: CtaLink | null;
   riveIcon: string;
   order: number;
+  /** CMS photo for the homepage gallery; empty = built-in photo/tile. */
+  image?: ImageAsset | null;
+}
+
+export interface PriceLine {
+  label: string;
+  price: string;
 }
 
 export interface Service extends Placeholderable {
@@ -158,6 +165,12 @@ export interface Service extends Placeholderable {
   riveIcon: string;
   order: number;
   seo?: Seo | null;
+  /** Optional headline price, e.g. "From $79". Hidden when empty. */
+  priceFrom?: string | null;
+  /** Optional price table. Hidden when empty. */
+  priceList?: PriceLine[] | null;
+  /** CMS photo; empty = built-in photo for the slug, if any. */
+  image?: ImageAsset | null;
 }
 
 export type FaqCategory = "general" | "services" | "financing" | "internet";
@@ -218,6 +231,7 @@ export interface HowItWorksStep extends Placeholderable {
   title: string;
   body?: string | null;
   order: number;
+  image?: ImageAsset | null;
 }
 
 export interface PageHero {
@@ -240,6 +254,25 @@ export interface BasePage {
   title: string;
   hero: PageHero;
   seo: Seo;
+  /** CMS photo for the page body; empty = built-in photo. */
+  photo?: ImageAsset | null;
+}
+
+export type BlogPage = BasePage;
+
+export interface PostSummary {
+  id: string;
+  slug: string;
+  title: string;
+  publishedAt: string;
+  author?: string | null;
+  excerpt?: string | null;
+  coverImage?: ImageAsset | null;
+}
+
+export interface Post extends PostSummary {
+  body: PortableTextBlock[];
+  seo?: Seo | null;
 }
 
 export interface HomePage extends BasePage {

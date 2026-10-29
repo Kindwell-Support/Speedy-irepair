@@ -6,6 +6,7 @@ import * as q from "./queries";
 import type {
   AboutPage,
   Announcement,
+  BlogPage,
   Brand,
   Faq,
   FaqCategory,
@@ -17,6 +18,8 @@ import type {
   LlmsDocument,
   PolicyPage,
   PolicySlug,
+  Post,
+  PostSummary,
   Promotion,
   QuotePage,
   SchedulePage,
@@ -51,12 +54,26 @@ async function fromSanity<T>(
   return data;
 }
 
+/** Top-level fields the editor cleared (null) keep the built-in default, so a page never renders half-empty. */
+const withDefaults = <T extends object>(data: Partial<T>, fallback: T): T => {
+  const out = { ...fallback } as Record<string, unknown>;
+  for (const [k, v] of Object.entries(data)) if (v !== null && v !== undefined) out[k] = v;
+  return out as T;
+};
+
 const byOrder = <T extends { order: number }>(a: T, b: T): number => a.order - b.order;
 
 // ---------- Global ----------
-export const getSiteSettings = cache(
-  (): Promise<SiteSettings> => fromSanity(q.siteSettingsQuery, {}, [q.TAGS.siteSettings], fx.siteSettings),
-);
+export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
+  const s = await fromSanity(q.siteSettingsQuery, {}, [q.TAGS.siteSettings], fx.siteSettings);
+  // The logo and any field left empty in the Studio keep the built-in value.
+  return {
+    copyright: s.copyright || fx.siteSettings.copyright,
+    business: withDefaults(s.business ?? {}, fx.siteSettings.business),
+    navigation: withDefaults(s.navigation ?? {}, fx.siteSettings.navigation),
+    defaultSeo: withDefaults(s.defaultSeo ?? {}, fx.siteSettings.defaultSeo),
+  };
+});
 
 export const getAnnouncement = cache(
   (): Promise<Announcement | null> =>
@@ -113,16 +130,29 @@ export const getShopCategories = cache(
     fromSanity<ShopCategoryEditorial[]>(q.shopCategoriesQuery, {}, [q.TAGS.shopCollectionConfig], []),
 );
 
+// ---------- Blog ----------
+export const getPosts = cache(
+  (): Promise<PostSummary[]> => fromSanity<PostSummary[]>(q.postsQuery, {}, [q.TAGS.post], []),
+);
+
+export const getPost = cache(
+  (slug: string): Promise<Post | null> => fromSanity<Post | null>(q.postBySlugQuery, { slug }, [q.TAGS.post], null),
+);
+
 // ---------- Page singletons ----------
-const singleton = <T>(type: string, fallback: T) =>
-  cache((): Promise<T> => fromSanity(q.pageSingletonQuery, { type }, [q.TAGS.page, type], fallback));
+const singleton = <T extends object>(type: string, fallback: T) =>
+  cache(
+    async (): Promise<T> =>
+      withDefaults(await fromSanity(q.pageSingletonQuery, { type }, [q.TAGS.page, type], fallback), fallback),
+  );
 
 export const getHomePage = cache(async (): Promise<HomePage> => {
   const page = await fromSanity(q.homePageQuery, {}, [q.TAGS.page, "homePage"], {
     ...fx.homePage,
     serviceCards: fx.serviceCards,
   });
-  return page.serviceCards.length ? page : { ...page, serviceCards: fx.serviceCards };
+  const merged = withDefaults(page, { ...fx.homePage, serviceCards: fx.serviceCards });
+  return merged.serviceCards.length ? merged : { ...merged, serviceCards: fx.serviceCards };
 });
 export const getServicesPage = singleton<ServicesPage>("servicesPage", fx.servicesPage);
 export const getShopPage = singleton<ShopPage>("shopPage", fx.shopPage);
@@ -133,6 +163,7 @@ export const getFaqPage = singleton<FaqPage>("faqPage", fx.faqPage);
 export const getAboutPage = singleton<AboutPage>("aboutPage", fx.aboutPage);
 export const getFinancingPage = singleton<FinancingPage>("financingPage", fx.financingPage);
 export const getHomeInternetPage = singleton<HomeInternetPage>("homeInternetPage", fx.homeInternetPage);
+export const getBlogPage = singleton<BlogPage>("blogPage", fx.blogPage);
 
 export const getPolicyPage = cache(
   (slug: PolicySlug): Promise<PolicyPage> =>

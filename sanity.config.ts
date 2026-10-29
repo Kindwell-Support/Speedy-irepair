@@ -7,6 +7,7 @@
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
 import { presentationTool } from "sanity/presentation";
+import { media } from "sanity-plugin-media";
 import { structureTool } from "sanity/structure";
 import { resolve } from "./sanity/preview/resolve";
 import { structure } from "./sanity/desk/structure";
@@ -29,6 +30,8 @@ export default defineConfig({
       resolve,
       previewUrl: { previewMode: { enable: "/api/draft-mode/enable", disable: "/api/draft-mode/disable" } },
     }),
+    // Media library: browse, tag, replace and delete uploaded images.
+    media(),
     visionTool({ defaultApiVersion: apiVersion }),
   ],
   schema: {

@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function SellYourDevicePage() {
   const [page, steps, brands, seo] = await Promise.all([getSellPage(), getHowItWorksSteps("sell"), getBrands(), getSeoData()]);
   const accepted = brands.filter((b) => b.acceptsTradeIn);
-  const photo = SITE_IMAGES.port;
+  const photo = page.photo ?? SITE_IMAGES.port;
   return (
     <>
       <JsonLd data={jsonLdForSellYourDevice(seo)} />

@@ -28,7 +28,7 @@ const NEXT_STEPS = [
 export default async function InstantQuotePage() {
   const [page, settings, seo] = await Promise.all([getQuotePage(), getSiteSettings(), getSeoData()]);
   const b = settings.business;
-  const photo = SITE_IMAGES.screenLift;
+  const photo = page.photo ?? SITE_IMAGES.screenLift;
   return (
     <>
       <JsonLd data={jsonLdForInstantQuote(seo)} />

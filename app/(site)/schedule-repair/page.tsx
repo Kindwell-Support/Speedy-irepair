@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 /** R07 — branded wrapper; Square booking stays on-site (click-to-load iframe, direct link fallback). */
 export default async function ScheduleRepairPage() {
   const [page, settings, seo] = await Promise.all([getSchedulePage(), getSiteSettings(), getSeoData()]);
-  const bench = SITE_IMAGES.bench;
+  const bench = page.photo ?? SITE_IMAGES.bench;
   return (
     <>
       <JsonLd data={jsonLdForScheduleRepair(seo)} />

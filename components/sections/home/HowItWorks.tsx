@@ -72,7 +72,7 @@ export function HowItWorks({ copy, steps, id = "how-it-works" }: { copy: Section
           </div>
           <ol className={cn("grid gap-4 lg:flex", steps.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
             {steps.map((s, i) => {
-              const photo = STEP_PHOTOS[s.id];
+              const photo = s.image ?? STEP_PHOTOS[s.id];
               return (
                 <li
                   key={s.id}

@@ -11,7 +11,8 @@ import { ButtonLink } from "./ButtonLink";
  * without it the hero stays a compact type-only band (FAQ, policies).
  */
 export function PageHero({ hero, photo, children }: { hero: PageHeroData; photo?: SiteImageKey; children?: ReactNode }) {
-  const img = photo ? SITE_IMAGES[photo] : null;
+  // The CMS "Hero photo" swaps the image on pages whose layout has one; no photo slot = no photo.
+  const img = photo ? (hero.poster ?? SITE_IMAGES[photo]) : null;
   return (
     <section>
       <div className={cn("container-site grid gap-10 pb-14 pt-14 md:pt-20 lg:gap-x-8 lg:pb-20", img && "lg:grid-cols-12 lg:items-end")}>

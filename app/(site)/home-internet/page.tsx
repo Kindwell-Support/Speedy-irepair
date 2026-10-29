@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 /** R11 — $40/mo, first month free, free smartphone (spec facts); Jotform behind a click-to-load facade. */
 export default async function HomeInternetPage() {
   const [page, faqs, seo] = await Promise.all([getHomeInternetPage(), getFaqs("internet"), getSeoData()]);
-  const board = SITE_IMAGES.boardMacro;
+  const board = page.photo ?? SITE_IMAGES.boardMacro;
   const lists = [
     { id: "who-its-for", s: page.whoItsForSection },
     { id: "what-you-get", s: page.whatYouGetSection },

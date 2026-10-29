@@ -70,7 +70,7 @@ export const hero = defineType({
     defineField({ name: "subline", type: "text", rows: 2 }),
     defineField({ name: "primaryCta", type: "cta" }),
     defineField({ name: "secondaryCta", type: "cta" }),
-    defineField({ name: "poster", title: "Poster / LCP image", type: "imageWithAlt" }),
+    defineField({ name: "poster", title: "Hero photo", type: "imageWithAlt", description: "Photo beside the headline on pages that have one. Empty = the built-in photo." }),
   ],
 });
 
@@ -134,6 +134,7 @@ export const serviceCard = defineType({
     defineField({ name: "href", type: "string", validation: (r) => r.required() }),
     defineField({ name: "externalLink", type: "cta" }),
     defineField({ name: "riveIcon", type: "string", description: "Rive artboard key, see public/rive/README.md" }),
+    defineField({ name: "image", type: "imageWithAlt", description: "Photo on the homepage services gallery. Empty = the built-in photo or text tile." }),
     defineField({ name: "order", type: "number" }),
   ],
   preview: { select: { title: "title", subtitle: "href" } },
@@ -170,4 +171,12 @@ export const openingHours = defineType({
   },
 });
 
-export const objectTypes = [imageWithAlt, cta, seo, hero, portableText, sectionCopy, serviceCard, address, openingHours];
+/** Blog post body: the rich text above plus inline images. */
+export const postBody = defineType({
+  name: "postBody",
+  title: "Body",
+  type: "array",
+  of: [...(portableText.of ?? []), defineArrayMember({ type: "imageWithAlt" })],
+});
+
+export const objectTypes = [imageWithAlt, cta, seo, hero, portableText, postBody, sectionCopy, serviceCard, address, openingHours];

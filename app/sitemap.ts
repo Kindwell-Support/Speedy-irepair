@@ -20,19 +20,19 @@ const STATIC_ROUTES: {
     path: "/schedule-repair",
     priority: 0.9,
     changeFrequency: "monthly",
-    sanityType: "scheduleRepairPage",
+    sanityType: "schedulePage",
   },
   {
     path: "/instant-quote",
     priority: 0.8,
     changeFrequency: "monthly",
-    sanityType: "instantQuotePage",
+    sanityType: "quotePage",
   },
   {
     path: "/sell-your-device",
     priority: 0.8,
     changeFrequency: "monthly",
-    sanityType: "sellYourDevicePage",
+    sanityType: "sellPage",
   },
   {
     path: "/home-internet",
@@ -42,6 +42,7 @@ const STATIC_ROUTES: {
   },
   { path: "/financing", priority: 0.7, changeFrequency: "monthly", sanityType: "financingPage" },
   { path: "/faq", priority: 0.7, changeFrequency: "monthly", sanityType: "faqPage" },
+  { path: "/blog", priority: 0.6, changeFrequency: "weekly", sanityType: "blogPage" },
   {
     path: "/policies/shipping-return",
     priority: 0.3,
@@ -70,7 +71,19 @@ async function getProductEntries(): Promise<{ handle: string; updatedAt?: string
   try {
     // Sanity-catalog variant; for headless Shopify replace with a Storefront API query (products { handle updatedAt }).
     const rows = await client.fetch<{ handle: string; updatedAt?: string }[]>(
-      `*[_type == "product" && defined(slug.current) && seo.noindex != true]{ "handle": slug.current, "updatedAt": _updatedAt }`,
+      `*[_type == "product" && defined(slug.current) && seo.noIndex != true]{ "handle": slug.current, "updatedAt": _updatedAt }`,
+    );
+    return rows ?? [];
+  } catch {
+    return [];
+  }
+}
+
+/** Published, non-noindexed blog posts (future-dated posts stay out until their date). */
+async function getPostEntries(): Promise<{ slug: string; updatedAt: string }[]> {
+  try {
+    const rows = await client.fetch<{ slug: string; updatedAt: string }[]>(
+      `*[_type == "post" && defined(slug.current) && publishedAt <= now() && seo.noIndex != true]{ "slug": slug.current, "updatedAt": _updatedAt }`,
     );
     return rows ?? [];
   } catch {
@@ -90,7 +103,7 @@ async function getDocState(): Promise<{ updated: Record<string, string>; noindex
     const [rows, policies] = await Promise.all([
       client.fetch<DocRow[]>(SITEMAP_DOCS_QUERY, { types }),
       client.fetch<DocRow[]>(
-        `*[_type == "policyPage"]{ _type, _updatedAt, "noindex": seo.noindex, "slug": slug.current }`,
+        `*[_type == "policyPage"]{ _type, _updatedAt, "noindex": seo.noIndex, "slug": slug.current }`,
       ),
     ]);
     const all = [...(rows ?? []).filter((r) => r._type !== "policyPage"), ...(policies ?? [])];
@@ -109,7 +122,7 @@ async function getDocState(): Promise<{ updated: Record<string, string>; noindex
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (!isIndexable()) return []; // staging/preview: empty sitemap
-  const [{ updated, noindex }, products] = await Promise.all([getDocState(), getProductEntries()]);
+  const [{ updated, noindex }, products, posts] = await Promise.all([getDocState(), getProductEntries(), getPostEntries()]);
   const now = new Date();
   const pages = STATIC_ROUTES.filter(
     (r) => !(r.sanityType && noindex.has(keyOf(r.sanityType, r.slug))),
@@ -128,5 +141,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "weekly" as const,
     priority: 0.6,
   }));
-  return [...pages, ...productUrls];
+  const postUrls = posts.map((p) => ({
+    url: `${SITE_URL}/blog/${p.slug}`,
+    lastModified: new Date(p.updatedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.5,
+  }));
+  return [...pages, ...postUrls, ...productUrls];
 }
