@@ -3,7 +3,7 @@
 import { OTHER, brandsFor, type Device } from "@/lib/repair-catalog";
 import { ChoiceList, StepHeading } from "./ui";
 
-/** Step 2. Brands for the chosen device; "Other / not listed" asks for the brand in words. */
+/** Step 3. Brands for the chosen device; "Other / not listed" asks for the brand in words. */
 export function BrandStep({
   device,
   value,

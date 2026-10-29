@@ -1,23 +1,35 @@
 import "server-only";
-import type { BookingInput, BookingResult, LeadInput, Slot } from "@/lib/repair-schemas";
+import type {
+  CompleteInput,
+  IntakeField,
+  IntakeResult,
+  Slot,
+  StartInput,
+} from "@/lib/repair-schemas";
+import type { IntakeSession } from "./session";
 
-export type { BookingInput, BookingResult, LeadInput, Slot };
+export type { CompleteInput, IntakeField, IntakeResult, IntakeSession, Slot, StartInput };
 
 /**
- * The booking backend behind /repair. Route handlers (app/api/repair/*) talk to this interface only, through the
- * `booking` export in lib/booking/index.ts, so swapping the mock for GoHighLevel is a one-line change there.
+ * The backend behind /repair. Route handlers (app/api/repair/*) talk to this interface only, through the `booking`
+ * export in lib/booking/index.ts: GoHighLevel when it's configured, the mock otherwise.
  * Server-only: the widget reaches it through the API routes, never by import.
+ *
+ * Nothing here blocks the customer on a CRM failure: startIntake, updateField and completeIntake log, retry in the
+ * background and carry on. The only errors they surface are a slot that's been taken (SlotUnavailableError).
  */
 export interface BookingProvider {
-  /** Every slot on a YYYY-MM-DD date (shop time), taken ones marked unavailable. [] when the shop is closed. */
-  getAvailableSlots(dateISO: string): Promise<Slot[]>;
-  /** Records the visitor as a lead once they've given contact details, before they pick a time. */
-  createLead(data: LeadInput): Promise<{ leadId: string }>;
-  /** Books the slot against the lead. Throws SlotUnavailableError if the slot has gone. */
-  completeBooking(data: BookingInput): Promise<BookingResult>;
+  /** Step 2: contact, consent and opportunity. Null when the CRM couldn't be reached (it's retried). */
+  startIntake(input: StartInput): Promise<IntakeSession | null>;
+  /** Steps 3–5: writes one answer to the contact as soon as it's chosen. */
+  updateField(session: IntakeSession, field: IntakeField, value: string): Promise<void>;
+  /** Free slots for the next BOOKING_WINDOW_DAYS, keyed by shop date. Throws when they can't be loaded. */
+  getFreeSlots(): Promise<Record<string, Slot[]>>;
+  /** Step 7: details, tags, and the appointment or "we'll call you". Throws SlotUnavailableError when the slot has gone. */
+  completeIntake(session: IntakeSession | null, input: CompleteInput): Promise<IntakeResult>;
 }
 
-/** Thrown by completeBooking when the chosen slot is no longer free; the route answers 409. */
+/** Thrown by completeIntake when the chosen slot is no longer free; the route answers 409. */
 export class SlotUnavailableError extends Error {
   constructor() {
     super("That time is no longer available.");

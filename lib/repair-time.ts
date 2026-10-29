@@ -3,8 +3,8 @@
  * own clock says. Client-safe (no server imports), shared by the widget and lib/booking.
  */
 export const SHOP_TIME_ZONE = "America/New_York";
-/** How far ahead the date picker lets you book. */
-export const BOOKING_WINDOW_DAYS = 60;
+/** How far ahead the date picker lets you book: the window the GHL free-slots lookup covers. */
+export const BOOKING_WINDOW_DAYS = 14;
 
 const DATE_ISO = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -19,7 +19,12 @@ function zonedParts(at: Date, timeZone = SHOP_TIME_ZONE): Record<string, number>
     second: "2-digit",
     hourCycle: "h23",
   });
-  return Object.fromEntries(fmt.formatToParts(at).filter((p) => p.type !== "literal").map((p) => [p.type, Number(p.value)]));
+  return Object.fromEntries(
+    fmt
+      .formatToParts(at)
+      .filter((p) => p.type !== "literal")
+      .map((p) => [p.type, Number(p.value)]),
+  );
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -61,8 +66,17 @@ export function shopTimeToUtc(dateISO: string, hhmm: string): Date {
 
 /** "10:45 AM", in shop time. */
 export const formatSlotTime = (iso: string): string =>
-  new Intl.DateTimeFormat("en-US", { timeZone: SHOP_TIME_ZONE, hour: "numeric", minute: "2-digit" }).format(new Date(iso));
+  new Intl.DateTimeFormat("en-US", {
+    timeZone: SHOP_TIME_ZONE,
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(new Date(iso));
 
 /** "Monday, November 2", for a YYYY-MM-DD date. */
 export const formatDateLong = (dateISO: string): string =>
-  new Intl.DateTimeFormat("en-US", { timeZone: "UTC", weekday: "long", month: "long", day: "numeric" }).format(new Date(`${dateISO}T12:00:00Z`));
+  new Intl.DateTimeFormat("en-US", {
+    timeZone: "UTC",
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(`${dateISO}T12:00:00Z`));

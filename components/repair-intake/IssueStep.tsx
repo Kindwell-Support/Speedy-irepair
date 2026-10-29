@@ -3,7 +3,7 @@
 import { ISSUE_OTHER, issuesFor, type Device } from "@/lib/repair-catalog";
 import { ChoiceList, StepHeading } from "./ui";
 
-/** Step 4. What's wrong; the list depends on the device (consoles swap Battery for HDMI Port). */
+/** Step 5. What's wrong; the list depends on the device (consoles swap Battery for HDMI Port). */
 export function IssueStep({
   device,
   value,

@@ -3,7 +3,7 @@
 import { OTHER, modelsFor, type Device } from "@/lib/repair-catalog";
 import { ChoiceList, StepHeading } from "./ui";
 
-/** Step 3. Models for the chosen brand, newest first; "Other / not listed" asks for the model in words. */
+/** Step 4. Models for the chosen brand, newest first; "Other / not listed" asks for the model in words. */
 export function ModelStep({
   device,
   brand,

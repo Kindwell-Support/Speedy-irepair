@@ -7,9 +7,25 @@ export const OTHER = "Other / not listed";
 export const DEVICES = ["Phone", "Tablet", "Laptop", "Game Console", "Other"] as const;
 export type Device = (typeof DEVICES)[number];
 
-const ISSUES = ["Cracked Screen", "Battery Replacement", "Water Damage", "Charging Port", "Software Issue", "Other"] as const;
-const CONSOLE_ISSUES = ["Cracked Screen", "HDMI Port", "Water Damage", "Charging Port", "Software Issue", "Other"] as const;
+const ISSUES = [
+  "Cracked Screen",
+  "Battery Replacement",
+  "Water Damage",
+  "Charging Port",
+  "Software Issue",
+  "Other",
+] as const;
+const CONSOLE_ISSUES = [
+  "Cracked Screen",
+  "HDMI Port",
+  "Water Damage",
+  "Charging Port",
+  "Software Issue",
+  "Other",
+] as const;
 export const ISSUE_OTHER = "Other";
+/** Every issue any device can produce: what the GHL Issue dropdown must contain. */
+export const ALL_ISSUES: readonly string[] = [...new Set([...ISSUES, ...CONSOLE_ISSUES])];
 
 interface DeviceNode {
   /** Brand → its models, newest first. "Other" brands carry no models, so the model step goes straight to free text. */
@@ -75,22 +91,69 @@ export const CATALOG: Record<Device, DeviceNode> = {
         "Galaxy A16",
         "Galaxy A15",
       ],
-      Google: ["Pixel 10 Pro XL", "Pixel 10 Pro", "Pixel 10", "Pixel 9 Pro XL", "Pixel 9 Pro", "Pixel 9", "Pixel 9a", "Pixel 8 Pro", "Pixel 8", "Pixel 8a", "Pixel 7 Pro", "Pixel 7", "Pixel 7a"],
-      Motorola: ["Moto G Power", "Moto G Stylus", "Moto G Play", "Moto G 5G", "Motorola Edge", "Motorola Razr", "Motorola Razr+"],
+      Google: [
+        "Pixel 10 Pro XL",
+        "Pixel 10 Pro",
+        "Pixel 10",
+        "Pixel 9 Pro XL",
+        "Pixel 9 Pro",
+        "Pixel 9",
+        "Pixel 9a",
+        "Pixel 8 Pro",
+        "Pixel 8",
+        "Pixel 8a",
+        "Pixel 7 Pro",
+        "Pixel 7",
+        "Pixel 7a",
+      ],
+      Motorola: [
+        "Moto G Power",
+        "Moto G Stylus",
+        "Moto G Play",
+        "Moto G 5G",
+        "Motorola Edge",
+        "Motorola Razr",
+        "Motorola Razr+",
+      ],
       LG: ["LG Velvet", "LG V60 ThinQ", "LG G8 ThinQ", "LG Stylo 6", "LG K92"],
     },
     issues: ISSUES,
   },
   Tablet: {
     brands: {
-      Apple: ["iPad Pro 13-inch", "iPad Pro 11-inch", "iPad Air 13-inch", "iPad Air 11-inch", "iPad (A16)", "iPad (10th gen)", "iPad (9th gen)", "iPad mini (A17 Pro)", "iPad mini (6th gen)"],
-      Samsung: ["Galaxy Tab S10 Ultra", "Galaxy Tab S10+", "Galaxy Tab S9", "Galaxy Tab S9 FE", "Galaxy Tab S8", "Galaxy Tab A9+", "Galaxy Tab A9", "Galaxy Tab A8"],
+      Apple: [
+        "iPad Pro 13-inch",
+        "iPad Pro 11-inch",
+        "iPad Air 13-inch",
+        "iPad Air 11-inch",
+        "iPad (A16)",
+        "iPad (10th gen)",
+        "iPad (9th gen)",
+        "iPad mini (A17 Pro)",
+        "iPad mini (6th gen)",
+      ],
+      Samsung: [
+        "Galaxy Tab S10 Ultra",
+        "Galaxy Tab S10+",
+        "Galaxy Tab S9",
+        "Galaxy Tab S9 FE",
+        "Galaxy Tab S8",
+        "Galaxy Tab A9+",
+        "Galaxy Tab A9",
+        "Galaxy Tab A8",
+      ],
     },
     issues: ISSUES,
   },
   Laptop: {
     brands: {
-      Apple: ["MacBook Air 15-inch", "MacBook Air 13-inch", "MacBook Pro 16-inch", "MacBook Pro 14-inch", "MacBook Pro 13-inch"],
+      Apple: [
+        "MacBook Air 15-inch",
+        "MacBook Air 13-inch",
+        "MacBook Pro 16-inch",
+        "MacBook Pro 14-inch",
+        "MacBook Pro 13-inch",
+      ],
       Dell: ["XPS 13", "XPS 15", "XPS 16", "Inspiron", "Latitude", "Vostro", "Alienware"],
       HP: ["Spectre x360", "Envy", "Pavilion", "EliteBook", "ProBook", "Victus", "HP Chromebook"],
       Lenovo: ["ThinkPad", "IdeaPad", "Yoga", "Legion", "Lenovo Chromebook"],
@@ -108,10 +171,17 @@ export const CATALOG: Record<Device, DeviceNode> = {
   Other: { brands: {}, issues: ISSUES },
 };
 
-export const isDevice = (v: unknown): v is Device => typeof v === "string" && (DEVICES as readonly string[]).includes(v);
+export const isDevice = (v: unknown): v is Device =>
+  typeof v === "string" && (DEVICES as readonly string[]).includes(v);
 
-export const brandsFor = (device: Device): string[] => [...Object.keys(CATALOG[device].brands), OTHER];
+export const brandsFor = (device: Device): string[] => [
+  ...Object.keys(CATALOG[device].brands),
+  OTHER,
+];
 
-export const modelsFor = (device: Device, brand: string): string[] => [...(CATALOG[device].brands[brand] ?? []), OTHER];
+export const modelsFor = (device: Device, brand: string): string[] => [
+  ...(CATALOG[device].brands[brand] ?? []),
+  OTHER,
+];
 
 export const issuesFor = (device: Device): readonly string[] => CATALOG[device].issues;
