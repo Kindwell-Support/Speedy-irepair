@@ -1,5 +1,6 @@
 "use client";
 
+import { readAttribution } from "@/lib/attribution";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { tradeInSchema, type TradeInInput } from "@/lib/forms/schemas";
 import { FormShell } from "./FormShell";
@@ -31,6 +32,7 @@ export function TradeInForm({ brands }: { brands: string[] }) {
           name: String(d.get("t-name") ?? ""),
           phone: String(d.get("t-phone") ?? ""),
           email: String(d.get("t-email") ?? ""),
+          attribution: readAttribution(),
         })
       }
     >

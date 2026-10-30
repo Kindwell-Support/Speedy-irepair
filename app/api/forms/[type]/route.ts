@@ -5,8 +5,8 @@ import { deliverSubmission } from "@/lib/forms/submit";
 import { getSiteSettings } from "@/lib/sanity/content";
 import { isProductionSite } from "@/lib/env";
 import { isGhlConfigured } from "@/lib/env.server";
-import { sendInquiry } from "@/lib/ghl/inquiry";
-import type { ContactInput } from "@/lib/forms/schemas";
+import { sendInquiry, sendTradeIn } from "@/lib/ghl/inquiry";
+import type { ContactInput, TradeInInput } from "@/lib/forms/schemas";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +15,7 @@ const json = (body: FormResponse, status = 200) => NextResponse.json(body, { sta
 /**
  * POST /api/forms/{quote|tradein|contact|newsletter}  (F1–F4; F5 Square + Jotform are third-party embeds)
  * Order: type check -> rate limit -> JSON parse -> spam fields (honeypot, fill time, Turnstile flag)
- *        -> zod validation -> GHL (contact form only) -> deliver (Sanity formSubmission + signed webhook).
+ *        -> zod validation -> GHL (contact and trade-in forms) -> deliver (Sanity formSubmission + signed webhook).
  * Spam hits get a fake success (no signal to bots) but are never stored.
  */
 export async function POST(req: NextRequest, { params }: { params: Promise<{ type: string }> }) {
@@ -42,8 +42,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ typ
   const parsed = formSchemas[type].safeParse(raw);
   if (!parsed.success) return json({ ok: false, error: "validation", fieldErrors: parsed.error.flatten().fieldErrors }, 422);
 
-  // Once GHL has the message, a Sanity or webhook failure must not tell the visitor to send it again.
-  const inGhl = type === "contact" && isGhlConfigured && (await sendInquiry(parsed.data as ContactInput)) === true;
+  // Once GHL has the lead, a Sanity or webhook failure must not tell the visitor to send it again.
+  const toGhl =
+    type === "contact" ? () => sendInquiry(parsed.data as ContactInput)
+    : type === "tradein" ? () => sendTradeIn(parsed.data as TradeInInput)
+    : undefined;
+  const inGhl = isGhlConfigured && toGhl !== undefined && (await toGhl()) === true;
 
   try {
     const settings = await getSiteSettings();

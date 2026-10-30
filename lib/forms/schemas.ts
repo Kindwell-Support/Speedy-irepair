@@ -49,6 +49,7 @@ export const tradeInSchema = z.object({
   name,
   phone,
   email,
+  attribution: attribution.optional(),
 });
 
 /** F4 Contact (REQ-100). */

@@ -49,6 +49,12 @@ export const INQUIRY_PIPELINE = {
   stageNew: "7eda428c-5b73-4014-a3e7-ba33c2b90413",
 } as const;
 
+/** The "Device Buyback" pipeline and its first stage, for the /sell-your-device trade-in form. */
+export const BUYBACK_PIPELINE = {
+  id: "LF9Lue3ni3S7oZk1Vwxv",
+  stageNew: "45737350-4829-4643-9409-3b5e574e49b5", // New Inquiry
+} as const;
+
 export const LEAD_STATUS = {
   intakeStarted: "Intake Started",
   submitted: "Submitted",
@@ -59,4 +65,5 @@ export const TAGS = {
   started: "intake-started",
   complete: "intake-complete",
   contactForm: "contact-form",
+  tradeInForm: "trade-in-form",
 } as const;
