@@ -4,6 +4,9 @@ import { checkFillTime, checkHoneypot, checkRateLimit, clientIp, isTurnstileEnab
 import { deliverSubmission } from "@/lib/forms/submit";
 import { getSiteSettings } from "@/lib/sanity/content";
 import { isProductionSite } from "@/lib/env";
+import { isGhlConfigured } from "@/lib/env.server";
+import { sendInquiry } from "@/lib/ghl/inquiry";
+import type { ContactInput } from "@/lib/forms/schemas";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +15,7 @@ const json = (body: FormResponse, status = 200) => NextResponse.json(body, { sta
 /**
  * POST /api/forms/{quote|tradein|contact|newsletter}  (F1–F4; F5 Square + Jotform are third-party embeds)
  * Order: type check -> rate limit -> JSON parse -> spam fields (honeypot, fill time, Turnstile flag)
- *        -> zod validation -> deliver (Sanity formSubmission + signed webhook).
+ *        -> zod validation -> GHL (contact form only) -> deliver (Sanity formSubmission + signed webhook).
  * Spam hits get a fake success (no signal to bots) but are never stored.
  */
 export async function POST(req: NextRequest, { params }: { params: Promise<{ type: string }> }) {
@@ -39,16 +42,20 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ typ
   const parsed = formSchemas[type].safeParse(raw);
   if (!parsed.success) return json({ ok: false, error: "validation", fieldErrors: parsed.error.flatten().fieldErrors }, 422);
 
+  // Once GHL has the message, a Sanity or webhook failure must not tell the visitor to send it again.
+  const inGhl = type === "contact" && isGhlConfigured && (await sendInquiry(parsed.data as ContactInput)) === true;
+
   try {
     const settings = await getSiteSettings();
     const result = await deliverSubmission(type, parsed.data as Record<string, unknown>, {
       pagePath: spam.data.pagePath,
       notificationEmail: settings.business.notificationEmail,
     });
-    if (!result.configured && isProductionSite)
+    if (!result.configured && !inGhl && isProductionSite)
       return json({ ok: false, error: "not_configured", message: "Form delivery is not configured." }, 503);
     return json({ ok: true, stored: result.stored, notified: result.notified, staging: !isProductionSite });
   } catch {
+    if (inGhl) return json({ ok: true, stored: false, notified: false, staging: !isProductionSite });
     return json({ ok: false, error: "server", message: "Something went wrong. Please try again." }, 500);
   }
 }

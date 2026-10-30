@@ -29,7 +29,7 @@ export const cta = defineType({
       name: "href",
       title: "Link",
       type: "string",
-      description: "Internal path (/schedule-repair), tel:, mailto: or full https:// URL.",
+      description: "Internal path (/repair), tel:, mailto: or full https:// URL.",
       validation: (r) =>
         r.required().custom((v) =>
           typeof v === "string" && /^(\/|#|https?:\/\/|tel:|mailto:)/.test(v) ? true : "Must start with /, #, https://, tel: or mailto:",

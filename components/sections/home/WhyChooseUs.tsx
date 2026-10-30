@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { SITE_IMAGES } from "@/lib/site-images";
 import type { SectionCopy, ValueProp } from "@/lib/sanity/types";
 import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
 
@@ -7,7 +8,7 @@ const FIRST = ["vp-3", "vp-5", "vp-6"];
 const rank = (id: string) => (FIRST.includes(id) ? FIRST.indexOf(id) : FIRST.length);
 
 /**
- * Spec 2.1.5. Editorial split: a bench photograph on one side, the reasons on the other as six equal items.
+ * Spec 2.1.5. Editorial split: a photo of the shop on one side, the reasons on the other as six equal items.
  * Speakable via data-speakable.
  */
 export function WhyChooseUs({ copy, items }: { copy: SectionCopy; items: ValueProp[] }) {
@@ -19,8 +20,8 @@ export function WhyChooseUs({ copy, items }: { copy: SectionCopy; items: ValuePr
           <div className="photo aspect-[4/5]">
             <div data-parallax="6" className="absolute inset-x-0 -inset-y-[10%]">
               <Image
-                src="/images/site/microsolder.webp"
-                alt="Soldering iron working on a phone logic board under a red stereo microscope"
+                src={SITE_IMAGES.storeTrophy.src}
+                alt={SITE_IMAGES.storeTrophy.alt}
                 fill
                 sizes="(min-width: 1024px) 40vw, 100vw"
                 className="object-cover"

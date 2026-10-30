@@ -134,6 +134,6 @@ export const EXTERNAL = {
     "https://ecom.acimacredit.com/views/phone-auth/ecom-merchant-813293c2-9f1e-4987-8b83-6691e6baf75e?redirect=application",
   homeInternetJotform: "https://form.jotform.com/253200750312037",
   ebay: "https://www.ebay.com/usr/speedyirepair",
-  leaveReview: "https://g.co/kgs/Rhw8GL",
+  leaveReview: "https://www.google.com/searchviewer/10?hl=en-us&output=search&svid=CCYSGioYOhYweDA6MHgzZTlkM2I1MGJkMDg2NTgwGAo",
   googleMaps: "https://goo.gl/maps/hx2oTBFB18LNoMW36",
 } as const;

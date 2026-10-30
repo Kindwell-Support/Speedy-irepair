@@ -161,22 +161,6 @@ export function jsonLdForInstantQuote(_d: SeoData): JsonLdGraph {
     crumbs("/instant-quote", "Instant Quote"),
   );
 }
-export function jsonLdForScheduleRepair(_d: SeoData): JsonLdGraph {
-  return graph(
-    page("/schedule-repair", "/schedule-repair"),
-    service({
-      slug: "service",
-      path: "/schedule-repair",
-      url: "/schedule-repair",
-      name: "Smartphone Repair Appointment",
-      serviceType: "Smartphone repair",
-      description:
-        "Book a smartphone repair appointment at Speedy iRepair, 1650 W Market St #27, Akron, OH 44313. Most repairs are done the same day in 45 minutes, and all repairs are covered under our 90-day warranty.",
-    }),
-    crumbs("/schedule-repair", "Schedule Repair"),
-  );
-}
-
 /* R08 /faq — FAQPage + BreadcrumbList */
 export function jsonLdForFaq(d: SeoData): JsonLdGraph {
   return graph(
@@ -184,6 +168,11 @@ export function jsonLdForFaq(d: SeoData): JsonLdGraph {
     faqPage("/faq", d.faqPageFaqs),
     crumbs("/faq", "FAQ"),
   );
+}
+
+/* /contact — WebPage + BreadcrumbList */
+export function jsonLdForContact(): JsonLdGraph {
+  return graph(page("/contact", "/contact", { type: "WebPage" }), crumbs("/contact", "Contact"));
 }
 
 /* R10 /financing — Service + FAQPage + BreadcrumbList */

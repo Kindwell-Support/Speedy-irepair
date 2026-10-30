@@ -17,7 +17,7 @@ const STATIC_ROUTES: {
   { path: "/services", priority: 0.9, changeFrequency: "monthly", sanityType: "servicesPage" },
   { path: "/shop", priority: 0.9, changeFrequency: "daily", sanityType: "shopPage" },
   {
-    path: "/schedule-repair",
+    path: "/repair",
     priority: 0.9,
     changeFrequency: "monthly",
     sanityType: "schedulePage",
@@ -41,6 +41,7 @@ const STATIC_ROUTES: {
     sanityType: "homeInternetPage",
   },
   { path: "/financing", priority: 0.7, changeFrequency: "monthly", sanityType: "financingPage" },
+  { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
   { path: "/faq", priority: 0.7, changeFrequency: "monthly", sanityType: "faqPage" },
   { path: "/blog", priority: 0.6, changeFrequency: "weekly", sanityType: "blogPage" },
   {

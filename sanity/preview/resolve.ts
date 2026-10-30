@@ -11,7 +11,7 @@ export const resolve: PresentationPluginOptions["resolve"] = {
     shopPage: at("Shop", "/shop"),
     sellPage: at("Sell Your Device", "/sell-your-device"),
     quotePage: at("Instant Quote", "/instant-quote"),
-    schedulePage: at("Schedule Repair", "/schedule-repair"),
+    schedulePage: at("Repair booking", "/repair"),
     faqPage: at("FAQ", "/faq"),
     faq: at("FAQ", "/faq"),
     aboutPage: at("About", "/about"),

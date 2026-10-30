@@ -43,6 +43,12 @@ export const FIELD_KEYS: Record<FieldName, string> = {
 /** Note the en dash (–). */
 export const LOCATION = "Akron – W Market St";
 
+/** The "General Inquiries" pipeline and its first stage. Separate from the repair pipeline in GHL_PIPELINE_ID. */
+export const INQUIRY_PIPELINE = {
+  id: "sxdmtq4VLDEo1ohQgZBY",
+  stageNew: "7eda428c-5b73-4014-a3e7-ba33c2b90413",
+} as const;
+
 export const LEAD_STATUS = {
   intakeStarted: "Intake Started",
   submitted: "Submitted",
@@ -52,4 +58,5 @@ export const LEAD_STATUS = {
 export const TAGS = {
   started: "intake-started",
   complete: "intake-complete",
+  contactForm: "contact-form",
 } as const;

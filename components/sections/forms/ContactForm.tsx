@@ -1,10 +1,11 @@
 "use client";
 
+import { readAttribution } from "@/lib/attribution";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { FormShell } from "./FormShell";
 import { fieldError, TextAreaField, TextField } from "./fields";
 
-/** F4 Contact form (REQ-100): name, email, phone, message → /api/forms/contact. */
+/** F4 Contact form (REQ-100): name, email, phone, message → /api/forms/contact → GHL General Inquiries. */
 export function ContactForm({ idPrefix = "contact" }: { idPrefix?: string }) {
   const { state, submit, markStarted, honeypotProps } = useFormSubmit("contact");
   const errors = state.status === "error" ? state.fieldErrors : undefined;
@@ -23,6 +24,7 @@ export function ContactForm({ idPrefix = "contact" }: { idPrefix?: string }) {
           email: String(d.get(f("email")) ?? ""),
           phone: String(d.get(f("phone")) ?? ""),
           message: String(d.get(f("message")) ?? ""),
+          attribution: readAttribution(),
         })
       }
     >

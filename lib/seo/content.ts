@@ -12,8 +12,9 @@ export type RouteKey =
   | "/shop/[product]"
   | "/sell-your-device"
   | "/instant-quote"
-  | "/schedule-repair"
+  | "/repair"
   | "/faq"
+  | "/contact"
   | "/financing"
   | "/home-internet"
   | "/blog"
@@ -128,7 +129,7 @@ export const ROUTES: RouteSeo[] = [
     ],
   },
   {
-    route: "/schedule-repair",
+    route: "/repair",
     label: "Schedule Repair",
     h1: "Schedule Your Phone Repair in Akron",
     metaTitle: "Schedule a Phone Repair in Akron, OH | Speedy iRepair",
@@ -164,6 +165,16 @@ export const ROUTES: RouteSeo[] = [
       "iphone repair no upfront payment",
       "will i lose data phone repair",
     ],
+  },
+  {
+    route: "/contact",
+    label: "Contact",
+    h1: "Contact Us",
+    metaTitle: "Contact Speedy iRepair | Phone Repair in Akron, OH",
+    metaDescription:
+      "Send Speedy iRepair a message about a repair, a device or an order. Find our Akron, OH shop address, phone number, store hours and directions.",
+    primaryKeyword: "speedy irepair contact",
+    secondaryKeywords: ["phone repair shop akron", "speedy irepair phone number"],
   },
   {
     route: "/financing",

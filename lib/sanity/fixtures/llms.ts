@@ -29,7 +29,7 @@ Address: 1650 W Market St #27, Akron, OH 44313
 - https://speedyirepair.com/services
 - https://speedyirepair.com/shop
 - https://speedyirepair.com/instant-quote
-- https://speedyirepair.com/schedule-repair
+- https://speedyirepair.com/repair
 `;
 
 /**

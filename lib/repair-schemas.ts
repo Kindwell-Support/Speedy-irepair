@@ -27,7 +27,7 @@ const email = z
 const name = z.string().trim().min(1, "Please enter your name").max(120);
 const device = z.enum(DEVICES, { error: "Choose your device" });
 
-const attribution = z.object({
+export const attribution = z.object({
   utmSource: z.string().trim().max(200).optional(),
   utmMedium: z.string().trim().max(200).optional(),
   utmCampaign: z.string().trim().max(200).optional(),

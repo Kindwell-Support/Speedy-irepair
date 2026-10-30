@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { ServiceSections } from "@/components/sections/shared/ServiceSections";
+import { ContactPrompt } from "@/components/sections/shared/ContactPrompt";
 import { FaqList } from "@/components/sections/shared/FaqList";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -21,6 +22,7 @@ export default async function ServicesPage() {
       <JsonLd data={jsonLdForServices(seo)} />
       <PageHero hero={page.hero} photo="bench" />
       <ServiceSections services={services} />
+      <ContactPrompt id="services-contact" heading="Don't see your repair?" intro="Tell us what's wrong with your device and we'll let you know if we can fix it." />
       <Section id="services-faq" copy={page.faqSection} tone="raised" layout="side">
         <FaqList faqs={faqs} />
       </Section>

@@ -7,7 +7,7 @@ export const EXTERNAL_LINKS = {
     "https://ecom.acimacredit.com/views/phone-auth/ecom-merchant-813293c2-9f1e-4987-8b83-6691e6baf75e?redirect=application",
   homeInternetSignup: "https://form.jotform.com/253200750312037",
   ebay: "https://www.ebay.com/usr/speedyirepair",
-  review: "https://g.co/kgs/Rhw8GL",
+  review: "https://www.google.com/searchviewer/10?hl=en-us&output=search&svid=CCYSGioYOhYweDA6MHgzZTlkM2I1MGJkMDg2NTgwGAo",
   maps: "https://goo.gl/maps/hx2oTBFB18LNoMW36",
   facebook: "https://m.facebook.com/speedyirepair/",
   twitter: "https://mobile.twitter.com/speedyirepair",
@@ -85,6 +85,7 @@ export const navigation: Navigation = {
     { label: "Home Internet", href: "/home-internet" },
     { label: "FAQ", href: "/faq" },
     { label: "Blog", href: "/blog" },
+    { label: "Contact", href: "/contact" },
   ],
   headerCta: { label: "Schedule Repair", href: "/repair", variant: "primary" },
   // Spec 2.1.11 (REQ-041)
@@ -95,6 +96,7 @@ export const navigation: Navigation = {
     { label: "Schedule Repair", href: "/repair" },
     { label: "Instant Quote", href: "/instant-quote" },
     { label: "FAQ", href: "/faq" },
+    { label: "Contact", href: "/contact" },
   ],
   // Spec 2.1.11 (REQ-042)
   footerLegalLinks: [

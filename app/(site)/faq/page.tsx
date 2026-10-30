@@ -5,6 +5,7 @@ import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForFaq } from "@/lib/seo/routes";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHero } from "@/components/ui/PageHero";
+import { ContactPrompt } from "@/components/sections/shared/ContactPrompt";
 import { FaqList } from "@/components/sections/shared/FaqList";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,6 +23,7 @@ export default async function FaqPage() {
         {page.intro ? <p className="mb-8 text-body-lg text-text-secondary">{page.intro}</p> : null}
         <FaqList faqs={faqs} engine="gsap" />
       </div>
+      <ContactPrompt id="faq-contact" heading="Still have a question?" intro="Send us a message and we'll get back to you." />
     </>
   );
 }

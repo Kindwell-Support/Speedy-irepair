@@ -17,7 +17,7 @@ export const metadata: Metadata = buildMetadata({
 
 /**
  * /repair: the interactive intake. Device → brand → model → issue → contact → time → confirmation.
- * Business details and "what to bring" come from the CMS (same source as /schedule-repair), so the confirmation
+ * Business details and "what to bring" come from the CMS (the schedulePage document), so the confirmation
  * never disagrees with the footer.
  */
 export default async function RepairPage() {

@@ -1,7 +1,9 @@
+import Image from "next/image";
 import type { BusinessInfo, SectionCopy } from "@/lib/sanity/types";
 import { publicEnv } from "@/lib/env";
 import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
 import { buttonClasses } from "@/components/ui/ButtonLink";
+import { SITE_IMAGES } from "@/lib/site-images";
 import { telHref } from "@/lib/utils/format";
 import { HoursList } from "@/components/sections/global/HoursList";
 import { ContactForm } from "@/components/sections/forms/ContactForm";
@@ -9,9 +11,9 @@ import { MapEmbed } from "./MapEmbed";
 import { OpenStatus } from "./OpenStatus";
 
 /**
- * Spec 2.1.9 location + contact (also used on /schedule-repair).
+ * Spec 2.1.9 location + contact.
  * The street address is set as display type: it is the one thing a visitor needs to carry away.
- * Map on the right (MapEmbed, with a poster while it loads); a live open/closed line sits above the hours.
+ * Storefront photo above the map on the right, so visitors know the building (MapEmbed, with a poster while it loads); a live open/closed line sits above the hours.
  * The contact form runs underneath as its own row.
  */
 export function LocationContact({
@@ -87,13 +89,22 @@ export function LocationContact({
           </div>
 
           {embed ? (
-            <div className="lg:col-span-7">
+            <div className="flex flex-col gap-4 lg:col-span-7">
+              <div className="photo relative aspect-[16/9]">
+                <Image
+                  src={SITE_IMAGES.storeExterior.src}
+                  alt={SITE_IMAGES.storeExterior.alt}
+                  fill
+                  sizes="(min-width: 1024px) 55vw, 100vw"
+                  className="object-cover object-[50%_32%]"
+                />
+              </div>
               <MapEmbed
                 src={embed}
                 title={`Map: ${business.name}`}
                 address={`${a.street}${a.suite ? ` ${a.suite}` : ""}, ${a.city}, ${a.state} ${a.zip}`}
                 mapsHref={business.externalLinks.maps}
-                className="h-[360px] w-full lg:h-full lg:min-h-[560px]"
+                className="h-[360px] w-full lg:min-h-[360px] lg:flex-1"
               />
             </div>
           ) : null}

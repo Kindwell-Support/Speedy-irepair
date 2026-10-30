@@ -14,7 +14,7 @@ const CARD_SLIDES: { id: string; label: string; look: Look }[] = [
   { id: "c2", label: "Pre-Owned", look: { photo: SITE_IMAGES.devices } },
   { id: "c4", label: "Prepaid Plans", look: { tile: { tone: "dark", big: "Save every month", small: "Simple Mobile, AT&T and Verizon" } } },
   { id: "c8", label: "Unlocking", look: { tile: { tone: "dark", big: "Unlocked", small: "From any carrier" } } },
-  { id: "c3", label: "Sell / Trade", look: { photo: SITE_IMAGES.counter } },
+  { id: "c3", label: "Sell / Trade", look: { photo: SITE_IMAGES.storeCounter } },
   { id: "c5", label: "Bill Pay", look: { tile: { tone: "dark", big: "Pay bills here", small: "Water, electric and gas" } } },
 ];
 

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { attribution } from "@/lib/repair-schemas";
 
 /**
  * Shared form schemas: the SAME schema validates on the client (before submit) and the server
@@ -56,6 +57,7 @@ export const contactSchema = z.object({
   email,
   phone: phone.optional().or(z.literal("")),
   message: z.string().trim().min(1, "Please enter a message").max(4000),
+  attribution: attribution.optional(),
 });
 
 /** F2 Newsletter (REQ-037). */

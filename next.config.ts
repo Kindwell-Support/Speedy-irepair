@@ -12,6 +12,9 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  async redirects() {
+    return [{ source: "/schedule-repair", destination: "/repair", permanent: true }];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

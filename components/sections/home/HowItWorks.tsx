@@ -5,14 +5,18 @@ import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
 import { SITE_IMAGES, type SiteImage } from "@/lib/site-images";
 import { cn } from "@/lib/utils/cn";
 
-/** Photo behind each step, by step id. Steps without one (the warranty step) carry their own visual. */
+/** Photo behind each step, by step id. */
 const STEP_PHOTOS: Record<string, SiteImage> = {
   "home-1": SITE_IMAGES.devices,
-  "home-2": SITE_IMAGES.counter,
+  "home-2": SITE_IMAGES.storeCounter,
   "home-3": SITE_IMAGES.screenLift,
+  "home-4": SITE_IMAGES.storeFront,
   "sell-1": SITE_IMAGES.devices,
-  "sell-2": SITE_IMAGES.counter,
+  "sell-2": SITE_IMAGES.storeCounter,
 };
+
+/** Steps set in the shop: the real store photo wins over the older image held in the CMS. */
+const SHOP_STEPS = ["home-2", "home-4", "sell-2"];
 
 /** The extra that makes a step concrete: a repair timer scrubbed by scroll, or the warranty ticket. */
 function StepExtra({ id }: { id: string }) {
@@ -72,7 +76,7 @@ export function HowItWorks({ copy, steps, id = "how-it-works" }: { copy: Section
           </div>
           <ol className={cn("grid gap-4 lg:flex", steps.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2")}>
             {steps.map((s, i) => {
-              const photo = s.image ?? STEP_PHOTOS[s.id];
+              const photo = SHOP_STEPS.includes(s.id) ? STEP_PHOTOS[s.id] : (s.image ?? STEP_PHOTOS[s.id]);
               return (
                 <li
                   key={s.id}

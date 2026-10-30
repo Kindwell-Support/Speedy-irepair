@@ -64,13 +64,27 @@ const withDefaults = <T extends object>(data: Partial<T>, fallback: T): T => {
 const byOrder = <T extends { order: number }>(a: T, b: T): number => a.order - b.order;
 
 // ---------- Global ----------
+const CONTACT_LINK = { label: "Contact", href: "/contact" };
+/** Puts Contact at `at` (default last) wherever the stored list has it, or adds it if it has none. */
+const withContact = <T extends { href: string }>(list: T[], at = list.length) => {
+  const links = list.filter((l) => l.href !== CONTACT_LINK.href);
+  return [...links.slice(0, at), CONTACT_LINK, ...links.slice(at)];
+};
+
 export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
   const s = await fromSanity(q.siteSettingsQuery, {}, [q.TAGS.siteSettings], fx.siteSettings);
   // The logo and any field left empty in the Studio keep the built-in value.
+  const navigation = withDefaults(s.navigation ?? {}, fx.siteSettings.navigation);
   return {
     copyright: s.copyright || fx.siteSettings.copyright,
     business: withDefaults(s.business ?? {}, fx.siteSettings.business),
-    navigation: withDefaults(s.navigation ?? {}, fx.siteSettings.navigation),
+    // Stored menus predate /contact, so the link is added here rather than depending on a Studio edit.
+    navigation: {
+      ...navigation,
+      // Fourth, the last slot PrimaryNav keeps in the bar; the link it displaces moves under "More".
+      primary: withContact(navigation.primary, 3),
+      footerQuickLinks: withContact(navigation.footerQuickLinks),
+    },
     defaultSeo: withDefaults(s.defaultSeo ?? {}, fx.siteSettings.defaultSeo),
   };
 });

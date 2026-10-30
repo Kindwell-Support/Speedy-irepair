@@ -1,6 +1,6 @@
 /**
- * Generated photographs of repair work (public/images/site). They show the trade, not this shop or its staff:
- * alt text says what each picture shows and never claims it as Speedy iRepair's bench, team or storefront.
+ * Photographs in public/images/site. The store* images are real photos of the shop. The rest are generated pictures
+ * of repair work: they show the trade, so their alt text never claims them as Speedy iRepair's bench or team.
  */
 export type SiteImage = { src: string; alt: string; width: number; height: number };
 
@@ -46,6 +46,36 @@ export const SITE_IMAGES = {
     alt: "A phone waiting on a dark shop counter, with lit tool shelves behind",
     width: 2000,
     height: 1116,
+  },
+  storeFront: {
+    src: "/images/site/store-front.webp",
+    alt: "The Speedy iRepair sign and front door on a sunny day",
+    width: 1536,
+    height: 2048,
+  },
+  storeFrontWide: {
+    src: "/images/site/store-front-wide.webp",
+    alt: "The Speedy iRepair sign and front door on a sunny day",
+    width: 1536,
+    height: 960,
+  },
+  storeExterior: {
+    src: "/images/site/store-exterior.webp",
+    alt: "The Speedy iRepair storefront seen from the sidewalk",
+    width: 1536,
+    height: 2048,
+  },
+  storeCounter: {
+    src: "/images/site/store-counter.webp",
+    alt: "Inside Speedy iRepair: the glass counter, branded floor mat and accessories wall",
+    width: 1536,
+    height: 2048,
+  },
+  storeTrophy: {
+    src: "/images/site/store-trophy.webp",
+    alt: "A trophy on the glass counter inside Speedy iRepair, above the branded floor mat",
+    width: 1536,
+    height: 2048,
   },
   port: {
     src: "/images/site/port.webp",
