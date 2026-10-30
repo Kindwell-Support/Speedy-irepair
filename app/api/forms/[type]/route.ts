@@ -53,9 +53,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ typ
     });
     if (!result.configured && !inGhl && isProductionSite)
       return json({ ok: false, error: "not_configured", message: "Form delivery is not configured." }, 503);
-    return json({ ok: true, stored: result.stored, notified: result.notified, staging: !isProductionSite });
+    // The staging notice says nothing was kept, so it only shows when that's true.
+    const delivered = inGhl || result.stored || result.notified;
+    return json({ ok: true, stored: result.stored, notified: result.notified, staging: !isProductionSite && !delivered });
   } catch {
-    if (inGhl) return json({ ok: true, stored: false, notified: false, staging: !isProductionSite });
+    if (inGhl) return json({ ok: true, stored: false, notified: false, staging: false });
     return json({ ok: false, error: "server", message: "Something went wrong. Please try again." }, 500);
   }
 }

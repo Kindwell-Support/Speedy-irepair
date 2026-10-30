@@ -3,6 +3,7 @@ import { leadSourceFor, type Attribution } from "@/lib/attribution";
 import { serverEnv } from "@/lib/env.server";
 import { GhlError, ghl, toE164 } from "@/lib/ghl/client";
 import { FIELD_IDS, LEAD_STATUS, LOCATION, TAGS, type FieldName } from "@/lib/ghl/fields";
+import { ensureOwner, ownerForUpsert } from "@/lib/ghl/owner";
 import { attempt } from "@/lib/ghl/retry";
 import {
   CONSENT_VERSION,
@@ -106,8 +107,13 @@ async function setLeadSourceIfEmpty(contactId: string, attribution: Attribution)
 /**
  * The contact's unfinished intake (an open opportunity still at "Intake Started"), or a new one. Opportunities
  * further along (submitted, booked, in repair) are left alone, so a second repair gets its own card.
+ * A new card goes to the contact's owner, once `owner` settles.
  */
-async function ensureOpportunity(contactId: string, name: string): Promise<string> {
+async function ensureOpportunity(
+  contactId: string,
+  name: string,
+  owner: Promise<string | undefined>,
+): Promise<string> {
   const params = new URLSearchParams({
     location_id: env.ghlLocationId,
     pipeline_id: env.ghlPipelineId,
@@ -120,11 +126,13 @@ async function ensureOpportunity(contactId: string, name: string): Promise<strin
   );
   const unfinished = opportunities.find((o) => o.pipelineStageId === env.ghlStageIntakeStarted);
   if (unfinished) return unfinished.id;
+  const assignedTo = await owner;
   const { opportunity } = await ghl<{ opportunity: Opportunity }>("POST", "/opportunities/", {
     locationId: env.ghlLocationId,
     pipelineId: env.ghlPipelineId,
     pipelineStageId: env.ghlStageIntakeStarted,
     contactId,
+    ...(assignedTo ? { assignedTo } : {}),
     name,
     status: "open",
   });
@@ -181,13 +189,16 @@ async function startCore(input: StartInput): Promise<IntakeSession> {
       smsConsentAt: shopDateISO(),
       ...attributionFields(input.attribution),
     }),
+    ...(await ownerForUpsert({ number: phone })),
   });
   const id = contact.id;
   const log = { contactId: id, phone };
+  const owner = attempt("assignOwner", log, () => ensureOwner(id));
   const [opportunityId] = await Promise.all([
     attempt("ensureOpportunity", log, () =>
-      ensureOpportunity(id, `${input.device} repair (${phone})`),
+      ensureOpportunity(id, `${input.device} repair (${phone})`, owner),
     ),
+    owner,
     attempt("setLeadSource", { ...log, attribution: input.attribution }, () =>
       setLeadSourceIfEmpty(id, input.attribution),
     ),
@@ -213,8 +224,11 @@ async function completeCore(session: IntakeSession | null, input: CompleteInput)
     slotStart: input.slotStart,
   };
   const oppName = `${input.name}: ${input.brand} ${input.model} – ${input.issue}`;
+  // Again here in case step 2's assignment was lost; a contact that has an owner keeps it.
+  const owner = attempt("assignOwner", log, () => ensureOwner(id));
 
   await Promise.all([
+    owner,
     attempt("updateContact details", log, () =>
       updateContact(id, {
         ...splitName(input.name),
@@ -234,7 +248,7 @@ async function completeCore(session: IntakeSession | null, input: CompleteInput)
 
   const opportunityId =
     s.opportunityId ??
-    (await attempt("ensureOpportunity", log, () => ensureOpportunity(id, oppName)));
+    (await attempt("ensureOpportunity", log, () => ensureOpportunity(id, oppName, owner)));
 
   const markBooked = () =>
     Promise.all([

@@ -3,6 +3,7 @@ import { leadSourceFor, type Attribution } from "@/lib/attribution";
 import { serverEnv } from "@/lib/env.server";
 import { ghl, toE164 } from "@/lib/ghl/client";
 import { FIELD_IDS, INQUIRY_PIPELINE, LOCATION, TAGS } from "@/lib/ghl/fields";
+import { ownerForUpsert, pickOwner } from "@/lib/ghl/owner";
 import { attempt } from "@/lib/ghl/retry";
 
 interface InquiryInput {
@@ -15,6 +16,7 @@ interface InquiryInput {
 
 interface Contact {
   id: string;
+  assignedTo?: string | null;
   customFields?: { id: string; value?: unknown }[];
 }
 
@@ -42,18 +44,22 @@ async function send({ name, email, phone, message, attribution = {} }: InquiryIn
     ...(phone ? { phone: toE164(phone) } : {}),
     source: "Website contact form",
     customFields,
+    ...(await ownerForUpsert({ email })),
   });
   const id = upserted.contact.id;
 
   await ghl("POST", `/contacts/${id}/tags`, { tags: [TAGS.contactForm] });
 
-  // First touch, as on /repair: a Lead Source the contact already has is left alone.
+  // First touch, as on /repair: a Lead Source or owner the contact already has is left alone.
   const { contact } = await ghl<{ contact: Contact }>("GET", `/contacts/${id}`);
-  if (!contact.customFields?.some((f) => f.id === FIELD_IDS.leadSource && f.value)) {
-    await ghl("PUT", `/contacts/${id}`, {
-      customFields: [{ id: FIELD_IDS.leadSource, field_value: leadSourceFor(attribution) }],
-    });
-  }
+  const owner = contact.assignedTo || pickOwner();
+  const update = {
+    ...(!contact.assignedTo && owner ? { assignedTo: owner } : {}),
+    ...(!contact.customFields?.some((f) => f.id === FIELD_IDS.leadSource && f.value)
+      ? { customFields: [{ id: FIELD_IDS.leadSource, field_value: leadSourceFor(attribution) }] }
+      : {}),
+  };
+  if (Object.keys(update).length) await ghl("PUT", `/contacts/${id}`, update);
 
   const params = new URLSearchParams({
     location_id: serverEnv.ghlLocationId,
@@ -75,6 +81,7 @@ async function send({ name, email, phone, message, attribution = {} }: InquiryIn
       pipelineId: INQUIRY_PIPELINE.id,
       pipelineStageId: INQUIRY_PIPELINE.stageNew,
       contactId: id,
+      ...(owner ? { assignedTo: owner } : {}),
       name: `${name.trim()}: website inquiry`,
       status: "open",
     });

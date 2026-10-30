@@ -19,6 +19,8 @@ export const serverEnv = {
   ghlStageIntakeStarted: process.env.GHL_STAGE_INTAKE_STARTED ?? "",
   ghlStageNewLead: process.env.GHL_STAGE_NEW_LEAD ?? "",
   ghlStageBooked: process.env.GHL_STAGE_BOOKED ?? "",
+  /** Comma-separated GHL user ids that new leads are assigned to; several share leads round robin. Optional. */
+  ghlOwnerUserIds: (process.env.GHL_OWNER_USER_IDS ?? "").split(",").map((s) => s.trim()).filter(Boolean),
   nodeEnv: process.env.NODE_ENV ?? "development",
 } as const;
 
