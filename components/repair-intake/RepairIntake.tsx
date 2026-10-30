@@ -12,7 +12,6 @@ import type {
   StartResponse,
 } from "@/lib/repair-schemas";
 import { shopDateISO } from "@/lib/repair-time";
-import { cssVars } from "@/lib/utils/css-vars";
 import { BrandStep } from "./BrandStep";
 import { ConfirmationStep, type ShopInfo, type WhatToBring } from "./ConfirmationStep";
 import { DetailsStep, PhoneStep } from "./ContactStep";
@@ -20,6 +19,7 @@ import { DeviceStep } from "./DeviceStep";
 import { IssueStep } from "./IssueStep";
 import { ModelStep } from "./ModelStep";
 import { ScheduleStep, type SlotsState } from "./ScheduleStep";
+import { StepProgress } from "./ui";
 
 const STEPS = ["Device", "Contact", "Brand", "Model", "Issue", "Time", "Your details"] as const;
 const [DEVICE, CONTACT, BRAND, MODEL, ISSUE, TIME, DETAILS] = [0, 1, 2, 3, 4, 5, 6];
@@ -304,7 +304,6 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
   const brandLabel = resolved(answers.brand, answers.brandOther, OTHER);
   const modelLabel = resolved(answers.model, answers.modelOther, OTHER);
   const issueLabel = answers.issue === ISSUE_OTHER ? answers.issueDetails : (answers.issue ?? "");
-  const progress = step === DONE ? 100 : ((step + 1) / STEPS.length) * 100;
   const status =
     step === DONE ? "Request sent" : `Step ${step + 1} of ${STEPS.length}: ${STEPS[step]}`;
 
@@ -315,42 +314,13 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
       </p>
 
       {step === DONE ? null : (
-        <div className="mb-8">
-          <div className="mb-3 flex min-h-11 items-center justify-between gap-4">
-            {step > 0 ? (
-              <button
-                type="button"
-                onClick={() => goTo(step - 1)}
-                className="-ml-2 inline-flex min-h-11 items-center gap-2 rounded-sm px-2 text-body-sm font-bold uppercase tracking-[0.06em] text-text-secondary transition-colors duration-fast hover:text-text focus-visible:shadow-focus"
-              >
-                <span aria-hidden>←</span> Back
-              </button>
-            ) : (
-              <span />
-            )}
-            <p
-              aria-hidden
-              className="text-body-sm font-semibold uppercase tracking-[0.06em] text-text-tertiary"
-            >
-              <span className="tabular-nums text-text">{step + 1}</span> / {STEPS.length} ·{" "}
-              {STEPS[step]}
-            </p>
-          </div>
-          <div
-            role="progressbar"
-            aria-label="Booking progress"
-            aria-valuemin={1}
-            aria-valuemax={STEPS.length}
-            aria-valuenow={step + 1}
-            aria-valuetext={status}
-            className="h-1 overflow-hidden rounded-full bg-surface-3"
-          >
-            <div
-              className="h-full w-[var(--progress)] rounded-full bg-primary transition-[width] duration-base ease-out"
-              style={cssVars({ "--progress": `${progress}%` })}
-            />
-          </div>
-        </div>
+        <StepProgress
+          steps={STEPS}
+          step={step}
+          status={status}
+          label="Booking progress"
+          onBack={() => goTo(step - 1)}
+        />
       )}
 
       {step === DEVICE ? (

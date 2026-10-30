@@ -35,7 +35,11 @@ export const homePage: HomePage = {
   serviceCards: [], // filled by content layer from collections.serviceCards
   howItWorksSection: { heading: "How it works" },
   brandsSection: { heading: "Brands we repair" },
-  whySection: { heading: "Why choose us" },
+  whySection: {
+    heading: "Why choose us",
+    intro:
+      "Speedy iRepair started with a kitchen table, a book bag and a few repair tools. Today we bring 10+ years of experience in cellphone repairs, and we only use high-quality replacement parts, backed by a 90-day warranty.",
+  },
   testimonialsSection: { heading: "What customers say" },
   promotionsSection: { heading: "Current promotions" },
   faqSection: { heading: "Common questions" },

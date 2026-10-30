@@ -10,13 +10,13 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { HowItWorks } from "@/components/sections/home/HowItWorks";
-import { TradeInForm } from "@/components/sections/forms/TradeInForm";
+import { TradeInIntake } from "@/components/trade-in/TradeInIntake";
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("/sell-your-device", (await getSellPage()).seo);
 }
 
-/** R05 — hero, 3 steps, trade-in multi-step form (lead capture; quote values TBD), brands, CTA. */
+/** R05 — hero, 3 steps, tap-through trade-in flow (lead capture to GHL Device Buyback; no prices), brands, CTA. */
 export default async function SellYourDevicePage() {
   const [page, steps, brands, seo] = await Promise.all([getSellPage(), getHowItWorksSteps("sell"), getBrands(), getSeoData()]);
   const accepted = brands.filter((b) => b.acceptsTradeIn);
@@ -32,7 +32,7 @@ export default async function SellYourDevicePage() {
             <h2 id="trade-in-heading" className="mb-8 text-h3">
               {page.formSection.heading}
             </h2>
-            <TradeInForm brands={accepted.map((b) => b.shortName)} />
+            <TradeInIntake />
           </div>
 
           <aside aria-labelledby="brands-accepted-heading" className="flex flex-col gap-10 lg:col-span-4 lg:col-start-9">

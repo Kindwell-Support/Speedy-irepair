@@ -1,7 +1,7 @@
 /**
- * Proof row: three big figures set like the hero's "Fixed in 45 min" line (the 45-minute figure is the hero's
+ * Proof row: four big figures set like the hero's "Fixed in 45 min" line (the 45-minute figure is the hero's
  * own, so it is not repeated here). Lives on HeroProof's red panel, so everything is white: the star included,
- * since brand red would vanish on it. Stacks on phones, one row from md.
+ * since brand red would vanish on it. Two by two on phones, one row from md.
  */
 import { StarIcon } from "@/components/ui/Stars";
 
@@ -9,11 +9,12 @@ const STATS = [
   { value: "4.9", suffix: <StarIcon className="ml-1.5 h-[0.8em] w-[0.8em] text-text" />, label: "Google rating", aria: "4.9 star Google rating" },
   { value: "1,000", suffix: "+", label: "Reviews", aria: "Over 1,000 reviews" },
   { value: "90", suffix: "-day", label: "Warranty", aria: "90-day warranty on repairs" },
+  { value: "10", suffix: "+", label: "Years", aria: "Over 10 years of repair experience" },
 ];
 
 export function TrustBar() {
   return (
-    <ul className="grid grid-cols-1 gap-5 text-center md:grid-cols-3 md:gap-6" aria-label="Trust indicators">
+    <ul className="grid grid-cols-2 gap-5 text-center md:grid-cols-4 md:gap-6" aria-label="Trust indicators">
       {STATS.map((stat) => (
         <li key={stat.label} aria-label={stat.aria}>
           <span aria-hidden className="flex items-center justify-center font-heading text-h4 font-black uppercase tabular-nums text-text">

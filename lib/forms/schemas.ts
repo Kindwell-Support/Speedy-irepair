@@ -42,7 +42,8 @@ export const quoteSchema = z.object({
 /** F5 Trade-in (spec 2.5, REQ-058): Device Type → Brand → Model → Condition → contact. */
 export const tradeInSchema = z.object({
   deviceType: z.enum(["Phone", "Tablet", "Smartwatch", "Laptop", "Other"], { error: "Choose your device type" }),
-  brand: z.enum(["Apple", "Samsung", "LG", "Google", "Motorola", "OnePlus", "Other"], { error: "Choose the brand" }),
+  // Any brand from lib/trade-in-catalog, or the visitor's own words for one it doesn't list.
+  brand: z.string({ error: "Choose the brand" }).trim().min(1, "Choose the brand").max(120),
   model: z.string().trim().min(1, "Tell us the model, e.g. Galaxy S22").max(120),
   condition: z.enum(["Like new", "Good", "Fair", "Cracked / damaged", "Not working"], { error: "Choose its condition" }),
   details: z.string().trim().max(2000).optional(),

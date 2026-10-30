@@ -4,6 +4,7 @@ import { useState, type FormEvent, type ReactNode } from "react";
 import { buttonClasses } from "@/components/ui/ButtonLink";
 import { TextField } from "@/components/sections/forms/fields";
 import { cn } from "@/lib/utils/cn";
+import { cssVars } from "@/lib/utils/css-vars";
 
 /** Big tap-target card shared by every pick step. aria-pressed marks the current answer when someone comes back. */
 export const optionClass =
@@ -11,7 +12,58 @@ export const optionClass =
 
 export const continueClass = buttonClasses("primary", "lg", "w-full sm:w-auto");
 
-/** Each step's title. RepairIntake moves focus here (data-step-heading) whenever the step changes. */
+/** Back button, "n / total · Step" and the progress bar above every step of a tap-through flow. */
+export function StepProgress({
+  steps,
+  step,
+  status,
+  label,
+  onBack,
+}: {
+  steps: readonly string[];
+  step: number;
+  /** The step in words, for screen readers. */
+  status: string;
+  label: string;
+  onBack: () => void;
+}) {
+  return (
+    <div className="mb-8">
+      <div className="mb-3 flex min-h-11 items-center justify-between gap-4">
+        {step > 0 ? (
+          <button
+            type="button"
+            onClick={onBack}
+            className="-ml-2 inline-flex min-h-11 items-center gap-2 rounded-sm px-2 text-body-sm font-bold uppercase tracking-[0.06em] text-text-secondary transition-colors duration-fast hover:text-text focus-visible:shadow-focus"
+          >
+            <span aria-hidden>←</span> Back
+          </button>
+        ) : (
+          <span />
+        )}
+        <p aria-hidden className="text-body-sm font-semibold uppercase tracking-[0.06em] text-text-tertiary">
+          <span className="tabular-nums text-text">{step + 1}</span> / {steps.length} · {steps[step]}
+        </p>
+      </div>
+      <div
+        role="progressbar"
+        aria-label={label}
+        aria-valuemin={1}
+        aria-valuemax={steps.length}
+        aria-valuenow={step + 1}
+        aria-valuetext={status}
+        className="h-1 overflow-hidden rounded-full bg-surface-3"
+      >
+        <div
+          className="h-full w-[var(--progress)] rounded-full bg-primary transition-[width] duration-base ease-out"
+          style={cssVars({ "--progress": `${((step + 1) / steps.length) * 100}%` })}
+        />
+      </div>
+    </div>
+  );
+}
+
+/** Each step's title. The flow moves focus here (data-step-heading) whenever the step changes. */
 export function StepHeading({ title, intro }: { title: string; intro?: ReactNode }) {
   return (
     <div className="mb-8">
