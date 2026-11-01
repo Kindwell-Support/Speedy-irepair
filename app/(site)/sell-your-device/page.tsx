@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { SITE_IMAGES } from "@/lib/site-images";
-import { getBrands, getHowItWorksSteps, getSellPage } from "@/lib/sanity/content";
+import { getHowItWorksSteps, getSellPage } from "@/lib/sanity/content";
 import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForSellYourDevice } from "@/lib/seo/routes";
@@ -10,16 +10,19 @@ import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { HowItWorks } from "@/components/sections/home/HowItWorks";
-import { TradeInIntake } from "@/components/trade-in/TradeInIntake";
+import { ReuselyWidget } from "@/components/trade-in/ReuselyWidget";
 
 export async function generateMetadata(): Promise<Metadata> {
   return pageMetadata("/sell-your-device", (await getSellPage()).seo);
 }
 
-/** R05 — hero, 3 steps, tap-through trade-in flow (lead capture to GHL Device Buyback; no prices), brands, CTA. */
+/** R05 — hero, 3 steps, Reusely buyback widget, CTA. */
 export default async function SellYourDevicePage() {
-  const [page, steps, brands, seo] = await Promise.all([getSellPage(), getHowItWorksSteps("sell"), getBrands(), getSeoData()]);
-  const accepted = brands.filter((b) => b.acceptsTradeIn);
+  const [page, steps, seo] = await Promise.all([
+    getSellPage(),
+    getHowItWorksSteps("sell"),
+    getSeoData(),
+  ]);
   const photo = page.photo ?? SITE_IMAGES.port;
   return (
     <>
@@ -32,28 +35,14 @@ export default async function SellYourDevicePage() {
             <h2 id="trade-in-heading" className="mb-8 text-h3">
               {page.formSection.heading}
             </h2>
-            <TradeInIntake />
+            <ReuselyWidget />
           </div>
 
-          <aside aria-labelledby="brands-accepted-heading" className="flex flex-col gap-10 lg:col-span-4 lg:col-start-9">
-            <div id="brands-accepted">
-              <h2 id="brands-accepted-heading" className="font-sans text-h5 font-bold">
-                {page.brandsSection.heading}
-              </h2>
-              <ul className="mt-4 border-t border-border">
-                {accepted.map((b) => (
-                  <li key={b.id} className="flex min-h-12 items-center border-b border-border font-heading text-h5 font-bold">
-                    {b.name}
-                  </li>
-                ))}
-              </ul>
+          <figure className="hidden lg:col-span-4 lg:col-start-9 lg:block">
+            <div className="photo aspect-[4/5]">
+              <Image src={photo.src} alt={photo.alt} fill sizes="30vw" />
             </div>
-            <figure className="hidden lg:block">
-              <div className="photo aspect-[4/5]">
-                <Image src={photo.src} alt={photo.alt} fill sizes="30vw" />
-              </div>
-            </figure>
-          </aside>
+          </figure>
         </div>
       </section>
       <Section id="sell-cta" copy={page.ctaSection} tone="raised">
