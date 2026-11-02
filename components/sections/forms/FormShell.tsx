@@ -54,11 +54,6 @@ export function FormShell({
         </span>
         <p className="font-heading text-h4 font-bold">{successTitle}</p>
         <p className="max-w-[52ch] text-body-lg text-text-secondary">{successMessage}</p>
-        {state.staging ? (
-          <Notice tone="staging">
-            Staging preview: this submission was validated but not stored or sent (form delivery is not configured yet).
-          </Notice>
-        ) : null}
       </div>
     );
   return (
