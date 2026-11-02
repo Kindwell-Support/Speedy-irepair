@@ -55,6 +55,9 @@ export const BUYBACK_PIPELINE = {
   stageNew: "45737350-4829-4643-9409-3b5e574e49b5", // New Inquiry
 } as const;
 
+/** Where /instant-quote leads wait in the repair pipeline. Comes before New Lead so its automations don't fire. */
+export const STAGE_QUOTE_REQUESTED = "985ba112-9869-4456-b30f-6496efcd8743";
+
 export const LEAD_STATUS = {
   intakeStarted: "Intake Started",
   submitted: "Submitted",
@@ -66,4 +69,5 @@ export const TAGS = {
   complete: "intake-complete",
   contactForm: "contact-form",
   tradeInForm: "trade-in-form",
+  quoteForm: "instant-quote-requested",
 } as const;

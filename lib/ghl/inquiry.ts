@@ -2,10 +2,20 @@ import "server-only";
 import { leadSourceFor, type Attribution } from "@/lib/attribution";
 import { serverEnv } from "@/lib/env.server";
 import { ghl, toE164 } from "@/lib/ghl/client";
-import { BUYBACK_PIPELINE, FIELD_IDS, INQUIRY_PIPELINE, LOCATION, TAGS } from "@/lib/ghl/fields";
+import {
+  BUYBACK_PIPELINE,
+  FIELD_IDS,
+  INQUIRY_PIPELINE,
+  LOCATION,
+  STAGE_QUOTE_REQUESTED,
+  TAGS,
+  type FieldName,
+} from "@/lib/ghl/fields";
 import { ownerForUpsert, pickOwner } from "@/lib/ghl/owner";
 import { attempt } from "@/lib/ghl/retry";
-import type { TradeInInput } from "@/lib/forms/schemas";
+import { CONSENT_VERSION } from "@/lib/repair-schemas";
+import { shopDateISO } from "@/lib/repair-time";
+import type { QuoteInput, TradeInInput } from "@/lib/forms/schemas";
 
 interface InquiryInput {
   name: string;
@@ -24,23 +34,27 @@ interface Contact {
 /** One website form's lead: who sent it, which pipeline it lands in, and what goes in the card name and note. */
 interface FormLead {
   name: string;
-  email: string;
+  /** Quote forms can leave this out; they always have a phone. */
+  email?: string;
   phone?: string;
   attribution: Attribution;
   source: string;
   tag: string;
-  pipeline: { id: string; stageNew: string };
+  /** reuseFrom: only an open card at one of these stages is reused, otherwise a new card opens. Without it, any open card is. */
+  pipeline: { id: string; stageNew: string; reuseFrom?: readonly string[] };
   cardName: string;
   note: string;
+  /** Extra contact fields, for forms that collect what the Repair Intake fields hold. */
+  contactFields?: Partial<Record<FieldName, string>>;
 }
 
 /**
  * A website form to GHL. Name, email and phone go on the contact; what was asked goes in a contact note, because
- * no custom field fits it and the Repair Intake fields belong to repairs. A contact has one open card in the form's
+ * no custom field fits it (quotes also fill the Repair Intake fields). A contact has one open card in the form's
  * pipeline, and a repeat submission moves it back to the first stage. Every step before the note is safe to repeat
  * and the note comes last, so a retry can't post it twice.
  */
-async function send({ name, email, phone, attribution, source, tag, pipeline, cardName, note }: FormLead) {
+async function send({ name, email, phone, attribution, source, tag, pipeline, cardName, note, contactFields = {} }: FormLead) {
   const [firstName, ...rest] = name.trim().split(/\s+/);
   const customFields = [
     { id: FIELD_IDS.location, field_value: LOCATION },
@@ -48,17 +62,18 @@ async function send({ name, email, phone, attribution, source, tag, pipeline, ca
     { id: FIELD_IDS.utmMedium, field_value: attribution.utmMedium },
     { id: FIELD_IDS.utmCampaign, field_value: attribution.utmCampaign },
     { id: FIELD_IDS.landingPage, field_value: attribution.landingPage },
+    ...(Object.entries(contactFields) as [FieldName, string][]).map(([k, v]) => ({ id: FIELD_IDS[k], field_value: v })),
   ].filter((f) => f.field_value);
 
   const upserted = await ghl<{ contact: { id: string } }>("POST", "/contacts/upsert", {
     locationId: serverEnv.ghlLocationId,
     firstName,
     ...(rest.length ? { lastName: rest.join(" ") } : {}),
-    email,
+    ...(email ? { email } : {}),
     ...(phone ? { phone: toE164(phone) } : {}),
     source,
     customFields,
-    ...(await ownerForUpsert({ email })),
+    ...(await ownerForUpsert(email ? { email } : { number: toE164(phone ?? "") })),
   });
   const id = upserted.contact.id;
 
@@ -81,12 +96,19 @@ async function send({ name, email, phone, attribution, source, tag, pipeline, ca
     contact_id: id,
     status: "open",
   });
-  const { opportunities } = await ghl<{ opportunities: { id: string }[] }>(
+  const { opportunities } = await ghl<{ opportunities: { id: string; pipelineStageId?: string }[] }>(
     "GET",
     `/opportunities/search?${params}`,
   );
-  if (opportunities[0]) {
-    await ghl("PUT", `/opportunities/${opportunities[0].id}`, { pipelineStageId: pipeline.stageNew });
+  const { reuseFrom } = pipeline;
+  const open = reuseFrom
+    ? opportunities.find((o) => o.pipelineStageId && reuseFrom.includes(o.pipelineStageId))
+    : opportunities[0];
+  if (open) {
+    await ghl("PUT", `/opportunities/${open.id}`, {
+      pipelineStageId: pipeline.stageNew,
+      ...(reuseFrom ? { name: cardName } : {}),
+    });
   } else {
     await ghl("POST", "/opportunities/", {
       locationId: serverEnv.ghlLocationId,
@@ -115,6 +137,45 @@ export const sendInquiry = (inquiry: InquiryInput) => {
       pipeline: INQUIRY_PIPELINE,
       cardName: `${input.name.trim()}: website inquiry`,
       note: `Website contact form:\n\n${message}`,
+    }),
+  );
+};
+
+/** Instant quote form to the repair pipeline. Never throws; true as for sendInquiry. */
+export const sendQuote = (quote: QuoteInput) => {
+  const { deviceType, brand, model, issue, details, attribution = {}, ...input } = quote;
+  return attempt("instant quote", quote, () =>
+    send({
+      ...input,
+      attribution,
+      source: "Website quote form",
+      tag: TAGS.quoteForm,
+      // A repair that's already moved on, e.g. Booked, keeps its card and the quote gets its own.
+      pipeline: {
+        id: serverEnv.ghlPipelineId,
+        stageNew: STAGE_QUOTE_REQUESTED,
+        reuseFrom: [serverEnv.ghlStageIntakeStarted, STAGE_QUOTE_REQUESTED],
+      },
+      contactFields: {
+        deviceType,
+        brand,
+        model: model.trim(),
+        issue,
+        problemDetails: details?.trim() ?? "",
+        smsConsentAt: shopDateISO(),
+      },
+      cardName: `${input.name.trim()}: ${brand} ${model.trim()} quote`,
+      note: [
+        "Website quote form:",
+        "",
+        `Device: ${deviceType}`,
+        `Brand: ${brand}`,
+        `Model: ${model.trim()}`,
+        `Issue: ${issue}`,
+        ...(details?.trim() ? ["", details.trim()] : []),
+        "",
+        `SMS consent given via website quote form, ${new Date().toISOString()}, consent text ${CONSENT_VERSION}`,
+      ].join("\n"),
     }),
   );
 };

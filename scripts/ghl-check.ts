@@ -5,7 +5,7 @@
  * spelled (GHL drops unknown values silently), and the pipeline stage IDs belong to the pipeline. Exits 1 on a mismatch.
  */
 import { LEAD_SOURCES } from "../lib/attribution";
-import { FIELD_IDS, FIELD_KEYS, LEAD_STATUS, LOCATION, type FieldName } from "../lib/ghl/fields";
+import { FIELD_IDS, FIELD_KEYS, LEAD_STATUS, LOCATION, STAGE_QUOTE_REQUESTED, type FieldName } from "../lib/ghl/fields";
 import { ALL_ISSUES, DEVICES } from "../lib/repair-catalog";
 
 const BASE_URL = "https://services.leadconnectorhq.com";
@@ -91,6 +91,9 @@ async function main() {
       if (stage) console.log(`  ✓ ${name} = ${stage.name}`);
       else fail(`${name} ${env(name)} is not a stage of "${pipeline.name}"`);
     }
+    const quoteStage = pipeline.stages.find((s) => s.id === STAGE_QUOTE_REQUESTED);
+    if (quoteStage) console.log(`  ✓ STAGE_QUOTE_REQUESTED = ${quoteStage.name}`);
+    else fail(`STAGE_QUOTE_REQUESTED ${STAGE_QUOTE_REQUESTED} is not a stage of "${pipeline.name}"`);
   }
 
   console.log("Calendar");

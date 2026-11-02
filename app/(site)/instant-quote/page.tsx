@@ -8,7 +8,7 @@ import { SITE_IMAGES } from "@/lib/site-images";
 import { telHref } from "@/lib/utils/format";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHero } from "@/components/ui/PageHero";
-import { QuoteForm } from "@/components/sections/forms/QuoteForm";
+import { QuoteIntake } from "@/components/quote/QuoteIntake";
 import { HoursList } from "@/components/sections/global/HoursList";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,7 +22,7 @@ const NEXT_STEPS = [
 ];
 
 /**
- * R06 — pricing TBD, so the tool runs in lead-capture mode (F1). The hero stays type-only so the form is near
+ * R06 — pricing TBD, so the tool runs in lead-capture mode (F1), tap-through like /repair. The hero stays type-only so the form is near
  * the top on a phone; the photo and the reassurance (what happens next, tap to call, hours) sit beside it.
  */
 export default async function InstantQuotePage() {
@@ -39,7 +39,7 @@ export default async function InstantQuotePage() {
             <h2 id="quote-heading" className="mb-8 text-h3">
               {page.formSection.heading}
             </h2>
-            <QuoteForm deviceTypes={page.deviceTypes} issues={page.issues} successMessage={page.successMessage} />
+            <QuoteIntake successMessage={page.successMessage} />
           </div>
 
           <aside aria-label="About your quote" className="flex flex-col gap-10 lg:col-span-4 lg:col-start-9">

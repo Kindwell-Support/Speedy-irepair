@@ -1,6 +1,7 @@
 "use client";
 
 import { OTHER, brandsFor, type Device } from "@/lib/repair-catalog";
+import { BRAND_LOGOS, WORDMARK_BRANDS } from "./brandLogos";
 import { ChoiceList, StepHeading } from "./ui";
 
 /** Step 3. Brands for the chosen device; "Other / not listed" asks for the brand in words. */
@@ -28,6 +29,8 @@ export function BrandStep({
         otherLabel="Brand"
         otherPlaceholder="e.g. OnePlus"
         otherError="Tell us the brand"
+        icons={BRAND_LOGOS}
+        iconOnly={WORDMARK_BRANDS}
         onChoose={onChoose}
       />
     </>

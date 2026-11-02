@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { DEVICES } from "@/lib/repair-catalog";
 import { attribution } from "@/lib/repair-schemas";
 
 /**
@@ -30,13 +31,16 @@ export const spamFields = z.object({
 
 /** F1 Instant Quote (spec 2.6, REQ-061..065): lead capture, no prices. The shop calls back, so email is optional. */
 export const quoteSchema = z.object({
-  deviceType: z.enum(["iPhone", "iPad", "Samsung", "LG", "Google", "Other"], { error: "Choose your device type" }),
+  deviceType: z.enum(DEVICES, { error: "Choose your device type" }),
+  // Any brand from lib/repair-catalog, or the visitor's own words for one it doesn't list.
+  brand: z.string({ error: "Choose the brand" }).trim().min(1, "Choose the brand").max(120),
   model: z.string().trim().min(1, "Tell us the model, e.g. iPhone 13").max(120),
-  issue: z.enum(["Cracked Screen", "Battery", "Charger Port", "Camera", "Water Damage", "Other"], { error: "Choose what's wrong" }),
+  issue: z.string({ error: "Choose what's wrong" }).trim().min(1, "Choose what's wrong").max(60),
   details: z.string().trim().max(2000).optional(),
   name,
   phone,
   email: email.optional().or(z.literal("")),
+  attribution: attribution.optional(),
 });
 
 /** F5 Trade-in (spec 2.5, REQ-058): Device Type → Brand → Model → Condition → contact. */

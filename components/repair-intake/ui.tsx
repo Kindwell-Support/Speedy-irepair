@@ -90,6 +90,8 @@ export function ChoiceList({
   otherPlaceholder,
   otherError,
   gridClassName = "grid-cols-2 md:grid-cols-3",
+  icons,
+  iconOnly,
   onChoose,
 }: {
   id: string;
@@ -101,6 +103,8 @@ export function ChoiceList({
   otherPlaceholder?: string;
   otherError: string;
   gridClassName?: string;
+  icons?: Record<string, ReactNode>;
+  iconOnly?: readonly string[];
   onChoose: (option: string, otherText: string) => void;
 }) {
   const onlyOther = options.length === 1 && options[0] === otherOption;
@@ -122,15 +126,22 @@ export function ChoiceList({
           {options.map((option) => {
             const isOther = option === otherOption;
             const pressed = isOther ? showOther : !showOther && value === option;
+            const logoOnly = iconOnly?.includes(option);
             return (
               <li key={option}>
                 <button
                   type="button"
                   aria-pressed={pressed}
-                  className={cn(optionClass, "h-full")}
+                  aria-label={logoOnly ? option : undefined}
+                  className={cn(optionClass, "h-full gap-3 md:gap-4", logoOnly && "justify-center")}
                   onClick={() => (isOther ? setShowOther(true) : onChoose(option, ""))}
                 >
-                  {option}
+                  {icons?.[option] ? (
+                    <span className={cn("flex h-7 shrink-0 items-center justify-center md:h-8", logoOnly ? "w-24 md:w-28" : "w-10 md:w-16")}>
+                      {icons[option]}
+                    </span>
+                  ) : null}
+                  {logoOnly ? null : option}
                 </button>
               </li>
             );

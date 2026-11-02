@@ -13,10 +13,18 @@ const PHOTOS: Record<Device, string> = {
 };
 
 /** Step 1. Picking a device moves straight on. */
-export function DeviceStep({ value, onChoose }: { value: Device | null; onChoose: (device: Device) => void }) {
+export function DeviceStep({
+  value,
+  intro = "Pick your device and we'll walk you through booking a time at the shop.",
+  onChoose,
+}: {
+  value: Device | null;
+  intro?: string;
+  onChoose: (device: Device) => void;
+}) {
   return (
     <>
-      <StepHeading title="What needs fixing?" intro="Pick your device and we'll walk you through booking a time at the shop." />
+      <StepHeading title="What needs fixing?" intro={intro} />
       <DeviceTiles devices={DEVICES} value={value} onChoose={onChoose} photos={PHOTOS} />
     </>
   );
