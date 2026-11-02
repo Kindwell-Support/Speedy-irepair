@@ -50,25 +50,24 @@ const ICONS: Record<DeviceKind, ReactNode> = {
 };
 
 /**
- * Photo per device, in public/images/devices (a cut-out on a transparent background reads best on the tile).
- * A device without one shows its line icon.
+ * The device cards that open the repair and trade-in flows: picture on top, name below. Picking one moves straight on.
+ * A device with no entry in `photos` shows its line icon.
  */
-const PHOTOS: Partial<Record<DeviceKind, string>> = {};
-
-/** The device cards that open the repair and trade-in flows: picture on top, name below. Picking one moves straight on. */
 export function DeviceTiles<T extends DeviceKind>({
   devices,
   value,
   onChoose,
+  photos,
 }: {
   devices: readonly T[];
   value: T | null;
   onChoose: (device: T) => void;
+  photos?: Partial<Record<T, string>>;
 }) {
   return (
     <ul className="grid grid-cols-2 gap-3 md:grid-cols-3">
       {devices.map((device) => {
-        const photo = PHOTOS[device];
+        const photo = photos?.[device];
         return (
           <li key={device}>
             <button
