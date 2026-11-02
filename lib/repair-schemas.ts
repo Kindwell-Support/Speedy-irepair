@@ -45,10 +45,10 @@ const deviceFields = {
 };
 
 function checkIssue(
-  v: { device: (typeof DEVICES)[number]; issue: string; issueDetails?: string },
+  v: { device: (typeof DEVICES)[number]; brand: string; issue: string; issueDetails?: string },
   ctx: z.RefinementCtx,
 ) {
-  if (!issuesFor(v.device).includes(v.issue))
+  if (!issuesFor(v.device, v.brand).includes(v.issue))
     ctx.addIssue({ code: "custom", path: ["issue"], message: "Choose what's wrong" });
   if (v.issue === ISSUE_OTHER && !v.issueDetails)
     ctx.addIssue({ code: "custom", path: ["issueDetails"], message: "Tell us what's wrong" });

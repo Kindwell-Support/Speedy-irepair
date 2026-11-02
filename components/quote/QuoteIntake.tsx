@@ -127,9 +127,10 @@ export function QuoteIntake({ successMessage }: { successMessage: string }) {
         />
       ) : null}
 
-      {step === ISSUE && answers.device ? (
+      {step === ISSUE && answers.device && answers.brand ? (
         <IssueStep
           device={answers.device}
+          brand={answers.brand}
           value={answers.issue}
           details={answers.issueOther}
           onChoose={(issue, issueOther) => answer(ISSUE, { issue, issueOther })}

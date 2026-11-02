@@ -62,7 +62,11 @@ export const LEAD_STATUS = {
   intakeStarted: "Intake Started",
   submitted: "Submitted",
   booked: "Booked",
+  quoteRequested: "Quote Requested",
 } as const;
+
+/** A repair under way. A new quote from one of these contacts leaves their Lead Status alone. */
+export const LEAD_STATUS_ACTIVE: readonly string[] = [LEAD_STATUS.booked, "In Repair", "Ready For Pickup"];
 
 export const TAGS = {
   started: "intake-started",

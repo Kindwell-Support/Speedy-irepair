@@ -366,9 +366,10 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
         />
       ) : null}
 
-      {step === ISSUE && answers.device ? (
+      {step === ISSUE && answers.device && answers.brand ? (
         <IssueStep
           device={answers.device}
+          brand={answers.brand}
           value={answers.issue}
           details={answers.issueDetails}
           onChoose={(issue, issueDetails) => {

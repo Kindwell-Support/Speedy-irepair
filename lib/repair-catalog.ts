@@ -15,14 +15,9 @@ const ISSUES = [
   "Software Issue",
   "Other",
 ] as const;
-const CONSOLE_ISSUES = [
-  "Cracked Screen",
-  "HDMI Port",
-  "Water Damage",
-  "Charging Port",
-  "Software Issue",
-  "Other",
-] as const;
+const CONSOLE_ISSUES = ["HDMI Port", "Water Damage", "Charging Port", "Software Issue", "Other"] as const;
+/** Nintendo's consoles have their own screen; PlayStation and Xbox plug into a TV. */
+const HANDHELD_ISSUES = ["Cracked Screen", ...CONSOLE_ISSUES] as const;
 export const ISSUE_OTHER = "Other";
 /** Every issue any device can produce: what the GHL Issue dropdown must contain. */
 export const ALL_ISSUES: readonly string[] = [...new Set([...ISSUES, ...CONSOLE_ISSUES])];
@@ -31,6 +26,8 @@ interface DeviceNode {
   /** Brand → its models, newest first. "Other" brands carry no models, so the model step goes straight to free text. */
   brands: Record<string, readonly string[]>;
   issues: readonly string[];
+  /** Brands whose issues differ from the device's list. */
+  brandIssues?: Record<string, readonly string[]>;
 }
 
 export const CATALOG: Record<Device, DeviceNode> = {
@@ -167,6 +164,7 @@ export const CATALOG: Record<Device, DeviceNode> = {
       Nintendo: ["Switch 2", "Switch OLED", "Switch", "Switch Lite"],
     },
     issues: CONSOLE_ISSUES,
+    brandIssues: { Nintendo: HANDHELD_ISSUES },
   },
   Other: { brands: {}, issues: ISSUES },
 };
@@ -184,4 +182,5 @@ export const modelsFor = (device: Device, brand: string): string[] => [
   OTHER,
 ];
 
-export const issuesFor = (device: Device): readonly string[] => CATALOG[device].issues;
+export const issuesFor = (device: Device, brand: string): readonly string[] =>
+  CATALOG[device].brandIssues?.[brand] ?? CATALOG[device].issues;

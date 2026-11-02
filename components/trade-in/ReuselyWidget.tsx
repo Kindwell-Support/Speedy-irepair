@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLenis } from "@/components/motion/LenisProvider";
 
 /** Same public IDs as the old Shopify page, so orders keep going to Monte's Reusely account. */
 const WIDGET_OPTIONS = {
@@ -23,12 +24,49 @@ const WIDGET_DOCUMENT = `<!doctype html>
   </body>
 </html>`;
 
+/** True when the wheel should scroll something inside the widget, like an open dropdown list, not the page. */
+function scrollsInsideWidget(e: WheelEvent) {
+  // composedPath, because the widget renders inside a shadow root that hides its elements from e.target.
+  for (const el of e.composedPath() as Element[]) {
+    if (el.nodeType !== Node.ELEMENT_NODE) continue;
+    const { overflowY } = getComputedStyle(el);
+    if (overflowY !== "auto" && overflowY !== "scroll") continue;
+    const room = e.deltaY < 0 ? el.scrollTop : el.scrollHeight - el.clientHeight - el.scrollTop;
+    if (room > 0) return true;
+  }
+  return false;
+}
+
 /**
  * /sell-your-device: Reusely's buyback widget. Orders go to Reusely, not GHL.
  * It runs in an iframe because it rewrites <head> and blocks pinch-zoom, which crashes React's page navigation.
  */
 export function ReuselyWidget() {
   const frameRef = useRef<HTMLIFrameElement>(null);
+  const lenis = useLenis();
+
+  // Wheel events inside an iframe never reach Lenis, so the page stutters under the cursor. Hand them back to it.
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame || !lenis) return;
+    let listeners: AbortController | undefined;
+    const forwardWheel = (e: WheelEvent) => {
+      if (e.ctrlKey || scrollsInsideWidget(e)) return;
+      e.preventDefault();
+      frame.dispatchEvent(new WheelEvent("wheel", { deltaY: e.deltaY, deltaMode: e.deltaMode, bubbles: true, cancelable: true }));
+    };
+    const listen = () => {
+      listeners?.abort();
+      listeners = new AbortController();
+      frame.contentWindow?.addEventListener("wheel", forwardWheel, { passive: false, signal: listeners.signal });
+    };
+    listen();
+    frame.addEventListener("load", listen);
+    return () => {
+      frame.removeEventListener("load", listen);
+      listeners?.abort();
+    };
+  }, [lenis]);
 
   // The widget changes height at each step, so keep the iframe sized to it.
   useEffect(() => {

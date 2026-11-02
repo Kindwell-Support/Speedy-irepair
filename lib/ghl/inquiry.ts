@@ -6,6 +6,8 @@ import {
   BUYBACK_PIPELINE,
   FIELD_IDS,
   INQUIRY_PIPELINE,
+  LEAD_STATUS,
+  LEAD_STATUS_ACTIVE,
   LOCATION,
   STAGE_QUOTE_REQUESTED,
   TAGS,
@@ -46,6 +48,8 @@ interface FormLead {
   note: string;
   /** Extra contact fields, for forms that collect what the Repair Intake fields hold. */
   contactFields?: Partial<Record<FieldName, string>>;
+  /** Lead Status to set, unless the contact has a repair under way. */
+  leadStatus?: string;
 }
 
 /**
@@ -54,7 +58,7 @@ interface FormLead {
  * pipeline, and a repeat submission moves it back to the first stage. Every step before the note is safe to repeat
  * and the note comes last, so a retry can't post it twice.
  */
-async function send({ name, email, phone, attribution, source, tag, pipeline, cardName, note, contactFields = {} }: FormLead) {
+async function send({ name, email, phone, attribution, source, tag, pipeline, cardName, note, contactFields = {}, leadStatus }: FormLead) {
   const [firstName, ...rest] = name.trim().split(/\s+/);
   const customFields = [
     { id: FIELD_IDS.location, field_value: LOCATION },
@@ -82,11 +86,16 @@ async function send({ name, email, phone, attribution, source, tag, pipeline, ca
   // First touch, as on /repair: a Lead Source or owner the contact already has is left alone.
   const { contact } = await ghl<{ contact: Contact }>("GET", `/contacts/${id}`);
   const owner = contact.assignedTo || pickOwner();
+  const current = (field: string) => contact.customFields?.find((f) => f.id === field)?.value;
+  const fields = [
+    ...(!current(FIELD_IDS.leadSource) ? [{ id: FIELD_IDS.leadSource, field_value: leadSourceFor(attribution) }] : []),
+    ...(leadStatus && !LEAD_STATUS_ACTIVE.includes(String(current(FIELD_IDS.leadStatus)))
+      ? [{ id: FIELD_IDS.leadStatus, field_value: leadStatus }]
+      : []),
+  ];
   const update = {
     ...(!contact.assignedTo && owner ? { assignedTo: owner } : {}),
-    ...(!contact.customFields?.some((f) => f.id === FIELD_IDS.leadSource && f.value)
-      ? { customFields: [{ id: FIELD_IDS.leadSource, field_value: leadSourceFor(attribution) }] }
-      : {}),
+    ...(fields.length ? { customFields: fields } : {}),
   };
   if (Object.keys(update).length) await ghl("PUT", `/contacts/${id}`, update);
 
@@ -164,6 +173,7 @@ export const sendQuote = (quote: QuoteInput) => {
         problemDetails: details?.trim() ?? "",
         smsConsentAt: shopDateISO(),
       },
+      leadStatus: LEAD_STATUS.quoteRequested,
       cardName: `${input.name.trim()}: ${brand} ${model.trim()} quote`,
       note: [
         "Website quote form:",
