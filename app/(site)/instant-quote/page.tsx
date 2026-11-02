@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const NEXT_STEPS = [
   { title: "We read your request", body: "Your device, model and fault go straight to the repair counter." },
-  { title: "We get back to you", body: "By phone, or by email if you left one, during opening hours." },
+  { title: "We get back to you", body: "By phone or email, during opening hours." },
   { title: "You decide", body: "The quote is free and there is no obligation to book." },
 ];
 

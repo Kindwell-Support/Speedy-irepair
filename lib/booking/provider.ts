@@ -25,7 +25,7 @@ export interface BookingProvider {
   updateField(session: IntakeSession, field: IntakeField, value: string): Promise<void>;
   /** Free slots for the next BOOKING_WINDOW_DAYS, keyed by shop date. Throws when they can't be loaded. */
   getFreeSlots(): Promise<Record<string, Slot[]>>;
-  /** Step 7: details, tags, and the appointment or "we'll call you". Throws SlotUnavailableError when the slot has gone. */
+  /** Step 6: details, tags, and the appointment or "we'll call you". Throws SlotUnavailableError when the slot has gone. */
   completeIntake(session: IntakeSession | null, input: CompleteInput): Promise<IntakeResult>;
 }
 

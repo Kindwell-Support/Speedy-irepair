@@ -29,7 +29,7 @@ export const spamFields = z.object({
   pagePath: z.string().max(200).optional(),
 });
 
-/** F1 Instant Quote (spec 2.6, REQ-061..065): lead capture, no prices. The shop calls back, so email is optional. */
+/** F1 Instant Quote (spec 2.6, REQ-061..065): lead capture, no prices. */
 export const quoteSchema = z.object({
   deviceType: z.enum(DEVICES, { error: "Choose your device type" }),
   // Any brand from lib/repair-catalog, or the visitor's own words for one it doesn't list.
@@ -39,7 +39,7 @@ export const quoteSchema = z.object({
   details: z.string().trim().max(2000).optional(),
   name,
   phone,
-  email: email.optional().or(z.literal("")),
+  email,
   attribution: attribution.optional(),
 });
 

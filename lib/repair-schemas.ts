@@ -18,12 +18,11 @@ const phone = z
   .min(7, "Please enter a valid phone number")
   .max(32)
   .regex(/^[0-9+().\-\s]+$/, "Please enter a valid phone number");
-/** Optional everywhere: "" means not given. */
 const email = z
   .string()
   .trim()
   .max(254)
-  .refine((v) => v === "" || z.email().safeParse(v).success, "Please enter a valid email");
+  .refine((v) => z.email().safeParse(v).success, "Please enter a valid email");
 const name = z.string().trim().min(1, "Please enter your name").max(120);
 const device = z.enum(DEVICES, { error: "Choose your device" });
 
@@ -56,13 +55,12 @@ function checkIssue(
 }
 
 /** Step 2 form (widget-side). */
-export const phoneStepSchema = z.object({ phone, email });
-/** Step 7 form (widget-side). */
-export const detailsStepSchema = z.object({ name, email });
+export const contactStepSchema = z.object({ name, phone, email });
 
 /** POST /api/repair/lead: step 2 creates the contact and opportunity. */
 export const startInputSchema = z.object({
   device,
+  name,
   phone,
   email,
   attribution: attribution.default({}),
@@ -83,7 +81,7 @@ export const fieldInputSchema = z
     message: "Unknown issue",
   });
 
-/** POST /api/repair/book: step 7 sends every answer, so it can rebuild the lead if step 2 never reached GHL. */
+/** POST /api/repair/book: step 6 sends every answer, so it can rebuild the lead if step 2 never reached GHL. */
 export const completeInputSchema = z
   .object({
     ...deviceFields,
@@ -115,7 +113,7 @@ export interface IntakeResult {
 }
 
 type ApiError = { ok: false; message: string; fieldErrors?: Record<string, string[] | undefined> };
-/** token is null when GHL couldn't be reached; the widget carries on and step 7 creates the lead instead. */
+/** token is null when GHL couldn't be reached; the widget carries on and step 6 creates the lead instead. */
 export type StartResponse = { ok: true; token: string | null } | ApiError;
 export type FieldResponse = { ok: true } | ApiError;
 /** Every day in the booking window that has slots, keyed YYYY-MM-DD (shop time). */

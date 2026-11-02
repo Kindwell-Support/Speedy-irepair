@@ -133,11 +133,11 @@ export function ChoiceList({
                   type="button"
                   aria-pressed={pressed}
                   aria-label={logoOnly ? option : undefined}
-                  className={cn(optionClass, "h-full gap-3 md:gap-4", logoOnly && "justify-center")}
+                  className={cn(optionClass, "h-full gap-3", icons && "justify-center text-center")}
                   onClick={() => (isOther ? setShowOther(true) : onChoose(option, ""))}
                 >
                   {icons?.[option] ? (
-                    <span className={cn("flex h-7 shrink-0 items-center justify-center md:h-8", logoOnly ? "w-24 md:w-28" : "w-10 md:w-16")}>
+                    <span className={cn("flex h-7 shrink-0 items-center justify-center md:h-8", logoOnly ? "w-24 md:w-28" : "w-7 md:w-8")}>
                       {icons[option]}
                     </span>
                   ) : null}

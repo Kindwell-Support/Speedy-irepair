@@ -9,7 +9,7 @@ import { serverEnv } from "@/lib/env.server";
  */
 export interface IntakeSession {
   contactId: string;
-  /** Null when the opportunity couldn't be created at step 2; step 7 finds or creates it. */
+  /** Null when the opportunity couldn't be created at step 2; step 6 finds or creates it. */
   opportunityId: string | null;
 }
 

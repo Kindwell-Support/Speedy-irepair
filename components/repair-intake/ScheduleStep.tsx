@@ -45,32 +45,35 @@ function monthDays(month: string): (string | null)[] {
 }
 
 /**
- * Step 6. A plain month grid (no date-picker dependency) over the free slots for the whole booking window, loaded
- * once by the wrapper from /api/repair/slots. Days with nothing free are disabled. If the times can't be loaded, or
- * nothing is free in the window, the visitor continues without a time and the shop calls to confirm one. Every
- * time is shop time (Eastern), whatever the visitor's own clock says.
+ * Step 6, the last. A plain month grid (no date-picker dependency) over the free slots for the whole booking window,
+ * loaded once by the wrapper from /api/repair/slots. Days with nothing free are disabled. If the times can't be loaded,
+ * or nothing is free in the window, the visitor sends the request without a time and the shop calls to confirm one.
+ * Every time is shop time (Eastern), whatever the visitor's own clock says.
  */
 export function ScheduleStep({
   today,
   date,
   slotStart,
   slots,
+  pending,
   error,
   onPickDate,
   onPickSlot,
-  onContinue,
+  onBook,
   onSkip,
 }: {
   today: string;
   date: string | null;
   slotStart: string | null;
   slots: SlotsState;
+  pending: boolean;
   /** e.g. the time picked was taken before the booking went through. */
   error?: string;
   onPickDate: (date: string) => void;
   onPickSlot: (start: string) => void;
-  onContinue: () => void;
-  /** Continue without a time; the shop calls to arrange one. */
+  /** Sends the request, with the picked time if there is one. */
+  onBook: () => void;
+  /** Sends the request without a time; the shop calls to arrange one. */
   onSkip: () => void;
 }) {
   // Follows the selected day until the visitor pages through months themselves.
@@ -85,6 +88,8 @@ export function ScheduleStep({
     (slots.status === "ready" &&
       !Object.values(days).some((list) => list.some((s) => s.available)));
 
+  const bookLabel = slotStart ? (pending ? "Booking…" : "Book this time") : pending ? "Sending…" : "Send request";
+
   if (noTimes) {
     return (
       <>
@@ -94,9 +99,10 @@ export function ScheduleStep({
         />
         <div className="grid gap-6">
           <Notice>We&apos;ll call you to confirm a time.</Notice>
+          {error ? <Notice tone="error">{error}</Notice> : null}
           <div>
-            <button type="button" className={continueClass} onClick={onContinue}>
-              Continue
+            <button type="button" className={continueClass} disabled={pending} onClick={onBook}>
+              {bookLabel}
             </button>
           </div>
         </div>
@@ -221,6 +227,7 @@ export function ScheduleStep({
               Can&apos;t find a time that works?{" "}
               <button
                 type="button"
+                disabled={pending}
                 onClick={onSkip}
                 className="inline-flex min-h-11 items-center rounded-sm text-primary-text underline underline-offset-4 focus-visible:shadow-focus"
               >
@@ -231,7 +238,7 @@ export function ScheduleStep({
         </div>
       </div>
 
-      {error && !slotStart ? (
+      {error ? (
         <div className="mt-6">
           <Notice tone="error">{error}</Notice>
         </div>
@@ -246,8 +253,8 @@ export function ScheduleStep({
             </strong>
           </p>
           <div>
-            <button type="button" className={continueClass} onClick={onContinue}>
-              Continue
+            <button type="button" className={continueClass} disabled={pending} onClick={onBook}>
+              {bookLabel}
             </button>
           </div>
         </div>

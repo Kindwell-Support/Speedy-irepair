@@ -19,9 +19,9 @@ import { SlotUnavailableError, type BookingProvider, type IntakeSession } from "
 /**
  * GoHighLevel backend (API v2). GHL is the only destination for repair leads; nothing here touches Sanity.
  *
- * Step 2 upserts the contact by phone (the location's duplicate rule is phone first, then email), records SMS
+ * Step 2 upserts the contact by phone (the location's duplicate rule is phone first, then email) with their name, records SMS
  * consent and attribution, tags it intake-started and opens an opportunity at "Intake Started". Steps 3–5 write
- * each answer straight to its custom field. Step 7 fills in name and email, swaps intake-started for
+ * each answer straight to its custom field. Step 6 confirms name and email, swaps intake-started for
  * intake-complete, and either books the appointment (stage Booked) or leaves it for a call (stage New Lead).
  * Every write goes through attempt(): failures are logged, retried after the response, and never shown to the
  * customer.
@@ -182,6 +182,7 @@ async function bookAppointment(contactId: string, input: CompleteInput, slotStar
 async function startCore(input: StartInput): Promise<IntakeSession> {
   const phone = toE164(input.phone);
   const contact = await upsertContact({
+    ...splitName(input.name),
     phone,
     ...(input.email ? { email: input.email } : {}),
     source: "Website repair widget",
@@ -199,7 +200,7 @@ async function startCore(input: StartInput): Promise<IntakeSession> {
   const owner = attempt("assignOwner", log, () => ensureOwner(id));
   const [opportunityId] = await Promise.all([
     attempt("ensureOpportunity", log, () =>
-      ensureOpportunity(id, `${input.device} repair (${phone})`, owner),
+      ensureOpportunity(id, `${input.name}: ${input.device} repair`, owner),
     ),
     owner,
     attempt("setLeadSource", { ...log, attribution: input.attribution }, () =>
@@ -216,7 +217,7 @@ async function startCore(input: StartInput): Promise<IntakeSession> {
   return { contactId: id, opportunityId: opportunityId ?? null };
 }
 
-/** Step 7. Throws SlotUnavailableError for a taken slot, and (only when there's no session) a failed upsert. */
+/** Step 6. Throws SlotUnavailableError for a taken slot, and (only when there's no session) a failed upsert. */
 async function completeCore(session: IntakeSession | null, input: CompleteInput) {
   const s = session ?? (await startCore(input));
   const id = s.contactId;

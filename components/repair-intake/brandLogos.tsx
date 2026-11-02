@@ -15,7 +15,7 @@ const LOGOS: Record<string, { viewBox: string; path: string }> = {
 };
 
 /** Logos that already spell the brand's name, so their tiles drop the text. */
-export const WORDMARK_BRANDS = ["Samsung", "LG", "Lenovo", "Sony", "Nintendo"] as const;
+export const WORDMARK_BRANDS = ["Samsung", "LG", "Dell", "HP", "Lenovo", "Sony", "Nintendo"] as const;
 
 /** Brand marks for the brand step, keyed by catalog brand name. Each path is cropped to its own bounds so wordmarks read at tile size. */
 export const BRAND_LOGOS: Record<string, ReactNode> = Object.fromEntries(

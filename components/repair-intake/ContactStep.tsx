@@ -4,11 +4,12 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import type { z } from "zod";
 import { Notice } from "@/components/ui/Notice";
 import { TextField, fieldError } from "@/components/sections/forms/fields";
-import { CONSENT_TEXT, detailsStepSchema, phoneStepSchema } from "@/lib/repair-schemas";
+import { CONSENT_TEXT, contactStepSchema } from "@/lib/repair-schemas";
 import { StepHeading, continueClass } from "./ui";
 
 type FieldErrors = Record<string, string[] | undefined>;
 type Values = Record<string, string>;
+type Contact = { name: string; phone: string; email: string };
 
 /** Validates with the step's schema on submit; field errors clear as the visitor edits that field. */
 function useStepForm<T extends Values>(
@@ -32,8 +33,12 @@ function useStepForm<T extends Values>(
   return { errors, submit, set };
 }
 
-/** Step 2. Phone (required, with the SMS consent line) and optional email; Continue creates the lead in the CRM. */
-export function PhoneStep({
+/**
+ * Step 2 of the repair and quote widgets. Name, phone (with the SMS consent line) and email, all required;
+ * on /repair, Continue creates the lead in the CRM.
+ */
+export function ContactStep({
+  intro,
   value,
   pending,
   error,
@@ -41,23 +46,30 @@ export function PhoneStep({
   onChange,
   onSubmit,
 }: {
-  value: { phone: string; email: string };
+  intro: string;
+  value: Contact;
   pending: boolean;
   error?: string;
   serverFieldErrors?: FieldErrors;
-  onChange: (value: { phone: string; email: string }) => void;
-  onSubmit: (value: { phone: string; email: string }) => void;
+  onChange: (value: Contact) => void;
+  onSubmit: (value: Contact) => void;
 }) {
-  const { errors, submit, set } = useStepForm(phoneStepSchema, value, onChange, onSubmit);
+  const { errors, submit, set } = useStepForm(contactStepSchema, value, onChange, onSubmit);
   const shown = errors ?? serverFieldErrors;
 
   return (
     <>
-      <StepHeading
-        title="How do we reach you?"
-        intro="We'll text or call if anything changes before your appointment."
-      />
+      <StepHeading title="How do we reach you?" intro={intro} />
       <form noValidate onSubmit={submit} aria-busy={pending} className="grid gap-5">
+        <TextField
+          id="repair-name"
+          label="Name"
+          autoComplete="name"
+          value={value.name}
+          onChange={set("name")}
+          error={fieldError(shown, "name")}
+          required
+        />
         <TextField
           id="repair-phone"
           label="Phone"
@@ -72,81 +84,18 @@ export function PhoneStep({
         />
         <TextField
           id="repair-email"
-          label="Email (optional)"
+          label="Email"
           type="email"
           autoComplete="email"
           value={value.email}
           onChange={set("email")}
           error={fieldError(shown, "email")}
+          required
         />
         {error ? <Notice tone="error">{error}</Notice> : null}
         <div>
           <button type="submit" className={continueClass} disabled={pending}>
             {pending ? "Saving…" : "Continue"}
-          </button>
-        </div>
-      </form>
-    </>
-  );
-}
-
-/** Step 7. Name, plus the email from step 2 to confirm or add; submitting books the time (or sends the request). */
-export function DetailsStep({
-  value,
-  booking,
-  pending,
-  error,
-  serverFieldErrors,
-  onChange,
-  onSubmit,
-}: {
-  value: { name: string; email: string };
-  /** Whether a time was picked: changes only the button label. */
-  booking: boolean;
-  pending: boolean;
-  error?: string;
-  serverFieldErrors?: FieldErrors;
-  onChange: (value: { name: string; email: string }) => void;
-  onSubmit: (value: { name: string; email: string }) => void;
-}) {
-  const { errors, submit, set } = useStepForm(detailsStepSchema, value, onChange, onSubmit);
-  const shown = errors ?? serverFieldErrors;
-
-  return (
-    <>
-      <StepHeading
-        title="Who's the repair for?"
-        intro="So we know who to look for at the counter."
-      />
-      <form noValidate onSubmit={submit} aria-busy={pending} className="grid gap-5">
-        <TextField
-          id="repair-name"
-          label="Name"
-          autoComplete="name"
-          value={value.name}
-          onChange={set("name")}
-          error={fieldError(shown, "name")}
-          required
-        />
-        <TextField
-          id="repair-email"
-          label="Email (optional)"
-          type="email"
-          autoComplete="email"
-          value={value.email}
-          onChange={set("email")}
-          error={fieldError(shown, "email")}
-        />
-        {error ? <Notice tone="error">{error}</Notice> : null}
-        <div>
-          <button type="submit" className={continueClass} disabled={pending}>
-            {pending
-              ? booking
-                ? "Booking…"
-                : "Sending…"
-              : booking
-                ? "Book this time"
-                : "Send request"}
           </button>
         </div>
       </form>

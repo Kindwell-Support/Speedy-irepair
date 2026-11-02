@@ -4,14 +4,6 @@ import { DEVICES, type Device } from "@/lib/repair-catalog";
 import { DeviceTiles } from "./DeviceTiles";
 import { StepHeading } from "./ui";
 
-const PHOTOS: Record<Device, string> = {
-  Phone: "/images/devices/phone.webp",
-  Tablet: "/images/devices/tablet.webp",
-  Laptop: "/images/devices/laptop.webp",
-  "Game Console": "/images/devices/console.webp",
-  Other: "/images/devices/other.webp",
-};
-
 /** Step 1. Picking a device moves straight on. */
 export function DeviceStep({
   value,
@@ -25,7 +17,7 @@ export function DeviceStep({
   return (
     <>
       <StepHeading title="What needs fixing?" intro={intro} />
-      <DeviceTiles devices={DEVICES} value={value} onChoose={onChoose} photos={PHOTOS} />
+      <DeviceTiles devices={DEVICES} value={value} onChoose={onChoose} />
     </>
   );
 }

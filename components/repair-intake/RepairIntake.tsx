@@ -14,15 +14,15 @@ import type {
 import { shopDateISO } from "@/lib/repair-time";
 import { BrandStep } from "./BrandStep";
 import { ConfirmationStep, type ShopInfo, type WhatToBring } from "./ConfirmationStep";
-import { DetailsStep, PhoneStep } from "./ContactStep";
+import { ContactStep } from "./ContactStep";
 import { DeviceStep } from "./DeviceStep";
 import { IssueStep } from "./IssueStep";
 import { ModelStep } from "./ModelStep";
 import { ScheduleStep, type SlotsState } from "./ScheduleStep";
 import { StepProgress } from "./ui";
 
-const STEPS = ["Device", "Contact", "Brand", "Model", "Issue", "Time", "Your details"] as const;
-const [DEVICE, CONTACT, BRAND, MODEL, ISSUE, TIME, DETAILS] = [0, 1, 2, 3, 4, 5, 6];
+const STEPS = ["Device", "Contact", "Brand", "Model", "Issue", "Time"] as const;
+const [DEVICE, CONTACT, BRAND, MODEL, ISSUE, TIME] = [0, 1, 2, 3, 4, 5];
 const DONE = STEPS.length; // the confirmation, after the last numbered step
 const STORAGE_KEY = "speedy:repair-intake:v2";
 
@@ -31,7 +31,7 @@ interface Answers {
   phone: string;
   email: string;
   name: string;
-  /** Signed CRM session from step 2; null when step 2 couldn't reach the CRM (step 7 then creates the lead). */
+  /** Signed CRM session from step 2; null when step 2 couldn't reach the CRM (step 6 then creates the lead). */
   token: string | null;
   /** The step 2 payload the token was issued for; set even when token is null, and marks step 2 as done. */
   tokenKey: string | null;
@@ -70,7 +70,6 @@ const OWNED: (keyof Answers)[][] = [
   ["model", "modelOther"],
   ["issue", "issueDetails"],
   ["date", "slotStart"],
-  [],
 ];
 
 function clearAfter(a: Answers, step: number): Answers {
@@ -81,13 +80,13 @@ function clearAfter(a: Answers, step: number): Answers {
 const resolved = (choice: string | null, other: string, otherOption: string) =>
   choice === otherOption ? other : (choice ?? "");
 
-const startKey = (a: Pick<Answers, "device" | "phone" | "email">) =>
-  JSON.stringify({ device: a.device, phone: a.phone.trim(), email: a.email.trim() });
+const startKey = (a: Pick<Answers, "device" | "name" | "phone" | "email">) =>
+  JSON.stringify({ device: a.device, name: a.name.trim(), phone: a.phone.trim(), email: a.email.trim() });
 
 /** The furthest step these answers support, so a restored session never lands past what it has. */
 function furthestStep(a: Answers): number {
   if (!a.device) return DEVICE;
-  if (!a.tokenKey) return CONTACT;
+  if (!a.tokenKey || !a.name.trim() || !a.email.trim()) return CONTACT;
   if (!resolved(a.brand, a.brandOther, OTHER)) return BRAND;
   if (!resolved(a.model, a.modelOther, OTHER)) return MODEL;
   if (!a.issue || (a.issue === ISSUE_OTHER && !a.issueDetails)) return ISSUE;
@@ -110,7 +109,7 @@ function readSaved(): { step: number; answers: Answers } | null {
   }
 }
 
-/** Steps 3–5 write each answer to the CRM as it's chosen. Fire-and-forget: step 7 sends everything again anyway. */
+/** Steps 3–5 write each answer to the CRM as it's chosen. Fire-and-forget: step 6 sends everything again anyway. */
 function saveField(token: string | null, field: IntakeField, value: string) {
   if (!token || !value) return;
   void fetch("/api/repair/lead", {
@@ -122,7 +121,7 @@ function saveField(token: string | null, field: IntakeField, value: string) {
 }
 
 /**
- * /repair intake: device → phone (creates the lead) → brand → model → issue → time → name (books it, or asks for a
+ * /repair intake: device → name and phone (creates the lead) → brand → model → issue → time (books it, or asks for a
  * call) → confirmation. Talks only to /api/repair/*; the CRM behind those routes lives in lib/booking (server-only),
  * and nothing here depends on CMS data. A CRM failure never stops the visitor: the server logs and retries it.
  * Progress survives a reload through sessionStorage until the request is sent.
@@ -217,7 +216,7 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
     }
   }
 
-  async function submitPhone(value: { phone: string; email: string }) {
+  async function submitContact(value: { name: string; phone: string; email: string }) {
     const next = { ...answers, ...value };
     const key = startKey(next);
     if (answers.tokenKey === key) return goTo(BRAND);
@@ -229,6 +228,7 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           device: next.device,
+          name: next.name,
           phone: next.phone,
           email: next.email,
           attribution: readAttribution(),
@@ -239,15 +239,15 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
         return setStart({ pending: false, error: body.message, fieldErrors: body.fieldErrors });
       if (body.ok) token = body.token;
     } catch {
-      // The CRM call is retried at step 7 with every answer; the visitor carries on.
+      // The CRM call is retried at step 6 with every answer; the visitor carries on.
     }
     setStart({ pending: false });
     setAnswers({ ...next, token, tokenKey: key });
     goTo(BRAND);
   }
 
-  async function submitDetails(value: { name: string; email: string }) {
-    const a = { ...answers, ...value };
+  async function book(slotStart: string | null) {
+    const a = answers;
     if (!a.device || !a.issue) return;
     const payload: CompleteInput = {
       device: a.device,
@@ -259,7 +259,7 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
       email: a.email,
       name: a.name,
       token: a.token,
-      slotStart: a.slotStart,
+      slotStart,
       attribution: readAttribution(),
     };
     setSubmit({ pending: true });
@@ -271,13 +271,13 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
       });
       const body = (await res.json()) as CompleteResponse;
       if (!body.ok) {
-        // The slot went while they were deciding: back to the times, reloaded so it's gone.
+        // The slot went while they were deciding: the times reload so it's gone.
         if (res.status === 409) {
           setSubmit({ pending: false });
           setAnswers((prev) => ({ ...prev, slotStart: null }));
           setSlotError(body.message);
           setSlots({ status: "idle" });
-          return goTo(TIME);
+          return;
         }
         return setSubmit({ pending: false, error: body.message, fieldErrors: body.fieldErrors });
       }
@@ -328,13 +328,14 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
       ) : null}
 
       {step === CONTACT ? (
-        <PhoneStep
-          value={{ phone: answers.phone, email: answers.email }}
+        <ContactStep
+          intro="We'll text or call if anything changes before your appointment."
+          value={{ name: answers.name, phone: answers.phone, email: answers.email }}
           pending={start.pending}
           error={start.error}
           serverFieldErrors={start.fieldErrors}
           onChange={(v) => setAnswers((a) => ({ ...a, ...v }))}
-          onSubmit={submitPhone}
+          onSubmit={submitContact}
         />
       ) : null}
 
@@ -384,36 +385,23 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
           date={answers.date}
           slotStart={answers.slotStart}
           slots={slots}
-          error={slotError}
+          pending={submit.pending}
+          error={slotError ?? submit.error}
           onPickDate={(date) =>
             setAnswers((a) => ({ ...a, date, slotStart: a.date === date ? a.slotStart : null }))
           }
           onPickSlot={(slotStart) => {
             setAnswers((a) => ({ ...a, slotStart }));
             setSlotError(undefined);
+            setSubmit({ pending: false });
           }}
-          onContinue={() => {
-            // Without times (load failed, or nothing free) there's no slot: the shop calls to confirm one.
-            if (slots.status !== "ready") setAnswers((a) => ({ ...a, slotStart: null }));
-            goTo(DETAILS);
-          }}
+          // Without times (load failed, or nothing free) there's no slot: the shop calls to confirm one.
+          onBook={() => void book(slots.status === "ready" ? answers.slotStart : null)}
           onSkip={() => {
             setAnswers((a) => ({ ...a, slotStart: null }));
             setSlotError(undefined);
-            goTo(DETAILS);
+            void book(null);
           }}
-        />
-      ) : null}
-
-      {step === DETAILS ? (
-        <DetailsStep
-          value={{ name: answers.name, email: answers.email }}
-          booking={answers.slotStart !== null}
-          pending={submit.pending}
-          error={submit.error}
-          serverFieldErrors={submit.fieldErrors}
-          onChange={(v) => setAnswers((a) => ({ ...a, ...v }))}
-          onSubmit={submitDetails}
         />
       ) : null}
 
@@ -426,7 +414,7 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
             { label: "Issue", value: issueLabel },
             { label: "Name", value: answers.name },
             { label: "Phone", value: answers.phone },
-            ...(answers.email ? [{ label: "Email", value: answers.email }] : []),
+            { label: "Email", value: answers.email },
           ]}
           shop={shop}
           whatToBring={whatToBring}

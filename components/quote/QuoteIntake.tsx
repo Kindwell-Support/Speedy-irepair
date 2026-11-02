@@ -4,20 +4,23 @@ import { useEffect, useRef, useState } from "react";
 import { readAttribution } from "@/lib/attribution";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
 import { ISSUE_OTHER, OTHER, type Device } from "@/lib/repair-catalog";
-import { CONSENT_TEXT } from "@/lib/repair-schemas";
 import { BrandStep } from "@/components/repair-intake/BrandStep";
+import { ContactStep } from "@/components/repair-intake/ContactStep";
 import { DeviceStep } from "@/components/repair-intake/DeviceStep";
 import { IssueStep } from "@/components/repair-intake/IssueStep";
 import { ModelStep } from "@/components/repair-intake/ModelStep";
 import { StepHeading, StepProgress } from "@/components/repair-intake/ui";
 import { FormShell } from "@/components/sections/forms/FormShell";
-import { fieldError, TextAreaField, TextField } from "@/components/sections/forms/fields";
+import { fieldError, TextAreaField } from "@/components/sections/forms/fields";
 
-const STEPS = ["Device", "Brand", "Model", "Issue", "Your details"] as const;
-const [DEVICE, BRAND, MODEL, ISSUE, DETAILS] = [0, 1, 2, 3, 4];
+const STEPS = ["Device", "Contact", "Brand", "Model", "Issue", "Details"] as const;
+const [DEVICE, CONTACT, BRAND, MODEL, ISSUE, DETAILS] = [0, 1, 2, 3, 4, 5];
 
 interface Answers {
   device: Device | null;
+  name: string;
+  phone: string;
+  email: string;
   brand: string | null;
   brandOther: string;
   model: string | null;
@@ -26,16 +29,16 @@ interface Answers {
   issueOther: string;
 }
 
-const EMPTY: Answers = { device: null, brand: null, brandOther: "", model: null, modelOther: "", issue: null, issueOther: "" };
+const EMPTY: Answers = { device: null, name: "", phone: "", email: "", brand: null, brandOther: "", model: null, modelOther: "", issue: null, issueOther: "" };
 
-/** What each step owns. Changing a step's answer clears every later step's. */
-const OWNED: (keyof Answers)[][] = [["device"], ["brand", "brandOther"], ["model", "modelOther"], ["issue", "issueOther"], []];
+/** What each step owns. Changing a step's answer clears every later step's (contact details are kept). */
+const OWNED: (keyof Answers)[][] = [["device"], [], ["brand", "brandOther"], ["model", "modelOther"], ["issue", "issueOther"], []];
 
 const resolved = (choice: string | null, other: string) => (choice === OTHER ? other : (choice ?? ""));
 
 /**
- * /instant-quote: device → brand → model → issue → contact, one tap per step with the /repair widget's steps.
- * The last step posts to /api/forms/quote, which sends the lead to the GHL repair pipeline.
+ * /instant-quote: device → contact → brand → model → issue → notes, in the same order as the /repair widget and
+ * with its steps. The last step posts to /api/forms/quote, which sends the lead to the GHL repair pipeline.
  */
 export function QuoteIntake({ successMessage }: { successMessage: string }) {
   const [step, setStep] = useState(DEVICE);
@@ -90,6 +93,19 @@ export function QuoteIntake({ successMessage }: { successMessage: string }) {
         />
       ) : null}
 
+      {step === CONTACT ? (
+        <ContactStep
+          intro="We'll text or call you with your quote."
+          value={{ name: answers.name, phone: answers.phone, email: answers.email }}
+          pending={false}
+          onChange={(v) => setAnswers((a) => ({ ...a, ...v }))}
+          onSubmit={(v) => {
+            setAnswers((a) => ({ ...a, ...v }));
+            goTo(BRAND);
+          }}
+        />
+      ) : null}
+
       {step === BRAND && answers.device ? (
         <BrandStep
           key={answers.device}
@@ -124,8 +140,8 @@ export function QuoteIntake({ successMessage }: { successMessage: string }) {
         <>
           {sent ? null : (
             <StepHeading
-              title="Where should we send your quote?"
-              intro={`${brand} ${model}: ${problem.toLowerCase()}. Leave your details and we'll be in touch.`}
+              title="Anything else we should know?"
+              intro={`${brand} ${model}: ${problem.toLowerCase()}. Add anything that helps, or just send it.`}
             />
           )}
           <FormShell
@@ -143,19 +159,14 @@ export function QuoteIntake({ successMessage }: { successMessage: string }) {
                 model,
                 issue: answers.issue!,
                 details: [answers.issueOther, String(d.get("q-details") ?? "")].filter((text) => text.trim()).join("\n\n"),
-                name: String(d.get("q-name") ?? ""),
-                phone: String(d.get("q-phone") ?? ""),
-                email: String(d.get("q-email") ?? ""),
+                name: answers.name,
+                phone: answers.phone,
+                email: answers.email,
                 attribution: readAttribution(),
               })
             }
           >
-            <div className="grid gap-5 md:grid-cols-2">
-              <TextField id="q-name" label="Name" autoComplete="name" required error={fieldError(errors, "name")} />
-              <TextField id="q-phone" label="Phone" type="tel" autoComplete="tel" required hint={CONSENT_TEXT} error={fieldError(errors, "phone")} />
-            </div>
-            <TextField id="q-email" label="Email (optional)" type="email" autoComplete="email" error={fieldError(errors, "email")} />
-            <TextAreaField id="q-details" label="Anything else? (optional)" error={fieldError(errors, "details")} />
+            <TextAreaField id="q-details" label="Notes (optional)" error={fieldError(errors, "details")} />
           </FormShell>
         </>
       ) : null}

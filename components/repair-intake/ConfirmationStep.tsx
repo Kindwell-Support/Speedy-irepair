@@ -39,7 +39,7 @@ function googleCalendarUrl(
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
-/** After step 7. Booked (or "we'll call you" when no time was booked): summary, calendar link, what to bring, where the shop is. */
+/** After step 6. Booked (or "we'll call you" when no time was booked): summary, calendar link, what to bring, where the shop is. */
 export function ConfirmationStep({
   result,
   summary,

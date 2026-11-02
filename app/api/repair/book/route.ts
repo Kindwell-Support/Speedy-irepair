@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 const json = (body: CompleteResponse, status = 200) => NextResponse.json(body, { status });
 
 /**
- * POST /api/repair/book: step 7, every answer plus the chosen slot (or none) → the result to confirm. 409 when the
+ * POST /api/repair/book: step 6, every answer plus the chosen slot (or none) → the result to confirm. 409 when the
  * slot has just gone; any other backend failure still answers success, since the lead is logged and retried.
  */
 export async function POST(req: NextRequest) {

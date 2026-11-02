@@ -22,7 +22,7 @@ async function readJson(req: NextRequest): Promise<unknown> {
 }
 
 /**
- * POST /api/repair/lead: step 2 (device, phone, email, attribution) → { token }. The token is the signed GHL session
+ * POST /api/repair/lead: step 2 (device, name, phone, email, attribution) → { token }. The token is the signed GHL session
  * the later steps send back; it's null when GHL couldn't be reached, and the widget carries on regardless.
  */
 export async function POST(req: NextRequest) {
