@@ -1,7 +1,7 @@
 import "server-only";
 import { leadSourceFor, type Attribution } from "@/lib/attribution";
 import { serverEnv } from "@/lib/env.server";
-import { GhlError, ghl, toE164 } from "@/lib/ghl/client";
+import { GhlError, ghl, isRetriable, toE164 } from "@/lib/ghl/client";
 import { FIELD_IDS, LEAD_STATUS, LOCATION, STAGE_QUOTE_REQUESTED, TAGS, type FieldName } from "@/lib/ghl/fields";
 import { ensureOwner, ownerForUpsert } from "@/lib/ghl/owner";
 import { attempt } from "@/lib/ghl/retry";
@@ -130,16 +130,22 @@ async function ensureOpportunity(
   );
   if (unfinished) return unfinished.id;
   const assignedTo = await owner;
-  const { opportunity } = await ghl<{ opportunity: Opportunity }>("POST", "/opportunities/", {
-    locationId: env.ghlLocationId,
-    pipelineId: env.ghlPipelineId,
-    pipelineStageId: env.ghlStageIntakeStarted,
-    contactId,
-    ...(assignedTo ? { assignedTo } : {}),
-    name,
-    status: "open",
-  });
-  return opportunity.id;
+  try {
+    const { opportunity } = await ghl<{ opportunity: Opportunity }>("POST", "/opportunities/", {
+      locationId: env.ghlLocationId,
+      pipelineId: env.ghlPipelineId,
+      pipelineStageId: env.ghlStageIntakeStarted,
+      contactId,
+      ...(assignedTo ? { assignedTo } : {}),
+      name,
+      status: "open",
+    });
+    return opportunity.id;
+  } catch (err) {
+    // GHL refuses a second card when "Allow duplicate opportunities" is off: carry on with the one it has.
+    if (isRetriable(err) || !opportunities[0]) throw err;
+    return opportunities[0].id;
+  }
 }
 
 async function slotMinutes(): Promise<number> {

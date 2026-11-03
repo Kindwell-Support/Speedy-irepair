@@ -1,7 +1,7 @@
 import "server-only";
 import { leadSourceFor, type Attribution } from "@/lib/attribution";
 import { serverEnv } from "@/lib/env.server";
-import { ghl, toE164 } from "@/lib/ghl/client";
+import { ghl, isRetriable, toE164 } from "@/lib/ghl/client";
 import {
   BUYBACK_PIPELINE,
   FIELD_IDS,
@@ -124,15 +124,21 @@ async function send({ name, email, phone, attribution, source, tag, pipeline, ca
       ...(reuseFrom ? { name: cardName } : {}),
     });
   } else {
-    await ghl("POST", "/opportunities/", {
-      locationId: serverEnv.ghlLocationId,
-      pipelineId: pipeline.id,
-      pipelineStageId: pipeline.stageNew,
-      contactId: id,
-      ...(owner ? { assignedTo: owner } : {}),
-      name: cardName,
-      status: "open",
-    });
+    try {
+      await ghl("POST", "/opportunities/", {
+        locationId: serverEnv.ghlLocationId,
+        pipelineId: pipeline.id,
+        pipelineStageId: pipeline.stageNew,
+        contactId: id,
+        ...(owner ? { assignedTo: owner } : {}),
+        name: cardName,
+        status: "open",
+      });
+    } catch (err) {
+      // GHL refuses a second card when "Allow duplicate opportunities" is off: bring back the one it has instead.
+      if (isRetriable(err) || !opportunities[0]) throw err;
+      await ghl("PUT", `/opportunities/${opportunities[0].id}`, { pipelineStageId: pipeline.stageNew, name: cardName });
+    }
   }
 
   await ghl("POST", `/contacts/${id}/notes`, { body: note });
