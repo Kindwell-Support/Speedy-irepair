@@ -81,7 +81,8 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     // Stored menus predate /contact, so the link is added here rather than depending on a Studio edit.
     navigation: {
       ...navigation,
-      primary: withContact(navigation.primary),
+      // Fourth, the last slot PrimaryNav keeps in the bar; the link it displaces moves under "More".
+      primary: withContact(navigation.primary, 3),
       footerQuickLinks: withContact(navigation.footerQuickLinks),
     },
     defaultSeo: withDefaults(s.defaultSeo ?? {}, fx.siteSettings.defaultSeo),

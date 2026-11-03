@@ -7,8 +7,7 @@
  *
  * What it changes:
  * - homePage hero CTAs: "Fix My Device" → /repair, "Get Home Internet" → /home-internet
- * - siteSettings nav: Shop Phones, Sell Your Device, Financing, Reviews in the bar (the rest under "More"),
- *   header button "Fix My Device"
+ * - siteSettings: header button "Fix My Device"
  * - announcement, promotions, services: Jotform links → /home-internet
  * - homeInternetPage: the landing page's new fields (offer, steps, who it's for, why us, form copy, disclaimer);
  *   the hero headline and photo are kept (so is jotformUrl, until the new page is deployed)
@@ -43,12 +42,8 @@ async function main() {
   const { hero } = fx.homePage;
   change("homePage", { "hero.primaryCta": cta(hero.primaryCta!), "hero.secondaryCta": cta(hero.secondaryCta!) });
 
-  // Nav + header button (siteSettings stores navigation as one object)
-  const nav = fx.siteSettings.navigation;
-  change("siteSettings", {
-    "navigation.primary": keyed(nav.primary.map(cta)),
-    "navigation.headerCta": cta(nav.headerCta),
-  });
+  // Header button only; the nav links stay as they are
+  change("siteSettings", { "navigation.headerCta": cta(fx.siteSettings.navigation.headerCta) });
 
   // Jotform links → the landing page
   const announcements = await client.fetch<{ _id: string; href?: string }[]>(`*[_type == "announcement"]{ _id, href }`);

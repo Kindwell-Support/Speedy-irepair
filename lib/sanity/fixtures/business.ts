@@ -77,14 +77,12 @@ export const businessInfo: BusinessInfo = {
 
 export const navigation: Navigation = {
   primary: [
-    // Phase 2: the bar keeps the secondary journeys; repair and home internet live in the hero and header CTA.
-    { label: "Shop Phones", href: "/shop" },
-    { label: "Sell Your Device", href: "/sell-your-device" },
-    { label: "Financing", href: "/financing" },
-    { label: "Reviews", href: "/#testimonials" },
     { label: "Services", href: "/services" },
-    { label: "Home Internet", href: "/home-internet" },
+    { label: "Shop", href: "/shop" },
+    { label: "Sell Your Device", href: "/sell-your-device" },
     { label: "Instant Quote", href: "/instant-quote" },
+    { label: "Financing", href: "/financing" },
+    { label: "Home Internet", href: "/home-internet" },
     { label: "FAQ", href: "/faq" },
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
