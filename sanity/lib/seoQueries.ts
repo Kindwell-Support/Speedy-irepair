@@ -14,7 +14,7 @@ export const SETTINGS_QUERY = /* groq */ `*[_id == "siteSettings"][0]{
   },
   "hasMap": mapsUrl,
   "geo": select(defined(geo.lat) => {"latitude": geo.lat, "longitude": geo.lng}),
-  "openingHours": hours[]{ days, opens, closes, closed },
+  "openingHours": hours[]{ "days": [day], opens, closes, closed },
   hoursPlaceholder,
   "sameAs": array::compact([...socials[].url, ebayUrl]),
   "paymentAccepted": array::compact([
