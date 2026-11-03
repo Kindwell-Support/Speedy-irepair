@@ -81,8 +81,7 @@ export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
     // Stored menus predate /contact, so the link is added here rather than depending on a Studio edit.
     navigation: {
       ...navigation,
-      // Fourth, the last slot PrimaryNav keeps in the bar; the link it displaces moves under "More".
-      primary: withContact(navigation.primary, 3),
+      primary: withContact(navigation.primary),
       footerQuickLinks: withContact(navigation.footerQuickLinks),
     },
     defaultSeo: withDefaults(s.defaultSeo ?? {}, fx.siteSettings.defaultSeo),
@@ -168,6 +167,21 @@ export const getHomePage = cache(async (): Promise<HomePage> => {
   const merged = withDefaults(page, { ...fx.homePage, serviceCards: fx.serviceCards });
   return merged.serviceCards.length ? merged : { ...merged, serviceCards: fx.serviceCards };
 });
+/** Stored sections that predate a nested field (e.g. how-it-works steps) take it from the built-in copy. */
+export const getHomeInternetPage = cache(async (): Promise<HomeInternetPage> => {
+  const fallback = fx.homeInternetPage;
+  const page = withDefaults(
+    await fromSanity(q.pageSingletonQuery, { type: "homeInternetPage" }, [q.TAGS.page, "homeInternetPage"], fallback),
+    fallback,
+  );
+  return {
+    ...page,
+    offer: withDefaults(page.offer, fallback.offer),
+    howToSignUpSection: withDefaults(page.howToSignUpSection, fallback.howToSignUpSection),
+    whoItsForSection: withDefaults(page.whoItsForSection, fallback.whoItsForSection),
+    whySection: withDefaults(page.whySection, fallback.whySection),
+  };
+});
 export const getServicesPage = singleton<ServicesPage>("servicesPage", fx.servicesPage);
 export const getShopPage = singleton<ShopPage>("shopPage", fx.shopPage);
 export const getSellPage = singleton<SellPage>("sellPage", fx.sellPage);
@@ -176,7 +190,6 @@ export const getSchedulePage = singleton<SchedulePage>("schedulePage", fx.schedu
 export const getFaqPage = singleton<FaqPage>("faqPage", fx.faqPage);
 export const getAboutPage = singleton<AboutPage>("aboutPage", fx.aboutPage);
 export const getFinancingPage = singleton<FinancingPage>("financingPage", fx.financingPage);
-export const getHomeInternetPage = singleton<HomeInternetPage>("homeInternetPage", fx.homeInternetPage);
 export const getBlogPage = singleton<BlogPage>("blogPage", fx.blogPage);
 
 export const getPolicyPage = cache(

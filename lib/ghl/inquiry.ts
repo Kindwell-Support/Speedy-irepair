@@ -6,6 +6,8 @@ import {
   BUYBACK_PIPELINE,
   FIELD_IDS,
   INQUIRY_PIPELINE,
+  INTERNET_OPTIONS,
+  INTERNET_PIPELINE,
   LEAD_STATUS,
   LEAD_STATUS_ACTIVE,
   LOCATION,
@@ -17,7 +19,7 @@ import { ownerForUpsert, pickOwner } from "@/lib/ghl/owner";
 import { attempt } from "@/lib/ghl/retry";
 import { CONSENT_VERSION } from "@/lib/repair-schemas";
 import { shopDateISO } from "@/lib/repair-time";
-import type { QuoteInput, TradeInInput } from "@/lib/forms/schemas";
+import type { InternetInput, QuoteInput, TradeInInput } from "@/lib/forms/schemas";
 
 interface InquiryInput {
   name: string;
@@ -50,6 +52,8 @@ interface FormLead {
   contactFields?: Partial<Record<FieldName, string>>;
   /** Lead Status to set, unless the contact has a repair under way. */
   leadStatus?: string;
+  /** GHL's own contact address fields, for forms that collect one. */
+  address?: { address1: string; city: string; state: string; postalCode: string };
 }
 
 /**
@@ -58,7 +62,7 @@ interface FormLead {
  * pipeline, and a repeat submission moves it back to the first stage. Every step before the note is safe to repeat
  * and the note comes last, so a retry can't post it twice.
  */
-async function send({ name, email, phone, attribution, source, tag, pipeline, cardName, note, contactFields = {}, leadStatus }: FormLead) {
+async function send({ name, email, phone, attribution, source, tag, pipeline, cardName, note, contactFields = {}, leadStatus, address }: FormLead) {
   const [firstName, ...rest] = name.trim().split(/\s+/);
   const customFields = [
     { id: FIELD_IDS.location, field_value: LOCATION },
@@ -75,6 +79,7 @@ async function send({ name, email, phone, attribution, source, tag, pipeline, ca
     ...(rest.length ? { lastName: rest.join(" ") } : {}),
     ...(email ? { email } : {}),
     ...(phone ? { phone: toE164(phone) } : {}),
+    ...address,
     source,
     customFields,
     ...(await ownerForUpsert(email ? { email } : { number: toE164(phone ?? "") })),
@@ -209,6 +214,42 @@ export const sendTradeIn = (tradeIn: TradeInInput) => {
         `Model: ${model.trim()}`,
         `Condition: ${condition}`,
         ...(details?.trim() ? ["", details.trim()] : []),
+      ].join("\n"),
+    }),
+  );
+};
+
+/** Home internet address check to Home Internet Leads. Never throws; true as for sendInquiry. */
+export const sendInternet = (lead: InternetInput) => {
+  const { street, unit, city, state, zip, homeType, situation, timing, currentProvider, attribution = {}, ...input } = lead;
+  const address1 = [street.trim(), unit?.trim()].filter(Boolean).join(", ");
+  const full = `${address1}, ${city.trim()}, ${state.toUpperCase()} ${zip}`;
+  return attempt("home internet", lead, () =>
+    send({
+      ...input,
+      attribution,
+      source: "Website home internet form",
+      tag: TAGS.internetForm,
+      pipeline: INTERNET_PIPELINE,
+      address: { address1, city: city.trim(), state: state.toUpperCase(), postalCode: zip },
+      contactFields: {
+        homeType: INTERNET_OPTIONS.homeType[homeType],
+        internetNeed: INTERNET_OPTIONS.internetNeed[situation],
+        internetTiming: INTERNET_OPTIONS.internetTiming[timing],
+        currentProvider: currentProvider?.trim() ?? "",
+        smsConsentAt: shopDateISO(),
+      },
+      cardName: `${input.name.trim()}: home internet, ${zip}`,
+      note: [
+        "Website home internet form:",
+        "",
+        `Address: ${full}`,
+        `Home: ${homeType}`,
+        `Need: ${situation}`,
+        `Timing: ${timing}`,
+        ...(currentProvider?.trim() ? [`Current provider: ${currentProvider.trim()}`] : []),
+        "",
+        `SMS consent given via website home internet form, ${new Date().toISOString()}, consent text ${CONSENT_VERSION}`,
       ].join("\n"),
     }),
   );

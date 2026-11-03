@@ -77,17 +77,19 @@ export const businessInfo: BusinessInfo = {
 
 export const navigation: Navigation = {
   primary: [
-    { label: "Services", href: "/services" },
-    { label: "Shop", href: "/shop" },
+    // Phase 2: the bar keeps the secondary journeys; repair and home internet live in the hero and header CTA.
+    { label: "Shop Phones", href: "/shop" },
     { label: "Sell Your Device", href: "/sell-your-device" },
-    { label: "Instant Quote", href: "/instant-quote" },
     { label: "Financing", href: "/financing" },
+    { label: "Reviews", href: "/#testimonials" },
+    { label: "Services", href: "/services" },
     { label: "Home Internet", href: "/home-internet" },
+    { label: "Instant Quote", href: "/instant-quote" },
     { label: "FAQ", href: "/faq" },
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
   ],
-  headerCta: { label: "Schedule Repair", href: "/repair", variant: "primary" },
+  headerCta: { label: "Fix My Device", href: "/repair", variant: "primary" },
   // Spec 2.1.11 (REQ-041)
   footerQuickLinks: [
     { label: "Home", href: "/" },
@@ -130,7 +132,7 @@ export const siteSettings: SiteSettings = {
 export const announcement: Announcement = {
   id: "announcement-home-internet",
   text: "FREE Smartphone when you sign up for Home Internet",
-  href: EXTERNAL_LINKS.homeInternetSignup,
-  external: true,
+  href: "/home-internet",
+  external: false,
   enabled: true,
 };

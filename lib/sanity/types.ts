@@ -343,10 +343,18 @@ export interface FinancingPage extends BasePage {
 }
 
 export interface HomeInternetPage extends BasePage {
-  whoItsForSection: SectionCopy & { items: string[] };
+  /** The faint red word behind the hero, like SPEEDY on the home page. */
+  ghostWord: string;
+  offer: { price: string; unit: string; items: string[] };
   whatYouGetSection: SectionCopy & { items: string[] };
-  howToSignUpSection: SectionCopy;
-  jotformUrl: string;
+  howToSignUpSection: SectionCopy & { steps: { title: string; body: string }[] };
+  whoItsForSection: SectionCopy & { items: string[] };
+  whySection: SectionCopy & { items: { title: string; body: string }[] };
+  formSection: SectionCopy;
+  confirmationMessage: string;
+  /** Spectrum's order page for Speedy, if they give us one: the confirmation then offers "Finish on Spectrum". */
+  spectrumOrderUrl?: string | null;
+  disclaimer: string;
   faqSection: SectionCopy;
 }
 

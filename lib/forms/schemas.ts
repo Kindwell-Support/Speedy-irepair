@@ -4,9 +4,9 @@ import { attribution } from "@/lib/repair-schemas";
 
 /**
  * Shared form schemas: the SAME schema validates on the client (before submit) and the server
- * (app/api/forms/[type]/route.ts). Spec 4.1 F1, F2, F4, F5. F3 (home internet) is the Jotform embed.
+ * (app/api/forms/[type]/route.ts). Spec 4.1 F1, F2, F4, F5, plus the home internet address check.
  */
-export const FORM_TYPES = ["quote", "tradein", "contact", "newsletter"] as const;
+export const FORM_TYPES = ["quote", "tradein", "contact", "newsletter", "internet"] as const;
 export type FormTypeKey = (typeof FORM_TYPES)[number];
 
 const name = z.string().trim().min(1, "Please enter your name").max(120);
@@ -66,6 +66,29 @@ export const contactSchema = z.object({
   attribution: attribution.optional(),
 });
 
+export const HOME_TYPES = ["House", "Townhome", "Condo", "Apartment"] as const;
+export const INTERNET_SITUATIONS = ["Moving in", "Switching provider", "New service"] as const;
+export const INTERNET_TIMING = ["ASAP", "Within 2 weeks", "Within a month", "Just looking"] as const;
+export const INTERNET_CONSENT_TEXT =
+  "By sending this you agree to receive calls and texts about home internet service. Reply STOP to opt out.";
+
+/** Home internet address check (/home-internet): where, what kind of home, when, and who to call back. */
+export const internetSchema = z.object({
+  street: z.string().trim().min(3, "Enter your street address").max(160),
+  unit: z.string().trim().max(40).optional(),
+  city: z.string().trim().min(1, "Enter your city").max(80),
+  state: z.string().trim().length(2, "Use the 2-letter state, e.g. OH"),
+  zip: z.string().trim().regex(/^\d{5}$/, "Enter a 5-digit ZIP code"),
+  homeType: z.enum(HOME_TYPES, { error: "Choose your type of home" }),
+  situation: z.enum(INTERNET_SITUATIONS, { error: "Choose what you need" }),
+  timing: z.enum(INTERNET_TIMING, { error: "Choose when you need it" }),
+  currentProvider: z.string().trim().max(80).optional(),
+  name,
+  phone,
+  email,
+  attribution: attribution.optional(),
+});
+
 /** F2 Newsletter (REQ-037). */
 export const newsletterSchema = z.object({ email });
 
@@ -74,17 +97,20 @@ export const formSchemas = {
   tradein: tradeInSchema,
   contact: contactSchema,
   newsletter: newsletterSchema,
+  internet: internetSchema,
 } as const satisfies Record<FormTypeKey, z.ZodType>;
 
 export type QuoteInput = z.infer<typeof quoteSchema>;
 export type TradeInInput = z.infer<typeof tradeInSchema>;
 export type ContactInput = z.infer<typeof contactSchema>;
 export type NewsletterInput = z.infer<typeof newsletterSchema>;
+export type InternetInput = z.infer<typeof internetSchema>;
 export type FormPayloads = {
   quote: QuoteInput;
   tradein: TradeInInput;
   contact: ContactInput;
   newsletter: NewsletterInput;
+  internet: InternetInput;
 };
 
 /** API response shape for every form route. */

@@ -203,11 +203,44 @@ export const financingPage = page("financingPage", "Financing", [
   defineField({ name: "applyCta", type: "cta" }),
   section("faqSection"),
 ]);
+const titledItems = (name: string) =>
+  defineField({
+    name,
+    type: "array",
+    of: [
+      defineArrayMember({
+        type: "object",
+        fields: [
+          defineField({ name: "title", type: "string", validation: (r) => r.required() }),
+          defineField({ name: "body", type: "text", rows: 2 }),
+        ],
+      }),
+    ],
+  });
 export const homeInternetPage = page("homeInternetPage", "Home Internet", [
-  extendSection("whoItsForSection", [stringList("items")]),
+  defineField({ name: "ghostWord", title: "Hero background word", type: "string", description: "The faint red word behind the hero." }),
+  defineField({
+    name: "offer",
+    type: "object",
+    fields: [
+      defineField({ name: "price", type: "string", description: "e.g. $40" }),
+      defineField({ name: "unit", type: "string", description: "e.g. /mo" }),
+      stringList("items"),
+    ],
+  }),
   extendSection("whatYouGetSection", [stringList("items")]),
-  section("howToSignUpSection"),
-  defineField({ name: "jotformUrl", type: "url", validation: (r) => r.required() }),
+  extendSection("howToSignUpSection", [titledItems("steps")]),
+  extendSection("whoItsForSection", [stringList("items")]),
+  extendSection("whySection", [titledItems("items")]),
+  section("formSection", "Address form"),
+  defineField({ name: "confirmationMessage", type: "text", rows: 3, description: "Shown after someone sends the address form." }),
+  defineField({
+    name: "spectrumOrderUrl",
+    title: "Spectrum order link",
+    type: "url",
+    description: "Optional. When set, the confirmation shows a \"Finish on Spectrum\" button.",
+  }),
+  defineField({ name: "disclaimer", type: "text", rows: 4, description: "Small print at the foot of the page." }),
   section("faqSection"),
 ]);
 

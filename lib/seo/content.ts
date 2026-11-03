@@ -384,7 +384,7 @@ export const SERVICES: ServiceSeo[] = [
     name: "Home Internet ($40/mo, first month free, free phone with signup)",
     serviceType: "Home internet service",
     snippet:
-      "Speedy iRepair offers home internet in Akron, Ohio for $40 per month, with the first month free and a free smartphone when you sign up. It is a great fit for anyone moving into a new home, townhome, condo, or apartment. Sign up with our online form or visit our store at 1650 W Market St.",
+      "Speedy iRepair offers home internet in Akron, Ohio for $40 per month, with the first month free and a free smartphone when you sign up. It is a great fit for anyone moving into a new home, townhome, condo, or apartment. Check your address online or visit our store at 1650 W Market St.",
     cta: [{ label: "Sign Up", href: "/home-internet" }],
   },
   {

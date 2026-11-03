@@ -27,8 +27,8 @@ export const homePage: HomePage = {
     headline: "Cracked screen? Dead battery? Fixed same day in Akron.",
     // Decision #1: founding year omitted. If businessInfo.foundingYear is later set, CMS may edit this line.
     subline: "Screens, batteries, charger ports and cameras with a 90‑day warranty.",
-    primaryCta: { label: "Schedule Repair", href: "/repair", variant: "primary" },
-    secondaryCta: { label: "Get Instant Quote", href: "/instant-quote", variant: "secondary" },
+    primaryCta: { label: "Fix My Device", href: "/repair", variant: "primary" },
+    secondaryCta: { label: "Get Home Internet", href: "/home-internet", variant: "secondary" },
     poster: null,
   },
   serviceCardsSection: { heading: "Our services" },
@@ -186,11 +186,47 @@ export const financingPage: FinancingPage = {
 
 export const homeInternetPage: HomeInternetPage = {
   title: "Home Internet",
-  hero: { headline: "Home internet with your first month free.", subline: "Sign up at the store or online and get a free smartphone." },
-  whoItsForSection: { heading: "Who it's for", items: ["New home", "Townhome", "Condo", "Apartment"] },
-  whatYouGetSection: { heading: "What you get", items: ["Home internet", "First month free", "Free smartphone"] },
-  howToSignUpSection: { heading: "How to sign up", intro: "Fill out the form or visit the store." },
-  jotformUrl: EXTERNAL_LINKS.homeInternetSignup,
+  hero: {
+    eyebrow: "Spectrum Authorized Retailer · Akron, OH",
+    headline: "Home internet with your first month free.",
+    subline: "Check your address in under a minute. A local Speedy iRepair specialist confirms what's available and gets you set up, with a free smartphone when you sign up.",
+  },
+  ghostWord: "Internet",
+  offer: { price: "$40", unit: "/mo", items: ["First month free", "Free smartphone with signup", "Local help in Akron"] },
+  whatYouGetSection: {
+    heading: "What you get",
+    items: ["Home internet for $40 a month", "Your first month free", "A free smartphone when you sign up"],
+  },
+  howToSignUpSection: {
+    heading: "How it works",
+    intro: "No call centre, no hold music. A real person at our West Market St store handles your order.",
+    steps: [
+      { title: "Check your address", body: "Tell us where you need service. It takes under a minute." },
+      { title: "We call you back", body: "A local specialist confirms what's available at your address and answers your questions." },
+      { title: "Get connected", body: "We set up your order and your free smartphone. Pick it up in store or finish online." },
+    ],
+  },
+  whoItsForSection: {
+    heading: "Who it's for",
+    intro: "A great fit if you're setting up a new place or tired of what you pay now.",
+    items: ["Moving to a new home", "New apartment, condo or townhome", "Switching providers", "Want a lower bill"],
+  },
+  whySection: {
+    heading: "Why sign up with Speedy",
+    items: [
+      { title: "Local, not a call centre", body: "We're at 1650 W Market St in Akron. Call us or stop by." },
+      { title: "One shop for everything", body: "Internet, phones, repairs and prepaid plans under one roof." },
+      { title: "Help after you sign up", body: "Questions about your service later? Come back to the same people." },
+    ],
+  },
+  formSection: {
+    heading: "Check my address",
+    intro: "Three quick steps. We'll call or text to confirm availability. No commitment.",
+  },
+  confirmationMessage: "A Speedy iRepair specialist will call or text you shortly to confirm what's available and finish setting you up.",
+  spectrumOrderUrl: null,
+  disclaimer:
+    "Speedy iRepair is a Spectrum Authorized Retailer. Service is not available in all areas. Offer, pricing and free smartphone are subject to availability and eligibility; restrictions apply. Ask in store for full details.",
   faqSection: { heading: "Home Internet FAQs" },
   seo: {
     metaTitle: "Home Internet in Akron, OH | Speedy iRepair",

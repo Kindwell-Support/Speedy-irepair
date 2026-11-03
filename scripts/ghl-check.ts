@@ -5,7 +5,16 @@
  * spelled (GHL drops unknown values silently), and the pipeline stage IDs belong to the pipeline. Exits 1 on a mismatch.
  */
 import { LEAD_SOURCES } from "../lib/attribution";
-import { FIELD_IDS, FIELD_KEYS, LEAD_STATUS, LOCATION, STAGE_QUOTE_REQUESTED, type FieldName } from "../lib/ghl/fields";
+import {
+  FIELD_IDS,
+  FIELD_KEYS,
+  INTERNET_OPTIONS,
+  INTERNET_PIPELINE,
+  LEAD_STATUS,
+  LOCATION,
+  STAGE_QUOTE_REQUESTED,
+  type FieldName,
+} from "../lib/ghl/fields";
 import { ALL_ISSUES, DEVICES } from "../lib/repair-catalog";
 
 const BASE_URL = "https://services.leadconnectorhq.com";
@@ -40,6 +49,9 @@ const DROPDOWNS: Partial<Record<FieldName, readonly string[]>> = {
   leadSource: Object.values(LEAD_SOURCES),
   leadStatus: Object.values(LEAD_STATUS),
   location: [LOCATION],
+  homeType: Object.values(INTERNET_OPTIONS.homeType),
+  internetNeed: Object.values(INTERNET_OPTIONS.internetNeed),
+  internetTiming: Object.values(INTERNET_OPTIONS.internetTiming),
 };
 
 async function main() {
@@ -95,6 +107,11 @@ async function main() {
     if (quoteStage) console.log(`  ✓ STAGE_QUOTE_REQUESTED = ${quoteStage.name}`);
     else fail(`STAGE_QUOTE_REQUESTED ${STAGE_QUOTE_REQUESTED} is not a stage of "${pipeline.name}"`);
   }
+
+  const internet = pipelines.find((p) => p.id === INTERNET_PIPELINE.id);
+  const internetStage = internet?.stages.find((s) => s.id === INTERNET_PIPELINE.stageNew);
+  if (internet && internetStage) console.log(`  ✓ INTERNET_PIPELINE = ${internet.name} / ${internetStage.name}`);
+  else fail(`INTERNET_PIPELINE ${INTERNET_PIPELINE.id} / stage ${INTERNET_PIPELINE.stageNew} not found`);
 
   console.log("Calendar");
   const { calendar } = await get<{ calendar: { name: string; slotDuration?: number } }>(

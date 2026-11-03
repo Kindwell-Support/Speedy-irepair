@@ -20,6 +20,10 @@ export const FIELD_IDS = {
   utmMedium: "S5Tf2T2R6Ym5SNCjVPQ7", // contact.utm_medium
   utmCampaign: "98PFuZNB37j3T8Sv0OYY", // contact.utm_campaign
   landingPage: "wQmTEmVJ2r7BYMEdt6Lu", // contact.landing_page
+  homeType: "6exaGFpVf4ZehPwSw5FR", // contact.home_type
+  internetNeed: "bBZZHIwXWX3A6P7sZDaI", // contact.internet_need
+  internetTiming: "OY3oEncjcRMKOPnqet5U", // contact.internet_timing
+  currentProvider: "GngFVcqwFCMjlttVXCAr", // contact.current_provider
 } as const;
 export type FieldName = keyof typeof FIELD_IDS;
 
@@ -38,7 +42,26 @@ export const FIELD_KEYS: Record<FieldName, string> = {
   utmMedium: "contact.utm_medium",
   utmCampaign: "contact.utm_campaign",
   landingPage: "contact.landing_page",
+  homeType: "contact.home_type",
+  internetNeed: "contact.internet_need",
+  internetTiming: "contact.internet_timing",
+  currentProvider: "contact.current_provider",
 };
+
+/**
+ * The /home-internet form's answers as GHL spells its dropdown options (capitalised differently). Update the
+ * right-hand side if an option is renamed in GHL.
+ */
+export const INTERNET_OPTIONS = {
+  homeType: { House: "House", Townhome: "Townhome", Condo: "Condo", Apartment: "Apartment" },
+  internetNeed: { "Moving in": "Moving In", "Switching provider": "Switching Provider", "New service": "New Service" },
+  internetTiming: {
+    ASAP: "ASAP",
+    "Within 2 weeks": "Within 2 Weeks",
+    "Within a month": "Within A Month",
+    "Just looking": "Just Looking",
+  },
+} as const;
 
 /** Note the en dash (–). */
 export const LOCATION = "Akron – W Market St";
@@ -53,6 +76,12 @@ export const INQUIRY_PIPELINE = {
 export const BUYBACK_PIPELINE = {
   id: "LF9Lue3ni3S7oZk1Vwxv",
   stageNew: "45737350-4829-4643-9409-3b5e574e49b5", // New Inquiry
+} as const;
+
+/** The "Home Internet Leads" pipeline and its first stage, for the /home-internet address check. */
+export const INTERNET_PIPELINE = {
+  id: "UI2A3FCoPQqQo07svKdz",
+  stageNew: "c84a0af0-b0f2-43b2-9b69-a51ec3ffea63", // New Lead
 } as const;
 
 /** Where /instant-quote leads wait in the repair pipeline. Comes before New Lead so its automations don't fire. */
@@ -74,4 +103,5 @@ export const TAGS = {
   contactForm: "contact-form",
   tradeInForm: "trade-in-form",
   quoteForm: "instant-quote-requested",
+  internetForm: "home-internet-lead",
 } as const;

@@ -76,7 +76,7 @@ const serviceSeeds: Omit<Service, "body" | "isPlaceholder" | "sourceNote">[] = [
   { id: "s08", slug: "sell-trade-your-device", title: "Sell / Trade Your Device", summary: "Compare top trade-in prices and get the best deal for your old or broken device.", ctas: [{ label: "Sell Your Device", href: "/sell-your-device", variant: "primary" }], riveIcon: "sell-trade", order: 8 },
   { id: "s09", slug: "prepaid-phone-plans", title: "Prepaid Phone Plans", summary: "Simple Mobile, AT&T and Verizon prepaid plans. Save money every month.", ctas: [visitCta, callCta], riveIcon: "prepaid-plans", order: 9 },
   { id: "s10", slug: "bill-payment-services", title: "Bill Payment Services", summary: "Pay water, electric and gas bills at our location.", ctas: [visitCta, directionsCta], riveIcon: "bill-payment", order: 10 },
-  { id: "s11", slug: "home-internet", title: "Home Internet", summary: "Home internet with your first month free, and a free smartphone when you sign up.", ctas: [{ label: "Sign up", href: "/home-internet", variant: "primary" }, { label: "Sign-up form", href: EXTERNAL_LINKS.homeInternetSignup, external: true, variant: "secondary" }], riveIcon: "home-internet", order: 11 },
+  { id: "s11", slug: "home-internet", title: "Home Internet", summary: "Home internet with your first month free, and a free smartphone when you sign up.", ctas: [{ label: "Sign up", href: "/home-internet", variant: "primary" }], riveIcon: "home-internet", order: 11 },
   { id: "s12", slug: "financing", title: "Financing", summary: "Acima lease-to-own financing. No credit needed.", ctas: [{ label: "Apply Now", href: EXTERNAL_LINKS.financing, external: true, variant: "primary" }, { label: "Financing details", href: "/financing", variant: "secondary" }], riveIcon: "financing", order: 12 },
   { id: "s13", slug: "accessories", title: "Accessories", summary: "Shop phone accessories.", ctas: [shopCta], riveIcon: "accessories", order: 13 },
   { id: "s14", slug: "replacement-parts", title: "Replacement Parts", summary: "Premium quality replacement parts, covered by our 90-day warranty.", ctas: [scheduleCta], riveIcon: "replacement-parts", order: 14 },
@@ -143,7 +143,7 @@ export const howItWorksSteps: HowItWorksStep[] = [
 
 /** Spec 2.1.7 (REQ-033). */
 export const promotions: Promotion[] = [
-  { id: "promo-1", title: "Free smartphone", body: "When you sign up for Home Internet.", cta: { label: "Sign up", href: EXTERNAL_LINKS.homeInternetSignup, external: true }, order: 1 },
+  { id: "promo-1", title: "Free smartphone", body: "When you sign up for Home Internet.", cta: { label: "Check my address", href: "/home-internet" }, order: 1 },
   { id: "promo-2", title: "First month free", body: "On Home Internet.", cta: { label: "Learn more", href: "/home-internet" }, order: 2 },
   { id: "promo-3", title: "No credit needed", body: "Financing available through Acima.", cta: { label: "Apply Now", href: EXTERNAL_LINKS.financing, external: true }, order: 3 },
 ];

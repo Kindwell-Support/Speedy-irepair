@@ -151,6 +151,52 @@ html[data-motion="ok"] :is([data-animate="steps"], [data-pin="how"]) [data-step]
   .hero-word { top: 50%; transform: translate(calc(-50% + var(--word-shift)), -50%); }
 }
 
+/* ------------------------------------------------------------- landing pages (app/(landing))
+   The home hero's language on an ad page: dark room, red lamp glow, a ghost word behind the copy. */
+.landing-stage {
+  background:
+    radial-gradient(45% 60% at 72% 45%, rgb(237 28 36 / 0.16), transparent 70%),
+    radial-gradient(120% 90% at 50% 120%, rgb(237 28 36 / 0.06), transparent 60%),
+    var(--color-bg);
+}
+.landing-word {
+  --word-shift: -0.08em;
+  left: 50%;
+  top: 5.5rem;
+  transform: translateX(calc(-50% + var(--word-shift)));
+  font-size: calc((100vw - 2 * var(--page-margin)) / 6.3);
+  line-height: 0.8;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgb(237 28 36 / 0.14);
+  user-select: none;
+}
+@media (min-width: 1024px) {
+  .landing-word { top: 50%; transform: translate(calc(-50% + var(--word-shift)), -50%); font-size: min(15vw, 13.5rem); }
+}
+.landing-price {
+  font-size: clamp(3.5rem, 9vw, 5.5rem);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+}
+.landing-price-unit {
+  margin-left: 0.08em;
+  font-size: 0.32em;
+  letter-spacing: 0;
+  color: var(--color-primary-text);
+}
+.landing-card {
+  background-color: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-glow-sm);
+}
+.landing-sticky {
+  background-color: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
 /* Top-right figure: "45 min", kept under the headline's size so it supports rather than competes. */
 .hero-stat-figure {
   font-size: clamp(2rem, min(2.4vw, 5svh), 2.75rem);
