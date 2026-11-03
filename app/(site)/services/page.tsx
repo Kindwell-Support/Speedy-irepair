@@ -19,7 +19,7 @@ export default async function ServicesPage() {
   const [page, services, faqs, seo] = await Promise.all([getServicesPage(), getServices(), getFaqs("services"), getSeoData()]);
   return (
     <>
-      <JsonLd data={jsonLdForServices(seo)} />
+      <JsonLd data={jsonLdForServices(seo, faqs)} />
       <PageHero hero={page.hero} photo="bench" />
       <ServiceSections services={services} />
       <ContactPrompt id="services-contact" heading="Don't see your repair?" intro="Tell us what's wrong with your device and we'll let you know if we can fix it." />

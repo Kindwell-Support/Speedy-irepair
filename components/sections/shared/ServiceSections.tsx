@@ -1,5 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Service } from "@/lib/sanity/types";
+import { serviceHref } from "@/lib/seo/content";
 import { SITE_IMAGES, type SiteImageKey } from "@/lib/site-images";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
@@ -8,7 +10,7 @@ import { RiveIcon } from "@/components/rive/RiveIcon";
 import { toRiveIconId } from "./rive";
 
 /** Services that have a photograph of that kind of work; the rest stay type-only. */
-const PHOTO_BY_SLUG: Partial<Record<string, SiteImageKey>> = {
+export const PHOTO_BY_SLUG: Partial<Record<string, SiteImageKey>> = {
   "screen-repair": "screenLift",
   "battery-replacement": "battery",
   "charger-port-repair": "port",
@@ -80,6 +82,14 @@ export function ServiceSections({ services }: { services: Service[] }) {
                         <ButtonLink key={`${s.id}-${c.label}`} cta={c} />
                       ))}
                     </div>
+                    {serviceHref(s.slug)?.startsWith("/services/") ? (
+                      <Link
+                        href={serviceHref(s.slug)!}
+                        className="mt-5 inline-flex min-h-10 items-center text-body font-bold text-primary-text hover:underline"
+                      >
+                        More about {s.title.toLowerCase()} →
+                      </Link>
+                    ) : null}
                   </div>
                   {photo ? (
                     <figure className="max-w-sm xl:max-w-none">

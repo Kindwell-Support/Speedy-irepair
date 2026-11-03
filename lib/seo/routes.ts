@@ -34,6 +34,7 @@ import {
   SERVICES,
   SERVICES_FAQS,
   SPEAKABLE_SELECTORS,
+  serviceHref,
   type FaqItem,
   type RouteKey,
   type ServiceSeo,
@@ -93,8 +94,14 @@ export function jsonLdForHome(d: SeoData): JsonLdGraph {
   );
 }
 
-/* R02 /services — Service x14 + FAQPage + BreadcrumbList */
-export function jsonLdForServices(d: SeoData): JsonLdGraph {
+/** A service's url: its own page when it has one, else its section on /services. Same @id either way. */
+const serviceUrl = (slug: string) => {
+  const href = serviceHref(slug);
+  return href?.startsWith("/services/") ? href : undefined;
+};
+
+/* R02 /services — Service x14 + FAQPage + BreadcrumbList. `faqs` = the FAQs rendered on the page. */
+export function jsonLdForServices(d: SeoData, faqs: FaqItem[] = d.servicesFaqs): JsonLdGraph {
   return graph(
     page("/services", "/services"),
     d.services.map((s) =>
@@ -103,11 +110,33 @@ export function jsonLdForServices(d: SeoData): JsonLdGraph {
         name: s.name,
         serviceType: s.serviceType,
         description: s.snippet,
+        url: serviceUrl(s.slug),
         offers: s.slug === "home-internet" ? homeInternetOffer() : undefined,
       }),
     ),
-    faqPage("/services", d.servicesFaqs),
+    faqPage("/services", faqs),
     crumbs("/services", "Services"),
+  );
+}
+
+/* /services/[slug] — WebPage + Service (no Offer) + FAQPage (visible FAQs) + BreadcrumbList */
+export function jsonLdForServiceDetail(
+  d: SeoData,
+  s: { slug: string; title: string; metaTitle: string; description: string; faqs: FaqItem[] },
+): JsonLdGraph {
+  const path = `/services/${s.slug}`;
+  const seoService = d.services.find((x) => x.slug === s.slug);
+  return graph(
+    webPage(path, s.metaTitle, s.description, { breadcrumb: true }),
+    service({
+      slug: s.slug,
+      url: path,
+      name: s.title,
+      serviceType: seoService?.serviceType ?? s.title,
+      description: s.description,
+    }),
+    faqPage(path, s.faqs),
+    crumbs(path, s.title, [{ name: "Services", path: "/services" }]),
   );
 }
 
@@ -162,10 +191,10 @@ export function jsonLdForInstantQuote(_d: SeoData): JsonLdGraph {
   );
 }
 /* R08 /faq — FAQPage + BreadcrumbList */
-export function jsonLdForFaq(d: SeoData): JsonLdGraph {
+export function jsonLdForFaq(d: SeoData, faqs: FaqItem[] = d.faqPageFaqs): JsonLdGraph {
   return graph(
     page("/faq", "/faq", { type: "WebPage" }),
-    faqPage("/faq", d.faqPageFaqs),
+    faqPage("/faq", faqs),
     crumbs("/faq", "FAQ"),
   );
 }

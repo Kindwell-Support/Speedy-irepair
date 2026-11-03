@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo/site";
 import { isIndexable } from "@/lib/seo/metadata";
+import { SERVICE_PAGES } from "@/lib/seo/content";
 import { client } from "@/sanity/lib/client";
 import { SITEMAP_DOCS_QUERY } from "@/sanity/lib/seoQueries"; // cms/adapters/seoQueries.ts
 
@@ -92,6 +93,19 @@ async function getPostEntries(): Promise<{ slug: string; updatedAt: string }[]> 
   }
 }
 
+/** Service docs behind /services/<slug> (noindexed ones are dropped). */
+async function getServiceEntries(): Promise<{ slug: string; updatedAt: string; noindex?: boolean | null }[]> {
+  try {
+    const rows = await client.fetch<{ slug: string; updatedAt: string; noindex?: boolean | null }[]>(
+      `*[_type == "service" && slug.current in $slugs]{ "slug": slug.current, "updatedAt": _updatedAt, "noindex": seo.noIndex }`,
+      { slugs: Object.keys(SERVICE_PAGES) },
+    );
+    return rows ?? [];
+  } catch {
+    return [];
+  }
+}
+
 type DocRow = { _type: string; _updatedAt: string; noindex?: boolean | null; slug?: string | null };
 const keyOf = (type: string, slug?: string | null) => (slug ? `${type}:${slug}` : type);
 
@@ -123,7 +137,12 @@ async function getDocState(): Promise<{ updated: Record<string, string>; noindex
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (!isIndexable()) return []; // staging/preview: empty sitemap
-  const [{ updated, noindex }, products, posts] = await Promise.all([getDocState(), getProductEntries(), getPostEntries()]);
+  const [{ updated, noindex }, products, posts, services] = await Promise.all([
+    getDocState(),
+    getProductEntries(),
+    getPostEntries(),
+    getServiceEntries(),
+  ]);
   const now = new Date();
   const pages = STATIC_ROUTES.filter(
     (r) => !(r.sanityType && noindex.has(keyOf(r.sanityType, r.slug))),
@@ -148,5 +167,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "monthly" as const,
     priority: 0.5,
   }));
-  return [...pages, ...postUrls, ...productUrls];
+  // Every service page is listed; the doc's edit date is used when Sanity has it.
+  const serviceDocs = new Map(services.map((s) => [s.slug, s]));
+  const serviceUrls = Object.keys(SERVICE_PAGES)
+    .filter((slug) => !serviceDocs.get(slug)?.noindex)
+    .map((slug) => ({
+      url: `${SITE_URL}/services/${slug}`,
+      lastModified: serviceDocs.get(slug) ? new Date(serviceDocs.get(slug)!.updatedAt) : now,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    }));
+  return [...pages, ...serviceUrls, ...postUrls, ...productUrls];
 }

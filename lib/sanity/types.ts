@@ -173,7 +173,16 @@ export interface Service extends Placeholderable {
   image?: ImageAsset | null;
 }
 
-export type FaqCategory = "general" | "services" | "financing" | "internet";
+export type FaqCategory =
+  | "general"
+  | "services"
+  | "repairs"
+  | "visiting"
+  | "selling"
+  | "shop"
+  | "plans"
+  | "financing"
+  | "internet";
 
 export interface Faq extends Placeholderable {
   id: string;
@@ -181,6 +190,8 @@ export interface Faq extends Placeholderable {
   /** Plain text so it can be used verbatim in FAQPage JSON-LD. */
   answer: string;
   categories: FaqCategory[];
+  /** Slugs of the /services/<slug> pages this answer also shows on. */
+  serviceSlugs?: string[] | null;
   order: number;
 }
 

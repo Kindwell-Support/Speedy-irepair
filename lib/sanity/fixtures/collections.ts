@@ -101,20 +101,36 @@ export const serviceCards: ServiceCard[] = [
 ];
 
 /** Spec 2.1.8: 8 FAQs, answers VERBATIM (REQ-034/069). */
+const REPAIRS = ["screen-repair", "battery-replacement", "charger-port-repair", "camera-repair"];
+const DRAFTED = "Drafted from brief facts. Client to approve.";
+
 export const faqs: Faq[] = [
-  { id: "faq-1", question: "How long does the average repair take?", answer: "iPhone repairs typically take 45-60 minutes. Most Android repairs take 1-2 hours, unless replacement parts need to be ordered (3-4 days from our warehouse).", categories: ["general", "services"], order: 1 },
-  { id: "faq-2", question: "Do you offer a warranty on replacement parts?", answer: "All repairs are covered under our 90-day warranty. Damage to your device after repair voids the warranty.", categories: ["general", "services"], order: 2 },
+  { id: "faq-1", question: "How long does the average repair take?", answer: "iPhone repairs typically take 45-60 minutes. Most Android repairs take 1-2 hours, unless replacement parts need to be ordered (3-4 days from our warehouse).", categories: ["general", "services"], serviceSlugs: REPAIRS, order: 1 },
+  { id: "faq-2", question: "Do you offer a warranty on replacement parts?", answer: "All repairs are covered under our 90-day warranty. Damage to your device after repair voids the warranty.", categories: ["general", "services"], serviceSlugs: REPAIRS, order: 2 },
   { id: "faq-3", question: "What payment methods do you accept?", answer: "All major credit and debit cards, PayPal, and Venmo.", categories: ["general"], order: 3 },
   { id: "faq-4", question: "Do you only repair screens?", answer: "No. We repair batteries, charger ports, cameras, speakers, and much more.", categories: ["general", "services"], order: 4 },
-  { id: "faq-5", question: "Can you fix water-damaged devices?", answer: "We can try to preserve your data, but cannot guarantee full functionality after water damage inspection.", categories: ["general", "services"], order: 5 },
-  { id: "faq-6", question: "Do I have to pay upfront?", answer: "No upfront payment for iPhone repairs. A deposit is required on all Android repairs. 50% down on phone purchases not currently in stock.", categories: ["general", "services"], order: 6 },
-  { id: "faq-7", question: "Will my phone look and function the same after repair?", answer: "Yes. If there is any damage that affects functionality beyond the repair, we will let you know beforehand.", categories: ["general", "services"], order: 7 },
-  { id: "faq-8", question: "Will I lose my data during repair?", answer: "There is a small possibility. We recommend backing up your data via iCloud, Google, or other cloud services before bringing your device in.", categories: ["general", "services"], order: 8 },
+  { id: "faq-5", question: "Can you fix water-damaged devices?", answer: "We can try to preserve your data, but cannot guarantee full functionality after water damage inspection.", categories: ["general", "services"], serviceSlugs: ["water-damage-inspection"], order: 5 },
+  { id: "faq-6", question: "Do I have to pay upfront?", answer: "No upfront payment for iPhone repairs. A deposit is required on all Android repairs. 50% down on phone purchases not currently in stock.", categories: ["general", "services"], serviceSlugs: REPAIRS, order: 6 },
+  { id: "faq-7", question: "Will my phone look and function the same after repair?", answer: "Yes. If there is any damage that affects functionality beyond the repair, we will let you know beforehand.", categories: ["general", "services"], serviceSlugs: ["screen-repair"], order: 7 },
+  { id: "faq-8", question: "Will I lose my data during repair?", answer: "There is a small possibility. We recommend backing up your data via iCloud, Google, or other cloud services before bringing your device in.", categories: ["general", "services"], serviceSlugs: [...REPAIRS, "water-damage-inspection"], order: 8 },
+  // SEO/AEO (2026-11-03): service-page and topic FAQs, drafted from facts already on the site, for client review.
+  { id: "faq-rep-1", question: "Which phone brands do you repair?", answer: "Apple, Samsung, LG, Google and more. Screens, batteries, charger ports and cameras are repaired in our store at 1650 W Market St, Akron, OH.", categories: ["repairs"], serviceSlugs: REPAIRS, order: 21, sourceNote: DRAFTED },
+  { id: "faq-rep-2", question: "How long does a screen repair take?", answer: "Most screen repairs are done the same day, in about 45 minutes, and are covered by our 90-day warranty.", categories: ["repairs"], serviceSlugs: ["screen-repair"], order: 22, sourceNote: DRAFTED },
+  { id: "faq-rep-3", question: "Is a battery replacement covered by a warranty?", answer: "Yes. Battery replacements are covered by our 90-day warranty. Damage to your device after the repair voids the warranty.", categories: ["repairs"], serviceSlugs: ["battery-replacement"], order: 23, sourceNote: DRAFTED },
+  { id: "faq-rep-4", question: "Which carriers can you unlock my phone from?", answer: "We can unlock your phone from any carrier. Call us at 1.855.377.3339 or visit the store at 1650 W Market St, Akron, to get started.", categories: ["repairs"], serviceSlugs: ["device-unlocking"], order: 24, sourceNote: DRAFTED },
+  { id: "faq-visit-1", question: "Do I need an appointment for a repair?", answer: "No. You can walk in, or schedule an appointment online before you come.", categories: ["visiting"], serviceSlugs: [...REPAIRS, "water-damage-inspection"], order: 31, sourceNote: DRAFTED },
+  { id: "faq-visit-2", question: "Where is Speedy iRepair located?", answer: "1650 W Market St #27, Akron, OH 44313.", categories: ["visiting"], order: 32, sourceNote: DRAFTED },
+  { id: "faq-visit-3", question: "What are your store hours?", answer: "Monday to Saturday, 12 PM to 6 PM. Closed Sunday.", categories: ["visiting"], order: 33, sourceNote: DRAFTED },
+  { id: "faq-sell-1", question: "Can I sell a broken phone?", answer: "Yes. We buy old and broken devices. Get a quote, bring it in or mail it, and get paid.", categories: ["selling"], order: 41, sourceNote: DRAFTED },
+  { id: "faq-shop-1", question: "What pre-owned devices do you sell?", answer: "Certified pre-owned iPhone, iPad, Apple Watch, MacBook and accessories.", categories: ["shop"], order: 51, sourceNote: DRAFTED },
+  { id: "faq-shop-2", question: "Can I order a phone you don't have in stock?", answer: "Yes. Phone purchases not currently in stock need 50% down.", categories: ["shop"], order: 52, sourceNote: DRAFTED },
+  { id: "faq-plan-1", question: "Which prepaid phone plans do you offer?", answer: "Simple Mobile, AT&T and Verizon prepaid plans, set up in our store at 1650 W Market St, Akron.", categories: ["plans"], serviceSlugs: ["prepaid-phone-plans"], order: 61, sourceNote: DRAFTED },
+  { id: "faq-plan-2", question: "What bills can I pay at your store?", answer: "Water, electric and gas bills, at our store at 1650 W Market St, Akron.", categories: ["plans"], serviceSlugs: ["bill-payment-services"], order: 62, sourceNote: DRAFTED },
   // OQ-16: financing + internet FAQs drafted from brief facts only, for client review.
   { id: "faq-fin-1", question: "Do I need good credit to finance?", answer: "No. Acima offers lease-to-own financing with no credit needed.", categories: ["financing"], order: 101, sourceNote: "Drafted from brief facts. Client to approve." },
   { id: "faq-fin-2", question: "What can I finance?", answer: "Smartphones and accessories.", categories: ["financing"], order: 102, sourceNote: "Drafted from brief facts. Client to approve." },
   { id: "faq-net-1", question: "Who can sign up for home internet?", answer: "Home internet is available for new homes, townhomes, condos and apartments.", categories: ["internet"], order: 201, sourceNote: "Drafted from brief facts. Client to approve." },
-  { id: "faq-net-2", question: "How do I sign up, and what do I get?", answer: "Fill out the sign-up form online or visit the store at 1650 W Market St. You get your first month free and a free smartphone when you sign up.", categories: ["internet"], order: 202, sourceNote: "Drafted from brief facts. Client to approve." },
+  { id: "faq-net-2", question: "How do I sign up, and what do I get?", answer: "Check your address on our home internet page or visit the store at 1650 W Market St. You get your first month free and a free smartphone when you sign up.", categories: ["internet"], order: 202, sourceNote: "Drafted from brief facts. Client to approve." },
 ];
 
 /** Spec 2.1.5 (REQ-029). */

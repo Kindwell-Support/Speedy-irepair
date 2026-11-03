@@ -109,6 +109,15 @@ export const getFaqs = cache(
     ),
 );
 
+export const getService = cache(
+  async (slug: string): Promise<Service | null> => (await getServices()).find((s) => s.slug === slug) ?? null,
+);
+
+/** FAQs linked to a service (Studio: "Show on service pages"). */
+export const getServiceFaqs = cache(
+  async (slug: string): Promise<Faq[]> => (await getFaqs(null)).filter((f) => f.serviceSlugs?.includes(slug)),
+);
+
 export const getTestimonials = cache(
   (): Promise<Testimonial[]> => fromSanity(q.testimonialsQuery, {}, [q.TAGS.testimonial], fx.testimonials),
 );

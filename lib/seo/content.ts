@@ -284,7 +284,7 @@ export const SERVICES: ServiceSeo[] = [
     snippet:
       "Speedy iRepair replaces cracked and broken smartphone screens at our shop at 1650 W Market St in Akron, Ohio. We repair Apple, Samsung, LG, Google, Motorola, and OnePlus phones. Most screen repairs are completed the same day in 45 minutes, and every repair is covered by our 90-day warranty.",
     detail:
-      "There is no upfront payment for iPhone repairs. Android repairs require a $20 deposit. If replacement parts need to be ordered, they arrive in 3-4 days from our warehouse.",
+      "There is no upfront payment for iPhone repairs. Android repairs require a deposit. If replacement parts need to be ordered, they arrive in 3-4 days from our warehouse.",
     cta: [
       { label: "Schedule Repair", href: "/repair" },
       { label: "Get Instant Quote", href: "/instant-quote" },
@@ -447,7 +447,7 @@ export const CORE_FAQS: FaqItem[] = [
   {
     question: "Do I have to pay upfront?",
     answer:
-      "No upfront payment for iPhone repairs. $20 deposit required on all Android repairs. 50% down on phone purchases not currently in stock.",
+      "No upfront payment for iPhone repairs. A deposit is required on all Android repairs. 50% down on phone purchases not currently in stock.",
   },
   {
     question: "Will my phone look and function the same after repair?",
@@ -575,3 +575,61 @@ export const MAIN_NAV: { name: string; path: string }[] = [
 
 /** CSS selectors the Frontend must put on the elements (see INTEGRATION_NOTES.md). */
 export const SPEAKABLE_SELECTORS = ["#hero-title", "#why-choose-us"];
+
+/**
+ * Services with their own /services/<slug> page: fallback title + description (the Studio's per-service SEO
+ * fields override them). Facts from the brief only; no prices in meta.
+ */
+export const SERVICE_PAGES: Record<string, { metaTitle: string; metaDescription: string }> = {
+  "screen-repair": {
+    metaTitle: "Screen Repair in Akron, OH | Speedy iRepair",
+    metaDescription:
+      "Cracked phone screen repair for Apple, Samsung, LG and Google at 1650 W Market St, Akron. Most repairs done same day in 45 minutes, 90-day warranty.",
+  },
+  "battery-replacement": {
+    metaTitle: "Phone Battery Replacement in Akron, OH | Speedy iRepair",
+    metaDescription:
+      "Phone won't hold a charge? Battery replacement for iPhone, Samsung, LG and Google in Akron, OH. Walk in or book online. 90-day warranty.",
+  },
+  "charger-port-repair": {
+    metaTitle: "Charger Port Repair in Akron, OH | Speedy iRepair",
+    metaDescription:
+      "Phone won't charge? Charger port repair for Apple, Samsung, LG and Google at 1650 W Market St, Akron. Covered by our 90-day warranty.",
+  },
+  "camera-repair": {
+    metaTitle: "Phone Camera Repair in Akron, OH | Speedy iRepair",
+    metaDescription:
+      "Blurry, cracked or dead phone camera? Front and rear camera repair for Apple, Samsung, LG and Google in Akron, OH. 90-day warranty.",
+  },
+  "water-damage-inspection": {
+    metaTitle: "Water Damage Phone Repair in Akron, OH | Speedy iRepair",
+    metaDescription:
+      "Dropped your phone in water? Water damage inspection at 1650 W Market St, Akron. We try to preserve your data and tell you what we find first.",
+  },
+  "device-unlocking": {
+    metaTitle: "Phone Unlocking in Akron, OH | Speedy iRepair",
+    metaDescription:
+      "Unlock your phone from any carrier at Speedy iRepair, 1650 W Market St, Akron. Call 1.855.377.3339 or visit the store to get started.",
+  },
+  "prepaid-phone-plans": {
+    metaTitle: "Prepaid Phone Plans in Akron, OH | Speedy iRepair",
+    metaDescription:
+      "Simple Mobile, AT&T and Verizon prepaid phone plans at 1650 W Market St, Akron. Save money every month. Visit the store or call 1.855.377.3339.",
+  },
+  "bill-payment-services": {
+    metaTitle: "Pay Utility Bills in Akron, OH | Speedy iRepair",
+    metaDescription:
+      "Pay water, electric and gas bills in person at Speedy iRepair, 1650 W Market St, Akron, in the same visit as a repair or plan.",
+  },
+};
+
+/** Where a service's "more" link goes: its own page, or the existing page that covers it. */
+const SERVICE_HOMES: Record<string, string> = {
+  "certified-pre-owned-devices": "/shop",
+  accessories: "/shop",
+  "sell-trade-your-device": "/sell-your-device",
+  "home-internet": "/home-internet",
+  financing: "/financing",
+};
+export const serviceHref = (slug: string): string | null =>
+  slug in SERVICE_PAGES ? `/services/${slug}` : (SERVICE_HOMES[slug] ?? null);

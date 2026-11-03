@@ -47,7 +47,7 @@ export const servicesQuery = defineQuery(`*[_type == "service"] | order(order as
 }`);
 
 export const faqsQuery = defineQuery(`*[_type == "faq" && (!defined($category) || $category in categories)] | order(order asc){
-  "id": _id, question, answer, categories, order, isPlaceholder
+  "id": _id, question, answer, categories, "serviceSlugs": services[]->slug.current, order, isPlaceholder
 }`);
 
 export const testimonialsQuery = defineQuery(`*[_type == "testimonial"] | order(coalesce(date, _createdAt) desc){
