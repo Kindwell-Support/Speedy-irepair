@@ -79,7 +79,8 @@ const page = (path: string, r: RouteKey, opts: Parameters<typeof webPage>[3] = {
   webPage(path, seo(r).metaTitle, seo(r).metaDescription, { breadcrumb: path !== "/", ...opts });
 
 /* R01 / — LocalBusiness + WebSite + FAQPage + SiteNavigationElement + Speakable */
-export function jsonLdForHome(d: SeoData): JsonLdGraph {
+/** `faqs` = the FAQs rendered on the page (defaults kept for callers that render none). */
+export function jsonLdForHome(d: SeoData, faqs: FaqItem[] = d.homeFaqs): JsonLdGraph {
   return graph(
     organization(d.site),
     localBusiness(d.site, {
@@ -90,7 +91,7 @@ export function jsonLdForHome(d: SeoData): JsonLdGraph {
     website(d.site),
     page("/", "/", { speakable: SPEAKABLE_SELECTORS }),
     siteNavigation(d.nav?.length ? d.nav : MAIN_NAV),
-    faqPage("/", d.homeFaqs),
+    faqPage("/", faqs),
   );
 }
 
@@ -205,7 +206,7 @@ export function jsonLdForContact(): JsonLdGraph {
 }
 
 /* R10 /financing — Service + FAQPage + BreadcrumbList */
-export function jsonLdForFinancing(d: SeoData): JsonLdGraph {
+export function jsonLdForFinancing(d: SeoData, faqs: FaqItem[] = d.financingFaqs): JsonLdGraph {
   const s = d.services.find((x) => x.slug === "financing")!;
   return graph(
     page("/financing", "/financing"),
@@ -217,13 +218,13 @@ export function jsonLdForFinancing(d: SeoData): JsonLdGraph {
       serviceType: s.serviceType,
       description: s.snippet,
     }),
-    faqPage("/financing", d.financingFaqs),
+    faqPage("/financing", faqs),
     crumbs("/financing", "Financing"),
   );
 }
 
 /* R11 /home-internet — Service (with brief-supplied $40/mo Offer) + FAQPage + BreadcrumbList */
-export function jsonLdForHomeInternet(d: SeoData): JsonLdGraph {
+export function jsonLdForHomeInternet(d: SeoData, faqs: FaqItem[] = d.homeInternetFaqs): JsonLdGraph {
   const s = d.services.find((x) => x.slug === "home-internet")!;
   return graph(
     page("/home-internet", "/home-internet"),
@@ -236,7 +237,7 @@ export function jsonLdForHomeInternet(d: SeoData): JsonLdGraph {
       description: s.snippet,
       offers: homeInternetOffer(),
     }),
-    faqPage("/home-internet", d.homeInternetFaqs),
+    faqPage("/home-internet", faqs),
     crumbs("/home-internet", "Home Internet"),
   );
 }

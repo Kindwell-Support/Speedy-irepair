@@ -20,7 +20,7 @@ export default async function FinancingPage() {
   const [page, steps, faqs, seo] = await Promise.all([getFinancingPage(), getHowItWorksSteps("financing"), getFaqs("financing"), getSeoData()]);
   return (
     <>
-      <JsonLd data={jsonLdForFinancing(seo)} />
+      <JsonLd data={jsonLdForFinancing(seo, faqs)} />
       <PageHero hero={page.hero} photo="boardMacro" />
       <Section id="what-is-acima" copy={page.whatIsSection} />
       <HowItWorks id="financing-steps" copy={page.howItWorksSection} steps={steps} />

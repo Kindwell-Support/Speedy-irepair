@@ -32,7 +32,7 @@ export default async function HomeInternetPage() {
   const { hero, offer } = page;
   return (
     <>
-      <JsonLd data={jsonLdForHomeInternet(seo)} />
+      <JsonLd data={jsonLdForHomeInternet(seo, faqs)} />
 
       <section className="landing-stage relative isolate overflow-hidden pb-16 pt-28 md:pt-32 lg:pb-24 lg:pt-40">
         <p aria-hidden className={`landing-word pointer-events-none absolute -z-10 ${wordmark.className}`}>

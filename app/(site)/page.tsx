@@ -46,7 +46,7 @@ export default async function HomePage() {
   ]);
   return (
     <>
-      <JsonLd data={jsonLdForHome(seo)} />
+      <JsonLd data={jsonLdForHome(seo, faqs)} />
       <HomeHero hero={page.hero} />
       <HeroProof business={settings.business} />
       <ServicesGrid copy={page.serviceCardsSection} cards={page.serviceCards} />
