@@ -1,5 +1,5 @@
 import "server-only";
-import { serverEnv } from "@/lib/env.server";
+import { missingGhlVars, serverEnv } from "@/lib/env.server";
 
 /**
  * Minimal GoHighLevel API v2 client. Private Integration tokens only work on v2 (services.leadconnectorhq.com),
@@ -20,9 +20,19 @@ export class GhlError extends Error {
   }
 }
 
+/** A required GHL_* env var is empty. Status 0, so it's never retried: it won't fix itself until a redeploy. */
+export class GhlConfigError extends GhlError {
+  constructor(readonly missing: readonly string[]) {
+    super(0, `GHL is misconfigured, missing env var(s): ${missing.join(", ")}. Nothing was sent to GHL.`);
+    this.name = "GhlConfigError";
+  }
+}
+
 /** Worth trying again: network failures, timeouts, rate limits and GHL-side errors. A 4xx won't fix itself. */
 export const isRetriable = (err: unknown): boolean =>
   !(err instanceof GhlError) || err.status === 429 || err.status >= 500;
+
+let configErrorLogged = false;
 
 export async function ghl<T>(
   method: "GET" | "POST" | "PUT" | "DELETE",
@@ -30,6 +40,15 @@ export async function ghl<T>(
   body?: unknown,
   opts: { revalidate?: number } = {},
 ): Promise<T> {
+  // Fail this call, not the site: callers already log failed GHL calls with the lead's payload (lib/ghl/retry.ts).
+  if (missingGhlVars.length) {
+    const err = new GhlConfigError(missingGhlVars);
+    if (!configErrorLogged) {
+      configErrorLogged = true;
+      console.error(`[ghl] ${err.message} Every GHL call is refused until it's set; check .env.example.`);
+    }
+    throw err;
+  }
   const res = await fetch(`${BASE_URL}${path}`, {
     method,
     headers: {

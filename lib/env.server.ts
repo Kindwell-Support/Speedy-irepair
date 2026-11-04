@@ -1,4 +1,5 @@
 import "server-only";
+import { GHL_FIELDS_ENV } from "@/lib/ghl/fields";
 
 /** Server-only secrets. Importing this file from a client component fails the build (server-only). */
 export const serverEnv = {
@@ -24,7 +25,30 @@ export const serverEnv = {
   nodeEnv: process.env.NODE_ENV ?? "development",
 } as const;
 
-/** Every GHL var set. Without them /repair runs on the mock backend (lib/booking/mock-provider.ts). */
+/**
+ * Every required GHL_* var that's empty: the core vars above plus the field, pipeline and stage IDs and location
+ * label in lib/ghl/fields.ts. While any is missing, every GHL call fails with a logged GhlConfigError
+ * (lib/ghl/client.ts) instead of sending incomplete data; the site itself stays up. GHL_OWNER_USER_IDS is optional,
+ * and GHL_TIMEZONE falls back to America/New_York (lib/repair-time.ts).
+ */
+export const missingGhlVars: readonly string[] = Object.entries({
+  GHL_API_TOKEN: serverEnv.ghlApiToken,
+  GHL_LOCATION_ID: serverEnv.ghlLocationId,
+  GHL_CALENDAR_ID: serverEnv.ghlCalendarId,
+  GHL_PIPELINE_ID: serverEnv.ghlPipelineId,
+  GHL_STAGE_INTAKE_STARTED: serverEnv.ghlStageIntakeStarted,
+  GHL_STAGE_NEW_LEAD: serverEnv.ghlStageNewLead,
+  GHL_STAGE_BOOKED: serverEnv.ghlStageBooked,
+  ...GHL_FIELDS_ENV,
+})
+  .filter(([, value]) => !value)
+  .map(([name]) => name);
+
+/**
+ * The core GHL vars set, meaning GHL is meant to be on. Without them /repair runs on the mock backend
+ * (lib/booking/mock-provider.ts) and forms skip GHL. With them set but another required var missing, GHL stays
+ * selected and its calls fail loudly (missingGhlVars), so a half-configured account never looks like the mock.
+ */
 export const isGhlConfigured = [
   serverEnv.ghlApiToken,
   serverEnv.ghlLocationId,

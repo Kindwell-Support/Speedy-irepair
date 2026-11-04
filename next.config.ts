@@ -12,6 +12,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Inlined at build time so the booking widget formats times in the same zone as the server (lib/repair-time.ts).
+  env: { GHL_TIMEZONE: process.env.GHL_TIMEZONE ?? "" },
   async redirects() {
     return [{ source: "/schedule-repair", destination: "/repair", permanent: true }];
   },

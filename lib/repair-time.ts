@@ -2,7 +2,28 @@
  * Date and time helpers for repair booking. Every appointment is in the shop's time zone, whatever the visitor's
  * own clock says. Client-safe (no server imports), shared by the widget and lib/booking.
  */
-export const SHOP_TIME_ZONE = "America/New_York";
+const DEFAULT_TIME_ZONE = "America/New_York";
+
+/**
+ * GHL_TIMEZONE, an IANA zone. next.config.ts inlines it so the browser sees the same value as the server. A missing
+ * or invalid value falls back to America/New_York rather than throwing in every date format on the site.
+ */
+function resolveTimeZone(value: string | undefined): string {
+  const tz = value?.trim();
+  if (tz) {
+    try {
+      new Intl.DateTimeFormat("en-US", { timeZone: tz });
+      return tz;
+    } catch {
+      // Logged below.
+    }
+  }
+  if (typeof window === "undefined")
+    console.error(`[ghl] GHL_TIMEZONE is ${tz ? `invalid ("${tz}")` : "not set"}; using ${DEFAULT_TIME_ZONE}.`);
+  return DEFAULT_TIME_ZONE;
+}
+
+export const SHOP_TIME_ZONE = resolveTimeZone(process.env.GHL_TIMEZONE);
 /** How far ahead the date picker lets you book: the window the GHL free-slots lookup covers. */
 export const BOOKING_WINDOW_DAYS = 14;
 

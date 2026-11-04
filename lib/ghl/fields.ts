@@ -1,29 +1,32 @@
 /**
- * GHL contact custom fields (folder "Repair Intake") and the exact dropdown values the intake writes. IDs were
- * resolved once from GET /locations/{locationId}/customFields by fieldKey. Re-check them, and every dropdown
- * value below, against the live account with:
+ * GHL contact custom fields (folder "Repair Intake"), pipelines and the exact dropdown values the intake writes.
+ * Every account-specific value (field, pipeline and stage IDs, the location label) comes from a GHL_* env var; see
+ * .env.example. Check them, and every dropdown value below, against the live account with:
  *   npx tsx --env-file=.env.local scripts/ghl-check.ts
+ * which also prints the account's IDs as ready-to-paste .env lines.
  * GHL silently drops a dropdown value it doesn't recognise, so a renamed option loses data without an error.
+ * An empty var is caught by missingGhlVars (lib/env.server.ts): GHL calls refuse to run, the site stays up.
  * No secrets here (no server-only import), so the check script can load it outside Next.
+ * process.env is read by literal name, as Next.js needs.
  */
 export const FIELD_IDS = {
-  deviceType: "YJ5KQKWaFP2k03ZzxDoZ", // contact.device_type
-  brand: "WwQz6RuR0UzhxN9pit2f", // contact.brand
-  model: "joyGZzBZJk77Cai7lFi7", // contact.model
-  issue: "4AJRI71bxLsMJgn91NxF", // contact.issue
-  problemDetails: "mUjYyMqauEaxSqWARVKF", // contact.problem_details
-  location: "evfI3Uq1it2v8pJhzMDX", // contact.location
-  leadSource: "bqA7bXAO9ndmmKw3rltJ", // contact.lead_source
-  leadStatus: "uJgKRFQzTmeSV26BopMs", // contact.lead_status
-  smsConsentAt: "ZY2YInaxgJPNdh6eOCjb", // contact.sms_consent_at
-  utmSource: "OufhjqD0baD4veivhGtg", // contact.utm_source
-  utmMedium: "S5Tf2T2R6Ym5SNCjVPQ7", // contact.utm_medium
-  utmCampaign: "98PFuZNB37j3T8Sv0OYY", // contact.utm_campaign
-  landingPage: "wQmTEmVJ2r7BYMEdt6Lu", // contact.landing_page
-  homeType: "6exaGFpVf4ZehPwSw5FR", // contact.home_type
-  internetNeed: "bBZZHIwXWX3A6P7sZDaI", // contact.internet_need
-  internetTiming: "OY3oEncjcRMKOPnqet5U", // contact.internet_timing
-  currentProvider: "GngFVcqwFCMjlttVXCAr", // contact.current_provider
+  deviceType: process.env.GHL_FIELD_DEVICE_TYPE ?? "",
+  brand: process.env.GHL_FIELD_BRAND ?? "",
+  model: process.env.GHL_FIELD_MODEL ?? "",
+  issue: process.env.GHL_FIELD_ISSUE ?? "",
+  problemDetails: process.env.GHL_FIELD_PROBLEM_DETAILS ?? "",
+  location: process.env.GHL_FIELD_LOCATION ?? "",
+  leadSource: process.env.GHL_FIELD_LEAD_SOURCE ?? "",
+  leadStatus: process.env.GHL_FIELD_LEAD_STATUS ?? "",
+  smsConsentAt: process.env.GHL_FIELD_SMS_CONSENT_AT ?? "",
+  utmSource: process.env.GHL_FIELD_UTM_SOURCE ?? "",
+  utmMedium: process.env.GHL_FIELD_UTM_MEDIUM ?? "",
+  utmCampaign: process.env.GHL_FIELD_UTM_CAMPAIGN ?? "",
+  landingPage: process.env.GHL_FIELD_LANDING_PAGE ?? "",
+  homeType: process.env.GHL_FIELD_HOME_TYPE ?? "",
+  internetNeed: process.env.GHL_FIELD_INTERNET_NEED ?? "",
+  internetTiming: process.env.GHL_FIELD_INTERNET_TIMING ?? "",
+  currentProvider: process.env.GHL_FIELD_CURRENT_PROVIDER ?? "",
 } as const;
 export type FieldName = keyof typeof FIELD_IDS;
 
@@ -48,6 +51,10 @@ export const FIELD_KEYS: Record<FieldName, string> = {
   currentProvider: "contact.current_provider",
 };
 
+/** The env var holding a field's ID: contact.device_type is GHL_FIELD_DEVICE_TYPE. */
+export const fieldEnvName = (fieldKey: string) =>
+  `GHL_FIELD_${fieldKey.replace(/^contact\./, "").toUpperCase()}`;
+
 /**
  * The /home-internet form's answers as GHL spells its dropdown options (capitalised differently). Update the
  * right-hand side if an option is renamed in GHL.
@@ -63,29 +70,44 @@ export const INTERNET_OPTIONS = {
   },
 } as const;
 
-/** Note the en dash (–). */
-export const LOCATION = "Akron – W Market St";
+/** The Location dropdown value, exactly as GHL spells it ("Akron – W Market St": note the en dash). */
+export const LOCATION = process.env.GHL_LOCATION_LABEL ?? "";
 
 /** The "General Inquiries" pipeline and its first stage. Separate from the repair pipeline in GHL_PIPELINE_ID. */
 export const INQUIRY_PIPELINE = {
-  id: "sxdmtq4VLDEo1ohQgZBY",
-  stageNew: "7eda428c-5b73-4014-a3e7-ba33c2b90413",
+  id: process.env.GHL_INQUIRY_PIPELINE_ID ?? "",
+  stageNew: process.env.GHL_INQUIRY_STAGE_NEW ?? "",
 } as const;
 
-/** The "Device Buyback" pipeline and its first stage, for the /sell-your-device trade-in form. */
+/** The "Device Buyback" pipeline and its first stage ("New Inquiry"), for the /sell-your-device trade-in form. */
 export const BUYBACK_PIPELINE = {
-  id: "LF9Lue3ni3S7oZk1Vwxv",
-  stageNew: "45737350-4829-4643-9409-3b5e574e49b5", // New Inquiry
+  id: process.env.GHL_BUYBACK_PIPELINE_ID ?? "",
+  stageNew: process.env.GHL_BUYBACK_STAGE_NEW ?? "",
 } as const;
 
-/** The "Home Internet Leads" pipeline and its first stage, for the /home-internet address check. */
+/** The "Home Internet Leads" pipeline and its first stage ("New Lead"), for the /home-internet address check. */
 export const INTERNET_PIPELINE = {
-  id: "UI2A3FCoPQqQo07svKdz",
-  stageNew: "c84a0af0-b0f2-43b2-9b69-a51ec3ffea63", // New Lead
+  id: process.env.GHL_INTERNET_PIPELINE_ID ?? "",
+  stageNew: process.env.GHL_INTERNET_STAGE_NEW ?? "",
 } as const;
 
 /** Where /instant-quote leads wait in the repair pipeline. Comes before New Lead so its automations don't fire. */
-export const STAGE_QUOTE_REQUESTED = "985ba112-9869-4456-b30f-6496efcd8743";
+export const STAGE_QUOTE_REQUESTED = process.env.GHL_STAGE_QUOTE_REQUESTED ?? "";
+
+/** Every env-backed value in this file by its var name, for validation (lib/env.server.ts) and the check script. */
+export const GHL_FIELDS_ENV: Record<string, string> = {
+  ...Object.fromEntries(
+    (Object.keys(FIELD_IDS) as FieldName[]).map((name) => [fieldEnvName(FIELD_KEYS[name]), FIELD_IDS[name]]),
+  ),
+  GHL_LOCATION_LABEL: LOCATION,
+  GHL_STAGE_QUOTE_REQUESTED: STAGE_QUOTE_REQUESTED,
+  GHL_INQUIRY_PIPELINE_ID: INQUIRY_PIPELINE.id,
+  GHL_INQUIRY_STAGE_NEW: INQUIRY_PIPELINE.stageNew,
+  GHL_BUYBACK_PIPELINE_ID: BUYBACK_PIPELINE.id,
+  GHL_BUYBACK_STAGE_NEW: BUYBACK_PIPELINE.stageNew,
+  GHL_INTERNET_PIPELINE_ID: INTERNET_PIPELINE.id,
+  GHL_INTERNET_STAGE_NEW: INTERNET_PIPELINE.stageNew,
+};
 
 export const LEAD_STATUS = {
   intakeStarted: "Intake Started",
