@@ -61,9 +61,9 @@ export const SITE_IMAGES = {
   },
   storeExterior: {
     src: "/images/site/store-exterior.webp",
-    alt: "The Speedy iRepair storefront seen from the sidewalk",
-    width: 1536,
-    height: 2048,
+    alt: "Four people in uniform outside the Speedy iRepair storefront in Akron",
+    width: 1206,
+    height: 883,
   },
   storeCounter: {
     src: "/images/site/store-counter.webp",

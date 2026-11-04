@@ -96,7 +96,7 @@ export function LocationContact({
                   alt={SITE_IMAGES.storeExterior.alt}
                   fill
                   sizes="(min-width: 1024px) 55vw, 100vw"
-                  className="object-cover object-[50%_32%]"
+                  className="object-cover object-[50%_25%]"
                 />
               </div>
               <MapEmbed
