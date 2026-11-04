@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { buttonClasses } from "@/components/ui/ButtonLink";
 import type { IntakeResult } from "@/lib/repair-schemas";
 import { formatDateLong, formatSlotTime, shopDateISO } from "@/lib/repair-time";
@@ -42,6 +43,7 @@ function googleCalendarUrl(
 /** After step 6. Booked (or "we'll call you" when no time was booked): summary, calendar link, what to bring, where the shop is. */
 export function ConfirmationStep({
   result,
+  device,
   summary,
   calendarTitle,
   shop,
@@ -49,6 +51,8 @@ export function ConfirmationStep({
   onRestart,
 }: {
   result: IntakeResult;
+  /** The "Your device" strip (photo and model), shown above the summary. */
+  device?: ReactNode;
   summary: { label: string; value: string }[];
   calendarTitle: string;
   shop: ShopInfo;
@@ -85,6 +89,8 @@ export function ConfirmationStep({
       ) : (
         <StepHeading title="Request received" intro="We'll call you to confirm a time." />
       )}
+
+      {device ? <div className="mb-4">{device}</div> : null}
 
       <dl className="grid gap-x-6 gap-y-4 rounded-md border border-border bg-surface-2 p-5 sm:grid-cols-[auto_1fr] md:p-6">
         {when ? (

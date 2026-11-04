@@ -18,6 +18,7 @@ import { ContactStep } from "./ContactStep";
 import { DeviceStep } from "./DeviceStep";
 import { IssueStep } from "./IssueStep";
 import { ModelStep } from "./ModelStep";
+import { ModelSummary } from "./ModelSummary";
 import { ScheduleStep, type SlotsState } from "./ScheduleStep";
 import { StepProgress } from "./ui";
 
@@ -303,6 +304,7 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
 
   const brandLabel = resolved(answers.brand, answers.brandOther, OTHER);
   const modelLabel = resolved(answers.model, answers.modelOther, OTHER);
+  const deviceLabel = `${brandLabel} ${modelLabel}`.trim();
   const issueLabel = answers.issue === ISSUE_OTHER ? answers.issueDetails : (answers.issue ?? "");
   const status =
     step === DONE ? "Request sent" : `Step ${step + 1} of ${STEPS.length}: ${STEPS[step]}`;
@@ -322,6 +324,16 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
           onBack={() => goTo(step - 1)}
         />
       )}
+
+      {(step === ISSUE || step === TIME) && answers.device ? (
+        <ModelSummary
+          className="mb-8"
+          device={answers.device}
+          model={answers.model}
+          label={deviceLabel}
+          onChange={() => goTo(MODEL)}
+        />
+      ) : null}
 
       {step === DEVICE ? (
         <DeviceStep value={answers.device} onChoose={(device) => answer(DEVICE, { device })} />
@@ -410,8 +422,12 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
         <ConfirmationStep
           result={result}
           calendarTitle={`${shop.name}: ${issueLabel} (${modelLabel})`}
+          device={
+            answers.device ? (
+              <ModelSummary device={answers.device} model={answers.model} label={deviceLabel} />
+            ) : null
+          }
           summary={[
-            { label: "Device", value: `${brandLabel} ${modelLabel}`.trim() },
             { label: "Issue", value: issueLabel },
             { label: "Name", value: answers.name },
             { label: "Phone", value: answers.phone },

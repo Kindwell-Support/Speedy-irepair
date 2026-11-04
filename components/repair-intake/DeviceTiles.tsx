@@ -14,7 +14,8 @@ const icon = (children: ReactNode) => (
   </svg>
 );
 
-const ICONS: Record<DeviceKind, ReactNode> = {
+/** Line icon per device, also used as the picture for a device without a model photo (ModelSummary). */
+export const DEVICE_ICONS: Record<DeviceKind, ReactNode> = {
   Phone: icon(
     <>
       <rect x="7" y="2" width="10" height="20" rx="2" />
@@ -75,7 +76,7 @@ export function DeviceTiles<T extends DeviceKind>({
             className={cn(optionClass, "h-full min-h-36 flex-col justify-center gap-3 text-center md:min-h-44")}
             onClick={() => onChoose(device)}
           >
-            {ICONS[device]}
+            {DEVICE_ICONS[device]}
             {device}
           </button>
         </li>
