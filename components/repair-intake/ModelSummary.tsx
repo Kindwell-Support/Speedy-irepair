@@ -49,7 +49,7 @@ export function ModelSummary({
       <div className="min-w-0 flex-1">
         <p className="text-body-sm font-semibold uppercase tracking-[0.06em] text-text-tertiary">Your device</p>
         {/* Wraps rather than truncating: nowrap text would widen the widget's grid column on phones. */}
-        <p className="break-words text-body-lg font-bold">{label}</p>
+        <p className="mt-0.5 break-words text-body font-bold leading-snug md:text-body-lg">{label}</p>
       </div>
       {onChange ? (
         <button

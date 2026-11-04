@@ -9,6 +9,7 @@ import { ContactStep } from "@/components/repair-intake/ContactStep";
 import { DeviceStep } from "@/components/repair-intake/DeviceStep";
 import { IssueStep } from "@/components/repair-intake/IssueStep";
 import { ModelStep } from "@/components/repair-intake/ModelStep";
+import { ModelSummary } from "@/components/repair-intake/ModelSummary";
 import { StepHeading, StepProgress } from "@/components/repair-intake/ui";
 import { FormShell } from "@/components/sections/forms/FormShell";
 import { fieldError, TextAreaField } from "@/components/sections/forms/fields";
@@ -70,6 +71,7 @@ export function QuoteIntake({ successMessage }: { successMessage: string }) {
 
   const brand = resolved(answers.brand, answers.brandOther);
   const model = resolved(answers.model, answers.modelOther);
+  const deviceLabel = `${brand} ${model}`.trim();
   const problem = answers.issue === ISSUE_OTHER ? answers.issueOther : (answers.issue ?? "");
   const sent = state.status === "success";
   const errors = state.status === "error" ? state.fieldErrors : undefined;
@@ -84,6 +86,16 @@ export function QuoteIntake({ successMessage }: { successMessage: string }) {
       {sent ? null : (
         <StepProgress steps={STEPS} step={step} status={status} label="Quote progress" onBack={() => goTo(step - 1)} />
       )}
+
+      {(step === ISSUE || step === DETAILS) && answers.device && !sent ? (
+        <ModelSummary
+          className="mb-8"
+          device={answers.device}
+          model={answers.model}
+          label={deviceLabel}
+          onChange={() => goTo(MODEL)}
+        />
+      ) : null}
 
       {step === DEVICE ? (
         <DeviceStep
@@ -142,7 +154,7 @@ export function QuoteIntake({ successMessage }: { successMessage: string }) {
           {sent ? null : (
             <StepHeading
               title="Anything else we should know?"
-              intro={`${brand} ${model}: ${problem.toLowerCase()}. Add anything that helps, or just send it.`}
+              intro={`Problem: ${problem.toLowerCase()}. Add anything that helps, or just send it.`}
             />
           )}
           <FormShell
