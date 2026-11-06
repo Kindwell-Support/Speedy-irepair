@@ -3,10 +3,14 @@
 import { useEffect, useRef } from "react";
 import { useLenis } from "@/components/motion/LenisProvider";
 
-/** Same public IDs as the old Shopify page, so orders keep going to Monte's Reusely account. */
+/**
+ * Monte's Reusely embed code: the shop only buys iPhones.
+ * brandSlug alone still lists every Apple product; adding deviceSlug opens straight on the iPhone model list.
+ */
 const WIDGET_OPTIONS = {
   tenantId: "6e6ee434e0666307f783a3ac6756eba292e9a49642f5fe62823ac96e0901bc88",
-  apiKey: "4BDVDTHXrb194FzDPb5h1hVBJPIJvLiPInYCO5lZwpL3Sh6GVDPPNzaduOzNHBTG",
+  brandSlug: "apple",
+  deviceSlug: "iphone",
   disableFloatButton: false,
 };
 
