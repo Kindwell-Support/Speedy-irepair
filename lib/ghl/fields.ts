@@ -94,6 +94,12 @@ export const INTERNET_PIPELINE = {
 /** Where /instant-quote leads wait in the repair pipeline. Comes before New Lead so its automations don't fire. */
 export const STAGE_QUOTE_REQUESTED = process.env.GHL_STAGE_QUOTE_REQUESTED ?? "";
 
+/**
+ * Where /instant-quote leads go when the widget showed them a price from the CMS price list. Optional: unset, those
+ * leads land in Quote Requested like the rest (so it's left out of GHL_FIELDS_ENV, which treats every var as required).
+ */
+export const STAGE_QUOTE_SHOWN = process.env.GHL_STAGE_QUOTE_SHOWN || STAGE_QUOTE_REQUESTED;
+
 /** Every env-backed value in this file by its var name, for validation (lib/env.server.ts) and the check script. */
 export const GHL_FIELDS_ENV: Record<string, string> = {
   ...Object.fromEntries(
@@ -125,6 +131,7 @@ export const TAGS = {
   contactForm: "contact-form",
   tradeInForm: "trade-in-form",
   quoteForm: "instant-quote-requested",
+  quoteShown: "instant-quote-shown",
   internetForm: "home-internet-lead",
 } as const;
 

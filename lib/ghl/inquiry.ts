@@ -13,6 +13,7 @@ import {
   LEAD_STATUS_ACTIVE,
   LOCATION,
   STAGE_QUOTE_REQUESTED,
+  STAGE_QUOTE_SHOWN,
   TAGS,
   type FieldName,
 } from "@/lib/ghl/fields";
@@ -21,6 +22,7 @@ import { attempt } from "@/lib/ghl/retry";
 import { CONSENT_VERSION } from "@/lib/repair-schemas";
 import { shopDateISO } from "@/lib/repair-time";
 import type { InternetInput, QuoteInput, TradeInInput } from "@/lib/forms/schemas";
+import type { QuotePrice } from "@/lib/repair-prices";
 import { checkAvailability } from "@/lib/internet-availability/check";
 import type { AvailabilityResult } from "@/lib/internet-availability/config";
 
@@ -166,20 +168,25 @@ export const sendInquiry = (inquiry: InquiryInput) => {
   );
 };
 
-/** Instant quote form to the repair pipeline. Never throws; true as for sendInquiry. */
-export const sendQuote = (quote: QuoteInput) => {
+/**
+ * Instant quote form to the repair pipeline. `prices` are what the widget showed from the CMS price list: any at all
+ * and the card goes to Quote Shown with them in the note, none and it's a Quote Requested for staff to price.
+ * Never throws; true as for sendInquiry.
+ */
+export const sendQuote = (quote: QuoteInput, prices: QuotePrice[] = []) => {
   const { deviceType, brand, model, issue, details, attribution = {}, ...input } = quote;
+  const shown = prices.length > 0;
   return attempt("instant quote", quote, () =>
     send({
       ...input,
       attribution,
       source: "Website quote form",
-      tag: TAGS.quoteForm,
+      tag: shown ? TAGS.quoteShown : TAGS.quoteForm,
       // A repair that's already moved on, e.g. Booked, keeps its card and the quote gets its own.
       pipeline: {
         id: serverEnv.ghlPipelineId,
-        stageNew: STAGE_QUOTE_REQUESTED,
-        reuseFrom: [serverEnv.ghlStageIntakeStarted, STAGE_QUOTE_REQUESTED],
+        stageNew: shown ? STAGE_QUOTE_SHOWN : STAGE_QUOTE_REQUESTED,
+        reuseFrom: [serverEnv.ghlStageIntakeStarted, STAGE_QUOTE_REQUESTED, STAGE_QUOTE_SHOWN],
       },
       contactFields: {
         deviceType,
@@ -198,6 +205,7 @@ export const sendQuote = (quote: QuoteInput) => {
         `Brand: ${brand}`,
         `Model: ${model.trim()}`,
         `Issue: ${issue}`,
+        ...(shown ? ["", "Price shown on the website:", ...prices.map((p) => `- ${p.label}: ${p.price}`)] : []),
         ...(details?.trim() ? ["", details.trim()] : []),
         "",
         `SMS consent given via website quote form, ${new Date().toISOString()}, consent text ${CONSENT_VERSION}`,

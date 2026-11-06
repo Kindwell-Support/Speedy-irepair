@@ -2,7 +2,7 @@ import "server-only";
 import { leadSourceFor, type Attribution } from "@/lib/attribution";
 import { serverEnv } from "@/lib/env.server";
 import { GhlError, ghl, isRetriable, toE164 } from "@/lib/ghl/client";
-import { FIELD_IDS, LEAD_STATUS, LOCATION, STAGE_QUOTE_REQUESTED, TAGS, type FieldName } from "@/lib/ghl/fields";
+import { FIELD_IDS, LEAD_STATUS, LOCATION, STAGE_QUOTE_REQUESTED, STAGE_QUOTE_SHOWN, TAGS, type FieldName } from "@/lib/ghl/fields";
 import { ensureOwner, ownerForUpsert } from "@/lib/ghl/owner";
 import { attempt } from "@/lib/ghl/retry";
 import {
@@ -126,7 +126,10 @@ async function ensureOpportunity(
   );
   // A quote customer who books carries on with their quote's card.
   const unfinished = opportunities.find(
-    (o) => o.pipelineStageId === env.ghlStageIntakeStarted || o.pipelineStageId === STAGE_QUOTE_REQUESTED,
+    (o) =>
+      o.pipelineStageId === env.ghlStageIntakeStarted ||
+      o.pipelineStageId === STAGE_QUOTE_REQUESTED ||
+      o.pipelineStageId === STAGE_QUOTE_SHOWN,
   );
   if (unfinished) return unfinished.id;
   const assignedTo = await owner;

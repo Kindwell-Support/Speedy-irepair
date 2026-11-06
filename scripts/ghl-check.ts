@@ -87,6 +87,7 @@ const PIPELINES: { idVar: string; name: string; stages: Record<string, string | 
       GHL_STAGE_NEW_LEAD: "New Lead",
       GHL_STAGE_BOOKED: "Booked",
       GHL_STAGE_QUOTE_REQUESTED: "Quote Requested",
+      GHL_STAGE_QUOTE_SHOWN: "Quote Shown",
     },
   },
   { idVar: "GHL_INQUIRY_PIPELINE_ID", name: "General Inquiries", stages: { GHL_INQUIRY_STAGE_NEW: null } },

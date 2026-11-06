@@ -108,8 +108,9 @@ export const quotePage: QuotePage = {
   formSection: { heading: "Tell us what happened" },
   deviceTypes: ["iPhone", "iPad", "Samsung", "LG", "Google", "Other"],
   issues: ["Cracked Screen", "Battery", "Charger Port", "Camera", "Water Damage", "Other"],
-  // Decision #5: lead capture only, NO prices shown.
+  // Lead capture, plus an instant price where a service's price list has one for the model (lib/repair-prices.ts).
   successMessage: "Thanks! We'll get back to you with a quote shortly.",
+  priceDisclaimer: "Estimate. Final price confirmed in store.",
   seo: {
     metaTitle: "Phone Repair Quote in Akron, OH | Speedy iRepair",
     metaDescription: `Request a phone repair quote for iPhone, iPad, Samsung, LG and Google devices in ${akron}.`,

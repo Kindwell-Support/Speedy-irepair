@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { getQuotePage, getSiteSettings } from "@/lib/sanity/content";
+import { getQuotePage, getSchedulePage, getServices, getSiteSettings } from "@/lib/sanity/content";
+import { quotePriceLines } from "@/lib/repair-prices";
 import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForInstantQuote } from "@/lib/seo/routes";
@@ -22,11 +23,18 @@ const NEXT_STEPS = [
 ];
 
 /**
- * R06 — pricing TBD, so the tool runs in lead-capture mode (F1), tap-through like /repair. The hero stays type-only so the form is near
- * the top on a phone; the photo and the reassurance (what happens next, tap to call, hours) sit beside it.
+ * R06 — tap-through like /repair. Shows a price where a service page's price list has one for the model (lib/repair-prices.ts),
+ * otherwise it's lead capture (F1). The hero stays type-only so the form is near the top on a phone; the photo and the
+ * reassurance (what happens next, tap to call, hours) sit beside it.
  */
 export default async function InstantQuotePage() {
-  const [page, settings, seo] = await Promise.all([getQuotePage(), getSiteSettings(), getSeoData()]);
+  const [page, settings, seo, services, schedule] = await Promise.all([
+    getQuotePage(),
+    getSiteSettings(),
+    getSeoData(),
+    getServices(),
+    getSchedulePage(),
+  ]);
   const b = settings.business;
   const photo = page.photo ?? SITE_IMAGES.screenLift;
   return (
@@ -39,7 +47,13 @@ export default async function InstantQuotePage() {
             <h2 id="quote-heading" className="mb-8 text-h3">
               {page.formSection.heading}
             </h2>
-            <QuoteIntake successMessage={page.successMessage} />
+            <QuoteIntake
+              successMessage={page.successMessage}
+              prices={quotePriceLines(services)}
+              priceDisclaimer={page.priceDisclaimer}
+              shop={{ name: b.name, address: b.footerAddressLine, phone: b.phone }}
+              whatToBring={{ heading: schedule.whatToBring.heading, intro: schedule.whatToBring.intro }}
+            />
           </div>
 
           <aside aria-label="About your quote" className="flex flex-col gap-10 lg:col-span-4 lg:col-start-9">

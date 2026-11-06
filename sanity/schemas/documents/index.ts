@@ -1,4 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { MODEL_OPTIONS, QUOTE_ISSUE_BY_SLUG } from "@/lib/repair-prices";
 import { placeholderFields } from "../objects";
 
 /** Repeatable documents. Field names MUST match lib/sanity/types.ts. Contract: docs/CONTRACT_SANITY.md */
@@ -33,6 +34,17 @@ export const service = defineType({
           fields: [
             defineField({ name: "label", type: "string", validation: (r) => r.required() }),
             defineField({ name: "price", type: "string", validation: (r) => r.required() }),
+            defineField({
+              name: "models",
+              title: "Models",
+              type: "array",
+              description:
+                "Tick the models this price is for and the Instant Quote widget shows it to them. Nothing ticked = service page only.",
+              of: [defineArrayMember({ type: "string" })],
+              options: { list: MODEL_OPTIONS, layout: "grid" },
+              // Only the services the widget has an issue for (lib/repair-prices.ts).
+              hidden: ({ document }) => !QUOTE_ISSUE_BY_SLUG[(document?.slug as { current?: string } | undefined)?.current ?? ""],
+            }),
           ],
           preview: { select: { title: "label", subtitle: "price" } },
         }),

@@ -179,6 +179,11 @@ export const quotePage = page("quotePage", "Instant Quote", [
   stringList("deviceTypes"),
   stringList("issues"),
   defineField({ name: "successMessage", type: "string" }),
+  defineField({
+    name: "priceDisclaimer",
+    type: "string",
+    description: "Under the price when the widget finds one in a service's price list.",
+  }),
 ]);
 export const schedulePage = page("schedulePage", "Schedule Repair", [
   section("whatToExpect"),

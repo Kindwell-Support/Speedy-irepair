@@ -43,7 +43,7 @@ export const promotionsQuery = defineQuery(`*[_type == "promotion"] | order(orde
 
 export const servicesQuery = defineQuery(`*[_type == "service"] | order(order asc){
   "id": _id, "slug": slug.current, title, summary, body, "ctas": ctas[]${cta}, riveIcon, order,
-  isPlaceholder, sourceNote, ${seo}, priceFrom, priceList[]{ label, price }, ${optImage("image")}
+  isPlaceholder, sourceNote, ${seo}, priceFrom, priceList[]{ label, price, models }, ${optImage("image")}
 }`);
 
 export const faqsQuery = defineQuery(`*[_type == "faq" && (!defined($category) || $category in categories)] | order(order asc){

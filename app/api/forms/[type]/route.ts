@@ -2,7 +2,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import { formSchemas, isFormType, spamFields, type FormResponse } from "@/lib/forms/schemas";
 import { checkFillTime, checkHoneypot, checkRateLimit, clientIp, isTurnstileEnabled, verifyTurnstile } from "@/lib/forms/spam";
 import { deliverSubmission } from "@/lib/forms/submit";
-import { getSiteSettings } from "@/lib/sanity/content";
+import { getServices, getSiteSettings } from "@/lib/sanity/content";
+import { findPrices, quotePriceLines } from "@/lib/repair-prices";
 import { isProductionSite } from "@/lib/env";
 import { isGhlConfigured } from "@/lib/env.server";
 import { sendInquiry, sendInternet, sendQuote, sendTradeIn } from "@/lib/ghl/inquiry";
@@ -18,6 +19,23 @@ const json = (body: FormResponse, status = 200) => NextResponse.json(body, { sta
  *        -> zod validation -> GHL (contact, quote, trade-in and internet forms) -> deliver (Sanity formSubmission + signed webhook).
  * Spam hits get a fake success (no signal to bots) but are never stored.
  */
+/**
+ * The prices the widget showed this visitor, worked out again from the CMS (the same lookup the widget runs), so the
+ * lead's stage and note never rest on what the browser sent. A CMS failure just files it as a plain quote request.
+ */
+async function quotedPrices(quote: QuoteInput) {
+  try {
+    return findPrices(quotePriceLines(await getServices()), {
+      device: quote.deviceType,
+      brand: quote.brand,
+      model: quote.model,
+      issue: quote.issue,
+    });
+  } catch {
+    return [];
+  }
+}
+
 export async function POST(req: NextRequest, { params }: { params: Promise<{ type: string }> }) {
   const { type } = await params;
   if (!isFormType(type)) return NextResponse.json({ ok: false, error: "server", message: "Unknown form." }, { status: 404 });
@@ -45,7 +63,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ typ
   // Once GHL has the lead, a Sanity or webhook failure must not tell the visitor to send it again.
   const toGhl =
     type === "contact" ? () => sendInquiry(parsed.data as ContactInput)
-    : type === "quote" ? () => sendQuote(parsed.data as QuoteInput)
+    : type === "quote" ? async () => sendQuote(parsed.data as QuoteInput, await quotedPrices(parsed.data as QuoteInput))
     : type === "tradein" ? () => sendTradeIn(parsed.data as TradeInInput)
     : type === "internet" ? () => sendInternet(parsed.data as InternetInput)
     : undefined;

@@ -152,6 +152,8 @@ export interface ServiceCard {
 export interface PriceLine {
   label: string;
   price: string;
+  /** Widget models this price is quoted for on /instant-quote (lib/repair-prices.ts). */
+  models?: string[] | null;
 }
 
 export interface Service extends Placeholderable {
@@ -322,6 +324,8 @@ export interface QuotePage extends BasePage {
   deviceTypes: string[];
   issues: string[];
   successMessage: string;
+  /** Shown under an instant price. */
+  priceDisclaimer: string;
 }
 
 export interface SchedulePage extends BasePage {
