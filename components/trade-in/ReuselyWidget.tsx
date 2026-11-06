@@ -3,14 +3,10 @@
 import { useEffect, useRef } from "react";
 import { useLenis } from "@/components/motion/LenisProvider";
 
-/**
- * Monte's Reusely embed code: the shop only buys iPhones.
- * brandSlug alone still lists every Apple product; adding deviceSlug opens straight on the iPhone model list.
- */
+/** Monte's Reusely embed code, as sent: brandSlug "apple" limits the widget to Apple products (iPhone, iPad, Mac, Watch...). */
 const WIDGET_OPTIONS = {
   tenantId: "6e6ee434e0666307f783a3ac6756eba292e9a49642f5fe62823ac96e0901bc88",
   brandSlug: "apple",
-  deviceSlug: "iphone",
   disableFloatButton: false,
 };
 

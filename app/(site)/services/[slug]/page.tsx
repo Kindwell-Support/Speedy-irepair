@@ -10,6 +10,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHero } from "@/components/ui/PageHero";
 import { Section } from "@/components/ui/Section";
 import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
+import { PriceTable } from "@/components/ui/PriceTable";
 import { RichText } from "@/components/ui/RichText";
 import { ContactPrompt } from "@/components/sections/shared/ContactPrompt";
 import { FaqList } from "@/components/sections/shared/FaqList";
@@ -79,16 +80,7 @@ export default async function ServiceDetailPage({ params }: Params) {
       {s.priceFrom || prices.length || s.body?.length ? (
         <Section id="service-details" copy={{ heading: `${s.title} details` }} layout="side">
           {s.priceFrom ? <p className="text-h4 font-bold text-primary-text">{s.priceFrom}</p> : null}
-          {prices.length ? (
-            <dl className="mt-5 max-w-md divide-y divide-border border-y border-border">
-              {prices.map((p) => (
-                <div key={p.label} className="flex items-baseline justify-between gap-6 py-2.5">
-                  <dt className="text-body text-text-secondary">{p.label}</dt>
-                  <dd className="text-body font-bold tabular-nums text-text-primary">{p.price}</dd>
-                </div>
-              ))}
-            </dl>
-          ) : null}
+          <PriceTable prices={prices} serviceTitle={s.title} className="mt-5" />
           {s.body?.length ? (
             <div className="mt-8 max-w-prose">
               <PlaceholderMark show={s.isPlaceholder}>

@@ -5,6 +5,7 @@ import { serviceHref } from "@/lib/seo/content";
 import { SITE_IMAGES, type SiteImageKey } from "@/lib/site-images";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { PlaceholderMark } from "@/components/ui/PlaceholderMark";
+import { PriceTable } from "@/components/ui/PriceTable";
 import { RichText } from "@/components/ui/RichText";
 import { RiveIcon } from "@/components/rive/RiveIcon";
 import { toRiveIconId } from "./rive";
@@ -65,16 +66,7 @@ export function ServiceSections({ services }: { services: Service[] }) {
                     <p className="mt-4 max-w-prose text-body-lg text-text-primary">{s.summary}</p>
                     {/* Pricing is optional CMS text: nothing renders until the shop fills it in. */}
                     {s.priceFrom ? <p className="mt-4 text-body-lg font-bold text-primary-text">{s.priceFrom}</p> : null}
-                    {prices.length ? (
-                      <dl className="mt-5 max-w-md divide-y divide-border border-y border-border">
-                        {prices.map((p) => (
-                          <div key={`${s.id}-${p.label}`} className="flex items-baseline justify-between gap-6 py-2.5">
-                            <dt className="text-body text-text-secondary">{p.label}</dt>
-                            <dd className="text-body font-bold tabular-nums text-text-primary">{p.price}</dd>
-                          </div>
-                        ))}
-                      </dl>
-                    ) : null}
+                    <PriceTable prices={prices} serviceTitle={s.title} className="mt-5" />
                     {s.body?.length ? (
                       <div className="mt-6 max-w-prose">
                         <PlaceholderMark show={s.isPlaceholder}>
