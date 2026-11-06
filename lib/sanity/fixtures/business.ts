@@ -132,5 +132,5 @@ export const announcement: Announcement = {
   text: "FREE Smartphone when you sign up for Home Internet",
   href: "/home-internet",
   external: false,
-  enabled: true,
+  enabled: false,
 };
