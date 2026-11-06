@@ -11,6 +11,7 @@ import {
   internetSchema,
 } from "@/lib/forms/schemas";
 import { useFormSubmit } from "@/lib/forms/useFormSubmit";
+import { UNKNOWN_RESULT, type AvailabilityResult } from "@/lib/internet-availability/config";
 import { telHref } from "@/lib/utils/format";
 import { cn } from "@/lib/utils/cn";
 import { StepHeading, StepProgress, continueClass, optionClass } from "@/components/repair-intake/ui";
@@ -92,18 +93,58 @@ function TileGroup({
   );
 }
 
+export interface AvailabilityCopy {
+  spectrumHeading: string;
+  attHeading: string;
+  attFiberHeading: string;
+  noneHeading: string;
+  noneMessage: string;
+  otherServicesHeading: string;
+}
+
+export interface OtherService {
+  title: string;
+  description: string;
+  href: string;
+}
+
+const addressKey = (a: Answers) =>
+  [a.street, a.unit, a.city, a.state, a.zip].map((v) => v.trim().toLowerCase().replace(/\s+/g, " ")).join("|");
+
+/** Checks Spectrum/AT&T for an address. Never rejects: any failure is "unknown" and staff check by hand. */
+async function fetchAvailability(a: Answers): Promise<AvailabilityResult> {
+  try {
+    const res = await fetch("/api/internet/availability", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ street: a.street, city: a.city, state: a.state, zip: a.zip }),
+    });
+    if (!res.ok) return UNKNOWN_RESULT;
+    return (await res.json()) as AvailabilityResult;
+  } catch {
+    return UNKNOWN_RESULT;
+  }
+}
+
 /**
- * /home-internet: address → home → contact, then a confirmation. One request at the end (/api/forms/internet);
- * staff check availability and call back. With a Spectrum order link in the CMS the confirmation offers it too.
+ * /home-internet: address → home → contact, then the result. Once the address step is valid, Spectrum/AT&T
+ * availability is checked in the background (/api/internet/availability), so it's ready by the time the contact
+ * step is sent. The result screen shows one outcome: Spectrum if it's there, else AT&T, else sorry plus the shop's
+ * other services. If the check couldn't run, it says we're checking and staff confirm on the call.
+ * One request at the end (/api/forms/internet) carries the result, so the lead is tagged with it.
  */
 export function InternetIntake({
   confirmationMessage,
   spectrumOrderUrl,
   shop,
+  results,
+  services,
 }: {
   confirmationMessage: string;
   spectrumOrderUrl?: string | null;
   shop: { address: string; phone: string };
+  results: AvailabilityCopy;
+  services: OtherService[];
 }) {
   const [step, setStep] = useState(ADDRESS);
   const [answers, setAnswers] = useState<Answers>(EMPTY);
@@ -112,7 +153,11 @@ export function InternetIntake({
   const rootRef = useRef<HTMLDivElement>(null);
   const confirmRef = useRef<HTMLHeadingElement>(null);
   const movedRef = useRef(false);
+  const [check, setCheck] = useState<{ key: string; result: AvailabilityResult | null }>();
   const sent = state.status === "success";
+  const key = addressKey(answers);
+  // Only a result for the address as it stands now; one for an address edited since is ignored.
+  const availability = check?.key === key ? check.result : null;
 
   useEffect(() => {
     if (!movedRef.current) return;
@@ -140,6 +185,10 @@ export function InternetIntake({
     e.preventDefault();
     const parsed = schema.safeParse(answers);
     if (!parsed.success) return setErrors(parsed.error.flatten().fieldErrors);
+    if (schema === addressSchema && check?.key !== key) {
+      setCheck({ key, result: null });
+      void fetchAvailability(answers).then((result) => setCheck((c) => (c?.key === key ? { key, result } : c)));
+    }
     goTo(to);
   };
 
@@ -147,46 +196,88 @@ export function InternetIntake({
   const shown = errors ?? (state.status === "error" ? state.fieldErrors : undefined);
   const status = sent ? "Address check sent" : `Step ${step + 1} of ${STEPS.length}: ${STEPS[step]}`;
 
-  if (sent)
+  if (sent) {
+    // A check still running (rare: it starts two steps earlier) shows "checking" and switches when it lands.
+    const outcome = (availability ?? UNKNOWN_RESULT).status;
+    const heading = {
+      spectrum: results.spectrumHeading,
+      att: availability?.attFiber ? results.attFiberHeading : results.attHeading,
+      none: results.noneHeading,
+      unknown: "We’re checking your address",
+    }[outcome];
+    // The Spectrum order link only where Spectrum may be on offer.
+    const orderUrl = outcome === "spectrum" || outcome === "unknown" ? spectrumOrderUrl : null;
     return (
       <div ref={rootRef} className="scroll-mt-24" role="status">
-        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-success-tint text-success" aria-hidden>
-          <svg viewBox="0 0 20 20" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 10.5l4 4 8-9" />
-          </svg>
-        </span>
+        {outcome === "none" ? (
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-tint text-primary-text" aria-hidden>
+            <svg viewBox="0 0 20 20" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M10 5.5v5.5M10 14.5v.01" />
+            </svg>
+          </span>
+        ) : (
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-success-tint text-success" aria-hidden>
+            <svg viewBox="0 0 20 20" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 10.5l4 4 8-9" />
+            </svg>
+          </span>
+        )}
         <h2 ref={confirmRef} tabIndex={-1} className="mt-5 font-heading text-h4 font-black uppercase outline-none">
-          We&rsquo;re checking your address
+          {heading}
         </h2>
         <p className="mt-2 font-bold text-text">
           {line}, {answers.city.trim()}, {answers.state.trim().toUpperCase()} {answers.zip.trim()}
         </p>
-        <p className="mt-3 max-w-[52ch] text-body-lg text-text-secondary">{confirmationMessage}</p>
+        <p className="mt-3 max-w-[52ch] text-body-lg text-text-secondary">
+          {outcome === "none" ? results.noneMessage : confirmationMessage}
+        </p>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          {spectrumOrderUrl ? (
-            <a href={spectrumOrderUrl} target="_blank" rel="noopener noreferrer" className={buttonClasses("primary", "lg")}>
+          {orderUrl ? (
+            <a href={orderUrl} target="_blank" rel="noopener noreferrer" className={buttonClasses("primary", "lg")}>
               Finish on Spectrum<span className="sr-only"> (opens in a new tab)</span>
             </a>
           ) : null}
-          <a href={telHref(shop.phone)} className={buttonClasses(spectrumOrderUrl ? "secondary" : "primary", "lg")}>
+          <a href={telHref(shop.phone)} className={buttonClasses(orderUrl ? "secondary" : "primary", "lg")}>
             Call {shop.phone}
           </a>
         </div>
+
+        {outcome === "none" && services.length ? (
+          <div className="mt-8">
+            <h3 className="font-sans text-h5 font-bold">{results.otherServicesHeading}</h3>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              {services.map((s) => (
+                <li key={s.href}>
+                  <Link
+                    href={s.href}
+                    className="block h-full rounded-md border border-border bg-surface-2 p-4 transition-colors hover:border-border-strong"
+                  >
+                    <span className="block font-bold text-text">{s.title}</span>
+                    <span className="mt-1 block text-body-sm text-text-secondary">{s.description}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         <div className="mt-8 rounded-md border border-border bg-surface-2 p-5">
           <p className="text-body-sm font-semibold uppercase tracking-[0.06em] text-text-tertiary">The store</p>
           <address className="mt-1 not-italic text-body text-text-secondary">{shop.address}</address>
         </div>
 
-        <p className="mt-6 text-body text-text-secondary">
-          Phone cracked while you&rsquo;re moving in?{" "}
-          <Link href="/repair" className="font-bold text-primary-text underline underline-offset-4">
-            Fix my device
-          </Link>
-        </p>
+        {outcome !== "none" ? (
+          <p className="mt-6 text-body text-text-secondary">
+            Phone cracked while you&rsquo;re moving in?{" "}
+            <Link href="/repair" className="font-bold text-primary-text underline underline-offset-4">
+              Fix my device
+            </Link>
+          </p>
+        ) : null}
       </div>
     );
+  }
 
   return (
     <div ref={rootRef} className="scroll-mt-24">
@@ -308,6 +399,7 @@ export function InternetIntake({
                 name: answers.name,
                 phone: answers.phone,
                 email: answers.email,
+                availability: availability ?? undefined,
                 attribution: readAttribution(),
               })
             }

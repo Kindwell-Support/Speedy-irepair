@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { DEVICES } from "@/lib/repair-catalog";
 import { attribution } from "@/lib/repair-schemas";
+import { AVAILABILITY_STATUSES } from "@/lib/internet-availability/config";
 
 /**
  * Shared form schemas: the SAME schema validates on the client (before submit) and the server
@@ -87,6 +88,15 @@ export const internetSchema = z.object({
   phone,
   email,
   attribution: attribution.optional(),
+  /** The address check's result from /api/internet/availability, for the GHL tags. Missing = the server checks itself. */
+  availability: z
+    .object({
+      status: z.enum(AVAILABILITY_STATUSES),
+      spectrum: z.boolean().nullable(),
+      att: z.boolean().nullable(),
+      attFiber: z.boolean(),
+    })
+    .optional(),
 });
 
 /** F2 Newsletter (REQ-037). */

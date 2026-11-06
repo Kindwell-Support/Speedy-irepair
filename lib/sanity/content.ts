@@ -190,6 +190,7 @@ export const getHomeInternetPage = cache(async (): Promise<HomeInternetPage> => 
     howToSignUpSection: withDefaults(page.howToSignUpSection, fallback.howToSignUpSection),
     whoItsForSection: withDefaults(page.whoItsForSection, fallback.whoItsForSection),
     whySection: withDefaults(page.whySection, fallback.whySection),
+    availabilityResults: withDefaults(page.availabilityResults, fallback.availabilityResults),
   };
 });
 export const getServicesPage = singleton<ServicesPage>("servicesPage", fx.servicesPage);

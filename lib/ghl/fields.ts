@@ -127,3 +127,15 @@ export const TAGS = {
   quoteForm: "instant-quote-requested",
   internetForm: "home-internet-lead",
 } as const;
+
+/**
+ * The home internet address check's result as tags on the lead (GHL creates a tag the first time it's used).
+ * Each provider is tagged on its own, so staff see AT&T as a backup even when the visitor was shown Spectrum.
+ */
+export const INTERNET_AVAILABILITY_TAGS = {
+  spectrum: "spectrum-available",
+  att: "att-available",
+  attFiber: "att-fiber-available",
+  none: "no-coverage",
+  unknown: "coverage-unknown",
+} as const;

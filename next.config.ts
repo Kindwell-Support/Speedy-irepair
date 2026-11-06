@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.shopify.com" },
     ],
   },
+  // The availability data is read from disk at runtime (lib/internet-availability/check.ts), so ship it with these routes.
+  outputFileTracingIncludes: {
+    "/api/internet/availability": ["./data/internet-coverage.json"],
+    "/api/forms/[type]": ["./data/internet-coverage.json"],
+  },
   experimental: {
     optimizePackageImports: ["@react-three/drei", "framer-motion"],
   },

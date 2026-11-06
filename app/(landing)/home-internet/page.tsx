@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Tomorrow } from "next/font/google";
-import { getFaqs, getHomeInternetPage, getSiteSettings } from "@/lib/sanity/content";
+import { getFaqs, getHomeInternetPage, getHomePage, getSiteSettings } from "@/lib/sanity/content";
 import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForHomeInternet } from "@/lib/seo/routes";
@@ -27,8 +27,20 @@ export async function generateMetadata(): Promise<Metadata> {
  * then how it works, who it's for, why us and FAQs, each ending back at the form. Every word comes from the CMS.
  */
 export default async function HomeInternetPage() {
-  const [page, faqs, seo, settings] = await Promise.all([getHomeInternetPage(), getFaqs("internet"), getSeoData(), getSiteSettings()]);
+  const [page, faqs, seo, settings, home] = await Promise.all([
+    getHomeInternetPage(),
+    getFaqs("internet"),
+    getSeoData(),
+    getSiteSettings(),
+    getHomePage(),
+  ]);
   const b = settings.business;
+  // "Can we help with something else?" when neither provider covers the address: the home page's service cards.
+  const otherServices = home.serviceCards
+    .filter((c) => !/home-internet/.test(c.href))
+    .sort((x, y) => x.order - y.order)
+    .slice(0, 4)
+    .map(({ title, description, href }) => ({ title, description, href }));
   const { hero, offer } = page;
   return (
     <>
@@ -69,6 +81,8 @@ export default async function HomeInternetPage() {
               confirmationMessage={page.confirmationMessage}
               spectrumOrderUrl={page.spectrumOrderUrl}
               shop={{ address: b.footerAddressLine, phone: b.phone }}
+              results={page.availabilityResults}
+              services={otherServices}
             />
           </div>
         </div>

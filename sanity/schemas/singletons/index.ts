@@ -235,6 +235,21 @@ export const homeInternetPage = page("homeInternetPage", "Home Internet", [
   section("formSection", "Address form"),
   defineField({ name: "confirmationMessage", type: "text", rows: 3, description: "Shown after someone sends the address form." }),
   defineField({
+    name: "availabilityResults",
+    title: "Availability results",
+    type: "object",
+    description:
+      "After the form is sent, the address is checked automatically. Spectrum is shown first if it's available, then AT&T, otherwise the \"sorry\" message with the shop's other services. Leave a field empty to use the built-in wording.",
+    fields: [
+      defineField({ name: "spectrumHeading", title: "Spectrum available", type: "string" }),
+      defineField({ name: "attHeading", title: "AT&T available (no Spectrum)", type: "string" }),
+      defineField({ name: "attFiberHeading", title: "AT&T Fiber available (no Spectrum)", type: "string" }),
+      defineField({ name: "noneHeading", title: "Neither available: heading", type: "string" }),
+      defineField({ name: "noneMessage", title: "Neither available: message", type: "text", rows: 2 }),
+      defineField({ name: "otherServicesHeading", title: "Neither available: other services heading", type: "string" }),
+    ],
+  }),
+  defineField({
     name: "spectrumOrderUrl",
     title: "Spectrum order link",
     type: "url",

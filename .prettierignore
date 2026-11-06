@@ -12,3 +12,4 @@ lib/shop/fixtures/*.json
 .claude
 .impeccable
 .taste-skill
+data/internet-coverage.json

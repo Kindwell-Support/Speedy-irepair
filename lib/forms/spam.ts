@@ -25,9 +25,9 @@ export function checkFillTime(startedAt: number, now = Date.now()): boolean {
   return elapsed >= MIN_FILL_MS && elapsed <= MAX_AGE_MS;
 }
 
-export function checkRateLimit(key: string, now = Date.now()): boolean {
+export function checkRateLimit(key: string, now = Date.now(), limit = RATE_LIMIT): boolean {
   const recent = (hits.get(key) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
-  if (recent.length >= RATE_LIMIT) {
+  if (recent.length >= limit) {
     hits.set(key, recent);
     return false;
   }

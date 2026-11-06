@@ -363,6 +363,15 @@ export interface HomeInternetPage extends BasePage {
   whySection: SectionCopy & { items: { title: string; body: string }[] };
   formSection: SectionCopy;
   confirmationMessage: string;
+  /** The address check's result screen: Spectrum first, then AT&T, then sorry + other services. */
+  availabilityResults: {
+    spectrumHeading: string;
+    attHeading: string;
+    attFiberHeading: string;
+    noneHeading: string;
+    noneMessage: string;
+    otherServicesHeading: string;
+  };
   /** Spectrum's order page for Speedy, if they give us one: the confirmation then offers "Finish on Spectrum". */
   spectrumOrderUrl?: string | null;
   disclaimer: string;

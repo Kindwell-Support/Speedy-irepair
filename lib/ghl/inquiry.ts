@@ -6,6 +6,7 @@ import {
   BUYBACK_PIPELINE,
   FIELD_IDS,
   INQUIRY_PIPELINE,
+  INTERNET_AVAILABILITY_TAGS,
   INTERNET_OPTIONS,
   INTERNET_PIPELINE,
   LEAD_STATUS,
@@ -20,6 +21,8 @@ import { attempt } from "@/lib/ghl/retry";
 import { CONSENT_VERSION } from "@/lib/repair-schemas";
 import { shopDateISO } from "@/lib/repair-time";
 import type { InternetInput, QuoteInput, TradeInInput } from "@/lib/forms/schemas";
+import { checkAvailability } from "@/lib/internet-availability/check";
+import type { AvailabilityResult } from "@/lib/internet-availability/config";
 
 interface InquiryInput {
   name: string;
@@ -44,6 +47,8 @@ interface FormLead {
   attribution: Attribution;
   source: string;
   tag: string;
+  /** More tags, e.g. the home internet availability result. */
+  extraTags?: string[];
   /** reuseFrom: only an open card at one of these stages is reused, otherwise a new card opens. Without it, any open card is. */
   pipeline: { id: string; stageNew: string; reuseFrom?: readonly string[] };
   cardName: string;
@@ -62,7 +67,7 @@ interface FormLead {
  * pipeline, and a repeat submission moves it back to the first stage. Every step before the note is safe to repeat
  * and the note comes last, so a retry can't post it twice.
  */
-async function send({ name, email, phone, attribution, source, tag, pipeline, cardName, note, contactFields = {}, leadStatus, address }: FormLead) {
+async function send({ name, email, phone, attribution, source, tag, extraTags = [], pipeline, cardName, note, contactFields = {}, leadStatus, address }: FormLead) {
   const [firstName, ...rest] = name.trim().split(/\s+/);
   const customFields = [
     { id: FIELD_IDS.location, field_value: LOCATION },
@@ -86,7 +91,7 @@ async function send({ name, email, phone, attribution, source, tag, pipeline, ca
   });
   const id = upserted.contact.id;
 
-  await ghl("POST", `/contacts/${id}/tags`, { tags: [tag] });
+  await ghl("POST", `/contacts/${id}/tags`, { tags: [tag, ...extraTags] });
 
   // First touch, as on /repair: a Lead Source or owner the contact already has is left alone.
   const { contact } = await ghl<{ contact: Contact }>("GET", `/contacts/${id}`);
@@ -225,17 +230,41 @@ export const sendTradeIn = (tradeIn: TradeInInput) => {
   );
 };
 
-/** Home internet address check to Home Internet Leads. Never throws; true as for sendInquiry. */
-export const sendInternet = (lead: InternetInput) => {
-  const { street, unit, city, state, zip, homeType, situation, timing, currentProvider, attribution = {}, ...input } = lead;
+const yesNo = (v: boolean | null) => (v ? "yes" : "no");
+
+/** Tags for the availability result: each provider found, or "no coverage", or "couldn't check". */
+function availabilityTags(a: AvailabilityResult): string[] {
+  if (a.status === "unknown") return [INTERNET_AVAILABILITY_TAGS.unknown];
+  if (a.status === "none") return [INTERNET_AVAILABILITY_TAGS.none];
+  return [
+    ...(a.spectrum ? [INTERNET_AVAILABILITY_TAGS.spectrum] : []),
+    ...(a.att ? [INTERNET_AVAILABILITY_TAGS.att] : []),
+    ...(a.attFiber ? [INTERNET_AVAILABILITY_TAGS.attFiber] : []),
+  ];
+}
+
+/** The availability line in the lead note. */
+const availabilityNote = (a: AvailabilityResult) =>
+  a.status === "unknown"
+    ? "Availability check: couldn't check this address automatically. Please check it by hand."
+    : `Availability check (FCC map data for the area, confirm on the call): Spectrum ${yesNo(a.spectrum)}, AT&T ${yesNo(a.att)}${a.attFiber ? " (Fiber)" : ""}`;
+
+/**
+ * Home internet address check to Home Internet Leads. Never throws; true as for sendInquiry. The availability
+ * result comes from the form (it checked after the address step); if it's missing the server checks now.
+ */
+export const sendInternet = async (lead: InternetInput) => {
+  const { street, unit, city, state, zip, homeType, situation, timing, currentProvider, availability, attribution = {}, ...input } = lead;
   const address1 = [street.trim(), unit?.trim()].filter(Boolean).join(", ");
   const full = `${address1}, ${city.trim()}, ${state.toUpperCase()} ${zip}`;
+  const result = availability ?? (await checkAvailability({ street, city, state, zip }));
   return attempt("home internet", lead, () =>
     send({
       ...input,
       attribution,
       source: "Website home internet form",
       tag: TAGS.internetForm,
+      extraTags: availabilityTags(result),
       pipeline: INTERNET_PIPELINE,
       address: { address1, city: city.trim(), state: state.toUpperCase(), postalCode: zip },
       contactFields: {
@@ -254,6 +283,8 @@ export const sendInternet = (lead: InternetInput) => {
         `Need: ${situation}`,
         `Timing: ${timing}`,
         ...(currentProvider?.trim() ? [`Current provider: ${currentProvider.trim()}`] : []),
+        "",
+        availabilityNote(result),
         "",
         `SMS consent given via website home internet form, ${new Date().toISOString()}, consent text ${CONSENT_VERSION}`,
       ].join("\n"),

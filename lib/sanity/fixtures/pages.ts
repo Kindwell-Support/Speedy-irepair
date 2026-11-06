@@ -224,6 +224,14 @@ export const homeInternetPage: HomeInternetPage = {
     intro: "Three quick steps. We'll call or text to confirm availability. No commitment.",
   },
   confirmationMessage: "A Speedy iRepair specialist will call or text you shortly to confirm what's available and finish setting you up.",
+  availabilityResults: {
+    spectrumHeading: "Good news! Spectrum is available in your area",
+    attHeading: "Good news! AT&T is available in your area",
+    attFiberHeading: "Good news! AT&T Fiber is available in your area",
+    noneHeading: "Sorry, Spectrum and AT&T aren't available in your area right now",
+    noneMessage: "Thanks for checking with us. We've got your details, so we'll reach out if that changes.",
+    otherServicesHeading: "Can we help with something else?",
+  },
   spectrumOrderUrl: null,
   disclaimer:
     "Speedy iRepair is a Spectrum Authorized Retailer. Service is not available in all areas. Offer, pricing and free smartphone are subject to availability and eligibility; restrictions apply. Ask in store for full details.",
