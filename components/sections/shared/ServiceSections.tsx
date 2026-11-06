@@ -26,14 +26,19 @@ export const PHOTO_BY_SLUG: Partial<Record<string, SiteImageKey>> = {
 export function ServiceSections({ services }: { services: Service[] }) {
   return (
     <div className="container-site lg:grid lg:grid-cols-12 lg:gap-x-8">
-      <nav aria-label="Services on this page" className="hidden self-start pt-16 lg:sticky lg:top-28 lg:col-span-3 lg:block">
+      {/* Capped to the viewport below the header: if the list is ever taller than the screen it scrolls itself instead of being cut off. */}
+      <nav
+        aria-label="Services on this page"
+        data-lenis-prevent
+        className="hidden self-start overscroll-contain pt-10 pb-6 lg:sticky lg:top-28 lg:col-span-3 lg:block lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto"
+      >
         <h2 className="mb-3 font-sans text-h5 font-bold">All services</h2>
         <ul>
           {services.map((s) => (
             <li key={s.id}>
               <a
                 href={`#${s.slug}`}
-                className="flex min-h-10 items-center text-body text-text-secondary transition-colors duration-fast hover:text-primary-text"
+                className="flex min-h-9 items-center text-body text-text-secondary transition-colors duration-fast hover:text-primary-text"
               >
                 {s.title}
               </a>
