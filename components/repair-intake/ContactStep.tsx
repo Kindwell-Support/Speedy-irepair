@@ -4,7 +4,7 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import type { z } from "zod";
 import { Notice } from "@/components/ui/Notice";
 import { TextField, fieldError } from "@/components/sections/forms/fields";
-import { CONSENT_TEXT, contactStepSchema } from "@/lib/repair-schemas";
+import { contactStepSchema } from "@/lib/repair-schemas";
 import { StepHeading, continueClass } from "./ui";
 
 type FieldErrors = Record<string, string[] | undefined>;
@@ -34,7 +34,7 @@ function useStepForm<T extends Values>(
 }
 
 /**
- * Step 2 of the repair and quote widgets. Name, phone (with the SMS consent line) and email, all required;
+ * Step 2 of the repair and quote widgets. Name, phone and email, all required;
  * on /repair, Continue creates the lead in the CRM.
  */
 export function ContactStep({
@@ -79,7 +79,6 @@ export function ContactStep({
           value={value.phone}
           onChange={set("phone")}
           error={fieldError(shown, "phone")}
-          hint={CONSENT_TEXT}
           required
         />
         <TextField

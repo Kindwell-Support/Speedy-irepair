@@ -7,11 +7,6 @@ import { ALL_ISSUES, DEVICES, ISSUE_OTHER, issuesFor } from "./repair-catalog";
  * the widget imports this file, never lib/booking.
  */
 
-/** Shown under the phone field. Bump CONSENT_VERSION whenever the wording changes; it's recorded on the contact. */
-export const CONSENT_TEXT =
-  "By continuing you agree to receive texts about your repair. Reply STOP to opt out.";
-export const CONSENT_VERSION = "v1";
-
 const phone = z
   .string()
   .trim()

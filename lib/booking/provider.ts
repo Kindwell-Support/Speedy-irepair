@@ -19,7 +19,7 @@ export type { CompleteInput, IntakeField, IntakeResult, IntakeSession, Slot, Sta
  * background and carry on. The only errors they surface are a slot that's been taken (SlotUnavailableError).
  */
 export interface BookingProvider {
-  /** Step 2: contact, consent and opportunity. Null when the CRM couldn't be reached (it's retried). */
+  /** Step 2: contact and opportunity. Null when the CRM couldn't be reached (it's retried). */
   startIntake(input: StartInput): Promise<IntakeSession | null>;
   /** Steps 3–5: writes one answer to the contact as soon as it's chosen. */
   updateField(session: IntakeSession, field: IntakeField, value: string): Promise<void>;

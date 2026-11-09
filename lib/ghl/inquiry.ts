@@ -19,8 +19,6 @@ import {
 } from "@/lib/ghl/fields";
 import { ownerForUpsert, pickOwner } from "@/lib/ghl/owner";
 import { attempt } from "@/lib/ghl/retry";
-import { CONSENT_VERSION } from "@/lib/repair-schemas";
-import { shopDateISO } from "@/lib/repair-time";
 import type { InternetInput, QuoteInput, TradeInInput } from "@/lib/forms/schemas";
 import type { QuotePrice } from "@/lib/repair-prices";
 import { checkAvailability } from "@/lib/internet-availability/check";
@@ -194,7 +192,6 @@ export const sendQuote = (quote: QuoteInput, prices: QuotePrice[] = []) => {
         model: model.trim(),
         issue,
         problemDetails: details?.trim() ?? "",
-        smsConsentAt: shopDateISO(),
       },
       leadStatus: shown ? LEAD_STATUS.quoteShown : LEAD_STATUS.quoteRequested,
       cardName: `${input.name.trim()}: ${brand} ${model.trim()} quote`,
@@ -207,8 +204,6 @@ export const sendQuote = (quote: QuoteInput, prices: QuotePrice[] = []) => {
         `Issue: ${issue}`,
         ...(shown ? ["", "Price shown on the website:", ...prices.map((p) => `- ${p.label}: ${p.price}`)] : []),
         ...(details?.trim() ? ["", details.trim()] : []),
-        "",
-        `SMS consent given via website quote form, ${new Date().toISOString()}, consent text ${CONSENT_VERSION}`,
       ].join("\n"),
     }),
   );
@@ -280,7 +275,6 @@ export const sendInternet = async (lead: InternetInput) => {
         internetNeed: INTERNET_OPTIONS.internetNeed[situation],
         internetTiming: INTERNET_OPTIONS.internetTiming[timing],
         currentProvider: currentProvider?.trim() ?? "",
-        smsConsentAt: shopDateISO(),
       },
       cardName: `${input.name.trim()}: home internet, ${zip}`,
       note: [
@@ -294,8 +288,6 @@ export const sendInternet = async (lead: InternetInput) => {
         `Referred by: ${referredBy?.trim() || "not given"}`,
         "",
         availabilityNote(result),
-        "",
-        `SMS consent given via website home internet form, ${new Date().toISOString()}, consent text ${CONSENT_VERSION}`,
       ].join("\n"),
     }),
   );

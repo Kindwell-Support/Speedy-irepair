@@ -273,7 +273,7 @@ export const policyPages: Record<PolicySlug, PolicyPage> = {
     title: "Privacy Policy",
     body: src.privacy.body,
     sourceUrl: src.privacy.sourceUrl,
-    sourceNote: "Verbatim from the live Shopify site, pulled 2026-10-27. Client/legal to review (OQ-17).",
+    sourceNote: "From the live Shopify site, pulled 2026-10-27; SMS / text messaging section and no-sharing language added 2026-11-09 for A2P 10DLC; Shopify sentence removed; chat widget named as the SMS opt-in, form/advertising carve-outs and contact address fixed 2026-11-10. Client/legal to review (OQ-17).",
     seo: { metaTitle: "Privacy Policy | Speedy iRepair", metaDescription: "How Speedy iRepair collects, uses and shares personal information." },
   },
   terms: {

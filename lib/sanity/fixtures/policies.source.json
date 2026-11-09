@@ -613,6 +613,20 @@
   "body": [
    {
     "_type": "block",
+    "_key": "priUpdated",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "priUpdateds",
+      "text": "Last updated: November 9, 2026",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
     "_key": "pri0",
     "style": "normal",
     "markDefs": [],
@@ -739,6 +753,20 @@
    },
    {
     "_type": "block",
+    "_key": "priForms",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "priFormss",
+      "text": "When you fill out a form on the Site (for example to book a repair, request a quote, or check home internet availability), we also collect the details you enter, such as your name, mobile phone number, email address, and service address, and we use them to respond to your request. Phone numbers submitted through these forms are used only to respond to your request. We do not send marketing text messages to them unless you separately opt in through the chat widget.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
     "_key": "pri9",
     "style": "h2",
     "markDefs": [],
@@ -802,7 +830,7 @@
      {
       "_type": "span",
       "_key": "pri13s",
-      "text": "- When in line with the preferences you have shared with us, provide you with information or advertising relating to our products or services.",
+      "text": "- When in line with the preferences you have shared with us, provide you with information or advertising relating to our products or services. We never use your mobile phone number or text messaging consent for targeted advertising, and never share them with advertising partners.",
       "marks": []
      }
     ]
@@ -844,7 +872,7 @@
      {
       "_type": "span",
       "_key": "pri16s",
-      "text": "We share your Personal Information with third parties to help us use your Personal Information, as described above. For example, we use Shopify to power our online store--you can read more about how Shopify uses your Personal Information here: https://www.shopify.com/legal/privacy. We also use Google Analytics to help us understand how our customers use the Site -- you can read more about how Google uses your Personal Information here: https://www.google.com/intl/en/policies/privacy/. You can also opt-out of Google Analytics here: https://tools.google.com/dlpage/gaoptout.",
+      "text": "We share your Personal Information with third parties to help us use your Personal Information, as described above. For example, we use Google Analytics to help us understand how our customers use the Site -- you can read more about how Google uses your Personal Information here: https://www.google.com/intl/en/policies/privacy/. You can also opt-out of Google Analytics here: https://tools.google.com/dlpage/gaoptout.",
       "marks": []
      }
     ]
@@ -859,6 +887,104 @@
       "_type": "span",
       "_key": "pri17s",
       "text": "Finally, we may also share your Personal Information to comply with applicable laws and regulations, to respond to a subpoena, search warrant or other lawful request for information we receive, or to otherwise protect our rights.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "priShareSms",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "priShareSmss",
+      "text": "We do not sell, rent, or share your mobile phone number or text messaging consent with third parties or affiliates for their marketing or promotional purposes. See “SMS / Text Messaging” below.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "smsH",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "smsHs",
+      "text": "SMS / TEXT MESSAGING",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "sms1",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "sms1s",
+      "text": "You can opt in to receive text messages from Speedy iRepair by entering your mobile number in the chat widget on our website and agreeing to the consent terms shown there. We may then text you about your repair, quote, appointment or home internet request.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "sms2",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "sms2s",
+      "text": "Message frequency varies. Message and data rates may apply. Consent to receive text messages is not a condition of any purchase.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "sms3",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "sms3s",
+      "text": "You can opt out at any time by replying STOP to any message. We will send one message confirming you have been unsubscribed and then stop texting you. For help, reply HELP, call us at 1.855.377.3339, or email info@speedyirepair.com. Carriers are not liable for delayed or undelivered messages.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "sms4",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "sms4s",
+      "text": "No mobile information will be shared with third parties or affiliates for marketing or promotional purposes. Text messaging originator opt-in data and consent will not be shared with any third parties. We may share your phone number only with service providers that help us deliver our text messages (such as our messaging platform), and only for that purpose.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "sms5",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "sms5s",
+      "text": "The SMS terms in this section apply regardless of anything else in this Privacy Policy, including the Sharing and Behavioural Advertising sections.",
       "marks": []
      }
     ]
@@ -886,7 +1012,7 @@
      {
       "_type": "span",
       "_key": "pri19s",
-      "text": "As described above, we use your Personal Information to provide you with targeted advertisements or marketing communications we believe may be of interest to you. For more information about how targeted advertising works, you can visit the Network Advertising Initiative’s (“NAI”) educational page at http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work.",
+      "text": "As described above, we use your Personal Information to provide you with targeted advertisements or marketing communications we believe may be of interest to you. For more information about how targeted advertising works, you can visit the Network Advertising Initiative’s (“NAI”) educational page at http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work. We never use your mobile phone number or text messaging consent for targeted advertising, and never share them with advertising partners.",
       "marks": []
      }
     ]
@@ -1110,7 +1236,7 @@
      {
       "_type": "span",
       "_key": "pri35s",
-      "text": "The Site is not intended for individuals under the age of [[INSERT AGE]] .",
+      "text": "The Site is not intended for individuals under the age of 13.",
       "marks": []
      }
     ]
@@ -1152,7 +1278,7 @@
      {
       "_type": "span",
       "_key": "pri38s",
-      "text": "speedyirepair",
+      "text": "Speedy iRepair",
       "marks": []
      }
     ]
@@ -1166,7 +1292,7 @@
      {
       "_type": "span",
       "_key": "pri39s",
-      "text": "[Re: Privacy Compliance Officer]",
+      "text": "Attn: Privacy",
       "marks": []
      }
     ]
@@ -1180,7 +1306,7 @@
      {
       "_type": "span",
       "_key": "pri40s",
-      "text": "Speedy iRepair LLC,",
+      "text": "1650 W Market St #27",
       "marks": []
      }
     ]
@@ -1194,7 +1320,7 @@
      {
       "_type": "span",
       "_key": "pri41s",
-      "text": "1650 W Market St., Ste 23,",
+      "text": "Akron, OH 44313",
       "marks": []
      }
     ]
@@ -1208,7 +1334,7 @@
      {
       "_type": "span",
       "_key": "pri42s",
-      "text": "Akron OH 44313, United States",
+      "text": "United States",
       "marks": []
      }
     ]

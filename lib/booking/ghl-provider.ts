@@ -6,21 +6,20 @@ import { FIELD_IDS, LEAD_STATUS, LOCATION, STAGE_QUOTE_REQUESTED, STAGE_QUOTE_SH
 import { ensureOwner, ownerForUpsert } from "@/lib/ghl/owner";
 import { attempt } from "@/lib/ghl/retry";
 import {
-  CONSENT_VERSION,
   type CompleteInput,
   type IntakeField,
   type Slot,
   type StartInput,
 } from "@/lib/repair-schemas";
-import { BOOKING_WINDOW_DAYS, SHOP_TIME_ZONE, shopDateISO } from "@/lib/repair-time";
+import { BOOKING_WINDOW_DAYS, SHOP_TIME_ZONE } from "@/lib/repair-time";
 import { ISSUE_OTHER } from "@/lib/repair-catalog";
 import { SlotUnavailableError, type BookingProvider, type IntakeSession } from "./provider";
 
 /**
  * GoHighLevel backend (API v2). GHL is the only destination for repair leads; nothing here touches Sanity.
  *
- * Step 2 upserts the contact by phone (the location's duplicate rule is phone first, then email) with their name, records SMS
- * consent and attribution, tags it intake-started and opens an opportunity at "Intake Started". Steps 3–5 write
+ * Step 2 upserts the contact by phone (the location's duplicate rule is phone first, then email) with their name and
+ * attribution, tags it intake-started and opens an opportunity at "Intake Started". Steps 3–5 write
  * each answer straight to its custom field. Step 6 confirms name and email, swaps intake-started for
  * intake-complete, and either books the appointment (stage Booked) or leaves it for a call (stage New Lead).
  * Every write goes through attempt(): failures are logged, retried after the response, and never shown to the
@@ -89,8 +88,6 @@ const addTags = (contactId: string, tags: string[]) =>
   ghl("POST", `/contacts/${contactId}/tags`, { tags });
 const removeTags = (contactId: string, tags: string[]) =>
   ghl("DELETE", `/contacts/${contactId}/tags`, { tags });
-const addNote = (contactId: string, body: string) =>
-  ghl("POST", `/contacts/${contactId}/notes`, { body });
 const moveOpportunity = (id: string, pipelineStageId: string, name?: string) =>
   ghl("PUT", `/opportunities/${id}`, { pipelineStageId, ...(name ? { name } : {}) });
 const setFields = (contactId: string, values: Partial<Record<FieldName, string | undefined>>) =>
@@ -199,7 +196,6 @@ async function startCore(input: StartInput): Promise<IntakeSession> {
       deviceType: input.device,
       location: LOCATION,
       leadStatus: LEAD_STATUS.intakeStarted,
-      smsConsentAt: shopDateISO(),
       ...attributionFields(input.attribution),
     }),
     ...(await ownerForUpsert({ number: phone })),
@@ -216,12 +212,6 @@ async function startCore(input: StartInput): Promise<IntakeSession> {
       setLeadSourceIfEmpty(id, input.attribution),
     ),
     attempt("addTag intake-started", log, () => addTags(id, [TAGS.started])),
-    attempt("addNote consent", log, () =>
-      addNote(
-        id,
-        `SMS consent given via website widget, ${new Date().toISOString()}, consent text ${CONSENT_VERSION}`,
-      ),
-    ),
   ]);
   return { contactId: id, opportunityId: opportunityId ?? null };
 }

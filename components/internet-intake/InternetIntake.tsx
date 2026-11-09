@@ -5,7 +5,6 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { readAttribution } from "@/lib/attribution";
 import {
   HOME_TYPES,
-  INTERNET_CONSENT_TEXT,
   INTERNET_SITUATIONS,
   INTERNET_TIMING,
   internetSchema,
@@ -417,7 +416,6 @@ export function InternetIntake({
               value={answers.phone}
               onChange={(e) => set("phone", e.target.value)}
               error={fieldError(shown, "phone")}
-              hint={INTERNET_CONSENT_TEXT}
               required
             />
             <TextField id="net-email" label="Email" type="email" autoComplete="email" value={answers.email} onChange={(e) => set("email", e.target.value)} error={fieldError(shown, "email")} required />

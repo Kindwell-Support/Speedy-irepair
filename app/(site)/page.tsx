@@ -25,6 +25,7 @@ import { Promotions } from "@/components/sections/home/Promotions";
 import { FaqList } from "@/components/sections/shared/FaqList";
 import { LocationContact } from "@/components/sections/shared/LocationContact";
 import { NewsletterForm } from "@/components/sections/forms/NewsletterForm";
+import { ChatWidgetScript } from "@/components/layout/ChatWidgetScript";
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getHomePage();
@@ -47,6 +48,7 @@ export default async function HomePage() {
   return (
     <>
       <JsonLd data={jsonLdForHome(seo, faqs)} />
+      <ChatWidgetScript />
       <HomeHero hero={page.hero} />
       <HeroProof business={settings.business} />
       <ServicesGrid copy={page.serviceCardsSection} cards={page.serviceCards} />
@@ -58,7 +60,7 @@ export default async function HomePage() {
       <Section id="faq" copy={page.faqSection} layout="side" reveal>
         <FaqList faqs={faqs} stagger />
       </Section>
-      <LocationContact copy={page.locationSection} business={settings.business} directionsLabel={page.locationSection.directionsLabel} />
+      <LocationContact copy={page.locationSection} business={settings.business} directionsLabel={page.locationSection.directionsLabel} showForm={false} />
       <section id="newsletter" aria-labelledby="newsletter-heading" className="bg-bg-raised py-20 md:py-24">
         <div className="container-site grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-x-8" data-animate="reveal" data-reveal="children">
           <h2 id="newsletter-heading" className="max-w-[18ch] text-h3 lg:col-span-6">

@@ -129,3 +129,9 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* GHL chat widget: home page only. Its <chat-widget> outlives client-side navigation, so hide it on any page
+   without the marker ChatWidgetScript renders (components/layout/ChatWidgetScript.tsx). */
+html:not(:has([data-chat-page])) chat-widget {
+  display: none !important;
+}

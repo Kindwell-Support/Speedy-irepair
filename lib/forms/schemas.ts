@@ -70,8 +70,6 @@ export const contactSchema = z.object({
 export const HOME_TYPES = ["House", "Townhome", "Condo", "Apartment"] as const;
 export const INTERNET_SITUATIONS = ["Moving in", "Switching provider", "New service"] as const;
 export const INTERNET_TIMING = ["ASAP", "Within 2 weeks", "Within a month", "Just looking"] as const;
-export const INTERNET_CONSENT_TEXT =
-  "By sending this you agree to receive calls and texts about home internet service. Reply STOP to opt out.";
 
 /** Home internet address check (/home-internet): where, what kind of home, when, and who to call back. */
 export const internetSchema = z.object({
