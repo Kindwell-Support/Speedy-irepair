@@ -57,13 +57,14 @@ test.describe("non-production is noindex", () => {
     expect(tag).toContain("nofollow");
   });
 
-  test("robots.txt disallows all", async ({ request }) => {
+  // Crawling stays allowed so crawlers can see the noindex header; a Disallow would hide it.
+  test("robots.txt allows crawling (noindex comes from the header)", async ({ request }) => {
     const res = await request.get("/robots.txt");
     expect(res.status()).toBe(200);
     const body = await res.text();
     expect(body).toMatch(/User-Agent: \*/i);
-    expect(body).toMatch(/^Disallow: \/\s*$/m);
-    expect(body).not.toMatch(/^Allow:/m);
+    expect(body).toMatch(/^Allow: \/\s*$/m);
+    expect(body).not.toMatch(/^Disallow:/m);
   });
 
   test("meta robots is noindex", async ({ page }) => {

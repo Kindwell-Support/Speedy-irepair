@@ -56,7 +56,7 @@ Full list and semantics: `.env.example`, `docs/ENV.md`. Leave the Production sco
   *Protection Bypass for Automation* secret (store it only as a CI/QA secret, never in the repo).
 - Verify on the staging URL:
   `curl -sI <staging-url> | grep -i x-robots-tag` → contains `noindex, nofollow`;
-  `curl -s <staging-url>/robots.txt` → `Disallow: /`.
+  `curl -s <staging-url>/robots.txt` → `Allow: /` (crawling stays open so crawlers can see the noindex header).
 
 ## 5. After staging is live
 

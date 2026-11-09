@@ -61,11 +61,14 @@ is noindex. It is expected to fail until every route exists — that is the poin
 
 ## Staging noindex rule (spec §5, REQ-130)
 
-Staging must never be indexed. Three layers, all keyed on `NEXT_PUBLIC_SITE_ENV`:
+Staging must never be indexed; speedyirepair.com must never be blocked.
 
-1. `app/robots.ts` → `Disallow: /` unless `NEXT_PUBLIC_SITE_ENV=production`.
-2. `next.config.ts` → `X-Robots-Tag: noindex, nofollow, noarchive` header on every response unless production.
-3. Metadata `robots: { index: false, follow: false }` (layout + `lib/seo/metadata.ts`) unless production.
+1. `app/robots.ts` → `Allow: /` for every crawler on every host (a `Disallow` would stop crawlers seeing the
+   noindex header below).
+2. `next.config.ts` → `X-Robots-Tag: noindex, nofollow, noarchive` on every host except speedyirepair.com and
+   www.speedyirepair.com (by `Host`, not env), so the `*.vercel.app` URLs and previews stay out of search.
+3. Metadata `robots: { index: false, follow: false }` (layout + `lib/seo/metadata.ts`) unless
+   `NEXT_PUBLIC_SITE_ENV=production`.
 
 `NEXT_PUBLIC_SITE_ENV=production` may be set **only** on the Vercel *Production* environment.
 Preview/staging must be `staging` (or unset). Vercel also adds `X-Robots-Tag: noindex` to

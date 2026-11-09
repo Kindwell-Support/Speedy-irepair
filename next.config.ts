@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
-const isProductionSite = process.env.NEXT_PUBLIC_SITE_ENV === "production";
+/**
+ * The production domain, as a host regex. Every other host (the *.vercel.app URLs, previews, localhost) gets a
+ * noindex header, so only speedyirepair.com can show up in search.
+ */
+const PRODUCTION_HOST = "(www\\.)?speedyirepair\\.com";
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -34,13 +38,12 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      { source: "/:path*", headers: securityHeaders },
+      // noindex by host (see PRODUCTION_HOST). Never on speedyirepair.com, whatever the env vars say.
       {
         source: "/:path*",
-        headers: [
-          ...securityHeaders,
-          // noindex layer 2 of 3 (robots.ts + meta robots are the others). Removed only in production.
-          ...(isProductionSite ? [] : [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }]),
-        ],
+        missing: [{ type: "host", value: PRODUCTION_HOST }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" }],
       },
       { source: "/studio/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
       {
