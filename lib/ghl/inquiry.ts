@@ -196,7 +196,7 @@ export const sendQuote = (quote: QuoteInput, prices: QuotePrice[] = []) => {
         problemDetails: details?.trim() ?? "",
         smsConsentAt: shopDateISO(),
       },
-      leadStatus: LEAD_STATUS.quoteRequested,
+      leadStatus: shown ? LEAD_STATUS.quoteShown : LEAD_STATUS.quoteRequested,
       cardName: `${input.name.trim()}: ${brand} ${model.trim()} quote`,
       note: [
         "Website quote form:",

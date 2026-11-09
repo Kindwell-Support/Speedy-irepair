@@ -120,6 +120,7 @@ export const LEAD_STATUS = {
   submitted: "Submitted",
   booked: "Booked",
   quoteRequested: "Quote Requested",
+  quoteShown: "Quote Shown",
 } as const;
 
 /** A repair under way. A new quote from one of these contacts leaves their Lead Status alone. */
