@@ -1278,7 +1278,7 @@
      {
       "_type": "span",
       "_key": "pri38s",
-      "text": "Speedy iRepair",
+      "text": "Speedy iRepair LLC",
       "marks": []
      }
     ]
@@ -1369,6 +1369,166 @@
       "_type": "span",
       "_key": "ter1s",
       "text": "Speedy iRepair is not responsible for any loss, corruption, or breach of data; the loss of data may occur as a result of the service provided. It is the customer’s responsibility to do a backup/copy of the data before bringing their device to Speedy iRepair. I understand Speedy iRepair is a 3rd party repair shop, and is not responsible for factory/service provider warranty voiding that may occur doing repairs. Devices not claimed within 14 days after the repair date shall be considered forfeited and will become property of Speedy iRepair to recover lost expenses. Warranty will only be provided for the parts that were serviced for up to 90 days. Speedy iRepair will not provide warranty on any devices previously serviced by other companies, or on damages occurring after the repair is completed. By signing this agreement in-store, I agree to these Terms & Conditions, and also agree to pay the amount indicated below to receive my device back after my repair is completed.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "tsmsH",
+    "style": "h2",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "tsmsHs",
+      "text": "SMS Messaging Terms",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "tsms1",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "tsms1s",
+      "text": "Program Name: Speedy iRepair SMS Notifications",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "tsms2",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "tsms2s",
+      "text": "Program Description: By opting in, you agree to receive SMS messages from Speedy iRepair LLC regarding repair inquiries, repair quotes, appointment confirmations and reminders, service updates, customer support, and occasional promotions and offers.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "tsms3",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "tsms3s",
+      "text": "Message Frequency: Message frequency varies depending on your interactions and service requests.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "tsms4",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "tsms4s",
+      "text": "Message and Data Rates: Message and data rates may apply.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "tsms5",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "tsms5s",
+      "text": "Opt-Out: You can opt out at any time by replying STOP to any message. You will receive one final confirmation message confirming your unsubscribe request.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "tsms6",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "tsms6s",
+      "text": "Help: Reply HELP for assistance, call 1.855.377.3339, or email info@speedyirepair.com.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "tsms7",
+    "style": "normal",
+    "markDefs": [
+     {
+      "_type": "link",
+      "_key": "tsms7link",
+      "href": "/policies/privacy"
+     }
+    ],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "tsms7s",
+      "text": "Privacy: Your mobile number and SMS opt-in consent will not be shared with third parties or affiliates for marketing or promotional purposes. See our ",
+      "marks": []
+     },
+     {
+      "_type": "span",
+      "_key": "tsms7l",
+      "text": "Privacy Policy",
+      "marks": [
+       "tsms7link"
+      ]
+     },
+     {
+      "_type": "span",
+      "_key": "tsms7e",
+      "text": ".",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "tsms8",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "tsms8s",
+      "text": "Carriers: Carriers are not liable for delayed or undelivered messages.",
+      "marks": []
+     }
+    ]
+   },
+   {
+    "_type": "block",
+    "_key": "tsms9",
+    "style": "normal",
+    "markDefs": [],
+    "children": [
+     {
+      "_type": "span",
+      "_key": "tsms9s",
+      "text": "Consent: Consent to receive SMS messages is not a condition of purchasing any goods or services.",
       "marks": []
      }
     ]
