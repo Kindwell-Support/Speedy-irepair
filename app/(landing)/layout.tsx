@@ -6,6 +6,7 @@ import { telHref } from "@/lib/utils/format";
 import { buttonClasses } from "@/components/ui/ButtonLink";
 import { hoursSummary } from "@/components/sections/global/HoursList";
 import { AttributionCapture } from "@/components/repair-intake/AttributionCapture";
+import { ChatWidgetScript } from "@/components/layout/ChatWidgetScript";
 
 /**
  * Ad landing pages: no menu, banner or full footer to leak the visit. The logo still goes home, and the call
@@ -64,6 +65,7 @@ export default async function LandingLayout({ children }: { children: ReactNode 
         </div>
       </footer>
       <AttributionCapture />
+      <ChatWidgetScript />
     </>
   );
 }
