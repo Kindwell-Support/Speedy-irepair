@@ -37,6 +37,7 @@ interface Answers {
   name: string;
   phone: string;
   email: string;
+  referredBy: string;
 }
 
 const EMPTY: Answers = {
@@ -52,6 +53,7 @@ const EMPTY: Answers = {
   name: "",
   phone: "",
   email: "",
+  referredBy: "",
 };
 
 const addressSchema = internetSchema.pick({ street: true, unit: true, city: true, state: true, zip: true });
@@ -399,6 +401,7 @@ export function InternetIntake({
                 name: answers.name,
                 phone: answers.phone,
                 email: answers.email,
+                referredBy: answers.referredBy || undefined,
                 availability: availability ?? undefined,
                 attribution: readAttribution(),
               })
@@ -418,6 +421,14 @@ export function InternetIntake({
               required
             />
             <TextField id="net-email" label="Email" type="email" autoComplete="email" value={answers.email} onChange={(e) => set("email", e.target.value)} error={fieldError(shown, "email")} required />
+            <TextField
+              id="net-referred"
+              label="Did someone refer you? If so, who? (optional)"
+              autoComplete="off"
+              value={answers.referredBy}
+              onChange={(e) => set("referredBy", e.target.value)}
+              error={fieldError(shown, "referredBy")}
+            />
           </FormShell>
         </>
       ) : null}

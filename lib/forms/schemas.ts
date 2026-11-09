@@ -87,6 +87,8 @@ export const internetSchema = z.object({
   name,
   phone,
   email,
+  /** Who sent them our way, so the shop can credit that person for the sale. */
+  referredBy: z.string().trim().max(80).optional(),
   attribution: attribution.optional(),
   /** The address check's result from /api/internet/availability, for the GHL tags. Missing = the server checks itself. */
   availability: z

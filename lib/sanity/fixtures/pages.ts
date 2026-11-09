@@ -230,7 +230,7 @@ export const homeInternetPage: HomeInternetPage = {
     attHeading: "Good news! AT&T is available in your area",
     attFiberHeading: "Good news! AT&T Fiber is available in your area",
     noneHeading: "Sorry, Spectrum and AT&T aren't available in your area right now",
-    noneMessage: "Thanks for checking with us. We've got your details, so we'll reach out if that changes.",
+    noneMessage: "Thanks for checking with us. We'll check other options in your area and get back to you.",
     otherServicesHeading: "Can we help with something else?",
   },
   spectrumOrderUrl: null,

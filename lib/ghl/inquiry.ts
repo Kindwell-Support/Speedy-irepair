@@ -262,7 +262,7 @@ const availabilityNote = (a: AvailabilityResult) =>
  * result comes from the form (it checked after the address step); if it's missing the server checks now.
  */
 export const sendInternet = async (lead: InternetInput) => {
-  const { street, unit, city, state, zip, homeType, situation, timing, currentProvider, availability, attribution = {}, ...input } = lead;
+  const { street, unit, city, state, zip, homeType, situation, timing, currentProvider, referredBy, availability, attribution = {}, ...input } = lead;
   const address1 = [street.trim(), unit?.trim()].filter(Boolean).join(", ");
   const full = `${address1}, ${city.trim()}, ${state.toUpperCase()} ${zip}`;
   const result = availability ?? (await checkAvailability({ street, city, state, zip }));
@@ -291,6 +291,7 @@ export const sendInternet = async (lead: InternetInput) => {
         `Need: ${situation}`,
         `Timing: ${timing}`,
         ...(currentProvider?.trim() ? [`Current provider: ${currentProvider.trim()}`] : []),
+        `Referred by: ${referredBy?.trim() || "not given"}`,
         "",
         availabilityNote(result),
         "",
