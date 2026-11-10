@@ -6,9 +6,10 @@ import type { CtaLink } from "@/lib/sanity/types";
 type Variant = NonNullable<CtaLink["variant"]>;
 type Size = "sm" | "md" | "lg";
 
-/* Rajdhani 700, uppercase, modest tracking: buttons are read and pressed, so they use the reading face. */
+/* Rajdhani 700, uppercase, modest tracking: buttons are read and pressed, so they use the reading face.
+   Focus: a white outline set off from the button. The site-wide red ring disappears against the red primary button. */
 const base =
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-sans font-bold uppercase tracking-[0.06em] transition-[background-color,border-color,color,box-shadow] duration-fast ease-out focus-visible:shadow-focus disabled:cursor-not-allowed";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-sans font-bold uppercase tracking-[0.06em] transition-[background-color,border-color,color,box-shadow] duration-fast ease-out focus-visible:shadow-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-text disabled:cursor-not-allowed";
 const variants: Record<Variant, string> = {
   primary: "bg-primary text-text hover:bg-primary-hover hover:shadow-glow-sm active:bg-primary-active",
   secondary: "bg-surface-3 text-text hover:bg-border-strong active:bg-border-strong",

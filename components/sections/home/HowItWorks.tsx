@@ -84,8 +84,8 @@ export function HowItWorks({ copy, steps, id = "how-it-works" }: { copy: Section
                   className="relative isolate flex min-h-[220px] flex-col justify-between gap-10 overflow-hidden rounded-md bg-bg p-6 lg:h-[clamp(320px,calc(100svh_-_400px),420px)] lg:min-h-0 lg:min-w-0 lg:flex-[1_1_0%] lg:p-8"
                 >
                   {photo ? (
-                    <div data-step-photo className="photo-shade absolute inset-0 -z-10" aria-hidden>
-                      <Image src={photo.src} alt="" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+                    <div data-step-photo className="photo-shade absolute inset-0 -z-10">
+                      <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
                     </div>
                   ) : null}
                   <div className="flex items-start justify-between gap-4">

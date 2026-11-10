@@ -5,15 +5,17 @@ import { telHref } from "@/lib/utils/format";
 import { PageHero } from "@/components/ui/PageHero";
 import { HoursList } from "@/components/sections/global/HoursList";
 import { RepairIntake } from "@/components/repair-intake/RepairIntake";
+import { getSeoData } from "@/lib/seo/getSeoData";
+import { jsonLdForRepair } from "@/lib/seo/routes";
+import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata: Metadata = buildMetadata({
-  path: "/repair",
-  fallback: {
-    metaTitle: "Book a Phone, Tablet or Laptop Repair in Akron, OH | Speedy iRepair",
-    metaDescription:
-      "Book your repair online in under a minute: pick your device and issue, choose a time, and we'll have it fixed while you wait at 1650 W Market St, Akron.",
-  },
-});
+const META = {
+  metaTitle: "Book a Phone, Tablet or Laptop Repair in Akron, OH | Speedy iRepair",
+  metaDescription:
+    "Book your repair online in under a minute: pick your device and issue, choose a time, and we'll have it fixed while you wait at 1650 W Market St, Akron.",
+};
+
+export const metadata: Metadata = buildMetadata({ path: "/repair", fallback: META });
 
 /**
  * /repair: the interactive intake. Device → brand → model → issue → contact → time → confirmation.
@@ -21,10 +23,11 @@ export const metadata: Metadata = buildMetadata({
  * never disagrees with the footer.
  */
 export default async function RepairPage() {
-  const [settings, schedule] = await Promise.all([getSiteSettings(), getSchedulePage()]);
+  const [settings, schedule, seo] = await Promise.all([getSiteSettings(), getSchedulePage(), getSeoData()]);
   const b = settings.business;
   return (
     <>
+      <JsonLd data={jsonLdForRepair(seo, { title: META.metaTitle, description: META.metaDescription })} />
       <PageHero hero={{ eyebrow: "Book a repair", headline: "Get it fixed today", subline: "Tell us what's broken, pick a time, walk in. Most repairs take 45 minutes." }} />
       <section aria-label="Book a repair" className="py-16 md:py-20">
         <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-x-8">

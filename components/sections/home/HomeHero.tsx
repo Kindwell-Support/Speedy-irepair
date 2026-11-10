@@ -88,8 +88,7 @@ export function HomeHero({ hero }: { hero: PageHero }) {
               <Image
                 data-phone-fixed
                 src="/images/hero/phone-tilt-fixed.webp"
-                alt=""
-                aria-hidden
+                alt="The same smartphone after repair, with a new, unbroken screen"
                 fill
                 sizes="(min-width: 1024px) 320px, 50vw"
                 className="hero-phone-fixed object-contain"

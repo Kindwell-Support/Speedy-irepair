@@ -6,12 +6,11 @@ export const EXTERNAL_LINKS = {
   financing:
     "https://ecom.acimacredit.com/views/phone-auth/ecom-merchant-813293c2-9f1e-4987-8b83-6691e6baf75e?redirect=application",
   homeInternetSignup: "https://form.jotform.com/253200750312037",
-  ebay: "https://www.ebay.com/usr/speedyirepair",
   review: "https://www.google.com/searchviewer/10?hl=en-us&output=search&svid=CCYSGioYOhYweDA6MHgzZTlkM2I1MGJkMDg2NTgwGAo",
   maps: "https://goo.gl/maps/hx2oTBFB18LNoMW36",
   facebook: "https://m.facebook.com/speedyirepair/",
   twitter: "https://mobile.twitter.com/speedyirepair",
-  instagram: "http://Instagram.com/speedyirepair",
+  instagram: "https://www.instagram.com/speedyirepair",
   youtube: "https://youtu.be/O_o94Qwoe7U",
 } as const;
 
@@ -100,7 +99,6 @@ export const navigation: Navigation = {
   ],
   // Spec 2.1.11 (REQ-042)
   footerLegalLinks: [
-    { label: "eBay Store", href: EXTERNAL_LINKS.ebay, external: true },
     { label: "Leave a Review", href: EXTERNAL_LINKS.review, external: true },
     { label: "Shipping & Return Policy", href: "/policies/shipping-return" },
     { label: "Privacy Policy", href: "/policies/privacy" },

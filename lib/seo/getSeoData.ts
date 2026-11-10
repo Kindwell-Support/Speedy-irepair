@@ -60,7 +60,13 @@ export async function getSeoData(): Promise<SeoData> {
         .then((r) => stripNulls(r ?? [])),
     ]);
     const s = rawSettings ? stripNulls(rawSettings) : null;
-    const site: SiteSettings = { ...DEFAULT_SITE_SETTINGS, ...(s ?? {}), url: SITE_URL };
+    const site: SiteSettings = {
+      ...DEFAULT_SITE_SETTINGS,
+      ...(s ?? {}),
+      // Field by field, so an empty CMS field falls back to the seeded value instead of dropping out of the schema.
+      address: { ...DEFAULT_SITE_SETTINGS.address, ...(s?.address ?? {}) },
+      url: SITE_URL,
+    };
     // Hours: if the settings doc exists and the editor left `hours` empty, emit NO hours (UI shows "Hours coming soon").
     if (s && (!s.openingHours || s.openingHours.length === 0)) site.openingHours = undefined;
     // Never trust array fields that came back empty over seeded facts (sameAs etc.).

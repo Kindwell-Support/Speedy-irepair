@@ -191,6 +191,25 @@ export function jsonLdForInstantQuote(_d: SeoData): JsonLdGraph {
     crumbs("/instant-quote", "Instant Quote"),
   );
 }
+/* /repair — WebPage + LocalBusiness (the shop you book into: address, hours, phone) + Service + BreadcrumbList.
+   `meta` = the title/description the page actually renders, so the WebPage node matches the <title>. */
+export function jsonLdForRepair(d: SeoData, meta: { title: string; description: string }): JsonLdGraph {
+  return graph(
+    webPage("/repair", meta.title, meta.description, { breadcrumb: true }),
+    localBusiness(d.site, { services: d.services }),
+    service({
+      slug: "service",
+      path: "/repair",
+      url: "/repair",
+      name: "Phone, Tablet and Laptop Repair Booking",
+      serviceType: "Smartphone repair",
+      description:
+        "Book a repair online at Speedy iRepair in Akron, Ohio: choose your device, brand, model and issue, then pick a time and walk in. Most repairs are done the same day in 45 minutes, with a 90-day warranty.",
+    }),
+    crumbs("/repair", "Book a Repair"),
+  );
+}
+
 /* R08 /faq — FAQPage + BreadcrumbList */
 export function jsonLdForFaq(d: SeoData, faqs: FaqItem[] = d.faqPageFaqs): JsonLdGraph {
   return graph(

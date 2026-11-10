@@ -162,8 +162,8 @@ export function ServicesCarousel({ slides }: { slides: ServiceSlide[] }) {
           {slides.map((s) => (
             <li key={s.id} className="relative isolate flex aspect-[78/100] w-[240px] shrink-0 snap-start flex-col justify-end overflow-hidden rounded-md bg-surface-2 p-6">
               {s.photo ? (
-                <div className="photo-shade absolute inset-0 -z-10" aria-hidden>
-                  <Image src={s.photo.src} alt="" fill sizes="240px" className="object-cover" />
+                <div className="photo-shade absolute inset-0 -z-10">
+                  <Image src={s.photo.src} alt={s.photo.alt} fill sizes="240px" className="object-cover" />
                 </div>
               ) : null}
               <h3 className="text-h4">

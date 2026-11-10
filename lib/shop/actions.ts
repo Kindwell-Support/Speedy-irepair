@@ -3,19 +3,20 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { CART_COOKIE } from "./config";
-import { getCatalog } from "./index";
+import { getCatalog, isCheckoutEnabled } from "./index";
 import type { Cart } from "./types";
 
 /**
  * Cart server actions. Cart id lives in an httpOnly cookie; all mutations run server-side.
- * Fixture mode: returns { ok: false, staging: true } so the UI shows the staging notice.
+ * Checkout off (fixtures, or SHOP_CHECKOUT_ENABLED unset): returns { ok: false, staging: true }. The product page
+ * doesn't render Add to Cart in that case, so this is only a guard against direct calls.
  */
 export type CartActionResult =
   | { ok: true; cart: Cart }
   | { ok: false; staging: true; message: string }
   | { ok: false; staging: false; message: string };
 
-const STAGING_MESSAGE = "Staging preview: checkout is not connected yet (Shopify Storefront token pending).";
+const STAGING_MESSAGE = "Online checkout isn't available yet. Please call the shop to buy.";
 
 async function setCartCookie(id: string): Promise<void> {
   (await cookies()).set(CART_COOKIE, id, {
@@ -29,7 +30,7 @@ async function setCartCookie(id: string): Promise<void> {
 
 export async function addToCart(merchandiseId: string, quantity = 1): Promise<CartActionResult> {
   const catalog = getCatalog();
-  if (!catalog.supportsCheckout) return { ok: false, staging: true, message: STAGING_MESSAGE };
+  if (!isCheckoutEnabled()) return { ok: false, staging: true, message: STAGING_MESSAGE };
   try {
     const existing = (await cookies()).get(CART_COOKIE)?.value;
     const cart = existing
@@ -45,7 +46,7 @@ export async function addToCart(merchandiseId: string, quantity = 1): Promise<Ca
 
 export async function updateCartLine(lineId: string, quantity: number): Promise<CartActionResult> {
   const catalog = getCatalog();
-  if (!catalog.supportsCheckout) return { ok: false, staging: true, message: STAGING_MESSAGE };
+  if (!isCheckoutEnabled()) return { ok: false, staging: true, message: STAGING_MESSAGE };
   const cartId = (await cookies()).get(CART_COOKIE)?.value;
   if (!cartId) return { ok: false, staging: false, message: "No cart." };
   const cart = await catalog.updateLines(cartId, [{ id: lineId, quantity }]);
@@ -61,7 +62,7 @@ export async function getCurrentCart(): Promise<Cart | null> {
 /** Redirects to Shopify-hosted checkout (cart.checkoutUrl). */
 export async function goToCheckout(): Promise<void> {
   const cartId = (await cookies()).get(CART_COOKIE)?.value;
-  const url = cartId ? await getCatalog().checkoutUrl(cartId) : null;
+  const url = cartId && isCheckoutEnabled() ? await getCatalog().checkoutUrl(cartId) : null;
   if (!url) redirect("/shop?checkout=unavailable");
   redirect(url);
 }

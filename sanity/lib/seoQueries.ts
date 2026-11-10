@@ -8,15 +8,15 @@ export const SETTINGS_QUERY = /* groq */ `*[_id == "siteSettings"][0]{
   "name": businessName, legalName, description,
   telephoneE164, telephoneDisplay, email,
   "address": {
-    "streetAddress": address.street + select(defined(address.unit) => " " + address.unit, ""),
-    "addressLocality": address.city, "addressRegion": address.region,
-    "postalCode": address.postalCode, "addressCountry": coalesce(address.country, "US")
+    "streetAddress": address.street + select(defined(address.suite) => " " + address.suite, ""),
+    "addressLocality": address.city, "addressRegion": address.state,
+    "postalCode": address.zip, "addressCountry": coalesce(address.country, "US")
   },
   "hasMap": mapsUrl,
   "geo": select(defined(geo.lat) => {"latitude": geo.lat, "longitude": geo.lng}),
   "openingHours": hours[]{ "days": [day], opens, closes, closed },
   hoursPlaceholder,
-  "sameAs": array::compact([...socials[].url, ebayUrl]),
+  "sameAs": array::compact(socials[].url),
   "paymentAccepted": array::compact([
     select(count(paymentMethods[@ in ["visa","mastercard","amex","discover"]]) > 0 => "Credit Card"),
     select(count(paymentMethods[@ in ["visa","mastercard","amex","discover"]]) > 0 => "Debit Card"),

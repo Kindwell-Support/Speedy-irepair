@@ -298,9 +298,10 @@ html[data-motion="ok"] .hero-phone-float {
   background: radial-gradient(circle at var(--ix) var(--iy), rgb(255 255 255 / 0.95), rgb(255 120 120 / 0.35) 14%, transparent 34%);
 }
 
-/* Hero buttons sit flat on the stage: no resting glow, the focus ring still shows. */
+/* Hero buttons sit flat on the stage: no resting glow. Focus = white outline, same as every ButtonLink
+   (the red ring vanished against the red button). */
 .hero-ctas a { box-shadow: none; }
-.hero-ctas a:focus-visible { box-shadow: var(--focus-ring); }
+.hero-ctas a:focus-visible { box-shadow: none; outline: 2px solid var(--color-text); outline-offset: 3px; }
 
 /* Glass shards: real cutouts (alpha WebP). Box position/size from cssVars (--sx --sy --sw); bindHeroRepair
    moves the box, the img inside carries the resting rotation and an idle drift. */

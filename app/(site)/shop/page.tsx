@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getShopPage } from "@/lib/sanity/content";
-import { getCatalog, SHOP_CATEGORIES } from "@/lib/shop";
+import { getCatalog, isCheckoutEnabled, SHOP_CATEGORIES } from "@/lib/shop";
+import { isProductionSite } from "@/lib/env";
 import { pageMetadata } from "@/lib/page/meta";
 import { getSeoData } from "@/lib/seo/getSeoData";
 import { jsonLdForShop } from "@/lib/seo/routes";
@@ -26,7 +27,8 @@ export default async function ShopPage() {
       <JsonLd data={jsonLdForShop(seo)} />
       <PageHero hero={{ ...page.hero, poster: { ...SITE_IMAGES.storeCounter, isSanity: false } }} photo="storeCounter" />
       <div className="container-site py-12">
-        {!catalog.supportsCheckout ? (
+        {/* Staging builds only: production never shows the staging note, checkout or not. */}
+        {!isCheckoutEnabled() && !isProductionSite ? (
           <Notice tone="staging" className="mb-8">
             {page.stagingNotice}
           </Notice>

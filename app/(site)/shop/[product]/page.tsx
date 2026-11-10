@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCatalog } from "@/lib/shop";
+import { getCatalog, isCheckoutEnabled } from "@/lib/shop";
 import type { Product } from "@/lib/shop/types";
+import { getSiteSettings } from "@/lib/sanity/content";
+import { ButtonLink } from "@/components/ui/ButtonLink";
+import { telHref } from "@/lib/utils/format";
 import { pageMetadata } from "@/lib/page/meta";
 import { productMetaDescription, productMetaTitle } from "@/lib/seo/content";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -55,9 +58,10 @@ function toProductInput(p: Product): ProductInput {
 export default async function ProductPage({ params }: Params) {
   const { product: handle } = await params;
   const catalog = getCatalog();
-  const [p, seo] = await Promise.all([catalog.getProduct(handle), getSeoData()]);
+  const [p, seo, settings] = await Promise.all([catalog.getProduct(handle), getSeoData(), getSiteSettings()]);
   if (!p) notFound();
   const img = p.featuredImage;
+  const checkoutEnabled = isCheckoutEnabled();
   return (
     <>
       <JsonLd data={jsonLdForProduct(seo, toProductInput(p))} />
@@ -75,10 +79,25 @@ export default async function ProductPage({ params }: Params) {
           <div>
             <h1 className="text-h2">{p.title}</h1>
             <p className="mt-4 text-h4">{formatPrice(p.priceRange.min.amount, p.priceRange.min.currencyCode)}</p>
-            <AddToCart
-              variants={p.variants.map((v) => ({ id: v.id, title: v.title, available: v.availableForSale, price: formatPrice(v.price.amount, v.price.currencyCode) }))}
-              checkoutEnabled={catalog.supportsCheckout}
-            />
+            {checkoutEnabled ? (
+              <AddToCart
+                variants={p.variants.map((v) => ({ id: v.id, title: v.title, available: v.availableForSale, price: formatPrice(v.price.amount, v.price.currencyCode) }))}
+                checkoutEnabled
+              />
+            ) : (
+              /* No online checkout yet (merchant account pending): buy by phone or in store. */
+              <div className="mt-8 space-y-4">
+                <p className="text-body text-text-secondary">
+                  {p.availableForSale
+                    ? "To buy this device, call the shop or send us a message and we'll get back to you."
+                    : "This one is sold out. Ask us when it's back, or what we have like it."}
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <ButtonLink cta={{ label: "Call to buy", href: telHref(settings.business.phone) }} size="lg" />
+                  <ButtonLink cta={{ label: "Ask about this device", href: "/contact", variant: "secondary" }} size="lg" />
+                </div>
+              </div>
+            )}
             {/* Shopify-authored HTML (trusted merchant content). */}
             <div className="prose-site mt-10 text-body text-text-secondary" dangerouslySetInnerHTML={{ __html: demoteHeadings(p.descriptionHtml) }} />
           </div>

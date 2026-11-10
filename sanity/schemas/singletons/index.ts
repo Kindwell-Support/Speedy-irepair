@@ -107,7 +107,7 @@ export const siteSettings = defineType({
       type: "object",
       group: "business",
       description: "Exact third-party URLs (spec 1.1). Change only when the business changes provider.",
-      fields: ["schedule", "financing", "homeInternetSignup", "ebay", "review", "maps", "facebook", "twitter", "instagram", "youtube"].map(
+      fields: ["schedule", "financing", "homeInternetSignup", "review", "maps", "facebook", "twitter", "instagram", "youtube"].map(
         (name) => defineField({ name, type: "url", validation: (r) => r.required().uri({ scheme: ["http", "https"] }) }),
       ),
     }),

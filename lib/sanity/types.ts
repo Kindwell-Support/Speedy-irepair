@@ -71,7 +71,6 @@ export type ExternalLinkKey =
   | "schedule"
   | "financing"
   | "homeInternetSignup"
-  | "ebay"
   | "review"
   | "maps"
   | "facebook"

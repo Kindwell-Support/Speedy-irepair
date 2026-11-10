@@ -9,6 +9,8 @@ export const serverEnv = {
   shopifyStoreDomain: process.env.SHOPIFY_STORE_DOMAIN ?? "",
   shopifyStorefrontToken: process.env.SHOPIFY_STOREFRONT_TOKEN ?? "",
   shopifyApiVersion: process.env.SHOPIFY_API_VERSION ?? "2025-10",
+  /** Second key for checkout: Add to Cart only appears when this is "true" AND the Shopify vars are set. */
+  shopCheckoutEnabled: process.env.SHOP_CHECKOUT_ENABLED === "true",
   formWebhookUrl: process.env.FORM_WEBHOOK_URL ?? "",
   formWebhookSecret: process.env.FORM_WEBHOOK_SECRET ?? "",
   turnstileSecretKey: process.env.TURNSTILE_SECRET_KEY ?? "",
