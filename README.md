@@ -1,4 +1,4 @@
-# Speedy iRepair — Website Rebuild (`web/`)
+# Speedy iRepair — Website Rebuild (`web/`)  
 ah
 Canonical app root for the Speedy iRepair rebuild (Kindwell Solutions).
 Spec: `../PROJECT_SPEC.md` · Decisions: `../DECISIONS_2026-10-27.md`.
@@ -95,4 +95,7 @@ build → **QA PASS → QC PASS → Abdullah explicit "deploy"** → DevOps depl
 
 ## Credentials still needed
 
+
 See `STAGING_SETUP.md`.
+
+
