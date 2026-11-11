@@ -19,7 +19,32 @@ const nextConfig: NextConfig = {
   // Inlined at build time so the booking widget formats times in the same zone as the server (lib/repair-time.ts).
   env: { GHL_TIMEZONE: process.env.GHL_TIMEZONE ?? "" },
   async redirects() {
-    return [{ source: "/schedule-repair", destination: "/repair", permanent: true }];
+    // Old Shopify URLs (from speedyirepair.com/sitemap.xml + Shopify's default policy URLs, 2026-11-11). Product handles are unchanged.
+    const shopify: [string, string][] = [
+      ["/products/:handle", "/shop/:handle"],
+      ["/collections/:path*", "/shop"],
+      ["/collections", "/shop"],
+      ["/cart", "/shop"],
+      ["/pages/contact-us", "/contact"],
+      ["/pages/faq", "/faq"],
+      ["/pages/instant-quote", "/instant-quote"],
+      ["/pages/sell-your-device", "/sell-your-device"],
+      ["/pages/repair-pricing", "/services"],
+      ["/pages/about-us", "/"],
+      ["/pages/privacy-policy", "/policies/privacy"],
+      ["/policies/privacy-policy", "/policies/privacy"],
+      ["/pages/terms-conditions", "/policies/terms"],
+      ["/policies/terms-of-service", "/policies/terms"],
+      ["/pages/return-policy", "/policies/shipping-return"],
+      ["/policies/refund-policy", "/policies/shipping-return"],
+      ["/policies/shipping-policy", "/policies/shipping-return"],
+      ["/blogs/:path*", "/blog"],
+      ["/agents.md", "/llms.txt"],
+    ];
+    return [
+      { source: "/schedule-repair", destination: "/repair", permanent: true },
+      ...shopify.map(([source, destination]) => ({ source, destination, permanent: true })),
+    ];
   },
   images: {
     formats: ["image/avif", "image/webp"],
