@@ -1,5 +1,5 @@
 import "server-only";
-import { createHmac } from "node:crypto";
+import { createHmac, randomUUID } from "node:crypto";
 import { createClient } from "next-sanity";
 import { publicEnv, isSanityConfigured } from "@/lib/env";
 import { serverEnv } from "@/lib/env.server";
@@ -43,7 +43,9 @@ export async function deliverSubmission(
       token: serverEnv.sanityWriteToken,
       useCdn: false,
     });
+    // The dataset is public. An _id with a dot keeps the doc out of unauthenticated reads (Studio still lists it).
     await writeClient.create({
+      _id: `submission.${randomUUID()}`,
       _type: "formSubmission",
       type,
       payload: JSON.stringify(payload),
