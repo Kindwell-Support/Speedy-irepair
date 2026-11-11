@@ -86,7 +86,7 @@ export const navigation: Navigation = {
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
   ],
-  headerCta: { label: "Fix My Device", href: "/repair", variant: "primary" },
+  headerCta: { label: "Book Repair", href: "/repair", variant: "primary" },
   // Spec 2.1.11 (REQ-041)
   footerQuickLinks: [
     { label: "Home", href: "/" },
