@@ -6,6 +6,7 @@ const GROUP_THRESHOLD = 10;
 /** Brand groups in display order, matched on how the Studio labels start ("iPhone 13 screen", "Galaxy S24 screen"). */
 const GROUPS: { name: string; match: RegExp }[] = [
   { name: "iPhone", match: /^iphone\b/i },
+  { name: "iPad", match: /^ipad\b/i },
   { name: "Samsung", match: /^(galaxy|samsung)\b/i },
 ];
 const OTHER = "Other";
