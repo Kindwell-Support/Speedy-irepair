@@ -132,6 +132,8 @@ export const TAGS = {
   quoteForm: "instant-quote-requested",
   quoteShown: "instant-quote-shown",
   internetForm: "home-internet-lead",
+  businessInquiry: "business-inquiry",
+  educationInquiry: "education-inquiry",
 } as const;
 
 /**

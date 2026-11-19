@@ -43,6 +43,8 @@ const STATIC_ROUTES: {
   },
   { path: "/financing", priority: 0.7, changeFrequency: "monthly", sanityType: "financingPage" },
   { path: "/contact", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/business-support", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/education", priority: 0.7, changeFrequency: "monthly" },
   { path: "/faq", priority: 0.7, changeFrequency: "monthly", sanityType: "faqPage" },
   { path: "/blog", priority: 0.6, changeFrequency: "weekly", sanityType: "blogPage" },
   {

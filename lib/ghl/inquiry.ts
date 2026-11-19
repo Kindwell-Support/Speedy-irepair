@@ -19,7 +19,7 @@ import {
 } from "@/lib/ghl/fields";
 import { ownerForUpsert, pickOwner } from "@/lib/ghl/owner";
 import { attempt } from "@/lib/ghl/retry";
-import type { InternetInput, QuoteInput, TradeInInput } from "@/lib/forms/schemas";
+import type { InternetInput, PartnerInput, QuoteInput, TradeInInput } from "@/lib/forms/schemas";
 import type { QuotePrice } from "@/lib/repair-prices";
 import { checkAvailability } from "@/lib/internet-availability/check";
 import type { AvailabilityResult } from "@/lib/internet-availability/config";
@@ -162,6 +162,35 @@ export const sendInquiry = (inquiry: InquiryInput) => {
       pipeline: INQUIRY_PIPELINE,
       cardName: `${input.name.trim()}: website inquiry`,
       note: `Website contact form:\n\n${message}`,
+    }),
+  );
+};
+
+const PARTNER = {
+  business: { label: "business support", form: "business support form", tag: TAGS.businessInquiry },
+  education: { label: "education", form: "education form", tag: TAGS.educationInquiry },
+} as const;
+
+/** /business-support and /education inquiries to General Inquiries, tagged by audience. Never throws; true as for sendInquiry. */
+export const sendPartner = (lead: PartnerInput) => {
+  const { audience, organization, deviceCount, message, attribution = {}, ...input } = lead;
+  const kind = PARTNER[audience];
+  return attempt(`${kind.label} inquiry`, lead, () =>
+    send({
+      ...input,
+      attribution,
+      source: `Website ${kind.form}`,
+      tag: kind.tag,
+      pipeline: INQUIRY_PIPELINE,
+      cardName: `${organization.trim()}: ${kind.label} inquiry`,
+      note: [
+        `Website ${kind.form}:`,
+        "",
+        `Organization: ${organization.trim()}`,
+        `Devices: ${deviceCount ?? "not given"}`,
+        "",
+        message.trim(),
+      ].join("\n"),
     }),
   );
 };

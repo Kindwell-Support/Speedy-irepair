@@ -6,15 +6,15 @@ import { getServices, getSiteSettings } from "@/lib/sanity/content";
 import { findPrices, quotePriceLines } from "@/lib/repair-prices";
 import { isProductionSite } from "@/lib/env";
 import { isGhlConfigured } from "@/lib/env.server";
-import { sendInquiry, sendInternet, sendQuote, sendTradeIn } from "@/lib/ghl/inquiry";
-import type { ContactInput, InternetInput, QuoteInput, TradeInInput } from "@/lib/forms/schemas";
+import { sendInquiry, sendInternet, sendPartner, sendQuote, sendTradeIn } from "@/lib/ghl/inquiry";
+import type { ContactInput, InternetInput, PartnerInput, QuoteInput, TradeInInput } from "@/lib/forms/schemas";
 
 export const dynamic = "force-dynamic";
 
 const json = (body: FormResponse, status = 200) => NextResponse.json(body, { status });
 
 /**
- * POST /api/forms/{quote|tradein|contact|newsletter|internet}  (F1–F4 and the home internet address check)
+ * POST /api/forms/{quote|tradein|contact|newsletter|internet|partner}  (F1–F4 and the home internet address check)
  * Order: type check -> rate limit -> JSON parse -> spam fields (honeypot, fill time, Turnstile flag)
  *        -> zod validation -> GHL (contact, quote, trade-in and internet forms) -> deliver (Sanity formSubmission + signed webhook).
  * Spam hits get a fake success (no signal to bots) but are never stored.
@@ -66,6 +66,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ typ
     : type === "quote" ? async () => sendQuote(parsed.data as QuoteInput, await quotedPrices(parsed.data as QuoteInput))
     : type === "tradein" ? () => sendTradeIn(parsed.data as TradeInInput)
     : type === "internet" ? () => sendInternet(parsed.data as InternetInput)
+    : type === "partner" ? () => sendPartner(parsed.data as PartnerInput)
     : undefined;
   const inGhl = isGhlConfigured && toGhl !== undefined && (await toGhl()) === true;
 

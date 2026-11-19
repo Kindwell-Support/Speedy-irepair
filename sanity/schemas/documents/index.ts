@@ -262,7 +262,7 @@ export const formSubmission = defineType({
   type: "document",
   readOnly: ({ currentUser }) => !currentUser?.roles.some((r) => r.name === "administrator"),
   fields: [
-    defineField({ name: "type", type: "string", options: { list: ["quote", "tradein", "contact", "newsletter", "internet"] } }),
+    defineField({ name: "type", type: "string", options: { list: ["quote", "tradein", "contact", "newsletter", "internet", "partner"] } }),
     defineField({ name: "payload", type: "text", description: "JSON string of the validated submission." }),
     defineField({ name: "createdAt", type: "datetime" }),
     defineField({ name: "status", type: "string", options: { list: ["new", "contacted", "closed", "spam"] }, initialValue: "new", readOnly: false }),

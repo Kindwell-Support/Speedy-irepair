@@ -15,6 +15,8 @@ export type RouteKey =
   | "/repair"
   | "/faq"
   | "/contact"
+  | "/business-support"
+  | "/education"
   | "/financing"
   | "/home-internet"
   | "/blog"
@@ -175,6 +177,26 @@ export const ROUTES: RouteSeo[] = [
       "Send Speedy iRepair a message about a repair, a device or an order. Find our Akron, OH shop address, phone number, store hours and directions.",
     primaryKeyword: "speedy irepair contact",
     secondaryKeywords: ["phone repair shop akron", "speedy irepair phone number"],
+  },
+  {
+    route: "/business-support",
+    label: "Business Support",
+    h1: "Device Repair for Local Businesses",
+    metaTitle: "Business Device Repair in Akron, OH | Speedy iRepair",
+    metaDescription:
+      "Phone, tablet and laptop repair and troubleshooting for Akron businesses. Most repairs same day, 90-day warranty. Send Speedy iRepair an inquiry today.",
+    primaryKeyword: "business device repair akron",
+    secondaryKeywords: ["business phone repair akron", "company laptop repair akron"],
+  },
+  {
+    route: "/education",
+    label: "Education",
+    h1: "Device Repair for Schools and Education Programs",
+    metaTitle: "School Device Repair in Akron, OH | Speedy iRepair",
+    metaDescription:
+      "Tablet, laptop and phone repair and troubleshooting for Akron schools and education programs. Most repairs same day, 90-day warranty. Send us an inquiry.",
+    primaryKeyword: "school device repair akron",
+    secondaryKeywords: ["school ipad repair akron", "chromebook repair for schools akron"],
   },
   {
     route: "/financing",

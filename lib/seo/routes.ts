@@ -224,6 +224,11 @@ export function jsonLdForContact(): JsonLdGraph {
   return graph(page("/contact", "/contact", { type: "WebPage" }), crumbs("/contact", "Contact"));
 }
 
+/* /business-support and /education — WebPage + BreadcrumbList */
+export function jsonLdForPartnerPage(path: "/business-support" | "/education", label: string): JsonLdGraph {
+  return graph(page(path, path, { type: "WebPage" }), crumbs(path, label));
+}
+
 /* R10 /financing — Service + FAQPage + BreadcrumbList */
 export function jsonLdForFinancing(d: SeoData, faqs: FaqItem[] = d.financingFaqs): JsonLdGraph {
   const s = d.services.find((x) => x.slug === "financing")!;

@@ -7,7 +7,7 @@ import { AVAILABILITY_STATUSES } from "@/lib/internet-availability/config";
  * Shared form schemas: the SAME schema validates on the client (before submit) and the server
  * (app/api/forms/[type]/route.ts). Spec 4.1 F1, F2, F4, F5, plus the home internet address check.
  */
-export const FORM_TYPES = ["quote", "tradein", "contact", "newsletter", "internet"] as const;
+export const FORM_TYPES = ["quote", "tradein", "contact", "newsletter", "internet", "partner"] as const;
 export type FormTypeKey = (typeof FORM_TYPES)[number];
 
 const name = z.string().trim().min(1, "Please enter your name").max(120);
@@ -99,6 +99,22 @@ export const internetSchema = z.object({
     .optional(),
 });
 
+export const PARTNER_AUDIENCES = ["business", "education"] as const;
+export type PartnerAudience = (typeof PARTNER_AUDIENCES)[number];
+export const PARTNER_DEVICE_COUNTS = ["1-10", "11-50", "51-200", "200+"] as const;
+
+/** /business-support and /education inquiry: who they are, roughly how many devices, and what they need. */
+export const partnerSchema = z.object({
+  audience: z.enum(PARTNER_AUDIENCES),
+  organization: z.string().trim().min(1, "Enter your organization's name").max(160),
+  name,
+  email,
+  phone,
+  deviceCount: z.enum(PARTNER_DEVICE_COUNTS).optional(),
+  message: z.string().trim().min(1, "Tell us what you need help with").max(4000),
+  attribution: attribution.optional(),
+});
+
 /** F2 Newsletter (REQ-037). */
 export const newsletterSchema = z.object({ email });
 
@@ -108,6 +124,7 @@ export const formSchemas = {
   contact: contactSchema,
   newsletter: newsletterSchema,
   internet: internetSchema,
+  partner: partnerSchema,
 } as const satisfies Record<FormTypeKey, z.ZodType>;
 
 export type QuoteInput = z.infer<typeof quoteSchema>;
@@ -115,12 +132,14 @@ export type TradeInInput = z.infer<typeof tradeInSchema>;
 export type ContactInput = z.infer<typeof contactSchema>;
 export type NewsletterInput = z.infer<typeof newsletterSchema>;
 export type InternetInput = z.infer<typeof internetSchema>;
+export type PartnerInput = z.infer<typeof partnerSchema>;
 export type FormPayloads = {
   quote: QuoteInput;
   tradein: TradeInInput;
   contact: ContactInput;
   newsletter: NewsletterInput;
   internet: InternetInput;
+  partner: PartnerInput;
 };
 
 /** API response shape for every form route. */
