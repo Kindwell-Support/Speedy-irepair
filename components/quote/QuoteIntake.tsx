@@ -14,6 +14,7 @@ import { DeviceStep } from "@/components/repair-intake/DeviceStep";
 import { IssueStep } from "@/components/repair-intake/IssueStep";
 import { ModelStep } from "@/components/repair-intake/ModelStep";
 import { ModelSummary } from "@/components/repair-intake/ModelSummary";
+import { PriceList } from "@/components/repair-intake/PriceStep";
 import { ScheduleStep, type SlotsState } from "@/components/repair-intake/ScheduleStep";
 import { StepHeading, StepProgress, continueClass } from "@/components/repair-intake/ui";
 import { FormShell } from "@/components/sections/forms/FormShell";
@@ -304,15 +305,7 @@ export function QuoteIntake({
       {step === PRICE && priced ? (
         <>
           <StepHeading title="Your repair price" intro={`${deviceLabel}, ${problem.toLowerCase()}.`} />
-          <dl className="divide-y divide-border border-y border-border">
-            {quoted.map((p, i) => (
-              <div key={`${p.label}-${i}`} className="flex items-baseline justify-between gap-6 py-4">
-                <dt className="text-body-lg text-text-secondary">{p.label}</dt>
-                <dd className="font-heading text-h4 font-black tabular-nums text-text">{p.price}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-3 text-body-sm text-text-tertiary">{priceDisclaimer}</p>
+          <PriceList prices={quoted} disclaimer={priceDisclaimer} />
           <button type="button" className={`${continueClass} mt-8`} onClick={() => goTo(TIME)}>
             Book this repair
           </button>

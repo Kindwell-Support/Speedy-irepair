@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { getSchedulePage, getSiteSettings } from "@/lib/sanity/content";
+import { getQuotePage, getSchedulePage, getServices, getSiteSettings } from "@/lib/sanity/content";
+import { quotePriceLines } from "@/lib/repair-prices";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { telHref } from "@/lib/utils/format";
 import { PageHero } from "@/components/ui/PageHero";
@@ -18,12 +19,19 @@ const META = {
 export const metadata: Metadata = buildMetadata({ path: "/repair", fallback: META });
 
 /**
- * /repair: the interactive intake. Device → brand → model → issue → contact → time → confirmation.
+ * /repair: the interactive intake. Device → contact → brand → model → issue → price → time → confirmation.
+ * Prices come from the service pages' price lists and the disclaimer from the instant quote page, as on /instant-quote.
  * Business details and "what to bring" come from the CMS (the schedulePage document), so the confirmation
  * never disagrees with the footer.
  */
 export default async function RepairPage() {
-  const [settings, schedule, seo] = await Promise.all([getSiteSettings(), getSchedulePage(), getSeoData()]);
+  const [settings, schedule, seo, services, quotePage] = await Promise.all([
+    getSiteSettings(),
+    getSchedulePage(),
+    getSeoData(),
+    getServices(),
+    getQuotePage(),
+  ]);
   const b = settings.business;
   return (
     <>
@@ -35,6 +43,8 @@ export default async function RepairPage() {
             <RepairIntake
               shop={{ name: b.name, address: b.footerAddressLine, phone: b.phone }}
               whatToBring={{ heading: schedule.whatToBring.heading, intro: schedule.whatToBring.intro }}
+              prices={quotePriceLines(services)}
+              priceDisclaimer={quotePage.priceDisclaimer}
             />
           </div>
 

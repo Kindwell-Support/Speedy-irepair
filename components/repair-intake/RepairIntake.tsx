@@ -11,6 +11,7 @@ import type {
   SlotsResponse,
   StartResponse,
 } from "@/lib/repair-schemas";
+import { findPrices, type QuotePriceLine } from "@/lib/repair-prices";
 import { shopDateISO } from "@/lib/repair-time";
 import { BrandStep } from "./BrandStep";
 import { ConfirmationStep, type ShopInfo, type WhatToBring } from "./ConfirmationStep";
@@ -19,13 +20,14 @@ import { DeviceStep } from "./DeviceStep";
 import { IssueStep } from "./IssueStep";
 import { ModelStep } from "./ModelStep";
 import { ModelSummary } from "./ModelSummary";
+import { INSPECTION_ISSUES, PriceStep } from "./PriceStep";
 import { ScheduleStep, type SlotsState } from "./ScheduleStep";
 import { StepProgress } from "./ui";
 
-const STEPS = ["Device", "Contact", "Brand", "Model", "Issue", "Time"] as const;
-const [DEVICE, CONTACT, BRAND, MODEL, ISSUE, TIME] = [0, 1, 2, 3, 4, 5];
+const STEPS = ["Device", "Contact", "Brand", "Model", "Issue", "Price", "Time"] as const;
+const [DEVICE, CONTACT, BRAND, MODEL, ISSUE, PRICE, TIME] = [0, 1, 2, 3, 4, 5, 6];
 const DONE = STEPS.length; // the confirmation, after the last numbered step
-const STORAGE_KEY = "speedy:repair-intake:v2";
+const STORAGE_KEY = "speedy:repair-intake:v3"; // v3: the Price step moved Time from 5 to 6
 
 interface Answers {
   device: Device | null;
@@ -70,6 +72,7 @@ const OWNED: (keyof Answers)[][] = [
   ["brand", "brandOther"],
   ["model", "modelOther"],
   ["issue", "issueDetails"],
+  [],
   ["date", "slotStart"],
 ];
 
@@ -122,12 +125,22 @@ function saveField(token: string | null, field: IntakeField, value: string) {
 }
 
 /**
- * /repair intake: device → name and phone (creates the lead) → brand → model → issue → time (books it, or asks for a
- * call) → confirmation. Talks only to /api/repair/*; the CRM behind those routes lives in lib/booking (server-only),
- * and nothing here depends on CMS data. A CRM failure never stops the visitor: the server logs and retries it.
+ * /repair intake: device → name and phone (creates the lead) → brand → model → issue → price → time (books it, or asks
+ * for a call) → confirmation. Talks only to /api/repair/*; the CRM behind those routes lives in lib/booking (server-only).
+ * The price step reads the service pages' price lists (passed in from the page), like /instant-quote. A CRM failure never stops the visitor: the server logs and retries it.
  * Progress survives a reload through sessionStorage until the request is sent.
  */
-export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBring: WhatToBring }) {
+export function RepairIntake({
+  shop,
+  whatToBring,
+  prices,
+  priceDisclaimer,
+}: {
+  shop: ShopInfo;
+  whatToBring: WhatToBring;
+  prices: QuotePriceLine[];
+  priceDisclaimer: string;
+}) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>(EMPTY);
   const [restored, setRestored] = useState(false);
@@ -306,6 +319,10 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
   const modelLabel = resolved(answers.model, answers.modelOther, OTHER);
   const deviceLabel = `${brandLabel} ${modelLabel}`.trim();
   const issueLabel = answers.issue === ISSUE_OTHER ? answers.issueDetails : (answers.issue ?? "");
+  const quoted =
+    answers.device && answers.issue && !INSPECTION_ISSUES.includes(answers.issue)
+      ? findPrices(prices, { device: answers.device, brand: brandLabel, model: modelLabel, issue: answers.issue })
+      : [];
   const status =
     step === DONE ? "Request sent" : `Step ${step + 1} of ${STEPS.length}: ${STEPS[step]}`;
 
@@ -325,7 +342,7 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
         />
       )}
 
-      {(step === ISSUE || step === TIME) && answers.device ? (
+      {(step === ISSUE || step === PRICE || step === TIME) && answers.device ? (
         <ModelSummary
           className="mb-8"
           device={answers.device}
@@ -392,6 +409,16 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
         />
       ) : null}
 
+      {step === PRICE && answers.issue ? (
+        <PriceStep
+          repair={`${deviceLabel}, ${issueLabel.toLowerCase()}`}
+          issue={answers.issue}
+          prices={quoted}
+          disclaimer={priceDisclaimer}
+          onContinue={() => goTo(TIME)}
+        />
+      ) : null}
+
       {step === TIME ? (
         <ScheduleStep
           today={shopDateISO()}
@@ -429,6 +456,7 @@ export function RepairIntake({ shop, whatToBring }: { shop: ShopInfo; whatToBrin
           }
           summary={[
             { label: "Issue", value: issueLabel },
+            ...quoted.map((p) => ({ label: p.label, value: p.price })),
             { label: "Name", value: answers.name },
             { label: "Phone", value: answers.phone },
             { label: "Email", value: answers.email },
